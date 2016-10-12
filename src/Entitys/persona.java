@@ -6,9 +6,26 @@
 package Entitys;
 
 /**
- *
+ * 
  * @author mannu
  */
 public class persona {
+    
+    //Atributos de clase.
+    public String nombre;
+    
+    public persona(String nombre) {
+        
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
     
 }
