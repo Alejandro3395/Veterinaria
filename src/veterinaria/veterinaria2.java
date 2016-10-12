@@ -10,5 +10,5 @@ package veterinaria;
  * @author diego
  */
 public class veterinaria2 {
-    
+    int x;
 }
