@@ -11,4 +11,5 @@ package veterinaria;
  */
 public class veterinaria2 {
     int x;
+    int y;
 }
