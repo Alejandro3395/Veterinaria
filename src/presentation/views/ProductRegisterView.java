@@ -27,57 +27,89 @@ public class ProductRegisterView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lbl_tittle = new javax.swing.JLabel();
+        btn_continue = new javax.swing.JButton();
+        btn_cancel = new javax.swing.JButton();
+        lbl_selection = new javax.swing.JLabel();
+        radio_selectionMedicine = new javax.swing.JRadioButton();
+        radio_selectionVaccine = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Registro de Prodcutos");
+        lbl_tittle.setText("Registro de Prodcutos");
 
-        jLabel2.setText("Nombre:");
+        btn_continue.setText("Continuar");
+        btn_continue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_continueActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("Cantidad:");
+        btn_cancel.setText("Cancelar");
 
-        jLabel4.setText("Precio de Venta:");
+        lbl_selection.setText("¿Que tipo de Producto deseas registrar?");
 
-        jLabel5.setText("Proveedor:");
+        radio_selectionMedicine.setText("Medicamento");
+        radio_selectionMedicine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radio_selectionMedicineActionPerformed(evt);
+            }
+        });
+
+        radio_selectionVaccine.setText("Vacuna");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1))
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
-                .addContainerGap(414, Short.MAX_VALUE))
+                .addGap(20, 404, Short.MAX_VALUE)
+                .addComponent(lbl_tittle))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(btn_cancel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_continue)
+                .addGap(89, 89, 89))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addComponent(lbl_selection))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(radio_selectionMedicine)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(radio_selectionVaccine)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(lbl_tittle)
                 .addGap(41, 41, 41)
-                .addComponent(jLabel2)
-                .addGap(31, 31, 31)
-                .addComponent(jLabel3)
+                .addComponent(lbl_selection)
                 .addGap(29, 29, 29)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addGap(0, 186, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radio_selectionMedicine)
+                    .addComponent(radio_selectionVaccine))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_continue)
+                    .addComponent(btn_cancel))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_continueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_continueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_continueActionPerformed
+
+    private void radio_selectionMedicineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_selectionMedicineActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radio_selectionMedicineActionPerformed
 
     /**
      * @param args the command line arguments
@@ -116,10 +148,11 @@ public class ProductRegisterView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton btn_cancel;
+    private javax.swing.JButton btn_continue;
+    private javax.swing.JLabel lbl_selection;
+    private javax.swing.JLabel lbl_tittle;
+    private javax.swing.JRadioButton radio_selectionMedicine;
+    private javax.swing.JRadioButton radio_selectionVaccine;
     // End of variables declaration//GEN-END:variables
 }
