@@ -5,6 +5,12 @@
  */
 package presentation.views;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Jorge
@@ -300,6 +306,215 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
                 new EmployeeRegisterView().setVisible(true);
             }
         });
+        
+    }
+
+    public JButton getBtn_cancel() {
+        return btn_cancel;
+    }
+
+    public void setBtn_cancel(JButton btn_cancel) {
+        this.btn_cancel = btn_cancel;
+    }
+
+    public JButton getBtn_register() {
+        return btn_register;
+    }
+
+    public void setBtn_register(JButton btn_register) {
+        this.btn_register = btn_register;
+    }
+
+    public JTextField getField_employeeAddressColony() {
+        return field_employeeAddressColony;
+    }
+
+    public void setField_employeeAddressColony(JTextField field_employeeAddressColony) {
+        this.field_employeeAddressColony = field_employeeAddressColony;
+    }
+
+    public JTextField getField_employeeAddressCross() {
+        return field_employeeAddressCross;
+    }
+
+    public void setField_employeeAddressCross(JTextField field_employeeAddressCross) {
+        this.field_employeeAddressCross = field_employeeAddressCross;
+    }
+
+    public JTextField getField_employeeAddressPostalCode() {
+        return field_employeeAddressPostalCode;
+    }
+
+    public void setField_employeeAddressPostalCode(JTextField field_employeeAddressPostalCode) {
+        this.field_employeeAddressPostalCode = field_employeeAddressPostalCode;
+    }
+
+    public JTextField getField_employeeAddressStreet() {
+        return field_employeeAddressStreet;
+    }
+
+    public void setField_employeeAddressStreet(JTextField field_employeeAddressStreet) {
+        this.field_employeeAddressStreet = field_employeeAddressStreet;
+    }
+
+    public JTextField getField_employeeName() {
+        return field_employeeName;
+    }
+
+    public void setField_employeeName(JTextField field_employeeName) {
+        this.field_employeeName = field_employeeName;
+    }
+
+    public JPasswordField getField_employeePassword() {
+        return field_employeePassword;
+    }
+
+    public void setField_employeePassword(JPasswordField field_employeePassword) {
+        this.field_employeePassword = field_employeePassword;
+    }
+
+    public JTextField getField_employeePhoneLada() {
+        return field_employeePhoneLada;
+    }
+
+    public void setField_employeePhoneLada(JTextField field_employeePhoneLada) {
+        this.field_employeePhoneLada = field_employeePhoneLada;
+    }
+
+    public JTextField getField_employeePhoneNumber() {
+        return field_employeePhoneNumber;
+    }
+
+    public void setField_employeePhoneNumber(JTextField field_employeePhoneNumber) {
+        this.field_employeePhoneNumber = field_employeePhoneNumber;
+    }
+
+    public JTextField getField_employeeUserName() {
+        return field_employeeUserName;
+    }
+
+    public void setField_employeeUserName(JTextField field_employeeUserName) {
+        this.field_employeeUserName = field_employeeUserName;
+    }
+
+    public JSeparator getjSeparator1() {
+        return jSeparator1;
+    }
+
+    public void setjSeparator1(JSeparator jSeparator1) {
+        this.jSeparator1 = jSeparator1;
+    }
+
+    public JLabel getLbl_employePhoneLada() {
+        return lbl_employePhoneLada;
+    }
+
+    public void setLbl_employePhoneLada(JLabel lbl_employePhoneLada) {
+        this.lbl_employePhoneLada = lbl_employePhoneLada;
+    }
+
+    public JLabel getLbl_employeeAddress() {
+        return lbl_employeeAddress;
+    }
+
+    public void setLbl_employeeAddress(JLabel lbl_employeeAddress) {
+        this.lbl_employeeAddress = lbl_employeeAddress;
+    }
+
+    public JLabel getLbl_employeeAddressColony() {
+        return lbl_employeeAddressColony;
+    }
+
+    public void setLbl_employeeAddressColony(JLabel lbl_employeeAddressColony) {
+        this.lbl_employeeAddressColony = lbl_employeeAddressColony;
+    }
+
+    public JLabel getLbl_employeeAddressCross() {
+        return lbl_employeeAddressCross;
+    }
+
+    public void setLbl_employeeAddressCross(JLabel lbl_employeeAddressCross) {
+        this.lbl_employeeAddressCross = lbl_employeeAddressCross;
+    }
+
+    public JLabel getLbl_employeeAddressPostalCode() {
+        return lbl_employeeAddressPostalCode;
+    }
+
+    public void setLbl_employeeAddressPostalCode(JLabel lbl_employeeAddressPostalCode) {
+        this.lbl_employeeAddressPostalCode = lbl_employeeAddressPostalCode;
+    }
+
+    public JLabel getLbl_employeeAddressStreet() {
+        return lbl_employeeAddressStreet;
+    }
+
+    public void setLbl_employeeAddressStreet(JLabel lbl_employeeAddressStreet) {
+        this.lbl_employeeAddressStreet = lbl_employeeAddressStreet;
+    }
+
+    public JLabel getLbl_employeeName() {
+        return lbl_employeeName;
+    }
+
+    public void setLbl_employeeName(JLabel lbl_employeeName) {
+        this.lbl_employeeName = lbl_employeeName;
+    }
+
+    public JLabel getLbl_employeePassword() {
+        return lbl_employeePassword;
+    }
+
+    public void setLbl_employeePassword(JLabel lbl_employeePassword) {
+        this.lbl_employeePassword = lbl_employeePassword;
+    }
+
+    public JLabel getLbl_employeePhone() {
+        return lbl_employeePhone;
+    }
+
+    public void setLbl_employeePhone(JLabel lbl_employeePhone) {
+        this.lbl_employeePhone = lbl_employeePhone;
+    }
+
+    public JLabel getLbl_employeePhoneNumber() {
+        return lbl_employeePhoneNumber;
+    }
+
+    public void setLbl_employeePhoneNumber(JLabel lbl_employeePhoneNumber) {
+        this.lbl_employeePhoneNumber = lbl_employeePhoneNumber;
+    }
+
+    public JLabel getLbl_employeeUserName() {
+        return lbl_employeeUserName;
+    }
+
+    public void setLbl_employeeUserName(JLabel lbl_employeeUserName) {
+        this.lbl_employeeUserName = lbl_employeeUserName;
+    }
+
+    public JLabel getLbl_personalData() {
+        return lbl_personalData;
+    }
+
+    public void setLbl_personalData(JLabel lbl_personalData) {
+        this.lbl_personalData = lbl_personalData;
+    }
+
+    public JLabel getLbl_tittle() {
+        return lbl_tittle;
+    }
+
+    public void setLbl_tittle(JLabel lbl_tittle) {
+        this.lbl_tittle = lbl_tittle;
+    }
+
+    public JLabel getLbl_userData() {
+        return lbl_userData;
+    }
+
+    public void setLbl_userData(JLabel lbl_userData) {
+        this.lbl_userData = lbl_userData;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

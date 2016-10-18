@@ -5,6 +5,12 @@
  */
 package presentation.views;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Jorge
@@ -36,7 +42,7 @@ public class MedicineRegisterView extends javax.swing.JFrame {
         field_productQuantity = new javax.swing.JTextField();
         field_productSellPrize = new javax.swing.JTextField();
         lbl_productCode = new javax.swing.JLabel();
-        btn_Register = new javax.swing.JButton();
+        btn_register = new javax.swing.JButton();
         field_productCode = new javax.swing.JTextField();
         btn_cancel = new javax.swing.JButton();
         combo_productSupplier = new javax.swing.JComboBox<>();
@@ -77,10 +83,10 @@ public class MedicineRegisterView extends javax.swing.JFrame {
 
         lbl_productCode.setText("Clave:");
 
-        btn_Register.setText("Registrar");
-        btn_Register.addActionListener(new java.awt.event.ActionListener() {
+        btn_register.setText("Registrar");
+        btn_register.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_RegisterActionPerformed(evt);
+                btn_registerActionPerformed(evt);
             }
         });
 
@@ -128,7 +134,7 @@ public class MedicineRegisterView extends javax.swing.JFrame {
                 .addGap(75, 75, 75)
                 .addComponent(btn_cancel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_Register)
+                .addComponent(btn_register)
                 .addGap(89, 89, 89))
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
@@ -253,7 +259,7 @@ public class MedicineRegisterView extends javax.swing.JFrame {
                     .addComponent(lbl_productCode))
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Register)
+                    .addComponent(btn_register)
                     .addComponent(btn_cancel))
                 .addContainerGap())
         );
@@ -261,9 +267,9 @@ public class MedicineRegisterView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegisterActionPerformed
+    private void btn_registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_RegisterActionPerformed
+    }//GEN-LAST:event_btn_registerActionPerformed
 
     private void combo_productSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_productSupplierActionPerformed
         // TODO add your handling code here:
@@ -317,11 +323,245 @@ public class MedicineRegisterView extends javax.swing.JFrame {
                 new MedicineRegisterView().setVisible(true);
             }
         });
+        
+        
+    }
+
+    public JButton getBtn_register() {
+        return btn_register;
+    }
+
+    public void setBtn_register(JButton btn_register) {
+        this.btn_register = btn_register;
+    }
+
+    public JButton getBtn_cancel() {
+        return btn_cancel;
+    }
+
+    public void setBtn_cancel(JButton btn_cancel) {
+        this.btn_cancel = btn_cancel;
+    }
+
+    public JComboBox<String> getCombo_dosePeriodType() {
+        return combo_dosePeriodType;
+    }
+
+    public void setCombo_dosePeriodType(JComboBox<String> combo_dosePeriodType) {
+        this.combo_dosePeriodType = combo_dosePeriodType;
+    }
+
+    public JComboBox<String> getCombo_productAdministrationWay() {
+        return combo_productAdministrationWay;
+    }
+
+    public void setCombo_productAdministrationWay(JComboBox<String> combo_productAdministrationWay) {
+        this.combo_productAdministrationWay = combo_productAdministrationWay;
+    }
+
+    public JComboBox<String> getCombo_productDoseQuantityType() {
+        return combo_productDoseQuantityType;
+    }
+
+    public void setCombo_productDoseQuantityType(JComboBox<String> combo_productDoseQuantityType) {
+        this.combo_productDoseQuantityType = combo_productDoseQuantityType;
+    }
+
+    public JComboBox<String> getCombo_productSupplier() {
+        return combo_productSupplier;
+    }
+
+    public void setCombo_productSupplier(JComboBox<String> combo_productSupplier) {
+        this.combo_productSupplier = combo_productSupplier;
+    }
+
+    public JTextField getField_productCode() {
+        return field_productCode;
+    }
+
+    public void setField_productCode(JTextField field_productCode) {
+        this.field_productCode = field_productCode;
+    }
+
+    public JTextField getField_productName() {
+        return field_productName;
+    }
+
+    public void setField_productName(JTextField field_productName) {
+        this.field_productName = field_productName;
+    }
+
+    public JTextField getField_productQuantity() {
+        return field_productQuantity;
+    }
+
+    public void setField_productQuantity(JTextField field_productQuantity) {
+        this.field_productQuantity = field_productQuantity;
+    }
+
+    public JTextField getField_productSellPrize() {
+        return field_productSellPrize;
+    }
+
+    public void setField_productSellPrize(JTextField field_productSellPrize) {
+        this.field_productSellPrize = field_productSellPrize;
+    }
+
+    public JLabel getLbl_productAdmnistrationWay() {
+        return lbl_productAdmnistrationWay;
+    }
+
+    public void setLbl_productAdmnistrationWay(JLabel lbl_productAdmnistrationWay) {
+        this.lbl_productAdmnistrationWay = lbl_productAdmnistrationWay;
+    }
+
+    public JLabel getLbl_productCode() {
+        return lbl_productCode;
+    }
+
+    public void setLbl_productCode(JLabel lbl_productCode) {
+        this.lbl_productCode = lbl_productCode;
+    }
+
+    public JLabel getLbl_productDose() {
+        return lbl_productDose;
+    }
+
+    public void setLbl_productDose(JLabel lbl_productDose) {
+        this.lbl_productDose = lbl_productDose;
+    }
+
+    public JLabel getLbl_productDosePeriod() {
+        return lbl_productDosePeriod;
+    }
+
+    public void setLbl_productDosePeriod(JLabel lbl_productDosePeriod) {
+        this.lbl_productDosePeriod = lbl_productDosePeriod;
+    }
+
+    public JLabel getLbl_productDoseQuantity() {
+        return lbl_productDoseQuantity;
+    }
+
+    public void setLbl_productDoseQuantity(JLabel lbl_productDoseQuantity) {
+        this.lbl_productDoseQuantity = lbl_productDoseQuantity;
+    }
+
+    public JLabel getLbl_productExpirationDate() {
+        return lbl_productExpirationDate;
+    }
+
+    public void setLbl_productExpirationDate(JLabel lbl_productExpirationDate) {
+        this.lbl_productExpirationDate = lbl_productExpirationDate;
+    }
+
+    public JLabel getLbl_productExpirationDay() {
+        return lbl_productExpirationDay;
+    }
+
+    public void setLbl_productExpirationDay(JLabel lbl_productExpirationDay) {
+        this.lbl_productExpirationDay = lbl_productExpirationDay;
+    }
+
+    public JLabel getLbl_productExpirationMonth() {
+        return lbl_productExpirationMonth;
+    }
+
+    public void setLbl_productExpirationMonth(JLabel lbl_productExpirationMonth) {
+        this.lbl_productExpirationMonth = lbl_productExpirationMonth;
+    }
+
+    public JLabel getLbl_productExpirationYear() {
+        return lbl_productExpirationYear;
+    }
+
+    public void setLbl_productExpirationYear(JLabel lbl_productExpirationYear) {
+        this.lbl_productExpirationYear = lbl_productExpirationYear;
+    }
+
+    public JLabel getLbl_productName() {
+        return lbl_productName;
+    }
+
+    public void setLbl_productName(JLabel lbl_productName) {
+        this.lbl_productName = lbl_productName;
+    }
+
+    public JLabel getLbl_productQuantity() {
+        return lbl_productQuantity;
+    }
+
+    public void setLbl_productQuantity(JLabel lbl_productQuantity) {
+        this.lbl_productQuantity = lbl_productQuantity;
+    }
+
+    public JLabel getLbl_productSellPrize() {
+        return lbl_productSellPrize;
+    }
+
+    public void setLbl_productSellPrize(JLabel lbl_productSellPrize) {
+        this.lbl_productSellPrize = lbl_productSellPrize;
+    }
+
+    public JLabel getLbl_productSupplier() {
+        return lbl_productSupplier;
+    }
+
+    public void setLbl_productSupplier(JLabel lbl_productSupplier) {
+        this.lbl_productSupplier = lbl_productSupplier;
+    }
+
+    public JLabel getLbl_tittle() {
+        return lbl_tittle;
+    }
+
+    public void setLbl_tittle(JLabel lbl_tittle) {
+        this.lbl_tittle = lbl_tittle;
+    }
+
+    public JSpinner getSpinner_productDosePeriod() {
+        return spinner_productDosePeriod;
+    }
+
+    public void setSpinner_productDosePeriod(JSpinner spinner_productDosePeriod) {
+        this.spinner_productDosePeriod = spinner_productDosePeriod;
+    }
+
+    public JSpinner getSpinner_productDoseQuantity() {
+        return spinner_productDoseQuantity;
+    }
+
+    public void setSpinner_productDoseQuantity(JSpinner spinner_productDoseQuantity) {
+        this.spinner_productDoseQuantity = spinner_productDoseQuantity;
+    }
+
+    public JSpinner getSpinner_productExpirationDay() {
+        return spinner_productExpirationDay;
+    }
+
+    public void setSpinner_productExpirationDay(JSpinner spinner_productExpirationDay) {
+        this.spinner_productExpirationDay = spinner_productExpirationDay;
+    }
+
+    public JSpinner getSpinner_productExpirationMonth() {
+        return spinner_productExpirationMonth;
+    }
+
+    public void setSpinner_productExpirationMonth(JSpinner spinner_productExpirationMonth) {
+        this.spinner_productExpirationMonth = spinner_productExpirationMonth;
+    }
+
+    public JSpinner getSpinner_productExpirationYear() {
+        return spinner_productExpirationYear;
+    }
+
+    public void setSpinner_productExpirationYear(JSpinner spinner_productExpirationYear) {
+        this.spinner_productExpirationYear = spinner_productExpirationYear;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Register;
     private javax.swing.JButton btn_cancel;
+    private javax.swing.JButton btn_register;
     private javax.swing.JComboBox<String> combo_dosePeriodType;
     private javax.swing.JComboBox<String> combo_productAdministrationWay;
     private javax.swing.JComboBox<String> combo_productDoseQuantityType;

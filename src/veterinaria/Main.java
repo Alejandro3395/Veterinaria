@@ -5,17 +5,24 @@
  */
 package veterinaria;
 
+import presentation.controllers.IntroController;
+
 /**
  *
  * @author mannu
  */
-public class Veterinaria {
+public class Main {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        createIntroView();
+        
     }
     
+    public static void createIntroView(){
+        IntroController introController = new IntroController();
+        introController.openWindow();
+    }
 }

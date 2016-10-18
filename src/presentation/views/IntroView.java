@@ -5,6 +5,8 @@
  */
 package presentation.views;
 
+import javax.swing.JButton;
+
 /**
  *
  * @author Jorge
@@ -87,6 +89,16 @@ public class IntroView extends javax.swing.JFrame {
                 new IntroView().setVisible(true);
             }
         });
+        
+        
+    }
+
+    public JButton getBtn_start() {
+        return btn_start;
+    }
+
+    public void setBtn_start(JButton btn_start) {
+        this.btn_start = btn_start;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

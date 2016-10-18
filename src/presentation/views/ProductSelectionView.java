@@ -5,17 +5,23 @@
  */
 package presentation.views;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+
 /**
  *
  * @author Jorge
  */
-public class ProductRegisterView extends javax.swing.JFrame {
+public class ProductSelectionView extends javax.swing.JFrame {
 
     /**
      * Creates new form productRegisterView
      */
-    public ProductRegisterView() {
+    public ProductSelectionView() {
         initComponents();
+        radioGroup_value();
     }
 
     /**
@@ -27,6 +33,7 @@ public class ProductRegisterView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        radioGroup_value = new javax.swing.ButtonGroup();
         lbl_tittle = new javax.swing.JLabel();
         btn_continue = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
@@ -128,23 +135,104 @@ public class ProductRegisterView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProductRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductSelectionView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProductRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductSelectionView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProductRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductSelectionView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProductRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductSelectionView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProductRegisterView().setVisible(true);
+                new ProductSelectionView().setVisible(true);
             }
         });
+        
+        
+    }
+    
+     public int getRadioGroupValue(){
+        
+        if(radio_selectionMedicine.isSelected()){
+            return 1;
+        }
+        if(radio_selectionVaccine.isSelected()){
+            return 2;
+        }
+        
+        return 0;
+    }
+    
+    private void radioGroup_value(){
+        ButtonGroup bg1 = radioGroup_value;
+        bg1.add(radio_selectionMedicine);
+        bg1.add(radio_selectionVaccine);
+
+    }
+
+    public ButtonGroup getRadioGroup_value() {
+        return radioGroup_value;
+    }
+
+    public void setRadioGroup_value(ButtonGroup radioGroup_value) {
+        this.radioGroup_value = radioGroup_value;
+    }
+
+    
+    
+    public JButton getBtn_cancel() {
+        return btn_cancel;
+    }
+
+    public void setBtn_cancel(JButton btn_cancel) {
+        this.btn_cancel = btn_cancel;
+    }
+
+    public JButton getBtn_continue() {
+        return btn_continue;
+    }
+
+    public void setBtn_continue(JButton btn_continue) {
+        this.btn_continue = btn_continue;
+    }
+
+    public JLabel getLbl_selection() {
+        return lbl_selection;
+    }
+
+    public void setLbl_selection(JLabel lbl_selection) {
+        this.lbl_selection = lbl_selection;
+    }
+
+    public JLabel getLbl_tittle() {
+        return lbl_tittle;
+    }
+
+    public void setLbl_tittle(JLabel lbl_tittle) {
+        this.lbl_tittle = lbl_tittle;
+    }
+
+    public JRadioButton getRadio_selectionMedicine() {
+        return radio_selectionMedicine;
+    }
+
+    public void setRadio_selectionMedicine(JRadioButton radio_selectionMedicine) {
+        this.radio_selectionMedicine = radio_selectionMedicine;
+    }
+
+    public JRadioButton getRadio_selectionVaccine() {
+        return radio_selectionVaccine;
+    }
+
+    public void setRadio_selectionVaccine(JRadioButton radio_selectionVaccine) {
+        this.radio_selectionVaccine = radio_selectionVaccine;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -152,6 +240,7 @@ public class ProductRegisterView extends javax.swing.JFrame {
     private javax.swing.JButton btn_continue;
     private javax.swing.JLabel lbl_selection;
     private javax.swing.JLabel lbl_tittle;
+    private javax.swing.ButtonGroup radioGroup_value;
     private javax.swing.JRadioButton radio_selectionMedicine;
     private javax.swing.JRadioButton radio_selectionVaccine;
     // End of variables declaration//GEN-END:variables

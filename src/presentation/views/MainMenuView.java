@@ -5,16 +5,18 @@
  */
 package presentation.views;
 
+import javax.swing.JButton;
+
 /**
  *
  * @author Jorge
  */
-public class MainView extends javax.swing.JFrame {
+public class MainMenuView extends javax.swing.JFrame {
 
     /**
      * Creates new form mainView
      */
-    public MainView() {
+    public MainMenuView() {
         initComponents();
     }
 
@@ -111,24 +113,60 @@ public class MainView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainView().setVisible(true);
+                new MainMenuView().setVisible(true);
             }
         });
     }
+
+    public JButton getBtn_consult() {
+        return btn_consult;
+    }
+
+    public void setBtn_consult(JButton btn_consult) {
+        this.btn_consult = btn_consult;
+    }
+
+    public JButton getBtn_inventory() {
+        return btn_inventory;
+    }
+
+    public void setBtn_inventory(JButton btn_inventory) {
+        this.btn_inventory = btn_inventory;
+    }
+
+    public JButton getBtn_register() {
+        return btn_register;
+    }
+
+    public void setBtn_register(JButton btn_register) {
+        this.btn_register = btn_register;
+    }
+
+    public JButton getBtn_sales() {
+        return btn_sales;
+    }
+
+    public void setBtn_sales(JButton btn_sales) {
+        this.btn_sales = btn_sales;
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_consult;
