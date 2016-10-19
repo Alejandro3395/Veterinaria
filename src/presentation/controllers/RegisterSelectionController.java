@@ -20,6 +20,8 @@ public class RegisterSelectionController extends AbstractViewController {
     private DoctorRegisterController doctorRegisterController;
     private SupplierRegisterController supplierRegisterController;
     private ProductSelectionController productRegisterController;
+    private CustomerRegisterController customerRegisterController;
+    private PetRegisterController petRegisterController;
     
     public RegisterSelectionController(){
         setRegisterSelectionView(new RegisterSelectionView());
@@ -27,9 +29,27 @@ public class RegisterSelectionController extends AbstractViewController {
         setDoctorRegisterController(new DoctorRegisterController());
         setSupplierRegisterController(new SupplierRegisterController());
         setProductRegisterController(new ProductSelectionController());
+        setCustomerRegisterController(new CustomerRegisterController());
+        setPetRegisterController(new PetRegisterController());
         initializeView();
     }
 
+    public CustomerRegisterController getCustomerRegisterController() {
+        return customerRegisterController;
+    }
+
+    public void setCustomerRegisterController(CustomerRegisterController customerRegisterController) {
+        this.customerRegisterController = customerRegisterController;
+    }
+
+    public PetRegisterController getPetRegisterController() {
+        return petRegisterController;
+    }
+
+    public void setPetRegisterController(PetRegisterController petRegisterController) {
+        this.petRegisterController = petRegisterController;
+    }
+    
     public EmployeeRegisterController getEmployeeRegisterController() {
         return employeeRegisterController;
     }
@@ -109,6 +129,14 @@ public class RegisterSelectionController extends AbstractViewController {
             
             case 4:
                 getProductRegisterController().openWindow();
+            break;
+            
+            case 5:
+                getCustomerRegisterController().openWindow();
+            break;
+            
+            case 6:
+                getPetRegisterController().openWindow();
             break;
         }
         

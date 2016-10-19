@@ -46,6 +46,11 @@ public class EmployeeRegisterController  extends AbstractViewController{
 
     @Override
     protected void setEvents() {
-        //getEmployeeRegisterView().getBtn_accept().addActionListener(actionEvent -> getValue());
+        getEmployeeRegisterView().getBtn_register().addActionListener(actionEvent -> registerEmployee());
+    }
+    
+    
+    private void registerEmployee(){
+        
     }
 }

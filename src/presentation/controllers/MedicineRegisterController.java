@@ -57,10 +57,7 @@ public class MedicineRegisterController extends AbstractViewController {
         
         ArrayList<String> data = new ArrayList<String>(obtainData());
         boolean isValidField = !isEmptyFields(data);
-        
-        for(int i =0; i<data.size();i++){
-            System.out.println(data.get(i));
-        }
+
         //System.out.println(isValidField);
         if(isValidField){
             String medicineName = data.get(0);
@@ -95,7 +92,6 @@ public class MedicineRegisterController extends AbstractViewController {
                     medicineAdministrationWay,
                     medicineExpirationDate,
                     medicineDose);
-                 //medicineManager.addMedicine(medicine);
                  
              }
             

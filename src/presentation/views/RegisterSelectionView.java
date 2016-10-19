@@ -41,6 +41,8 @@ public class RegisterSelectionView extends javax.swing.JFrame {
         lbl_tittle = new javax.swing.JLabel();
         btn_accept = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
+        radio_valueCustomer = new javax.swing.JRadioButton();
+        radio_valuePet = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,6 +70,15 @@ public class RegisterSelectionView extends javax.swing.JFrame {
 
         btn_cancel.setText("Cancelar");
 
+        radio_valueCustomer.setText("Cliente");
+        radio_valueCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radio_valueCustomerActionPerformed(evt);
+            }
+        });
+
+        radio_valuePet.setText("Mascota");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,6 +97,8 @@ public class RegisterSelectionView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(142, 142, 142)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(radio_valuePet)
+                    .addComponent(radio_valueCustomer)
                     .addComponent(radio_valueEmployee)
                     .addComponent(radio_valueProduct)
                     .addComponent(radio_valueDoctor)
@@ -96,7 +109,7 @@ public class RegisterSelectionView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lbl_tittle)
-                .addGap(43, 43, 43)
+                .addGap(16, 16, 16)
                 .addComponent(radio_valueEmployee)
                 .addGap(18, 18, 18)
                 .addComponent(radio_valueDoctor)
@@ -104,7 +117,11 @@ public class RegisterSelectionView extends javax.swing.JFrame {
                 .addComponent(radio_valueSupplier)
                 .addGap(18, 18, 18)
                 .addComponent(radio_valueProduct)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(radio_valueCustomer)
+                .addGap(18, 18, 18)
+                .addComponent(radio_valuePet)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_accept)
                     .addComponent(btn_cancel))
@@ -121,6 +138,10 @@ public class RegisterSelectionView extends javax.swing.JFrame {
     private void radio_valueEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_valueEmployeeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_radio_valueEmployeeActionPerformed
+
+    private void radio_valueCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_valueCustomerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radio_valueCustomerActionPerformed
     
     private void radioGroup_value(){
         ButtonGroup bg1 = radioGroup_value;
@@ -128,6 +149,8 @@ public class RegisterSelectionView extends javax.swing.JFrame {
         bg1.add(radio_valueEmployee);
         bg1.add(radio_valueSupplier);
         bg1.add(radio_valueProduct);
+        bg1.add(radio_valueCustomer);
+        bg1.add(radio_valuePet);
     }
     
     public int getRadioGroupValue(){
@@ -145,6 +168,13 @@ public class RegisterSelectionView extends javax.swing.JFrame {
         }
         if(radio_valueProduct.isSelected()){
             return 4;
+        }
+        
+        if(radio_valueCustomer.isSelected()){
+            return 5;
+        }
+        if(radio_valuePet.isSelected()){
+            return 6;
         }
         
         return 0;
@@ -251,13 +281,33 @@ public class RegisterSelectionView extends javax.swing.JFrame {
         this.radio_valueSupplier = radio_valueSupplier;
     }
 
+    public JRadioButton getRadio_valueCustomer() {
+        return radio_valueCustomer;
+    }
+
+    public void setRadio_valueCustomer(JRadioButton radio_valueCustomer) {
+        this.radio_valueCustomer = radio_valueCustomer;
+    }
+
+    public JRadioButton getRadio_valuePet() {
+        return radio_valuePet;
+    }
+
+    public void setRadio_valuePet(JRadioButton radio_valuePet) {
+        this.radio_valuePet = radio_valuePet;
+    }
+    
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_accept;
     private javax.swing.JButton btn_cancel;
     private javax.swing.JLabel lbl_tittle;
     private javax.swing.ButtonGroup radioGroup_value;
+    private javax.swing.JRadioButton radio_valueCustomer;
     private javax.swing.JRadioButton radio_valueDoctor;
     private javax.swing.JRadioButton radio_valueEmployee;
+    private javax.swing.JRadioButton radio_valuePet;
     private javax.swing.JRadioButton radio_valueProduct;
     private javax.swing.JRadioButton radio_valueSupplier;
     // End of variables declaration//GEN-END:variables
