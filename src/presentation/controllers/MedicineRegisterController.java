@@ -49,31 +49,29 @@ public class MedicineRegisterController extends AbstractViewController {
 
     @Override
     protected void setEvents() {
-       // getMedicineRegisterView().getBtn_register().addActionListener(actionEvent -> registerMedicine());
+       getMedicineRegisterView().getBtn_register().addActionListener(actionEvent -> registerMedicine());
     }
     
     private void registerMedicine(){
         
         ArrayList<String> data = new ArrayList<String>(obtainData());
-        
-        
-        String medicineName = data.get(0);
-        int  medicineQuantity =  Integer.valueOf(data.get(1)).intValue();
-        double medicineSellPrice =  Double.valueOf(data.get(2)).doubleValue();
-        
-        String medicineSupplier = data.get(3);
-        String medicineAdministrationWay = data.get(4);
-        
-        //obtener la fecha
-        String medicineExpirationDate = data.get(5);
-        
-        //obtener la dosis
-        String medicineDose= data.get(6);
-        
-
         boolean isValidField = !isEmptyFields(data);
         
-        boolean isValidData = isValidMedicine(
+        System.out.println(isValidField);
+        if(isValidField){
+            String medicineName = data.get(0);
+            int  medicineQuantity =  Integer.valueOf(data.get(1)).intValue();
+            double medicineSellPrice =  Double.valueOf(data.get(2)).doubleValue();
+        
+            String medicineSupplier = data.get(3);
+            String medicineAdministrationWay = data.get(4);
+        
+            //obtener la fecha
+            String medicineExpirationDate = data.get(5);
+        
+            //obtener la dosis
+            String medicineDose= data.get(6);
+             boolean isValidData = isValidMedicine(
                 medicineName,
                 medicineQuantity,
                 medicineSellPrice,
@@ -81,11 +79,11 @@ public class MedicineRegisterController extends AbstractViewController {
                 medicineAdministrationWay,
                 medicineExpirationDate,
                 medicineDose);
-        
-        if(isValidField){
-            if(isValidData){
-                
-            }
+             
+             if(isValidData){
+                 
+             }
+            
         }
         
     }
@@ -127,10 +125,11 @@ public class MedicineRegisterController extends AbstractViewController {
     }
     
     private boolean isEmptyFields(ArrayList<String> data){
-        boolean result = true;
+        boolean result = false;
         for(int i =0; i < data.size(); i++){
             if(data.get(i).isEmpty()){
-                result = false;
+                System.out.println("llegue");
+                result = true;
             }
         }
         return result;
