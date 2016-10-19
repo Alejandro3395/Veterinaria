@@ -25,28 +25,48 @@ public class MedicineDAO extends AbstractDAO<Medicine> {
     }
     
     @Override
-    public void add(Medicine medicine) throws SQLException {
+    public void add(Medicine medicine)  {
         saveEntity(medicine);
     }
 
     @Override
     public void delete(Medicine entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        deleteEntity(entity);
     }
 
     @Override
     public void update(Medicine entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        updateEntity(entity);
     }
 
     @Override
     public Object get(int objectId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Medicine medicine = null;
+        
+        try{
+            openSession();
+            
+            medicine = (Medicine) session.get(Medicine.class,objectId);
+        }finally{
+            session.close();
+        }
+        return medicine;
     }
 
     @Override
-    public ArrayList getList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Medicine> getList() {
+        ArrayList<Medicine> medicineList = null;
+        
+        try{
+            openSession();
+            medicineList = (ArrayList) session.createQuery("from Medicine").list();
+            
+            
+        }finally{
+            session.close();
+        }
+        return medicineList;
     }
+    
     
 }

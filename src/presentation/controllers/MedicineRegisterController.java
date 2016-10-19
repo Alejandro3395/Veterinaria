@@ -5,6 +5,7 @@
  */
 package presentation.controllers;
 
+import Entitys.Medicine;
 import bussiness.MedicineManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
@@ -57,11 +58,15 @@ public class MedicineRegisterController extends AbstractViewController {
         ArrayList<String> data = new ArrayList<String>(obtainData());
         boolean isValidField = !isEmptyFields(data);
         
-        System.out.println(isValidField);
+        for(int i =0; i<data.size();i++){
+            System.out.println(data.get(i));
+        }
+        //System.out.println(isValidField);
         if(isValidField){
             String medicineName = data.get(0);
-            int  medicineQuantity =  Integer.valueOf(data.get(1)).intValue();
-            double medicineSellPrice =  Double.valueOf(data.get(2)).doubleValue();
+            System.out.println("valor: "+data.get(1));
+            int  medicineQuantity =  Integer.parseInt(data.get(1).toString());
+            double medicineSellPrice =  Double.parseDouble(data.get(2).toString());
         
             String medicineSupplier = data.get(3);
             String medicineAdministrationWay = data.get(4);
@@ -71,7 +76,7 @@ public class MedicineRegisterController extends AbstractViewController {
         
             //obtener la dosis
             String medicineDose= data.get(6);
-             boolean isValidData = isValidMedicine(
+             boolean isValidData = !isValidMedicine(
                 medicineName,
                 medicineQuantity,
                 medicineSellPrice,
@@ -81,6 +86,16 @@ public class MedicineRegisterController extends AbstractViewController {
                 medicineDose);
              
              if(isValidData){
+                 MedicineManager medicineManager = MedicineManager.GetInstance();
+                 Medicine medicine = medicineManager.createMedicine(
+                    medicineName,
+                    medicineQuantity,
+                    medicineSellPrice,
+                    medicineSupplier,
+                    medicineAdministrationWay,
+                    medicineExpirationDate,
+                    medicineDose);
+                 //medicineManager.addMedicine(medicine);
                  
              }
             
@@ -92,8 +107,8 @@ public class MedicineRegisterController extends AbstractViewController {
         ArrayList<String> data = new ArrayList<String>();
         
         data.add(getMedicineRegisterView().getField_productName().getText());
-        data.add(getMedicineRegisterView().getField_productQuantity().toString());
-        data.add(getMedicineRegisterView().getField_productSellPrize().toString());
+        data.add(getMedicineRegisterView().getField_productQuantity().getText());
+        data.add(getMedicineRegisterView().getField_productSellPrize().getText());
         
         data.add(getMedicineRegisterView().getCombo_productSupplier().getSelectedItem().toString());
         data.add(getMedicineRegisterView().getCombo_productAdministrationWay().getSelectedItem().toString());
@@ -101,23 +116,23 @@ public class MedicineRegisterController extends AbstractViewController {
         //obtener la fecha
         String expirationDate = "";
         
-        String expirationDay = getMedicineRegisterView().getSpinner_productExpirationDay().toString();
-        String expirationMonth = getMedicineRegisterView().getSpinner_productExpirationMonth().toString();
-        String expirationYear = getMedicineRegisterView().getSpinner_productExpirationYear().toString();
+        String expirationDay = getMedicineRegisterView().getSpinner_productExpirationDay().getValue().toString();
+        String expirationMonth = getMedicineRegisterView().getSpinner_productExpirationMonth().getValue().toString();
+        String expirationYear = getMedicineRegisterView().getSpinner_productExpirationYear().getValue().toString();
         
-        expirationDate = expirationDay + " " + expirationMonth + " " + expirationYear;
+        expirationDate = expirationDay + "-" + expirationMonth + "-" + expirationYear;
         
         data.add(expirationDate);
         
         //obtener la dosis
         String dose= "";
         
-        String doseQuantity = getMedicineRegisterView().getSpinner_productDoseQuantity().toString();
-        String doseType = getMedicineRegisterView().getCombo_productDoseQuantityType().toString();
-        String dosePeriod = getMedicineRegisterView().getSpinner_productDosePeriod().toString();
-        String dosePeriodType = getMedicineRegisterView().getCombo_dosePeriodType().toString();
+        String doseQuantity = getMedicineRegisterView().getSpinner_productDoseQuantity().getValue().toString();
+        String doseType = getMedicineRegisterView().getCombo_productDoseQuantityType().getSelectedItem().toString();
+        String dosePeriod = getMedicineRegisterView().getSpinner_productDosePeriod().getValue().toString();
+        String dosePeriodType = getMedicineRegisterView().getCombo_dosePeriodType().getSelectedItem().toString();
         
-        dose = doseQuantity+ " " + doseType + " " + dosePeriod + " " + dosePeriodType;
+        dose = doseQuantity+ " " + doseType + " cada " + dosePeriod + " " + dosePeriodType;
         
         data.add(dose);
         
