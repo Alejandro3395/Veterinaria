@@ -22,6 +22,8 @@ public class MedicineRegisterView extends javax.swing.JFrame {
      */
     public MedicineRegisterView() {
         initComponents();
+        loadComboAdministrationWay();
+        loadComboSupplier();
     }
 
     /**
@@ -323,8 +325,21 @@ public class MedicineRegisterView extends javax.swing.JFrame {
                 new MedicineRegisterView().setVisible(true);
             }
         });
-        
-        
+
+    }
+    
+    public void loadComboAdministrationWay(){
+        this.getCombo_productAdministrationWay().removeAllItems();
+        this.getCombo_productAdministrationWay().addItem("Oral");
+        this.getCombo_productAdministrationWay().addItem("Rectal");
+        this.getCombo_productAdministrationWay().addItem("Intravenosa");
+    }
+    
+    public void loadComboSupplier(){
+        this.getCombo_productSupplier().removeAllItems();
+        this.getCombo_productSupplier().addItem("Proveedor 1");
+        this.getCombo_productSupplier().addItem("Proveedor 2");
+        this.getCombo_productSupplier().addItem("Proveedor 3");
     }
 
     public JButton getBtn_register() {

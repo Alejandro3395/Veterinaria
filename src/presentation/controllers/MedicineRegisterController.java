@@ -6,6 +6,7 @@
 package presentation.controllers;
 
 import bussiness.MedicineManager;
+import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.AbstractViewController;
 import presentation.views.MedicineRegisterView;
@@ -48,47 +49,29 @@ public class MedicineRegisterController extends AbstractViewController {
 
     @Override
     protected void setEvents() {
-        getMedicineRegisterView().getBtn_register().addActionListener(actionEvent -> registerMedicine());
+       // getMedicineRegisterView().getBtn_register().addActionListener(actionEvent -> registerMedicine());
     }
     
     private void registerMedicine(){
         
-        String medicineName = getMedicineRegisterView().getField_productName().getText();
-        int  medicineQuantity =  Integer.valueOf(getMedicineRegisterView().getField_productQuantity().getText()).intValue();
-        String quantity = getMedicineRegisterView().getField_productQuantity().toString();
-        double medicineSellPrice =  Double.valueOf(getMedicineRegisterView().getField_productSellPrize().getText()).doubleValue();
-        String price = getMedicineRegisterView().getField_productSellPrize().toString();
+        ArrayList<String> data = new ArrayList<String>(obtainData());
         
-        String medicineSupplier = getMedicineRegisterView().getCombo_productSupplier().getSelectedItem().toString();
-        String medicineAdministrationWay = getMedicineRegisterView().getCombo_productAdministrationWay().getSelectedItem().toString();
+        
+        String medicineName = data.get(0);
+        int  medicineQuantity =  Integer.valueOf(data.get(1)).intValue();
+        double medicineSellPrice =  Double.valueOf(data.get(2)).doubleValue();
+        
+        String medicineSupplier = data.get(3);
+        String medicineAdministrationWay = data.get(4);
         
         //obtener la fecha
-        String medicineExpirationDate = "";
-        
-        String medicineExpirationDateDay = getMedicineRegisterView().getSpinner_productExpirationDay().toString();
-        String medicineExpirationDateMonth = getMedicineRegisterView().getSpinner_productExpirationMonth().toString();
-        String medicineExpirationDateYear = getMedicineRegisterView().getSpinner_productExpirationYear().toString();
-        
-        medicineExpirationDate = medicineExpirationDateDay + medicineExpirationDateMonth + medicineExpirationDateYear;
+        String medicineExpirationDate = data.get(5);
         
         //obtener la dosis
-        String medicineDose= "";
+        String medicineDose= data.get(6);
         
-        String medicineDoseQuantity = getMedicineRegisterView().getSpinner_productDoseQuantity().toString();
-        String medicineDoseType = getMedicineRegisterView().getCombo_productDoseQuantityType().toString();
-        String medicinePeriod = getMedicineRegisterView().getSpinner_productDosePeriod().toString();
-        String medicinePeriodType = getMedicineRegisterView().getCombo_dosePeriodType().toString();
-        
-        medicineDose = medicineDoseQuantity +" " + medicineDoseType + " " + medicinePeriod + " " + medicinePeriodType;
-        
-        boolean isValidField = !isEmptyFields(
-                medicineName,
-                quantity,
-                price,
-                medicineSupplier,
-                medicineAdministrationWay,
-                medicineExpirationDate,
-                medicineDose);
+
+        boolean isValidField = !isEmptyFields(data);
         
         boolean isValidData = isValidMedicine(
                 medicineName,
@@ -107,18 +90,50 @@ public class MedicineRegisterController extends AbstractViewController {
         
     }
     
-    private boolean isEmptyFields(
-            String name,
-            String quantity,
-            String sellPrice,
-            String supplier,
-            String administrationWay,
-            String expirationDate,
-            String dose
-    ){
-        return(name.isEmpty() || quantity.isEmpty() || sellPrice.isEmpty()|| 
-                supplier.isEmpty() || administrationWay.isEmpty() || 
-                expirationDate.isEmpty() || dose.isEmpty() );
+    private ArrayList<String> obtainData(){
+        ArrayList<String> data = new ArrayList<String>();
+        
+        data.add(getMedicineRegisterView().getField_productName().getText());
+        data.add(getMedicineRegisterView().getField_productQuantity().toString());
+        data.add(getMedicineRegisterView().getField_productSellPrize().toString());
+        
+        data.add(getMedicineRegisterView().getCombo_productSupplier().getSelectedItem().toString());
+        data.add(getMedicineRegisterView().getCombo_productAdministrationWay().getSelectedItem().toString());
+        
+        //obtener la fecha
+        String expirationDate = "";
+        
+        String expirationDay = getMedicineRegisterView().getSpinner_productExpirationDay().toString();
+        String expirationMonth = getMedicineRegisterView().getSpinner_productExpirationMonth().toString();
+        String expirationYear = getMedicineRegisterView().getSpinner_productExpirationYear().toString();
+        
+        expirationDate = expirationDay + " " + expirationMonth + " " + expirationYear;
+        
+        data.add(expirationDate);
+        
+        //obtener la dosis
+        String dose= "";
+        
+        String doseQuantity = getMedicineRegisterView().getSpinner_productDoseQuantity().toString();
+        String doseType = getMedicineRegisterView().getCombo_productDoseQuantityType().toString();
+        String dosePeriod = getMedicineRegisterView().getSpinner_productDosePeriod().toString();
+        String dosePeriodType = getMedicineRegisterView().getCombo_dosePeriodType().toString();
+        
+        dose = doseQuantity+ " " + doseType + " " + dosePeriod + " " + dosePeriodType;
+        
+        data.add(dose);
+        
+        return data;
+    }
+    
+    private boolean isEmptyFields(ArrayList<String> data){
+        boolean result = true;
+        for(int i =0; i < data.size(); i++){
+            if(data.get(i).isEmpty()){
+                result = false;
+            }
+        }
+        return result;
     }
     
     private boolean isValidMedicine(
