@@ -13,10 +13,8 @@ import javax.swing.WindowConstants;
  *
  * @author Jorge
  */
-public abstract class AbstractViewController {
-    //private Notifier notifier = new Notifier();
-
-
+public abstract class AbstractRegisterController  {
+    protected abstract ArrayList<String> obtainData();
     public abstract void openWindow();
 
     protected void configureWindow(JFrame window) {
@@ -30,6 +28,15 @@ public abstract class AbstractViewController {
     protected abstract void initializeView();
 
     protected abstract void setEvents();
- 
-
+    
+    protected boolean isEmptyFields(ArrayList<String> data){
+        boolean result = false;
+        for(int i =0; i < data.size(); i++){
+            if(data.get(i).isEmpty()){
+                System.out.println("campo invalido");
+                result = true;
+            }
+        }
+        return result;
+    }
 }

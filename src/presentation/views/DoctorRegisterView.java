@@ -5,6 +5,12 @@
  */
 package presentation.views;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Jorge
@@ -28,8 +34,8 @@ public class DoctorRegisterView extends javax.swing.JFrame {
     private void initComponents() {
 
         lbl_tittle = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_register = new javax.swing.JButton();
+        btn_cancel = new javax.swing.JButton();
         field_doctorAddressPostalCode = new javax.swing.JTextField();
         field_doctorAddressCross = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -39,9 +45,7 @@ public class DoctorRegisterView extends javax.swing.JFrame {
         lbl_userData = new javax.swing.JLabel();
         lbl_doctorUserName = new javax.swing.JLabel();
         lbl_doctorPassword = new javax.swing.JLabel();
-        field_employeeName = new javax.swing.JTextField();
-        field_doctorPassword = new javax.swing.JPasswordField();
-        field_doctorUserName = new javax.swing.JTextField();
+        field_doctorName = new javax.swing.JTextField();
         lbl_personalData = new javax.swing.JLabel();
         lbl_doctorPhoneLada = new javax.swing.JLabel();
         field_doctorPhoneLada = new javax.swing.JTextField();
@@ -59,14 +63,16 @@ public class DoctorRegisterView extends javax.swing.JFrame {
         lbl_doctorProfessionalCode = new javax.swing.JLabel();
         field_doctorRFC = new javax.swing.JTextField();
         field_doctorProfessionalCode = new javax.swing.JTextField();
+        field_doctorUserName = new javax.swing.JTextField();
+        field_doctorUserPassword = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lbl_tittle.setText("Registro de Doctor");
 
-        jButton1.setText("Registrar");
+        btn_register.setText("Registrar");
 
-        jButton2.setText("Cancelar");
+        btn_cancel.setText("Cancelar");
 
         field_doctorAddressPostalCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,15 +92,9 @@ public class DoctorRegisterView extends javax.swing.JFrame {
 
         lbl_doctorPassword.setText("Contraseña:");
 
-        field_employeeName.addActionListener(new java.awt.event.ActionListener() {
+        field_doctorName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                field_employeeNameActionPerformed(evt);
-            }
-        });
-
-        field_doctorPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                field_doctorPasswordActionPerformed(evt);
+                field_doctorNameActionPerformed(evt);
             }
         });
 
@@ -190,7 +190,7 @@ public class DoctorRegisterView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(73, 73, 73)
-                        .addComponent(jButton2))
+                        .addComponent(btn_cancel))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,13 +199,13 @@ public class DoctorRegisterView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(btn_register)
                         .addGap(71, 71, 71))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(field_doctorPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(field_doctorUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(field_doctorUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                            .addComponent(field_doctorUserPassword))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -218,7 +218,7 @@ public class DoctorRegisterView extends javax.swing.JFrame {
                         .addComponent(lbl_doctorPhone)
                         .addComponent(lbl_doctorName))
                     .addGap(54, 54, 54)
-                    .addComponent(field_employeeName, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(field_doctorName, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(480, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -263,22 +263,22 @@ public class DoctorRegisterView extends javax.swing.JFrame {
                 .addComponent(lbl_userData)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(field_doctorPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_doctorUserName))
+                    .addComponent(lbl_doctorUserName)
+                    .addComponent(field_doctorUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_doctorPassword)
-                    .addComponent(field_doctorUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(field_doctorUserPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btn_register)
+                    .addComponent(btn_cancel))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(68, 68, 68)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(field_employeeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(field_doctorName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lbl_doctorName))
                     .addGap(41, 41, 41)
                     .addComponent(lbl_doctorPhone)
@@ -292,13 +292,9 @@ public class DoctorRegisterView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_field_doctorAddressPostalCodeActionPerformed
 
-    private void field_employeeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_employeeNameActionPerformed
+    private void field_doctorNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_doctorNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_field_employeeNameActionPerformed
-
-    private void field_doctorPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_doctorPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_field_doctorPasswordActionPerformed
+    }//GEN-LAST:event_field_doctorNameActionPerformed
 
     private void field_doctorPhoneLadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_doctorPhoneLadaActionPerformed
         // TODO add your handling code here:
@@ -339,21 +335,280 @@ public class DoctorRegisterView extends javax.swing.JFrame {
         });
     }
 
+    public JTextField getField_doctorAddressColony() {
+        return field_doctorAddressColony;
+    }
+
+    public void setField_doctorAddressColony(JTextField field_doctorAddressColony) {
+        this.field_doctorAddressColony = field_doctorAddressColony;
+    }
+
+    public JTextField getField_doctorAddressCross() {
+        return field_doctorAddressCross;
+    }
+
+    public void setField_doctorAddressCross(JTextField field_doctorAddressCross) {
+        this.field_doctorAddressCross = field_doctorAddressCross;
+    }
+
+    public JTextField getField_doctorAddressPostalCode() {
+        return field_doctorAddressPostalCode;
+    }
+
+    public void setField_doctorAddressPostalCode(JTextField field_doctorAddressPostalCode) {
+        this.field_doctorAddressPostalCode = field_doctorAddressPostalCode;
+    }
+
+    public JTextField getField_doctorAddressStreet() {
+        return field_doctorAddressStreet;
+    }
+
+    public void setField_doctorAddressStreet(JTextField field_doctorAddressStreet) {
+        this.field_doctorAddressStreet = field_doctorAddressStreet;
+    }
+
+    public JTextField getField_doctorEmail() {
+        return field_doctorEmail;
+    }
+
+    public void setField_doctorEmail(JTextField field_doctorEmail) {
+        this.field_doctorEmail = field_doctorEmail;
+    }
+
+    public JTextField getField_doctorUserPassword() {
+        return field_doctorUserPassword;
+    }
+
+    public void setField_doctorUserPassword(JTextField field_doctorPassword) {
+        this.field_doctorUserPassword = field_doctorPassword;
+    }
+
+    public JTextField getField_doctorPhoneLada() {
+        return field_doctorPhoneLada;
+    }
+
+    public void setField_doctorPhoneLada(JTextField field_doctorPhoneLada) {
+        this.field_doctorPhoneLada = field_doctorPhoneLada;
+    }
+
+    public JTextField getField_doctorPhoneNumber() {
+        return field_doctorPhoneNumber;
+    }
+
+    public void setField_doctorPhoneNumber(JTextField field_doctorPhoneNumber) {
+        this.field_doctorPhoneNumber = field_doctorPhoneNumber;
+    }
+
+    public JTextField getField_doctorProfessionalCode() {
+        return field_doctorProfessionalCode;
+    }
+
+    public void setField_doctorProfessionalCode(JTextField field_doctorProfessionalCode) {
+        this.field_doctorProfessionalCode = field_doctorProfessionalCode;
+    }
+
+    public JTextField getField_doctorRFC() {
+        return field_doctorRFC;
+    }
+
+    public void setField_doctorRFC(JTextField field_doctorRFC) {
+        this.field_doctorRFC = field_doctorRFC;
+    }
+
+    public JTextField getField_doctorUserName() {
+        return field_doctorUserName;
+    }
+
+    public void setField_doctorUserName(JTextField field_doctorUserName) {
+        this.field_doctorUserName = field_doctorUserName;
+    }
+
+    public JTextField getField_doctorName() {
+        return field_doctorName;
+    }
+
+    public void setField_doctorName(JTextField field_employeeName) {
+        this.field_doctorName = field_employeeName;
+    }
+
+
+
+    public JSeparator getjSeparator1() {
+        return jSeparator1;
+    }
+
+    public void setjSeparator1(JSeparator jSeparator1) {
+        this.jSeparator1 = jSeparator1;
+    }
+
+    public JLabel getLbl_doctorAddress() {
+        return lbl_doctorAddress;
+    }
+
+    public void setLbl_doctorAddress(JLabel lbl_doctorAddress) {
+        this.lbl_doctorAddress = lbl_doctorAddress;
+    }
+
+    public JLabel getLbl_doctorAddressColony() {
+        return lbl_doctorAddressColony;
+    }
+
+    public void setLbl_doctorAddressColony(JLabel lbl_doctorAddressColony) {
+        this.lbl_doctorAddressColony = lbl_doctorAddressColony;
+    }
+
+    public JLabel getLbl_doctorAddressCross() {
+        return lbl_doctorAddressCross;
+    }
+
+    public void setLbl_doctorAddressCross(JLabel lbl_doctorAddressCross) {
+        this.lbl_doctorAddressCross = lbl_doctorAddressCross;
+    }
+
+    public JLabel getLbl_doctorAddressPostalCode() {
+        return lbl_doctorAddressPostalCode;
+    }
+
+    public void setLbl_doctorAddressPostalCode(JLabel lbl_doctorAddressPostalCode) {
+        this.lbl_doctorAddressPostalCode = lbl_doctorAddressPostalCode;
+    }
+
+    public JLabel getLbl_doctorAddressStreet() {
+        return lbl_doctorAddressStreet;
+    }
+
+    public void setLbl_doctorAddressStreet(JLabel lbl_doctorAddressStreet) {
+        this.lbl_doctorAddressStreet = lbl_doctorAddressStreet;
+    }
+
+    public JLabel getLbl_doctorEmail() {
+        return lbl_doctorEmail;
+    }
+
+    public void setLbl_doctorEmail(JLabel lbl_doctorEmail) {
+        this.lbl_doctorEmail = lbl_doctorEmail;
+    }
+
+    public JLabel getLbl_doctorName() {
+        return lbl_doctorName;
+    }
+
+    public void setLbl_doctorName(JLabel lbl_doctorName) {
+        this.lbl_doctorName = lbl_doctorName;
+    }
+
+    public JLabel getLbl_doctorPassword() {
+        return lbl_doctorPassword;
+    }
+
+    public void setLbl_doctorPassword(JLabel lbl_doctorPassword) {
+        this.lbl_doctorPassword = lbl_doctorPassword;
+    }
+
+    public JLabel getLbl_doctorPhone() {
+        return lbl_doctorPhone;
+    }
+
+    public void setLbl_doctorPhone(JLabel lbl_doctorPhone) {
+        this.lbl_doctorPhone = lbl_doctorPhone;
+    }
+
+    public JLabel getLbl_doctorPhoneLada() {
+        return lbl_doctorPhoneLada;
+    }
+
+    public void setLbl_doctorPhoneLada(JLabel lbl_doctorPhoneLada) {
+        this.lbl_doctorPhoneLada = lbl_doctorPhoneLada;
+    }
+
+    public JLabel getLbl_doctorPhoneNumber() {
+        return lbl_doctorPhoneNumber;
+    }
+
+    public void setLbl_doctorPhoneNumber(JLabel lbl_doctorPhoneNumber) {
+        this.lbl_doctorPhoneNumber = lbl_doctorPhoneNumber;
+    }
+
+    public JLabel getLbl_doctorProfessionalCode() {
+        return lbl_doctorProfessionalCode;
+    }
+
+    public void setLbl_doctorProfessionalCode(JLabel lbl_doctorProfessionalCode) {
+        this.lbl_doctorProfessionalCode = lbl_doctorProfessionalCode;
+    }
+
+    public JLabel getLbl_doctorRFC() {
+        return lbl_doctorRFC;
+    }
+
+    public void setLbl_doctorRFC(JLabel lbl_doctorRFC) {
+        this.lbl_doctorRFC = lbl_doctorRFC;
+    }
+
+    public JLabel getLbl_doctorUserName() {
+        return lbl_doctorUserName;
+    }
+
+    public void setLbl_doctorUserName(JLabel lbl_doctorUserName) {
+        this.lbl_doctorUserName = lbl_doctorUserName;
+    }
+
+    public JLabel getLbl_personalData() {
+        return lbl_personalData;
+    }
+
+    public void setLbl_personalData(JLabel lbl_personalData) {
+        this.lbl_personalData = lbl_personalData;
+    }
+
+    public JLabel getLbl_tittle() {
+        return lbl_tittle;
+    }
+
+    public void setLbl_tittle(JLabel lbl_tittle) {
+        this.lbl_tittle = lbl_tittle;
+    }
+
+    public JLabel getLbl_userData() {
+        return lbl_userData;
+    }
+
+    public void setLbl_userData(JLabel lbl_userData) {
+        this.lbl_userData = lbl_userData;
+    }
+
+    public JButton getBtn_cancel() {
+        return btn_cancel;
+    }
+
+    public void setBtn_cancel(JButton btn_cancel) {
+        this.btn_cancel = btn_cancel;
+    }
+
+    public JButton getBtn_register() {
+        return btn_register;
+    }
+
+    public void setBtn_register(JButton btn_register) {
+        this.btn_register = btn_register;
+    }
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_cancel;
+    private javax.swing.JButton btn_register;
     private javax.swing.JTextField field_doctorAddressColony;
     private javax.swing.JTextField field_doctorAddressCross;
     private javax.swing.JTextField field_doctorAddressPostalCode;
     private javax.swing.JTextField field_doctorAddressStreet;
     private javax.swing.JTextField field_doctorEmail;
-    private javax.swing.JPasswordField field_doctorPassword;
+    private javax.swing.JTextField field_doctorName;
     private javax.swing.JTextField field_doctorPhoneLada;
     private javax.swing.JTextField field_doctorPhoneNumber;
     private javax.swing.JTextField field_doctorProfessionalCode;
     private javax.swing.JTextField field_doctorRFC;
     private javax.swing.JTextField field_doctorUserName;
-    private javax.swing.JTextField field_employeeName;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JTextField field_doctorUserPassword;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbl_doctorAddress;
     private javax.swing.JLabel lbl_doctorAddressColony;

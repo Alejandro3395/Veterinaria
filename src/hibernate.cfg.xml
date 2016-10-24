@@ -1,30 +1,24 @@
-<?xml version='1.0' encoding='utf-8'?>
-<!DOCTYPE hibernate-configuration PUBLIC
-"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        
-        <!-- parametros para la conexion a la base de datos -->
-        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost/veterinaria</property>
-        <property name="connection.username">root</property>
-        <property name="connection.password"></property>
-        
-        <!-- Configuracion del pool interno -->
-        <property name="connection.pool_size">1</property>
-        
-        <!--Dialecto de hibernate-->
-        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
-        
-        <!--Propiedades importantes-->
-        <property name="show_sql">true</property> 
-        <property name="hbm2ddl.auto">create-drop</property> <!--  Propiedad para eliminar y crear la base de datos-->
-        
-        <!-- Archivos de mapeo -->
-        <mapping resource= "Data/Mapping/medicine.hbm.xml"/>
-        <mapping resource= "Data/Mapping/Product.hbm.xml"/>
-        
-    </session-factory>
+  <session-factory>
+    <!-- parametros para la conexion a la base de datos -->
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="connection.url">jdbc:mysql://localhost/veterinaria</property>
+    <property name="connection.username">root</property>
+    <property name="connection.password"/>
+    <!-- Configuracion del pool interno -->
+    <property name="connection.pool_size">1</property>
+    <!--Dialecto de hibernate-->
+    <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+    <!--Propiedades importantes-->
+    <property name="show_sql">true</property>
+    <property name="hbm2ddl.auto">create-drop</property>
+    <!--  Propiedad para eliminar y crear la base de datos-->
+    <!-- Archivos de mapeo -->
+    <mapping resource="Data/Mapping/medicine.hbm.xml"/>
+    <mapping resource="Data/Mapping/Product.hbm.xml"/>
+    <mapping resource="Data/Mapping/Person.hbm.xml"/>
+    <mapping resource="Data/Mapping/Doctor.xml"/>
+  </session-factory>
 </hibernate-configuration>

@@ -102,7 +102,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_cancel" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -115,14 +115,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_register" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="field_doctorPassword" min="-2" pref="153" max="-2" attributes="0"/>
-                          <Component id="field_doctorUserName" min="-2" pref="153" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="field_doctorUserName" pref="153" max="32767" attributes="0"/>
+                          <Component id="field_doctorUserPassword" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -141,7 +141,7 @@
                       <Component id="lbl_doctorName" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                  <Component id="field_employeeName" min="-2" pref="133" max="-2" attributes="0"/>
+                  <Component id="field_doctorName" min="-2" pref="133" max="-2" attributes="0"/>
                   <EmptySpace pref="480" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -194,18 +194,18 @@
               <Component id="lbl_userData" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="field_doctorPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lbl_doctorUserName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_doctorUserName" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="34" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbl_doctorPassword" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_doctorUserName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_doctorUserPassword" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_register" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_cancel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -213,7 +213,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="field_employeeName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="field_doctorName" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lbl_doctorName" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
@@ -230,12 +230,12 @@
         <Property name="text" type="java.lang.String" value="Registro de Doctor"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btn_register">
       <Properties>
         <Property name="text" type="java.lang.String" value="Registrar"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="btn_cancel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
@@ -279,17 +279,10 @@
         <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="field_employeeName">
+    <Component class="javax.swing.JTextField" name="field_doctorName">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="field_employeeNameActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="field_doctorNameActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JPasswordField" name="field_doctorPassword">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="field_doctorPasswordActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="field_doctorUserName">
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_personalData">
       <Properties>
@@ -357,6 +350,10 @@
     <Component class="javax.swing.JTextField" name="field_doctorRFC">
     </Component>
     <Component class="javax.swing.JTextField" name="field_doctorProfessionalCode">
+    </Component>
+    <Component class="javax.swing.JTextField" name="field_doctorUserName">
+    </Component>
+    <Component class="javax.swing.JTextField" name="field_doctorUserPassword">
     </Component>
   </SubComponents>
 </Form>
