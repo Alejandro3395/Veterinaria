@@ -2,3 +2,7 @@ nbproject/private/
 build/
 dist/
 *.xml
+!/src/Data/Mapping/employee.hbm.xml
+!/src/Data/Mapping/Person.hbm.xml
+!/src/Data/Mapping/Phone.hbm.xml
+!/src/Data/Mapping/Address.hbm.xml

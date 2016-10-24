@@ -5,21 +5,27 @@
  */
 package Entitys;
 
+import java.io.Serializable;
+
+
 /**
  *
  * @author diego
  */
-public class Person {
+ public abstract class Person implements Serializable {
     
     //Parametros
+    private long id;
     private Address address;
     private Phone phone;
     private String name;
     
     
     //Constructor
-    public Person(String name){
+    public Person(String name, Address address, Phone phone){
         this.name = name;
+        this.address= address;
+        this.phone = phone;
     }
     
     //gets y sets
@@ -30,6 +36,30 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Phone getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Phone phone) {
+        this.phone = phone;
     }
  
     

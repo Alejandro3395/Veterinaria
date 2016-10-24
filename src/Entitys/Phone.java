@@ -5,15 +5,21 @@
  */
 package Entitys;
 
+import java.io.Serializable;
+
 /**
  *
  * @author diego
  */
-public class Phone {
+public class Phone implements Serializable{
     
-    
+    long id;
     private String lada;
     private String number;
+    
+    public Phone (){
+        
+    }
 
     public Phone(String lada, String number) {
         this.lada = lada;
@@ -37,4 +43,11 @@ public class Phone {
     }
     
     
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

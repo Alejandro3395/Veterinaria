@@ -5,17 +5,24 @@
  */
 package Entitys;
 
+import java.io.Serializable;
+
 /**
  *
  * @author diego
  */
-public class Address {
+public class Address implements Serializable {
     
+    private long id;
     private int zipCode;
     private String street;
     private String colony;
     private String crossovers;
 
+    public Address(){
+        
+    }
+    
     public Address(int zipCode, String street, String colony, String crossovers) {
         this.zipCode = zipCode;
         this.street = street;
@@ -37,6 +44,14 @@ public class Address {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getColony() {

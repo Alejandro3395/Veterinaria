@@ -16,10 +16,10 @@ public class Doctor extends Person {
     private String professionalCode;
     private String email;
 
-    public Doctor(String name, String RFC, String professionalCode, String email) {
+    public Doctor(String name, Address address, Phone phone,String RFC, String professionalCode, String email) {
        
 
-        super(name);
+        super(name, address, phone);
         this.RFC = RFC;
         this.professionalCode = professionalCode;
         this.email = email;
