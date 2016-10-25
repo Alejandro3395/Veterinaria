@@ -3,9 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/Veterinaria/src/presentation/controllers/EmployeeRegisterController.java</file>
-            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/Veterinaria/src/presentation/controllers/DoctorRegisterController.java</file>
-            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/Veterinaria/src/presentation/views/EmployeeRegisterView.java</file>
+            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/Veterinaria/src/Data/Mapping/Doctor.hbm.xml</file>
+            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/Veterinaria/src/Entitys/User.java</file>
+            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/Veterinaria/src/bussiness/DoctorManager.java</file>
+            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/Veterinaria/src/Entitys/UserDoctor.java</file>
+            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/Veterinaria/src/Data/Mapping/medicine.hbm.xml</file>
+            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/Veterinaria/src/Entitys/Doctor.java</file>
+            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/Veterinaria/src/Data/Mapping/Person.hbm.xml</file>
+            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/Veterinaria/src/Entitys/Medicine.java</file>
         </group>
     </open-files>
 </project-private>

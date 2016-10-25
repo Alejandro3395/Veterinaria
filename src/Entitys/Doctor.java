@@ -5,26 +5,47 @@
  */
 package Entitys;
 
+import java.io.Serializable;
+
 /**
  *
  * @author diego
  */
-public class Doctor extends Person {
+public class Doctor extends Person implements Serializable{
     
-    
+
     private String RFC;
-    private String professionalCode;
-    private String email;
+    private String identityCard;
+    private UserDoctor user;
 
-    public Doctor(String name, String RFC, String professionalCode, String email) {
-       
-
-        super(name);
+    public Doctor(String name, Address address, Phone phone, String RFC, String identityCard) {
+        super(name, address, phone);
         this.RFC = RFC;
-        this.professionalCode = professionalCode;
-        this.email = email;
+        this.identityCard = identityCard;
     }
 
+    public Doctor(Doctor doctor) {
+        super(doctor.getName(),doctor.getAddress(),doctor.getPhone());
+        this.RFC = doctor.RFC;
+        this.identityCard = doctor.identityCard;
+        
+    }
+
+    public Doctor(String name, Address address, Phone phone) {
+        super(name, address, phone);
+    }
+    
+    
+
+    public UserDoctor getUser() {
+        return user;
+    }
+
+    public void setUser(UserDoctor user) {
+        this.user = user;
+    }
+    
+    
     public String getRFC() {
         return RFC;
     }
@@ -33,25 +54,13 @@ public class Doctor extends Person {
         this.RFC = RFC;
     }
 
-    public String getProfessionalCode() {
-        return professionalCode;
+    public String getIdentityCard() {
+        return identityCard;
     }
 
-    public void setProfessionalCode(String professionalCode) {
-        this.professionalCode = professionalCode;
+    public void setIdentityCard(String identityCard) {
+        this.identityCard = identityCard;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
-    
-    
-    
-    
+     
     
 }

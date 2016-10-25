@@ -14,8 +14,8 @@ public class Employee extends Person{
    private  String RFC;
    
    
-   public Employee(String name, String RFC){
-       super(name);
+   public Employee(String name, Address address, Phone phone, String RFC){
+       super(name, address, phone);
        this.RFC = RFC;
    }
 
@@ -26,7 +26,6 @@ public class Employee extends Person{
     public void setRFC(String RFC) {
         this.RFC = RFC;
     }
-    
    
    
    

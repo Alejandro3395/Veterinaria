@@ -19,6 +19,6 @@
     <mapping resource="Data/Mapping/medicine.hbm.xml"/>
     <mapping resource="Data/Mapping/Product.hbm.xml"/>
     <mapping resource="Data/Mapping/Person.hbm.xml"/>
-    <mapping resource="Data/Mapping/Doctor.xml"/>
+    <mapping resource="Data/Mapping/Doctor.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -24,6 +24,77 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="lbl_personalData" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="326" max="-2" attributes="0"/>
+          </Group>
+          <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                      <Component id="lbl_doctorPhoneNumber" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="field_doctorPhoneNumber" min="-2" pref="87" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                      <Component id="lbl_doctorPhoneLada" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                      <Component id="field_doctorPhoneLada" min="-2" pref="63" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="lbl_doctorAddressStreet" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_doctorAddress" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="field_doctorAddressStreet" min="-2" pref="37" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="lbl_doctorAddressColony" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="field_doctorAddressColony" min="-2" pref="155" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="lbl_doctorAddressPostalCode" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="field_doctorAddressPostalCode" min="-2" pref="51" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                              <Component id="lbl_doctorAddressCross" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="field_doctorAddressCross" min="-2" pref="54" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lbl_doctorRFC" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_doctorProfessionalCode" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="field_doctorRFC" max="32767" attributes="0"/>
+                                  <Component id="field_doctorProfessionalCode" pref="206" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="349" max="-2" attributes="0"/>
+                      <Component id="lbl_userData" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lbl_doctorEmail" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_cancel" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="btn_register" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
@@ -31,107 +102,19 @@
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="lbl_userData" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="329" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-          </Group>
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-                              <Component id="lbl_doctorPhoneNumber" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="field_doctorPhoneNumber" min="-2" pref="87" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                              <Component id="lbl_doctorPhoneLada" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                              <Component id="field_doctorPhoneLada" min="-2" pref="63" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="lbl_doctorAddressStreet" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_doctorAddress" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="field_doctorAddressStreet" min="-2" pref="37" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                      <Component id="lbl_doctorAddressColony" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="field_doctorAddressColony" min="-2" pref="155" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="lbl_doctorAddressPostalCode" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="field_doctorAddressPostalCode" min="-2" pref="51" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                                      <Component id="lbl_doctorAddressCross" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="field_doctorAddressCross" min="-2" pref="54" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lbl_doctorEmail" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_doctorRFC" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_doctorProfessionalCode" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="field_doctorEmail" max="32767" attributes="0"/>
-                                          <Component id="field_doctorRFC" max="32767" attributes="0"/>
-                                          <Component id="field_doctorProfessionalCode" pref="206" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSeparator1" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
-                      <Component id="btn_cancel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbl_doctorPassword" min="-2" max="-2" attributes="0"/>
                           <Component id="lbl_doctorUserName" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_doctorUserPassword" min="-2" max="-2" attributes="0"/>
                       </Group>
-                  </Group>
-              </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btn_register" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="field_doctorUserName" pref="153" max="32767" attributes="0"/>
-                          <Component id="field_doctorUserPassword" max="32767" attributes="0"/>
+                          <Component id="field_doctorEmail" pref="197" max="32767" attributes="0"/>
+                          <Component id="field_doctorUserPassword" alignment="0" max="32767" attributes="0"/>
+                          <Component id="field_doctorUserName" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="383" max="-2" attributes="0"/>
                   </Group>
               </Group>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Component id="lbl_personalData" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="326" max="-2" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
@@ -163,46 +146,51 @@
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Component id="lbl_doctorAddress" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_doctorAddressStreet" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_doctorAddressStreet" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbl_doctorAddressColony" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_doctorAddressColony" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbl_doctorAddressPostalCode" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_doctorAddressPostalCode" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbl_doctorAddressCross" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_doctorAddressCross" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_doctorAddressStreet" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_doctorAddressStreet" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_doctorAddressColony" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_doctorAddressColony" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_doctorAddressPostalCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_doctorAddressPostalCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_doctorAddressCross" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_doctorAddressCross" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_doctorRFC" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_doctorRFC" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_doctorProfessionalCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_doctorProfessionalCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lbl_userData" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_doctorUserName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_doctorUserName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_doctorUserPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_doctorUserPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="41" max="32767" attributes="0"/>
+                      <Component id="lbl_doctorEmail" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="field_doctorEmail" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_doctorEmail" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_doctorEmail" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_doctorRFC" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_doctorRFC" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_doctorProfessionalCode" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_doctorProfessionalCode" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="lbl_userData" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_doctorUserName" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_doctorUserName" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_doctorPassword" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_doctorUserPassword" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btn_register" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btn_cancel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -218,7 +206,7 @@
                   </Group>
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   <Component id="lbl_doctorPhone" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="470" max="32767" attributes="0"/>
+                  <EmptySpace pref="541" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -247,8 +235,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="field_doctorAddressCross">
     </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator1">
-    </Component>
     <Component class="javax.swing.JLabel" name="lbl_doctorName">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombre:"/>
@@ -262,21 +248,6 @@
     <Component class="javax.swing.JLabel" name="lbl_doctorAddress">
       <Properties>
         <Property name="text" type="java.lang.String" value="Direccion"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbl_userData">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Datos de usuario"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbl_doctorUserName">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Nombre de Usuario:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbl_doctorPassword">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="field_doctorName">
@@ -350,6 +321,23 @@
     <Component class="javax.swing.JTextField" name="field_doctorRFC">
     </Component>
     <Component class="javax.swing.JTextField" name="field_doctorProfessionalCode">
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator1">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbl_userData">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Datos de usuario"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbl_doctorUserName">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nombre de usuario:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbl_doctorUserPassword">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="field_doctorUserName">
     </Component>

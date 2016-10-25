@@ -25,11 +25,8 @@ public class DoctorDAO extends AbstractDAO<Doctor> {
         return doctorDAO;
     }
     
-    
-   
-
     @Override
-    public void add(Doctor entity) throws SQLException {
+    public void add(Doctor entity) {
         saveEntity(entity);
     }
 

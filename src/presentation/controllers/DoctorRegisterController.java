@@ -5,6 +5,10 @@
  */
 package presentation.controllers;
 
+import Entitys.Doctor;
+import Entitys.UserDoctor;
+import bussiness.DoctorManager;
+import presentation.controllers.*;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.AbstractRegisterController;
@@ -23,6 +27,7 @@ public class DoctorRegisterController extends AbstractRegisterController {
         
         initializeView();
     }
+
 
     public DoctorRegisterView getDoctorRegisterView() {
         return doctorRegisterView;
@@ -53,12 +58,16 @@ public class DoctorRegisterController extends AbstractRegisterController {
     
     private void registerDoctor(){
         ArrayList<String> data = new ArrayList<String>(obtainData());
+        
+        ArrayList<String> doctorData = new ArrayList<String>(data.subList(0, 9));
+        ArrayList<String> userDoctorData = new ArrayList<String>(data.subList(9, data.size()));
+        
+        
         boolean isValidField =!isEmptyFields(data);
         
         if(isValidField){
-            
-            
-            
+            DoctorManager doctorManager = DoctorManager.GetInstance();
+                 doctorManager.createEntity(doctorData,userDoctorData);
         }
     }
 
@@ -66,26 +75,26 @@ public class DoctorRegisterController extends AbstractRegisterController {
     protected ArrayList<String> obtainData() {
         ArrayList<String> data = new ArrayList<String>();
         
-        data.add(getDoctorRegisterView().getField_doctorName().getText());
-        
-        String doctorPhone = "";
-        String phoneLada = getDoctorRegisterView().getField_doctorPhoneLada().getText(); 
-        String phoneNumber = getDoctorRegisterView().getField_doctorPhoneNumber().getText();
-        doctorPhone = phoneLada +"-" +phoneNumber;
-        data.add(doctorPhone);
-        
-        String doctorAddress ="";
-        String addressStreet = getDoctorRegisterView().getField_doctorAddressStreet().getText();
-        String addressCross = getDoctorRegisterView().getField_doctorAddressCross().getText();
-        String addressColony = getDoctorRegisterView().getField_doctorAddressColony().getText();
-        doctorAddress = addressStreet + " " + addressCross + " " + addressColony;
-        data.add(doctorAddress);
+        String doctorName = getDoctorRegisterView().getField_doctorName().getText();
+        data.add(doctorName);
         
         String doctorPostalCode = getDoctorRegisterView().getField_doctorAddressPostalCode().getText();
         data.add(doctorPostalCode);
         
-        String doctorEmail = getDoctorRegisterView().getField_doctorEmail().getText();
-        data.add(doctorEmail);
+        String doctorAddressStreet = getDoctorRegisterView().getField_doctorAddressStreet().getText();
+        data.add(doctorAddressStreet);
+        
+        String doctorAddressColony = getDoctorRegisterView().getField_doctorAddressColony().getText();
+        data.add(doctorAddressColony);
+        
+        String doctorAddressCross = getDoctorRegisterView().getField_doctorAddressCross().getText();
+        data.add(doctorAddressCross);
+        
+        String doctorPhoneLada = getDoctorRegisterView().getField_doctorPhoneLada().getText(); 
+        data.add(doctorPhoneLada);
+        
+        String doctorPhoneNumber = getDoctorRegisterView().getField_doctorPhoneNumber().getText();
+        data.add(doctorPhoneNumber);
         
         String doctorRFC = getDoctorRegisterView().getField_doctorRFC().getText();
         data.add(doctorRFC);
@@ -98,6 +107,9 @@ public class DoctorRegisterController extends AbstractRegisterController {
         
         String doctorUserPassword = getDoctorRegisterView().getField_doctorUserPassword().getText();
         data.add(doctorUserPassword);
+        
+        String doctorUserEmail = getDoctorRegisterView().getField_doctorEmail().getText();
+        data.add(doctorUserEmail);
         
         return data;
     }

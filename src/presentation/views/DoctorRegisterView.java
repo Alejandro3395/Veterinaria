@@ -38,13 +38,9 @@ public class DoctorRegisterView extends javax.swing.JFrame {
         btn_cancel = new javax.swing.JButton();
         field_doctorAddressPostalCode = new javax.swing.JTextField();
         field_doctorAddressCross = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
         lbl_doctorName = new javax.swing.JLabel();
         lbl_doctorPhone = new javax.swing.JLabel();
         lbl_doctorAddress = new javax.swing.JLabel();
-        lbl_userData = new javax.swing.JLabel();
-        lbl_doctorUserName = new javax.swing.JLabel();
-        lbl_doctorPassword = new javax.swing.JLabel();
         field_doctorName = new javax.swing.JTextField();
         lbl_personalData = new javax.swing.JLabel();
         lbl_doctorPhoneLada = new javax.swing.JLabel();
@@ -63,6 +59,10 @@ public class DoctorRegisterView extends javax.swing.JFrame {
         lbl_doctorProfessionalCode = new javax.swing.JLabel();
         field_doctorRFC = new javax.swing.JTextField();
         field_doctorProfessionalCode = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        lbl_userData = new javax.swing.JLabel();
+        lbl_doctorUserName = new javax.swing.JLabel();
+        lbl_doctorUserPassword = new javax.swing.JLabel();
         field_doctorUserName = new javax.swing.JTextField();
         field_doctorUserPassword = new javax.swing.JTextField();
 
@@ -85,12 +85,6 @@ public class DoctorRegisterView extends javax.swing.JFrame {
         lbl_doctorPhone.setText("Telefono");
 
         lbl_doctorAddress.setText("Direccion");
-
-        lbl_userData.setText("Datos de usuario");
-
-        lbl_doctorUserName.setText("Nombre de Usuario:");
-
-        lbl_doctorPassword.setText("Contraseña:");
 
         field_doctorName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,10 +118,73 @@ public class DoctorRegisterView extends javax.swing.JFrame {
 
         lbl_doctorProfessionalCode.setText("Cedula Profesional:");
 
+        lbl_userData.setText("Datos de usuario");
+
+        lbl_doctorUserName.setText("Nombre de usuario:");
+
+        lbl_doctorUserPassword.setText("Contraseña:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lbl_personalData)
+                .addGap(326, 326, 326))
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(lbl_doctorPhoneNumber)
+                        .addGap(18, 18, 18)
+                        .addComponent(field_doctorPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(lbl_doctorPhoneLada)
+                        .addGap(49, 49, 49)
+                        .addComponent(field_doctorPhoneLada, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lbl_doctorAddressStreet)
+                                    .addComponent(lbl_doctorAddress))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(field_doctorAddressStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(lbl_doctorAddressColony)
+                                .addGap(18, 18, 18)
+                                .addComponent(field_doctorAddressColony, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lbl_doctorAddressPostalCode)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(field_doctorAddressPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)
+                                .addComponent(lbl_doctorAddressCross)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(field_doctorAddressCross, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_doctorRFC)
+                                    .addComponent(lbl_doctorProfessionalCode))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(field_doctorRFC)
+                                    .addComponent(field_doctorProfessionalCode, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(349, 349, 349)
+                        .addComponent(lbl_userData)))
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_doctorEmail)
+                    .addComponent(btn_cancel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_register)
+                .addGap(71, 71, 71))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,82 +192,15 @@ public class DoctorRegisterView extends javax.swing.JFrame {
                         .addComponent(lbl_tittle)
                         .addGap(24, 24, 24))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lbl_userData)
-                        .addGap(329, 329, 329))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(89, 89, 89)
-                                .addComponent(lbl_doctorPhoneNumber)
-                                .addGap(18, 18, 18)
-                                .addComponent(field_doctorPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64)
-                                .addComponent(lbl_doctorPhoneLada)
-                                .addGap(49, 49, 49)
-                                .addComponent(field_doctorPhoneLada, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(43, 43, 43)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(lbl_doctorAddressStreet)
-                                            .addComponent(lbl_doctorAddress))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(field_doctorAddressStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(34, 34, 34)
-                                        .addComponent(lbl_doctorAddressColony)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(field_doctorAddressColony, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lbl_doctorAddressPostalCode)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(field_doctorAddressPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(42, 42, 42)
-                                        .addComponent(lbl_doctorAddressCross)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(field_doctorAddressCross, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbl_doctorEmail)
-                                            .addComponent(lbl_doctorRFC)
-                                            .addComponent(lbl_doctorProfessionalCode))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(field_doctorEmail)
-                                            .addComponent(field_doctorRFC)
-                                            .addComponent(field_doctorProfessionalCode, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))))))
-                        .addGap(0, 10, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(btn_cancel))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_doctorPassword)
-                            .addComponent(lbl_doctorUserName))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_register)
-                        .addGap(71, 71, 71))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lbl_doctorUserName)
+                            .addComponent(lbl_doctorUserPassword))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(field_doctorUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                            .addComponent(field_doctorUserPassword))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbl_personalData)
-                .addGap(326, 326, 326))
+                            .addComponent(field_doctorEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                            .addComponent(field_doctorUserPassword)
+                            .addComponent(field_doctorUserName))
+                        .addGap(383, 383, 383))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(41, 41, 41)
@@ -236,40 +226,43 @@ public class DoctorRegisterView extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(lbl_doctorAddress)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_doctorAddressStreet)
-                    .addComponent(field_doctorAddressStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_doctorAddressColony)
-                    .addComponent(field_doctorAddressColony, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_doctorAddressPostalCode)
-                    .addComponent(field_doctorAddressPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_doctorAddressCross)
-                    .addComponent(field_doctorAddressCross, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_doctorEmail)
-                    .addComponent(field_doctorEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_doctorRFC)
-                    .addComponent(field_doctorRFC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_doctorProfessionalCode)
-                    .addComponent(field_doctorProfessionalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_userData)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_doctorUserName)
-                    .addComponent(field_doctorUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_doctorPassword)
-                    .addComponent(field_doctorUserPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_doctorAddressStreet)
+                            .addComponent(field_doctorAddressStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_doctorAddressColony)
+                            .addComponent(field_doctorAddressColony, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_doctorAddressPostalCode)
+                            .addComponent(field_doctorAddressPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_doctorAddressCross)
+                            .addComponent(field_doctorAddressCross, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(79, 79, 79)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_doctorRFC)
+                            .addComponent(field_doctorRFC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_doctorProfessionalCode)
+                            .addComponent(field_doctorProfessionalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_userData)
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_doctorUserName)
+                            .addComponent(field_doctorUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_doctorUserPassword)
+                            .addComponent(field_doctorUserPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addComponent(lbl_doctorEmail))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(field_doctorEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_register)
                     .addComponent(btn_cancel))
@@ -282,7 +275,7 @@ public class DoctorRegisterView extends javax.swing.JFrame {
                         .addComponent(lbl_doctorName))
                     .addGap(41, 41, 41)
                     .addComponent(lbl_doctorPhone)
-                    .addContainerGap(470, Short.MAX_VALUE)))
+                    .addContainerGap(541, Short.MAX_VALUE)))
         );
 
         pack();
@@ -497,13 +490,6 @@ public class DoctorRegisterView extends javax.swing.JFrame {
         this.lbl_doctorName = lbl_doctorName;
     }
 
-    public JLabel getLbl_doctorPassword() {
-        return lbl_doctorPassword;
-    }
-
-    public void setLbl_doctorPassword(JLabel lbl_doctorPassword) {
-        this.lbl_doctorPassword = lbl_doctorPassword;
-    }
 
     public JLabel getLbl_doctorPhone() {
         return lbl_doctorPhone;
@@ -545,13 +531,6 @@ public class DoctorRegisterView extends javax.swing.JFrame {
         this.lbl_doctorRFC = lbl_doctorRFC;
     }
 
-    public JLabel getLbl_doctorUserName() {
-        return lbl_doctorUserName;
-    }
-
-    public void setLbl_doctorUserName(JLabel lbl_doctorUserName) {
-        this.lbl_doctorUserName = lbl_doctorUserName;
-    }
 
     public JLabel getLbl_personalData() {
         return lbl_personalData;
@@ -572,7 +551,7 @@ public class DoctorRegisterView extends javax.swing.JFrame {
     public JLabel getLbl_userData() {
         return lbl_userData;
     }
-
+  
     public void setLbl_userData(JLabel lbl_userData) {
         this.lbl_userData = lbl_userData;
     }
@@ -592,6 +571,23 @@ public class DoctorRegisterView extends javax.swing.JFrame {
     public void setBtn_register(JButton btn_register) {
         this.btn_register = btn_register;
     }
+
+    public JLabel getLbl_doctorUserName() {
+        return lbl_doctorUserName;
+    }
+
+    public void setLbl_doctorUserName(JLabel lbl_doctorUserName) {
+        this.lbl_doctorUserName = lbl_doctorUserName;
+    }
+
+    public JLabel getLbl_doctorUserPassword() {
+        return lbl_doctorUserPassword;
+    }
+
+    public void setLbl_doctorUserPassword(JLabel lbl_doctorUserPassword) {
+        this.lbl_doctorUserPassword = lbl_doctorUserPassword;
+    }
+    
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -617,13 +613,13 @@ public class DoctorRegisterView extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_doctorAddressStreet;
     private javax.swing.JLabel lbl_doctorEmail;
     private javax.swing.JLabel lbl_doctorName;
-    private javax.swing.JLabel lbl_doctorPassword;
     private javax.swing.JLabel lbl_doctorPhone;
     private javax.swing.JLabel lbl_doctorPhoneLada;
     private javax.swing.JLabel lbl_doctorPhoneNumber;
     private javax.swing.JLabel lbl_doctorProfessionalCode;
     private javax.swing.JLabel lbl_doctorRFC;
     private javax.swing.JLabel lbl_doctorUserName;
+    private javax.swing.JLabel lbl_doctorUserPassword;
     private javax.swing.JLabel lbl_personalData;
     private javax.swing.JLabel lbl_tittle;
     private javax.swing.JLabel lbl_userData;

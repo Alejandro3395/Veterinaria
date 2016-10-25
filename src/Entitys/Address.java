@@ -5,11 +5,13 @@
  */
 package Entitys;
 
+import java.io.Serializable;
+
 /**
  *
  * @author diego
  */
-public class Address {
+public class Address implements Serializable {
     
     private int zipCode;
     private String street;
@@ -22,6 +24,10 @@ public class Address {
         this.colony = colony;
         this.crossovers = crossovers;
     }
+
+    public Address() {
+    }
+    
 
     public int getZipCode() {
         return zipCode;

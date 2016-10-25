@@ -11,8 +11,8 @@ package Entitys;
  */
 public class Client extends Person{
     
-    public Client(String name){    
-        super(name);
+    public Client(String name, Address address, Phone phone){    
+        super(name, address, phone);
     }
     
 }
