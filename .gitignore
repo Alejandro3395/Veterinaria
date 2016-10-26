@@ -6,3 +6,5 @@ dist/
 !/src/Data/Mapping/Person.hbm.xml
 !/src/Data/Mapping/Phone.hbm.xml
 !/src/Data/Mapping/Address.hbm.xml
+/nbproject/
+/test/
