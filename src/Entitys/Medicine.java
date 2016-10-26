@@ -17,12 +17,9 @@ public class Medicine extends Product implements Serializable{
     private String dose;
     private String administration;
 
+
+    public Medicine(){
     
-    public Medicine(
-            String dose, 
-            String administration){
-        this.dose = dose;
-        this.administration = administration;
     }
 
     public Medicine( 

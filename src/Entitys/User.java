@@ -9,22 +9,16 @@ package Entitys;
  *
  * @author mannu
  */
-public class User {
-    private long id;
-    private String user;
+public abstract class User {
+    private long id; 
+    private String username;
     private String password;
+    private String email;
+    
 
-    public User(String user, String password) {
-        this.user = user;
+    public User(String username, String password, String email) {
+        this.username = username;
         this.password = password;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
     }
 
     public String getPassword() {
@@ -33,6 +27,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     

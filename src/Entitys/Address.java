@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class Address implements Serializable {
     
-    private long id;
+    
     private int zipCode;
     private String street;
     private String colony;
@@ -44,14 +44,6 @@ public class Address implements Serializable {
 
     public void setStreet(String street) {
         this.street = street;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getColony() {

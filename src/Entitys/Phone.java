@@ -13,7 +13,6 @@ import java.io.Serializable;
  */
 public class Phone implements Serializable{
     
-    long id;
     private String lada;
     private String number;
     
@@ -42,12 +41,4 @@ public class Phone implements Serializable{
         this.number = number;
     }
     
-    
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 }
