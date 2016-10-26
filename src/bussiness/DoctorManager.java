@@ -40,6 +40,7 @@ public class DoctorManager {
         //  public Doctor(String name, Address address, Phone phone, String RFC, String identityCard) {
         
         String doctorName = data.get(0);
+        String postalCode = data.get(1);
         int  doctorPostalCode = Integer.valueOf(data.get(1));
         String doctorAddressStreet = data.get(2);
         String doctorAddressColony = data.get(3);
@@ -53,16 +54,36 @@ public class DoctorManager {
         
         /*
         validamos reglas de negocio de identityCard y postalcode
-        
         */
+        boolean isViolatingBussinessRule = false;
+        
+        //primera regla de negocio postal code 4 numeros
+        if (postalCode.length() != 5){
+            isViolatingBussinessRule = true;
+        }
+        
+        //segunda regla de negocio la lada long 3
+        if(doctorPhoneLada.length() != 3){
+            isViolatingBussinessRule = true;
+        }
+        
+        //tercera regla de negocio numero de telefono long 10
+        if(doctorPhoneNumber.length() != 10){
+            isViolatingBussinessRule = true;
+        }
+        
+        if(doctorRFC.length() != 12){
+            isViolatingBussinessRule = true;
+        }
+        
+        
+        Doctor doctorData;
         
         Address doctorAddress = new Address(doctorPostalCode,doctorAddressStreet,doctorAddressColony,doctorAddressCross);
         Phone doctorPhone = new Phone(doctorPhoneLada,doctorPhoneNumber);
         
-        Doctor doctorData = new Doctor(doctorName,doctorAddress,doctorPhone,doctorRFC,doctorIdentityCard);
-        
-       
-        
+         doctorData = new Doctor(doctorName,doctorAddress,doctorPhone,doctorRFC,doctorIdentityCard);
+
         return doctorData;
     }
     
@@ -75,6 +96,8 @@ public class DoctorManager {
         /*
         validamos reglas del negocio
         */
+        
+        
         
         UserDoctor userDoctor = new UserDoctor(doctorUserName, doctorUserPassword, doctorUserEmail);
         
