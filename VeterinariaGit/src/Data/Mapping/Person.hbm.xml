@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name = "Entitys.Person" table ="Person" >
+        <id name="id" >
+            <generator class="identity"/>
+        </id>
+        
+        <property name= "name" type="string" column="name" />  
+        
+        <component name="address" class="Entitys.Address"> <!-- class attribute optional -->
+            <property name="zipCode" type="integer" column="zipCode" />
+            <property name="street" type="string" column="street"/>
+            <property name="colony" type="string" column="colony" />
+            <property name="crossovers" type="string" column="crossover"/>
+         </component>
+         
+        <component name="phone" class="Entitys.Phone"> <!-- class attribute optional -->
+            <property name="lada" type="string" column="lada"/>
+            <property name="number" type= "string" column="number" />
+        </component>
+  </class>
+</hibernate-mapping>
