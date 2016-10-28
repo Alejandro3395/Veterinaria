@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: MedicineRegisterController (MedicineRegisterController.java)
+* @author: Jorge Zapata
+* 
+* date: October 27, 2016
+* 
+* This class represent the controller for the medicine entitys.
+* The objective of the class is to listen the events that the view
+* provides and pass the data to the manager class.
+* 
+*/
+
 package presentation.controllers;
 
 import Entitys.Medicine;
@@ -12,10 +19,6 @@ import javax.swing.WindowConstants;
 import presentation.AbstractRegisterController;
 import presentation.views.MedicineRegisterView;
 
-/**
- *
- * @author Jorge
- */
 public class MedicineRegisterController extends AbstractRegisterController  {
     private MedicineRegisterView medicineRegisterView;
     
@@ -45,57 +48,34 @@ public class MedicineRegisterController extends AbstractRegisterController  {
         getMedicineRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
-
+    
+    /**
+     * This method set the listeners into the view buttons.
+     */
     @Override
     protected void setEvents() {
        getMedicineRegisterView().getBtn_register().addActionListener(actionEvent -> registerMedicine());
     }
     
+    /**
+     *  This method uses sends the data the view provides to the manager.
+     */
     private void registerMedicine(){
         
         ArrayList<String> data = new ArrayList<String>(obtainData());
         boolean isValidField = !isEmptyFields(data);
 
-        //System.out.println(isValidField);
         if(isValidField){
-            String medicineName = data.get(0);
-            int  medicineQuantity =  Integer.parseInt(data.get(1).toString());
-            double medicineSellPrice =  Double.parseDouble(data.get(2).toString());
-        
-            String medicineSupplier = data.get(3);
-            String medicineAdministrationWay = data.get(4);
-        
-            //obtener la fecha
-            String medicineExpirationDate = data.get(5);
-        
-            //obtener la dosis
-            String medicineDose= data.get(6);
-            
-            boolean isValidData = !isValidMedicine(
-                medicineName,
-                medicineQuantity,
-                medicineSellPrice,
-                medicineSupplier,
-                medicineAdministrationWay,
-                medicineExpirationDate,
-                medicineDose);
-             
-             if(isValidData){
                  MedicineManager medicineManager = MedicineManager.GetInstance();
-                 medicineManager.createMedicine(
-                    medicineName,
-                    medicineQuantity,
-                    medicineSellPrice,
-                    medicineSupplier,
-                    medicineAdministrationWay,
-                    medicineExpirationDate,
-                    medicineDose);
-                 
-                 //tirar notificacion 
-             }
+                 medicineManager.createMedicine(data);
         }
     }
     
+    /**
+     * This method transforms the view form into an arraylist of strings for future
+     * parsing.
+     * @return 
+     */
     @Override
     protected ArrayList<String> obtainData(){
         
@@ -141,33 +121,5 @@ public class MedicineRegisterController extends AbstractRegisterController  {
         
         return data;
     }
-    
-    private boolean isValidMedicine(
-            String name,
-            int quantity,
-            double sellPrice,
-            String supplier,
-            String administrationWay,
-            String expirationDate,
-            String dose
-    ){
-        
-        boolean answer = false;
-        
-        MedicineManager medicineManager = MedicineManager.GetInstance();
-        
-        answer = medicineManager.verifyMedicine(
-            name,
-            quantity,
-            sellPrice,
-            supplier,
-            administrationWay,
-            expirationDate,
-            dose);
-        
-        return answer;
-    }
-    
-    
     
 }

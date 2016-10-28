@@ -1,18 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: AbstractViewController (AbstractViewController.java)
+* @author: Jorge Zapata
+* 
+* date: October 27, 2016
+* 
+* This class represent the controller for the view classes.
+* 
+* The main idea in making the class abstract is to create a father class type 
+* because all controllers require three main methods:
+* 1. configure window
+* 2. set events
+* 3. initialize view
+* 
+*/
+
 package presentation;
 
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-/**
- *
- * @author Jorge
- */
+
 public abstract class AbstractViewController {
     //private Notifier notifier = new Notifier();
 

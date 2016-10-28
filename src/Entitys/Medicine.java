@@ -1,16 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: Medicine (Medicine.java)
+* @author: Jorge Zapata
+* 
+* date: October 27, 2016
+* 
+* A class to model the medicine entity.
+* This class provides the interface for the manipulation of 
+* object properties such as the dose and the administration
+* way.
+*/
+
 package Entitys;
 
+import exceptions.InvalidFieldException;
 import java.io.Serializable;
-/**
- *
- * 
- * @author mannu
- */
+
 public class Medicine extends Product implements Serializable{
   
     
@@ -33,14 +37,25 @@ public class Medicine extends Product implements Serializable{
             String dose,
             String expiration_date,
             String administration
-            ){
-        
+            ) throws InvalidFieldException{
         super(name,supplier, amount, cost,expiration_date);
-        this.dose = dose;
-        this.administration = administration;
+        if(isValidAmount(amount)){
+            this.dose = dose;
+            this.administration = administration;
+        }else{
+            throw new InvalidFieldException("La cantidad de un nuevo medicamento no puede ser 0!");
+        }
+        
         
     }
 
+    public boolean isValidAmount(int amount){
+        boolean result = false;
+        if(amount > 0){
+            result = true;
+        }
+        return result;
+    }
     
     public String getDose() {
         return dose;

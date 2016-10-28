@@ -1,8 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: RegisterSelectionController (RegisterSelectionController.java)
+* @author: Jorge Zapata
+* 
+* date: October 27, 2016
+* 
+* This class represent the register selection view.
+* 
+* The objective of this class is let the user decide wich type of 
+* entity they want to register.
+* 
+*/
+
 package presentation.controllers;
 
 import javax.swing.ButtonGroup;
@@ -29,16 +37,16 @@ public class RegisterSelectionController extends AbstractViewController {
         setDoctorRegisterController(new DoctorRegisterController());
         setSupplierRegisterController(new SupplierRegisterController());
         setProductRegisterController(new ProductSelectionController());
-        setCustomerRegisterController(new ClientRegisterController());
+        setClientRegisterController(new ClientRegisterController());
         setPetRegisterController(new PetRegisterController());
         initializeView();
     }
 
-    public ClientRegisterController getCustomerRegisterController() {
+    public ClientRegisterController getClientRegisterController() {
         return customerRegisterController;
     }
 
-    public void setCustomerRegisterController(ClientRegisterController customerRegisterController) {
+    public void setClientRegisterController(ClientRegisterController customerRegisterController) {
         this.customerRegisterController = customerRegisterController;
     }
 
@@ -105,11 +113,17 @@ public class RegisterSelectionController extends AbstractViewController {
         setEvents();
     }
 
+    /**
+     * This method set the listeners into the view buttons.
+     */
     @Override
     protected void setEvents() {
         getRegisterSelectionView().getBtn_accept().addActionListener(actionEvent -> getValue());
     }
-    
+     
+    /**
+     *  This method redirects the user to the selected view.
+     */
     private void getValue(){
         
         int value = registerSelectionView.getRadioGroupValue();
@@ -132,7 +146,7 @@ public class RegisterSelectionController extends AbstractViewController {
             break;
             
             case 5:
-                getCustomerRegisterController().openWindow();
+                getClientRegisterController().openWindow();
             break;
             
             case 6:
