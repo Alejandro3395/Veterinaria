@@ -5,6 +5,7 @@
  */
 package Entitys;
 
+import exceptions.InvalidFieldException;
 import java.io.Serializable;
 
 /**
@@ -17,11 +18,36 @@ public class Doctor extends Person implements Serializable{
     private String RFC;
     private String identityCard;
     private UserDoctor user;
+    private int RFCSize= 12;
+    private int identityCardSize = 8;
 
-    public Doctor(String name, Address address, Phone phone, String RFC, String identityCard) {
+    public Doctor(String name, Address address, Phone phone, String RFC, String identityCard) throws InvalidFieldException {
         super(name, address, phone);
-        this.RFC = RFC;
-        this.identityCard = identityCard;
+        
+        if(isValidRFC(RFC) && isValidIdentityCard(identityCard)){
+            this.RFC = RFC;
+            this.identityCard = identityCard;
+        }else{
+            throw new InvalidFieldException("Datos erroneos...Cedula o RFC");
+        }
+        
+        
+    }
+    
+    private boolean isValidRFC(String RFC){
+        boolean result = true;
+        if(RFC.length() != RFCSize){
+            result = false;
+        }
+        return result;
+    }
+    
+    private boolean isValidIdentityCard(String identityCard){
+        boolean result = true;
+        if(identityCard.length() != identityCardSize){
+            result = false;
+        }
+        return result;
     }
 
     public Doctor(Doctor doctor) {
@@ -31,9 +57,6 @@ public class Doctor extends Person implements Serializable{
         
     }
 
-    public Doctor(String name, Address address, Phone phone) {
-        super(name, address, phone);
-    }
     
     
 

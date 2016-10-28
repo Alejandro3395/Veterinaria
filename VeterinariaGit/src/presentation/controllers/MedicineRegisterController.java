@@ -58,41 +58,11 @@ public class MedicineRegisterController extends AbstractRegisterController  {
 
         //System.out.println(isValidField);
         if(isValidField){
-            String medicineName = data.get(0);
-            int  medicineQuantity =  Integer.parseInt(data.get(1).toString());
-            double medicineSellPrice =  Double.parseDouble(data.get(2).toString());
-        
-            String medicineSupplier = data.get(3);
-            String medicineAdministrationWay = data.get(4);
-        
-            //obtener la fecha
-            String medicineExpirationDate = data.get(5);
-        
-            //obtener la dosis
-            String medicineDose= data.get(6);
-            
-            boolean isValidData = !isValidMedicine(
-                medicineName,
-                medicineQuantity,
-                medicineSellPrice,
-                medicineSupplier,
-                medicineAdministrationWay,
-                medicineExpirationDate,
-                medicineDose);
-             
-             if(isValidData){
                  MedicineManager medicineManager = MedicineManager.GetInstance();
-                 medicineManager.createMedicine(
-                    medicineName,
-                    medicineQuantity,
-                    medicineSellPrice,
-                    medicineSupplier,
-                    medicineAdministrationWay,
-                    medicineExpirationDate,
-                    medicineDose);
+                 medicineManager.createMedicine(data);
                  
                  //tirar notificacion 
-             }
+             
         }
     }
     

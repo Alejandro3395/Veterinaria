@@ -51,19 +51,23 @@ public class MedicineManager {
         
     }
     
-    public Medicine createMedicine(
-            String name,
-            int quantity,
-            double sellPrice,
-            String supplier,
-            String administrationWay,
-            String expirationDate,
-            String dose  
-    ) {
-        Medicine medicine = new Medicine(name,supplier,quantity,sellPrice,dose,expirationDate,administrationWay);
-        System.out.println("Vamos bien\n");
+    public Medicine createMedicine(ArrayList<String> data) {
+        
+        String medicineName = data.get(0);
+        int  medicineQuantity =  Integer.parseInt(data.get(1).toString());
+        double medicineSellPrice =  Double.parseDouble(data.get(2).toString());
+        
+        String medicineSupplier = data.get(3);
+        String medicineAdministrationWay = data.get(4);
+        
+        //obtener la fecha
+        String medicineExpirationDate = data.get(5);
+        
+        //obtener la dosis
+        String medicineDose= data.get(6);
+        
+        Medicine medicine = new Medicine(medicineName,medicineSupplier,medicineQuantity,medicineSellPrice,medicineDose,medicineExpirationDate,medicineAdministrationWay);
         medicineManager.saveMedicine(medicine);
-        System.out.println("exito!");
         return medicine;
 
     }
