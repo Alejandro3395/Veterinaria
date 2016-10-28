@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: DoctorRegisterController (DoctorRegisterController.java)
+* @author: Jorge Zapata
+* 
+* date: October 27, 2016
+* 
+* This class represent the controller for the doctor entitys.
+* The objective of the class is to listen the events that the view
+* provides and pass the data to the manager class.
+* 
+*/
+
 package presentation.controllers;
 
 import Entitys.Doctor;
@@ -14,10 +21,7 @@ import javax.swing.WindowConstants;
 import presentation.AbstractRegisterController;
 import presentation.views.DoctorRegisterView;
 
-/**
- *
- * @author Jorge
- */
+
 public class DoctorRegisterController extends AbstractRegisterController {
     private DoctorRegisterView doctorRegisterView;
     
@@ -50,12 +54,18 @@ public class DoctorRegisterController extends AbstractRegisterController {
         getDoctorRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
-
+    
+    /**
+     * This method set the listeners into the view buttons.
+     */
     @Override
     protected void setEvents() {
         getDoctorRegisterView().getBtn_register().addActionListener(actionEvent -> registerDoctor());
     }
     
+    /**
+     *  This method uses sends the data the view provides to the manager.
+     */
     private void registerDoctor(){
         ArrayList<String> data = new ArrayList<String>(obtainData());
         
@@ -70,7 +80,12 @@ public class DoctorRegisterController extends AbstractRegisterController {
                  doctorManager.createEntity(doctorData,userDoctorData);
         }
     }
-
+    
+     /**
+     * This method transforms the view form into an arraylist of strings for future
+     * parsing.
+     * @return 
+     */
     @Override
     protected ArrayList<String> obtainData() {
         ArrayList<String> data = new ArrayList<String>();

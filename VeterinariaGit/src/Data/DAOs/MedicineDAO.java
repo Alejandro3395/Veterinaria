@@ -1,8 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: MedicineDAO (MedicineDAO.java)
+* @author: Jorge Zapata
+* 
+* date: October 27, 2016
+* 
+* This class represent the data section of the medicine class.
+* 
+* The main objective of this class is to make the comunication with the 
+* database.
+* 
+*/
+
 package Data.DAOs;
 
 import Entitys.Medicine;
@@ -38,7 +46,13 @@ public class MedicineDAO extends AbstractDAO<Medicine> {
     public void update(Medicine entity) {
         updateEntity(entity);
     }
-
+    
+    /**
+     * This method recieves a medicine object and checks if exists in the 
+     * database.
+     * @param objectId
+     * @return 
+     */
     @Override
     public Object get(int objectId) {
         Medicine medicine = null;
@@ -52,7 +66,11 @@ public class MedicineDAO extends AbstractDAO<Medicine> {
         }
         return medicine;
     }
-
+    
+    /**
+     * This method returns the collection of elements from the medicine type.
+     * @return 
+     */
     @Override
     public ArrayList<Medicine> getList() {
         ArrayList<Medicine> medicineList = null;

@@ -1,16 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: User (User.java)
+* @author: Jorge Zapata
+* 
+* date: October 27, 2016
+* 
+* A class to model the user entity.
+* The system requires a registered user to work, then 
+* we need the username and the password properties wich are in
+* this class.
+*/
+
 package Entitys;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Jorge
- */
 public class User implements Serializable{
     private long id;
     private String userName;

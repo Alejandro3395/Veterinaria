@@ -1,17 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: Doctor (Doctor.java)
+* @author: Jorge Zapata
+* 
+* date: October 27, 2016
+* 
+* A class to model the doctor entity.
+* This file contains the access routines for a doctor
+* and provides an object to act as a container for the
+* manipulation of a doctor's data.
+* 
+*/
+
 package Entitys;
 
 import exceptions.InvalidFieldException;
 import java.io.Serializable;
 
-/**
- *
- * @author diego
- */
 public class Doctor extends Person implements Serializable{
     
 
@@ -20,17 +24,22 @@ public class Doctor extends Person implements Serializable{
     private UserDoctor user;
     private int RFCSize= 12;
     private int identityCardSize = 8;
-
+//          supplier(.......) 
     public Doctor(String name, Address address, Phone phone, String RFC, String identityCard) throws InvalidFieldException {
         super(name, address, phone);
         
-        if(isValidRFC(RFC) && isValidIdentityCard(identityCard)){
-            this.RFC = RFC;
-            this.identityCard = identityCard;
+        if(isValidRFC(RFC)){
+            
+            if(isValidIdentityCard(identityCard)){
+                this.RFC = RFC;
+                this.identityCard = identityCard;
+            }else{
+                throw new InvalidFieldException("Datos erroneos en la Cedula Profesional");
+            }
+            
         }else{
-            throw new InvalidFieldException("Datos erroneos...Cedula o RFC");
-        }
-        
+            throw new InvalidFieldException("Datos erroneos en el RFC");
+        } 
         
     }
     
@@ -56,9 +65,6 @@ public class Doctor extends Person implements Serializable{
         this.identityCard = doctor.identityCard;
         
     }
-
-    
-    
 
     public UserDoctor getUser() {
         return user;

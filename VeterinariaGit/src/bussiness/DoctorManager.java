@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: DoctorManager (DoctorManager.java)
+* @author: Jorge Zapata
+* 
+* date: October 27, 2016
+* 
+* This class represent the manager for the doctor entitys.
+* The objective of the class is to recieve the data that the view
+* collects and pass it to the entity class to insert it to the database.
+* 
+*/
+
 package bussiness;
 
 import Data.DAOs.DoctorDAO;
@@ -13,18 +20,41 @@ import Entitys.UserDoctor;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 
-/**
- *
- * @author Jorge
- */
 public class DoctorManager {
     private static final DoctorManager doctorManager = new DoctorManager();
     private DoctorDAO doctorDAO;
+    
+    /**
+     * Constants to use with the createDoctor method
+     */
+    private static final int nameIndex = 0;
+    private static final int postalCodeIndex = 1;
+    private static final int adressStreetIndex = 2;
+    private static final int addressColonyIndex = 3;
+    private static final int addressCrossIndex = 4;
+    private static final int phoneLadaIndex = 5;
+    private static final int phoneNumberIndex = 6;
+    private static final int RFCIndex = 7;
+    private static final int identityCardIndex = 8;
+    
+    /**
+     * Constants to use with the createUserDoctor method
+     */
+    private static final int userNameIndex = 0;
+    private static final int userPasswordIndex = 1;
+    private static final int userEmailIndex = 2;
+    
+    
     
     public DoctorManager(){
         this.doctorDAO = DoctorDAO.GetInstance();
     }
     
+    /**
+     * This method returns an instance of the class that the other classes can
+     * use.
+     * @return 
+     */
     public static DoctorManager GetInstance(){
         return doctorManager;
     }
@@ -35,20 +65,25 @@ public class DoctorManager {
     }
     
 
-    
+    /**
+     * The method recieves the data array from the view and parse it 
+     * so that the doctor entity can understand it, finally we create a 
+     * new entity, the method assumes that the data is passed in the correct order.
+     * 
+     * @param data
+     * @return data
+     * @throws InvalidFieldException 
+     */
     public Doctor createDoctor(ArrayList<String> data) throws InvalidFieldException {
-        
-        //  public Doctor(String name, Address address, Phone phone, String RFC, String identityCard) {
-        
-        String doctorName = data.get(0);
-        int  doctorPostalCode = Integer.valueOf(data.get(1));
-        String doctorAddressStreet = data.get(2);
-        String doctorAddressColony = data.get(3);
-        String doctorAddressCross = data.get(4);
-        String doctorPhoneLada = data.get(5);
-        String doctorPhoneNumber = data.get(6);
-        String doctorRFC = data.get(7);
-        String doctorIdentityCard = data.get(8);
+        String doctorName = data.get(nameIndex);
+        int  doctorPostalCode = Integer.valueOf(data.get(postalCodeIndex));
+        String doctorAddressStreet = data.get(adressStreetIndex);
+        String doctorAddressColony = data.get(addressColonyIndex);
+        String doctorAddressCross = data.get(addressCrossIndex);
+        String doctorPhoneLada = data.get(phoneLadaIndex);
+        String doctorPhoneNumber = data.get(phoneNumberIndex);
+        String doctorRFC = data.get(RFCIndex);
+        String doctorIdentityCard = data.get(identityCardIndex);
         
         Doctor doctorData;
         
@@ -59,25 +94,34 @@ public class DoctorManager {
 
         return doctorData;
     }
-    
+     /**
+     * The method recieves the data array from the view and parse it 
+     * so that the UserDoctor entity can understand it, finally we create a 
+     * new entity, the method assumes that the data is passed in the correct order.
+     * 
+     * @param data
+     * @return data
+     * @throws InvalidFieldException 
+     */
     public UserDoctor createUserDoctor(ArrayList<String> data) throws InvalidFieldException{
         
-        String doctorUserName = data.get(0);
-        String doctorUserPassword = data.get(1);
-        String doctorUserEmail = data.get(2);
-        
-        /*
-        validamos reglas del negocio
-        */
+        String doctorUserName = data.get(userNameIndex);
+        String doctorUserPassword = data.get(userPasswordIndex);
+        String doctorUserEmail = data.get(userEmailIndex);
         
         UserDoctor userDoctor = new UserDoctor(doctorUserName, doctorUserPassword, doctorUserEmail);
         
         return userDoctor;
         
     }
-    
+    /**
+     * The method recieves the data from the view and uses it to create the new 
+     * entitys, an exception is thrown if there's an invalid data.
+     * 
+     * @param doctorData
+     * @param userDoctorData 
+     */
     public void createEntity(ArrayList<String> doctorData, ArrayList<String> userDoctorData){
-        //InvalidFieldException exception = new InvalidFieldException("Datos para el registro de doctor invalidos");
         
         try{
             Doctor doctor = new Doctor(createDoctor(doctorData));
@@ -86,11 +130,15 @@ public class DoctorManager {
         }catch(InvalidFieldException exception ){
             System.out.println(exception.getMessage());
             
-        }
-        
-        
+        } 
     }
     
+    /**
+     * The method recieves the doctor and the userDoctor entitys to set the user to the doctor 
+     * and then insert the doctor into the DataBase.
+     * @param doctor
+     * @param userDoctor 
+     */
     public void insertDoctor(Doctor doctor, UserDoctor userDoctor){
         
         doctor.setUser(userDoctor);

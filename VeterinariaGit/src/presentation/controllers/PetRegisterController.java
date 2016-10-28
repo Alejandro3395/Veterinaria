@@ -5,7 +5,9 @@
  */
 package presentation.controllers;
 
+import java.util.ArrayList;
 import javax.swing.WindowConstants;
+import presentation.AbstractRegisterController;
 import presentation.AbstractViewController;
 import presentation.views.PetRegisterView;
 
@@ -13,7 +15,7 @@ import presentation.views.PetRegisterView;
  *
  * @author Jorge
  */
-public class PetRegisterController extends AbstractViewController {
+public class PetRegisterController extends AbstractRegisterController {
     private PetRegisterView petRegisterView;
     
     public PetRegisterController(){
@@ -55,6 +57,17 @@ public class PetRegisterController extends AbstractViewController {
     
     private void registerPet(){
         
+    }
+
+    @Override
+    protected ArrayList<String> obtainData() {
+        ArrayList<String> data = new ArrayList<String>();
+        String petOwner = getPetRegisterView().getCombo_petOwner().getSelectedItem().toString();
+        data.add(petOwner);
+
+        //String petAge = getPetRegisterView().getSpinner_NOSECOMOSELLAMA().getValue().toString();
+        
+        return data;
     }
     
 }
