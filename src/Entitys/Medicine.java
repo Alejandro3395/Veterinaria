@@ -38,6 +38,7 @@ public class Medicine extends Product implements Serializable{
             String expiration_date,
             String administration
             ) throws InvalidFieldException{
+        
         super(name,supplier, amount, cost,expiration_date);
         if(isValidAmount(amount)){
             this.dose = dose;
@@ -45,8 +46,6 @@ public class Medicine extends Product implements Serializable{
         }else{
             throw new InvalidFieldException("La cantidad de un nuevo medicamento no puede ser 0!");
         }
-        
-        
     }
 
     public boolean isValidAmount(int amount){

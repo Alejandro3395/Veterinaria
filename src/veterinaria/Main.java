@@ -5,24 +5,40 @@
  */
 package veterinaria;
 
+import Data.DAOs.EmployeeDAO;
+import Entitys.Address;
+import Entitys.Employee;
+import Entitys.Phone;
+import Entitys.UserEmployee;
+import exceptions.InvalidFieldException;
+import java.util.ArrayList;
+import java.util.List;
 import presentation.controllers.IntroController;
+import presentation.controllers.LoginMainViewHelper;
+import presentation.views.LoginMainView;
 
 /**
  *
  * @author mannu
  */
-public class Main {
+public class Main implements Runnable{
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)  throws InvalidFieldException   {
         createIntroView();
-        
+
     }
-    
-    public static void createIntroView(){
-        IntroController introController = new IntroController();
-        introController.openWindow();
+
+    public static void createIntroView() throws InvalidFieldException {
+
+        LoginMainViewHelper loginMainViewHelper = new LoginMainViewHelper();
+        loginMainViewHelper.openWindow();
+    }
+
+    @Override
+    public void run() {
+        
     }
 }

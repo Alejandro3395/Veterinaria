@@ -6,7 +6,10 @@
 package presentation.controllers;
 
 import bussiness.ClientManager;
+import exceptions.InvalidFieldException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.WindowConstants;
 import presentation.AbstractRegisterController;
 import presentation.AbstractViewController;
@@ -47,10 +50,16 @@ public class ClientRegisterController extends AbstractRegisterController{
 
     @Override
     protected void setEvents() {
-        getClientRegisterView().getBtn_register().addActionListener(actionEvent -> registerClient());
+        getClientRegisterView().getBtn_register().addActionListener(actionEvent -> {
+            try {
+                registerClient();
+            } catch (InvalidFieldException ex) {
+                Logger.getLogger(ClientRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
     
-    private void registerClient(){
+    private void registerClient() throws InvalidFieldException{
            ArrayList<String> clientData = new ArrayList<String>(obtainData());
         
 

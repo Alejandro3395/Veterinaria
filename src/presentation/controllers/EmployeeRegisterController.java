@@ -6,8 +6,11 @@
 package presentation.controllers;
 
 import bussiness.EmployeeManager;
+import exceptions.InvalidFieldException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.WindowConstants;
 import presentation.AbstractRegisterController;
 import presentation.AbstractViewController;
@@ -61,13 +64,19 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
      */
     @Override
     protected void setEvents() {
-        getEmployeeRegisterView().getBtn_register().addActionListener(actionEvent -> registerEmployee());
+        getEmployeeRegisterView().getBtn_register().addActionListener(actionEvent -> {
+            try {
+                registerEmployee();
+            } catch (InvalidFieldException ex) {
+                Logger.getLogger(EmployeeRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
     
     /**
      *  This method uses sends the data the view provides to the manager.
      */
-    private void registerEmployee() {
+    private void registerEmployee() throws InvalidFieldException {
         
           ArrayList<String> data = new ArrayList<String>(obtainData());
         

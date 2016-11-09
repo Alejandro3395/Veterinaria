@@ -8,6 +8,10 @@ package Data.DAOs;
 import Entitys.Employee;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
 
 /**
  *
@@ -46,7 +50,7 @@ public class EmployeeDAO extends AbstractDAO<Employee> {
      * @return null
      */
     @Override
-    public Employee get(int employeeId) {
+    public Employee get(long employeeId) {
         Employee employee = null;
         
         try{
@@ -74,5 +78,34 @@ public class EmployeeDAO extends AbstractDAO<Employee> {
         return employeeList;
     }
 
+     public String getName(){
+        String name = null;
+        
+        try{
+            openSession();
+            name= (String) session.createQuery("SELECT u.name FROM Employee as u WHERE id=1").uniqueResult();
+        }finally{
+            session.close();
+        }
+        return name;
+    }
+     
+     
+     /* Method to get a list with all the employees*/
+     public List <Employee> getPassAndUser(){
+         List<Employee> employeeDataList= null;
+         
+         try{
+         openSession();
+         employeeDataList = session.createQuery(" FROM Employee ").list();
+         transaction.commit();
+         }catch (HibernateException e) {
+         if (transaction!=null) transaction.rollback();
+         e.printStackTrace(); 
+      }finally {
+         session.close(); 
+      }
+          return employeeDataList;
+   }
     
 }

@@ -4,6 +4,7 @@ import Data.DAOs.ClientDAO;
 import Entitys.Address;
 import Entitys.Client;
 import Entitys.Phone;
+import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 
 /**
@@ -66,7 +67,7 @@ public class ClientManager {
      * @throws InvalidFieldException 
      */
     
-    public Client createClient(ArrayList<String> data) {
+    public Client createClient(ArrayList<String> data) throws InvalidFieldException {
 
         String clientName = data.get(0);
         int clientPostalCode = Integer.valueOf(data.get(1)) ;
@@ -103,7 +104,7 @@ public class ClientManager {
      * @param clientData
      */
  
-    public void createEntity(ArrayList<String> clientData) {
+    public void createEntity(ArrayList<String> clientData) throws InvalidFieldException {
         
         Client client = new Client(createClient(clientData));
         insertClient(client);

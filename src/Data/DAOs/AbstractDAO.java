@@ -42,7 +42,7 @@ public abstract class AbstractDAO<Entity> {
 
     public abstract void update(Entity entity);
 
-    public abstract Object get(int objectId);
+    public abstract Object get(long objectId);
 
     public abstract ArrayList<?> getList();
 
@@ -79,7 +79,6 @@ public abstract class AbstractDAO<Entity> {
             openSession();
 
             session.update(entity);
-
             transaction.commit();
         } catch (HibernateException hibernateException) {
             exceptionManagement(hibernateException);

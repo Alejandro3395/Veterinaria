@@ -41,7 +41,7 @@ public class ClientDAO extends AbstractDAO<Client> {
     }
 
     @Override
-    public Object get(int objectId) {
+    public Object get(long objectId) {
         Client client = null;
         
         try{

@@ -54,7 +54,7 @@ public class MedicineDAO extends AbstractDAO<Medicine> {
      * @return null
      */
     @Override
-    public Medicine get(int medicineId) {
+    public Medicine get(long medicineId) {
         Medicine medicine = null;
         
         try{

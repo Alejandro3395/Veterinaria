@@ -23,7 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 public abstract class AbstractRegisterController  {
-    protected abstract ArrayList<String> obtainData();
+    
     public abstract void openWindow();
 
     protected void configureWindow(JFrame window) {
@@ -53,5 +53,6 @@ public abstract class AbstractRegisterController  {
         }
         return result;
     }
+    protected abstract ArrayList<String> obtainData();
     
 }

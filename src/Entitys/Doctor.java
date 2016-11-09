@@ -25,6 +25,10 @@ public class Doctor extends Person implements Serializable{
     private int RFCSize= 12;
     private int identityCardSize = 8;
 //          supplier(.......) 
+    
+    public Doctor(){    
+    }
+    
     public Doctor(String name, Address address, Phone phone, String RFC, String identityCard) throws InvalidFieldException {
         super(name, address, phone);
         

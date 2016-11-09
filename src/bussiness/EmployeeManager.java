@@ -10,6 +10,7 @@ import Entitys.Address;
 import Entitys.Employee;
 import Entitys.Phone;
 import Entitys.UserEmployee;
+import exceptions.InvalidFieldException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -33,7 +34,7 @@ public class EmployeeManager {
     
 
     
-    public Employee createEmployee(ArrayList<String> data) {
+    public Employee createEmployee(ArrayList<String> data) throws InvalidFieldException {
         
         //  public Employee(String name, Address address, Phone phone, String RFC) {
         
@@ -103,7 +104,7 @@ public class EmployeeManager {
         
     }
     
-    public void createEntity(ArrayList<String> employeeData, ArrayList<String> userEmployeeData) {
+    public void createEntity(ArrayList<String> employeeData, ArrayList<String> userEmployeeData) throws InvalidFieldException {
         
         Employee employee = new Employee(createEmployee(employeeData));
         UserEmployee user = new UserEmployee(createUserEmployee(userEmployeeData));

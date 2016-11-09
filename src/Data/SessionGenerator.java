@@ -14,7 +14,7 @@ import org.hibernate.cfg.Configuration;
 * class: SessionGenerator (SessionGenerator.java)
 * @author: Manuel Bojorquez
 * 
-* date: October 27, 2016
+* date: October 25, 2016
 * 
 * The objective of the class is to initialize a SessionFactory object.
 * @param sessionFactory object responsible for managing sessions connecting to the database
@@ -23,9 +23,6 @@ import org.hibernate.cfg.Configuration;
 */
 
 public class SessionGenerator {
-    /*
-      
-    */
     private static final SessionFactory sessionFactory;
 
     

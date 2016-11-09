@@ -15,8 +15,13 @@ package Data.DAOs;
 
 import Entitys.Doctor;
 import Entitys.Medicine;
+import Entitys.UserDoctor;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
 
 /**
  *
@@ -56,7 +61,7 @@ public class DoctorDAO extends AbstractDAO<Doctor> {
      * @return null
      */
     @Override
-    public Doctor get(int doctorId) {
+    public Doctor get(long doctorId) {
         Doctor doctor = null;
         
         try{
@@ -86,5 +91,23 @@ public class DoctorDAO extends AbstractDAO<Doctor> {
         }
         return doctorList;
     }
+    
+   
+    
+    public List <UserDoctor> getPassAndUser(){
+         List<UserDoctor> listDatos = null;
+         
+      try{
+         openSession();
+         listDatos = session.createQuery("SELECT d.user FROM Doctor d").list();
+         transaction.commit();
+      }catch (HibernateException e) {
+         if (transaction!=null) transaction.rollback();
+         e.printStackTrace(); 
+      }finally {
+         session.close(); 
+      }
+          return listDatos;
+   }
     
 }

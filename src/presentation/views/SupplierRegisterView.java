@@ -5,6 +5,10 @@
  */
 package presentation.views;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Jorge
@@ -168,6 +172,86 @@ public class SupplierRegisterView extends javax.swing.JFrame {
                 new SupplierRegisterView().setVisible(true);
             }
         });
+    }
+
+    public JButton getBtn_Register() {
+        return btn_Register;
+    }
+
+    public void setBtn_Register(JButton btn_Register) {
+        this.btn_Register = btn_Register;
+    }
+
+    public JButton getBtn_cancel() {
+        return btn_cancel;
+    }
+
+    public void setBtn_cancel(JButton btn_cancel) {
+        this.btn_cancel = btn_cancel;
+    }
+
+    public JTextField getField_supplierName() {
+        return field_supplierName;
+    }
+
+    public void setField_supplierName(JTextField field_supplierName) {
+        this.field_supplierName = field_supplierName;
+    }
+
+    public JTextField getField_supplierPhoneLada() {
+        return field_supplierPhoneLada;
+    }
+
+    public void setField_supplierPhoneLada(JTextField field_supplierPhoneLada) {
+        this.field_supplierPhoneLada = field_supplierPhoneLada;
+    }
+
+    public JTextField getField_supplierPhoneNumber() {
+        return field_supplierPhoneNumber;
+    }
+
+    public void setField_supplierPhoneNumber(JTextField field_supplierPhoneNumber) {
+        this.field_supplierPhoneNumber = field_supplierPhoneNumber;
+    }
+
+    public JLabel getLbl_supplierName() {
+        return lbl_supplierName;
+    }
+
+    public void setLbl_supplierName(JLabel lbl_supplierName) {
+        this.lbl_supplierName = lbl_supplierName;
+    }
+
+    public JLabel getLbl_supplierPhone() {
+        return lbl_supplierPhone;
+    }
+
+    public void setLbl_supplierPhone(JLabel lbl_supplierPhone) {
+        this.lbl_supplierPhone = lbl_supplierPhone;
+    }
+
+    public JLabel getLbl_supplierPhoneLada() {
+        return lbl_supplierPhoneLada;
+    }
+
+    public void setLbl_supplierPhoneLada(JLabel lbl_supplierPhoneLada) {
+        this.lbl_supplierPhoneLada = lbl_supplierPhoneLada;
+    }
+
+    public JLabel getLbl_supplierPhoneNumber() {
+        return lbl_supplierPhoneNumber;
+    }
+
+    public void setLbl_supplierPhoneNumber(JLabel lbl_supplierPhoneNumber) {
+        this.lbl_supplierPhoneNumber = lbl_supplierPhoneNumber;
+    }
+
+    public JLabel getLbl_tittle() {
+        return lbl_tittle;
+    }
+
+    public void setLbl_tittle(JLabel lbl_tittle) {
+        this.lbl_tittle = lbl_tittle;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
