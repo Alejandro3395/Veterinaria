@@ -27,6 +27,7 @@ public class Doctor extends Person implements Serializable{
 //          supplier(.......) 
     public Doctor(String name, Address address, Phone phone, String RFC, String identityCard) throws InvalidFieldException {
         super(name, address, phone);
+
         
         if(isValidRFC(RFC)){
             
@@ -42,6 +43,11 @@ public class Doctor extends Person implements Serializable{
         } 
         
     }
+
+    public Doctor()  {
+       
+    }
+    
     
     private boolean isValidRFC(String RFC){
         boolean result = true;
@@ -79,17 +85,24 @@ public class Doctor extends Person implements Serializable{
         return RFC;
     }
 
-    public void setRFC(String RFC) {
-        this.RFC = RFC;
+    public void setRFC(String RFC) throws InvalidFieldException {
+        if( isValidRFC(RFC) ){
+        this.RFC = RFC;            
+        }else{
+            throw new InvalidFieldException("Datos erroneos en el RFC");
+        }
     }
 
     public String getIdentityCard() {
         return identityCard;
     }
 
-    public void setIdentityCard(String identityCard) {
-        this.identityCard = identityCard;
+    public void setIdentityCard(String identityCard) throws InvalidFieldException{
+        if(isValidIdentityCard(identityCard)){
+            this.identityCard = identityCard;   
+        }else{
+            throw new InvalidFieldException("Datos erroneos en la cedula profesional");
+        }
     }
      
-    
 }

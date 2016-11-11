@@ -5,6 +5,7 @@
  */
 package veterinaria;
 
+import presentation.controllers.DoctorManagerHelper;
 import presentation.controllers.IntroController;
 
 /**
@@ -17,7 +18,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        createIntroView();
+        //createIntroView();
+        DoctorManagerHelper doc = new DoctorManagerHelper();
+        doc.openWindow();
         
     }
     

@@ -24,13 +24,26 @@ import presentation.views.DoctorRegisterView;
 
 public class DoctorRegisterController extends AbstractRegisterController {
     private DoctorRegisterView doctorRegisterView;
+    private DoctorManagerHelper doctorManagerHelper;
+    private static int registerOption = 1;
     
     
-    public DoctorRegisterController(){
+    public DoctorRegisterController(DoctorManagerHelper doctorManager){
         setDoctorRegisterView(new DoctorRegisterView());
+        setDoctorManagerHelper( doctorManager  );
         
         initializeView();
     }
+
+    public DoctorManagerHelper getDoctorManagerHelper() {
+        return doctorManagerHelper;
+    }
+
+    public void setDoctorManagerHelper(DoctorManagerHelper doctorManagerHelper) {
+        this.doctorManagerHelper = doctorManagerHelper;
+    }
+
+
 
 
     public DoctorRegisterView getDoctorRegisterView() {
@@ -41,7 +54,10 @@ public class DoctorRegisterController extends AbstractRegisterController {
         this.doctorRegisterView = doctorRegisterView;
     }
     
-    
+    private void updateTable(int option, int id){
+        getDoctorManagerHelper().updateTable(option,id);
+        
+    }
     
     @Override
     public void openWindow() {
@@ -60,24 +76,48 @@ public class DoctorRegisterController extends AbstractRegisterController {
      */
     @Override
     protected void setEvents() {
-        getDoctorRegisterView().getBtn_register().addActionListener(actionEvent -> registerDoctor());
+        getDoctorRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        getDoctorRegisterView().getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
+    }
+    
+    private void cancelRegistration(){
+        closeWindow();
+    }
+    
+    private void closeWindow(){
+        getDoctorRegisterView().dispose();
     }
     
     /**
      *  This method uses sends the data the view provides to the manager.
      */
-    private void registerDoctor(){
+    private void proceedWithRegistration(){
+        
         ArrayList<String> data = new ArrayList<String>(obtainData());
         
         ArrayList<String> doctorData = new ArrayList<String>(data.subList(0, 9));
         ArrayList<String> userDoctorData = new ArrayList<String>(data.subList(9, data.size()));
         
-        
         boolean isValidField =!isEmptyFields(data);
+        
+        String message="";
+        String successStatus="SUCCESS";
         
         if(isValidField){
             DoctorManager doctorManager = DoctorManager.GetInstance();
-                 doctorManager.createEntity(doctorData,userDoctorData);
+            message = doctorManager.registerDoctor(doctorData,userDoctorData);
+            if(message.equals(successStatus)){
+                getNotifier().showSuccessMessage("Success", message);
+                //UserDoctor userDoctor = new UserDoctor( doctorManager.createUserDoctor(userDoctorData) );
+                int id = doctorManager.getDoctorId(userDoctorData);
+                updateTable(registerOption,id);
+                closeWindow();
+            }else{
+                getNotifier().showWarningMessage( message );
+            }
+        }else{
+            message = "Rellene todos los campos";
+            getNotifier().showWarningMessage( message );
         }
     }
     

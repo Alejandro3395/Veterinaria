@@ -57,12 +57,14 @@ public class DoctorDAO extends AbstractDAO<Doctor> {
      */
     @Override
     public Object get(int objectId) {
+        
+        long id = (long) objectId;
         Doctor doctor = null;
         
         try{
             openSession();
             
-            doctor = (Doctor) session.get(Doctor.class,objectId);
+            doctor = (Doctor) session.get(Doctor.class,id);
         }finally{
             session.close();
         }
@@ -74,13 +76,12 @@ public class DoctorDAO extends AbstractDAO<Doctor> {
      * @return 
      */
     @Override
-    public ArrayList<?> getList() {
+    public ArrayList<Doctor> getList() {
         ArrayList<Doctor> doctorList = null;
         
         try{
             openSession();
             doctorList = (ArrayList) session.createQuery("from Doctor").list();
-            
         } finally{
             session.close();
         }

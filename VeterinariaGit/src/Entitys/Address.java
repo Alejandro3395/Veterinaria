@@ -18,8 +18,8 @@ public class Address implements Serializable {
     private String street;
     private String colony;
     private String crossovers;
-    private int zipCodeMinSize = 10000;
-    private int zipCodeMaxSize = 99999;
+    private static int zipCodeMinSize = 10000;
+    private static int zipCodeMaxSize = 99999;
 
     public Address(int zipCode, String street, String colony, String crossovers) throws InvalidFieldException {
         
@@ -38,6 +38,7 @@ public class Address implements Serializable {
         if( (zipCode > zipCodeMinSize) && (zipCode < zipCodeMaxSize) ){
             result = true;
         }
+        System.out.println(result);
         return result;
     }
 

@@ -25,22 +25,32 @@ import presentation.views.RegisterSelectionView;
 public class RegisterSelectionController extends AbstractViewController {
     private RegisterSelectionView registerSelectionView;
     private EmployeeRegisterController employeeRegisterController;
-    private DoctorRegisterController doctorRegisterController;
     private SupplierRegisterController supplierRegisterController;
     private ProductSelectionController productRegisterController;
     private CustomerRegisterController customerRegisterController;
     private PetRegisterController petRegisterController;
+    private DoctorManagerHelper doctorCRUDController;
     
     public RegisterSelectionController(){
         setRegisterSelectionView(new RegisterSelectionView());
         setEmployeeRegisterController(new EmployeeRegisterController());
-        setDoctorRegisterController(new DoctorRegisterController());
+        setDoctorCRUDController( new DoctorManagerHelper());
         setSupplierRegisterController(new SupplierRegisterController());
         setProductRegisterController(new ProductSelectionController());
         setCustomerRegisterController(new CustomerRegisterController());
         setPetRegisterController(new PetRegisterController());
         initializeView();
     }
+
+    public DoctorManagerHelper getDoctorCRUDController() {
+        return doctorCRUDController;
+    }
+
+    public void setDoctorCRUDController(DoctorManagerHelper doctorCRUDController) {
+        this.doctorCRUDController = doctorCRUDController;
+    }
+    
+    
 
     public CustomerRegisterController getCustomerRegisterController() {
         return customerRegisterController;
@@ -66,13 +76,7 @@ public class RegisterSelectionController extends AbstractViewController {
         this.employeeRegisterController = employeeRegisterController;
     }
 
-    public DoctorRegisterController getDoctorRegisterController() {
-        return doctorRegisterController;
-    }
 
-    public void setDoctorRegisterController(DoctorRegisterController doctorRegisterController) {
-        this.doctorRegisterController = doctorRegisterController;
-    }
 
     public SupplierRegisterController getSupplierRegisterController() {
         return supplierRegisterController;
@@ -118,13 +122,13 @@ public class RegisterSelectionController extends AbstractViewController {
      */
     @Override
     protected void setEvents() {
-        getRegisterSelectionView().getBtn_accept().addActionListener(actionEvent -> getValue());
+        getRegisterSelectionView().getBtn_accept().addActionListener(actionEvent -> getSelectedOption());
     }
      
     /**
      *  This method redirects the user to the selected view.
      */
-    private void getValue(){
+    private void getSelectedOption(){
         
         int value = registerSelectionView.getRadioGroupValue();
         switch(value){
@@ -134,7 +138,7 @@ public class RegisterSelectionController extends AbstractViewController {
             break;
             
             case 2:
-                getDoctorRegisterController().openWindow();
+                getDoctorCRUDController().openWindow();
             break;
             
             case 3:

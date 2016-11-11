@@ -60,10 +60,27 @@ public class DoctorManager {
     }
     
     
-    private void saveDoctor(Doctor doctor) {
+    private void addDoctor(Doctor doctor) {
         doctorDAO.add(doctor);
     }
     
+    private void deleteDoctor(Doctor doctor){
+        doctorDAO.delete(doctor);
+    }
+    
+    private void updateDoctor(Doctor doctor){
+        doctorDAO.update(doctor);
+    }
+    
+    public Doctor getDoctor(int id){
+        return (Doctor) doctorDAO.get(id);
+    }
+     
+    public void eliminateDoctor(int id){
+       deleteDoctor((Doctor)(doctorDAO.get(id)));
+    }
+    
+   
 
     /**
      * The method recieves the data array from the view and parse it 
@@ -121,16 +138,108 @@ public class DoctorManager {
      * @param doctorData
      * @param userDoctorData 
      */
-    public void createEntity(ArrayList<String> doctorData, ArrayList<String> userDoctorData){
-        
+    public String registerDoctor(ArrayList<String> doctorData, ArrayList<String> userDoctorData){
+        String message ="";
         try{
             Doctor doctor = new Doctor(createDoctor(doctorData));
             UserDoctor user = new UserDoctor(createUserDoctor(userDoctorData));
-            insertDoctor(doctor,user);
+            setDoctorUser(doctor,user);
+            message = "SUCCESS";
         }catch(InvalidFieldException exception ){
             System.out.println(exception.getMessage());
+            message = exception.getMessage();
+        }
+        return message;
+    }
+    
+    public String modifyDoctor(ArrayList<String> newDoctorData , int id){
+        String message = "";
+ 
+        try{
+            Doctor doctor =  (getDoctor(id));
+            ArrayList<String> doctorData = new ArrayList<>( getDoctorData(doctor) );
             
-        } 
+            if(isNewData(doctorData, newDoctorData)){
+                //procedemos a mover los datos de el objeto doctor contra los de newDoctorData 
+                Doctor updatedDoctor = updateData(doctor,newDoctorData); //EXCEPCION
+                updateDoctor(updatedDoctor);
+                message = "SUCCESS";
+            }else{
+                System.out.println("datos sin cambio");
+            }
+        }catch(InvalidFieldException exception){
+            System.out.println(exception.getMessage());
+            message = exception.getMessage();
+        }
+        return message;
+    }
+    
+    private Doctor updateData(Doctor doctor, ArrayList<String> newDoctorData) throws InvalidFieldException{
+        
+        //obtenemos los valores del arraylist
+        String newDoctorName = newDoctorData.get(nameIndex);
+        int  newDoctorPostalCode = Integer.valueOf(newDoctorData.get(postalCodeIndex));
+        String newDoctorAddressStreet = newDoctorData.get(adressStreetIndex);
+        String newDoctorAddressColony = newDoctorData.get(addressColonyIndex);
+        String newDoctorAddressCross = newDoctorData.get(addressCrossIndex);
+        String newDoctorPhoneLada = newDoctorData.get(phoneLadaIndex);
+        String newDoctorPhoneNumber = newDoctorData.get(phoneNumberIndex);
+        String newDoctorRFC = newDoctorData.get(RFCIndex);
+        String newDoctorIdentityCard = newDoctorData.get(identityCardIndex);
+        
+        //sustituimos valores
+        doctor.setName(newDoctorName);
+        
+        Address newAddress = new Address(newDoctorPostalCode,newDoctorAddressStreet,newDoctorAddressColony,newDoctorAddressCross);
+        doctor.setAddress(newAddress);
+        
+        Phone newPhone = new Phone(newDoctorPhoneLada,newDoctorPhoneNumber);
+        doctor.setPhone(newPhone);
+        
+        doctor.setRFC(newDoctorRFC);
+    
+        doctor.setIdentityCard(newDoctorIdentityCard);
+       
+        return doctor;
+    }
+    
+    private ArrayList<String> getDoctorData(Doctor doctor){
+        
+        ArrayList<String> data = new ArrayList<String>();
+        
+        data.add(doctor.getName().toString());
+        data.add( Integer.toString( doctor.getAddress().getZipCode() ) );
+        data.add(doctor.getAddress().getStreet().toString());
+        data.add(doctor.getAddress().getColony().toString());
+        data.add(doctor.getAddress().getCrossovers().toString());
+        data.add(doctor.getPhone().getLada().toString());
+        data.add(doctor.getPhone().getNumber().toString());
+        data.add(doctor.getRFC().toString());
+        data.add(doctor.getIdentityCard().toString());
+        
+        return data;
+    }
+    
+    private boolean isNewData(ArrayList<String> doctorData, ArrayList<String> newDoctorData){
+        boolean result = false;
+        int diferences = 0;
+        
+        for(int index = 0; index < newDoctorData.size(); index++){
+            
+            if(!( doctorData.get(index).equals(newDoctorData.get(index) ) ) ){
+                diferences++;
+            }
+        }
+        
+        if (diferences>0) { result = true;  }
+        
+        return result;
+    }
+    
+    public ArrayList<Doctor> getDoctorList(){
+        ArrayList<Doctor> doctorList;
+        doctorList = new ArrayList<Doctor> (getDoctors());
+        return doctorList; 
     }
     
     /**
@@ -139,10 +248,28 @@ public class DoctorManager {
      * @param doctor
      * @param userDoctor 
      */
-    public void insertDoctor(Doctor doctor, UserDoctor userDoctor){
-        
+    public void setDoctorUser(Doctor doctor, UserDoctor userDoctor){
         doctor.setUser(userDoctor);
-        doctorManager.saveDoctor(doctor);
-
+        doctorManager.addDoctor(doctor);
+    }
+    
+    public ArrayList<Doctor> getDoctors(){
+        return (ArrayList<Doctor>) doctorDAO.getList();
+    }
+    
+    public int getDoctorId(ArrayList<String> doctorData){
+        int id = 0;
+        
+        ArrayList<Doctor> doctorList = getDoctorList();
+        String doctorUserName = doctorData.get(userNameIndex);
+        
+        for(int i =0; i < doctorList.size(); i++){
+            String userName = doctorList.get(i).getUser().getUserName().toString();
+            if(doctorUserName.equals(userName)){
+               id = (int) doctorList.get(i).getId();
+            }
+        }
+        
+        return id;
     }
 }
