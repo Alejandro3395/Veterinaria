@@ -50,8 +50,12 @@ public class Address implements Serializable {
         return zipCode;
     }
 
-    public void setZipCode(int zipCode) {
-        this.zipCode = zipCode;
+    public void setZipCode(int zipCode) throws InvalidFieldException {
+        if(isValidZipCode(zipCode)){
+            this.zipCode = zipCode;            
+        }else{
+            throw new InvalidFieldException("Codigo postal erroneo!");
+        }
     }
 
     public String getStreet() {

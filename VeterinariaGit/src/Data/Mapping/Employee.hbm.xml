@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <joined-subclass name="Entitys.Employee" table="Employee" extends="Entitys.Person" >
+    <key column="id"/>
+    
+    <property name="RFC" type="string" column="RFC"/>
+    
+    <component name = "user" class="Entitys.UserEmployee" >
+        <property name="userName" type="string" column="userName" unique="true"/>
+        <property name="userPassword" type="string" column = "userPassword"/>
+        <property name ="userEmail" type="string" column ="userEmail"/>
+        
+    </component>
+  
+  </joined-subclass>
+</hibernate-mapping>

@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import presentation.AbstractViewController;
 import presentation.views.DoctorManagerView;
 import presentation.controllers.DoctorRegisterController;
-import presentation.controllers.DoctorEliminationHelper;
 
 /**
  *
@@ -26,17 +25,13 @@ public class DoctorManagerHelper extends AbstractViewController {
     private DoctorManagerView doctorManagerView;
     private DoctorRegisterController doctorRegisterController;
     private DoctorModificationHelper doctorModificationHelper;
-    private DoctorEliminationHelper doctorEliminationHelper;
-    private static int registerOption = 1;
-    private static int modifyOption = 2;
     
     public DoctorManagerHelper(){
         setDoctorManagerView(new DoctorManagerView());
         setDoctorRegisterController(new DoctorRegisterController(this));
-        setDoctorEliminationHelper(new DoctorEliminationHelper(this));
         setDoctorModificationHelper(new DoctorModificationHelper(this));
         
-        loadDoctorRegister();
+        loadDoctorRegisterToTable();
         initializeView();
     }
 
@@ -56,13 +51,6 @@ public class DoctorManagerHelper extends AbstractViewController {
         this.doctorManagerView = doctorManagerView;
     }
 
-    public DoctorEliminationHelper getDoctorEliminationHelper() {
-        return doctorEliminationHelper;
-    }
-
-    public void setDoctorEliminationHelper(DoctorEliminationHelper doctorEliminationHelper) {
-        this.doctorEliminationHelper = doctorEliminationHelper;
-    } 
 
     public DoctorRegisterController getDoctorRegisterController() {
         return doctorRegisterController;
@@ -74,7 +62,6 @@ public class DoctorManagerHelper extends AbstractViewController {
 
     @Override
     public void openWindow() {
-        
         getDoctorManagerView().setVisible(true);
     }
 
@@ -93,43 +80,55 @@ public class DoctorManagerHelper extends AbstractViewController {
     protected void setEvents() {
         getDoctorManagerView().getBtn_addDoctor().addActionListener(actionEvent -> openRegisterView());
         getDoctorManagerView().getBtn_modifyDoctor().addActionListener(actionEvent -> openModificationView());
-        getDoctorManagerView().getBtn_deleteDoctor().addActionListener(actionEvent -> openEliminationView());
+        getDoctorManagerView().getBtn_deleteDoctor().addActionListener(actionEvent -> openEliminationConfirmationView());
+        getDoctorManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
     }
     
-    public void loadDoctorRegister(){
+    public void loadDoctorRegisterToTable(){
         
         DefaultTableModel model = (DefaultTableModel) getDoctorManagerView().getTable_doctorTable().getModel();
         
         int rowCount = model.getRowCount();
-        System.out.println(rowCount);
-        
         if(rowCount !=0){model.setRowCount(0);}
-        
         
         DoctorManager doctorManager = DoctorManager.GetInstance();
         
         ArrayList<Doctor> doctorList = doctorManager.getDoctorList() ;
-
         setTableContent(doctorList);
-        
-        
     }
     
     private void openModificationView(){
         if(isRowSelected()){
             getDoctorModificationHelper().openWindow();
         }else{
-            //porfavor elije un row
+            getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
     }
     
-    private void openEliminationView(){
+    private void openEliminationConfirmationView(){
         
         if(isRowSelected()){
-            getDoctorEliminationHelper().openWindow();
+            if(isDeletionConfirmed()){
+                proceedWithElimination();
+            }
         }else{
-            //notificar que porfavor se elija una row
+            getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
+    }
+    
+    private void closeWindow(){
+        getDoctorManagerView().dispose();
+    }
+    
+    private void proceedWithElimination(){
+        int row = getDoctorManagerView().getTable_doctorTable().getSelectedRow();
+        
+        int id = Integer.valueOf( getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
+
+        DoctorManager doctorManager = DoctorManager.GetInstance();
+        doctorManager.eliminateDoctor(id);
+        getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Doctor");
+        updateTable();
     }
     
     private boolean isRowSelected(){
@@ -145,8 +144,7 @@ public class DoctorManagerHelper extends AbstractViewController {
         return result;
     }
     
-    private void setTableContent(ArrayList<Doctor> doctorList){
-        
+    private void setTableContent(ArrayList<Doctor> doctorList){    
         for(int index =0; index < doctorList.size(); index++ ){
             Doctor doctorData = doctorList.get(index) ;
             addDoctorToTable(doctorData);
@@ -162,7 +160,6 @@ public class DoctorManagerHelper extends AbstractViewController {
         DefaultTableModel model = (DefaultTableModel) getDoctorManagerView().getTable_doctorTable().getModel();
         
         long id = doctor.getId();
-        //long id = index +1;
         String name = doctor.getName();
         String street =  doctor.getAddress().getStreet();
         int postal = doctor.getAddress().getZipCode();
@@ -175,13 +172,14 @@ public class DoctorManagerHelper extends AbstractViewController {
         model.addRow(row); 
     }
     
-    public void updateTable(){
-        loadDoctorRegister();
+    private boolean isDeletionConfirmed() {
+        System.out.println("llegue");
+        String messageConfirm = "¿Estas seguro que deseas eliminarlo?";
+        int optionSelected = getNotifier().showConfirmDialog( messageConfirm );
+        return optionSelected == getNotifier().getYES_OPTION();
     }
     
-    
-    
-    
-
-    
+    public void updateTable(){
+        loadDoctorRegisterToTable();
+    }
 }

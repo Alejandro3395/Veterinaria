@@ -24,41 +24,49 @@ import presentation.views.RegisterSelectionView;
  */
 public class RegisterSelectionController extends AbstractViewController {
     private RegisterSelectionView registerSelectionView;
-    private EmployeeRegisterController employeeRegisterController;
+    private EmployeeManagerHelper employeeManagerHelper;
     private SupplierRegisterController supplierRegisterController;
     private ProductSelectionController productRegisterController;
-    private CustomerRegisterController customerRegisterController;
+    private ClientManagerHelper clientManagerHelper;
     private PetRegisterController petRegisterController;
-    private DoctorManagerHelper doctorCRUDController;
+    private DoctorManagerHelper doctorManagerHelper;
     
     public RegisterSelectionController(){
         setRegisterSelectionView(new RegisterSelectionView());
-        setEmployeeRegisterController(new EmployeeRegisterController());
-        setDoctorCRUDController( new DoctorManagerHelper());
+        setEmployeeManagerHelper(new EmployeeManagerHelper());
+        setDoctorManagerHelper( new DoctorManagerHelper());
         setSupplierRegisterController(new SupplierRegisterController());
         setProductRegisterController(new ProductSelectionController());
-        setCustomerRegisterController(new CustomerRegisterController());
+        setClientManagerHelper(new ClientManagerHelper());
         setPetRegisterController(new PetRegisterController());
         initializeView();
     }
 
-    public DoctorManagerHelper getDoctorCRUDController() {
-        return doctorCRUDController;
+    public DoctorManagerHelper getDoctorManagerHelper() {
+        return doctorManagerHelper;
     }
 
-    public void setDoctorCRUDController(DoctorManagerHelper doctorCRUDController) {
-        this.doctorCRUDController = doctorCRUDController;
+    public void setDoctorManagerHelper(DoctorManagerHelper doctorManagerHelper) {
+        this.doctorManagerHelper = doctorManagerHelper;
+    }
+
+    public EmployeeManagerHelper getEmployeeManagerHelper() {
+        return employeeManagerHelper;
+    }
+
+    public void setEmployeeManagerHelper(EmployeeManagerHelper employeeManagerHelper) {
+        this.employeeManagerHelper = employeeManagerHelper;
+    }
+
+    public ClientManagerHelper getClientManagerHelper() {
+        return clientManagerHelper;
+    }
+
+    public void setClientManagerHelper(ClientManagerHelper clientManagerHelper) {
+        this.clientManagerHelper = clientManagerHelper;
     }
     
-    
-
-    public CustomerRegisterController getCustomerRegisterController() {
-        return customerRegisterController;
-    }
-
-    public void setCustomerRegisterController(CustomerRegisterController customerRegisterController) {
-        this.customerRegisterController = customerRegisterController;
-    }
+ 
 
     public PetRegisterController getPetRegisterController() {
         return petRegisterController;
@@ -67,14 +75,7 @@ public class RegisterSelectionController extends AbstractViewController {
     public void setPetRegisterController(PetRegisterController petRegisterController) {
         this.petRegisterController = petRegisterController;
     }
-    
-    public EmployeeRegisterController getEmployeeRegisterController() {
-        return employeeRegisterController;
-    }
-
-    public void setEmployeeRegisterController(EmployeeRegisterController employeeRegisterController) {
-        this.employeeRegisterController = employeeRegisterController;
-    }
+ 
 
 
 
@@ -134,11 +135,11 @@ public class RegisterSelectionController extends AbstractViewController {
         switch(value){
             
             case 1:
-                getEmployeeRegisterController().openWindow();
+                getEmployeeManagerHelper().openWindow();
             break;
             
             case 2:
-                getDoctorCRUDController().openWindow();
+                getDoctorManagerHelper().openWindow();
             break;
             
             case 3:
@@ -150,7 +151,7 @@ public class RegisterSelectionController extends AbstractViewController {
             break;
             
             case 5:
-                getCustomerRegisterController().openWindow();
+                getClientManagerHelper().openWindow();
             break;
             
             case 6:

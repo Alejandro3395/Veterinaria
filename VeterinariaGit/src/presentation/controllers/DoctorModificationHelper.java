@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.AbstractRegisterController;
 import presentation.views.DoctorModificationView;
+import presentation.views.DoctorRegisterView;
 
 /**
  *
@@ -18,15 +19,26 @@ import presentation.views.DoctorModificationView;
  */
 public class DoctorModificationHelper extends AbstractRegisterController {
     private DoctorModificationView doctorModificationView;
+    private DoctorRegisterView doctorRegisterView;
     private DoctorManagerHelper doctorManagerHelper;
-    private static int modifyOption = 2;
     
     public DoctorModificationHelper(DoctorManagerHelper doctorManager){
         setDoctorModificationView( new DoctorModificationView());
+        setDoctorRegisterView( new DoctorRegisterView() );
         setDoctorManagerHelper( doctorManager);
         
         initializeView();
     }
+
+    public DoctorRegisterView getDoctorRegisterView() {
+        return doctorRegisterView;
+    }
+
+    public void setDoctorRegisterView(DoctorRegisterView doctorRegisterView) {
+        this.doctorRegisterView = doctorRegisterView;
+    }
+    
+    
 
     public DoctorModificationView getDoctorModificationView() {
         return doctorModificationView;
@@ -49,33 +61,30 @@ public class DoctorModificationHelper extends AbstractRegisterController {
     @Override
     public void openWindow() {
         loadDoctorData();
-        getDoctorModificationView().setVisible(true);
+        getDoctorRegisterView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getDoctorModificationView() );
-        getDoctorModificationView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureWindow( getDoctorRegisterView() );
+        getDoctorRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
     @Override
     protected void setEvents() {
-        getDoctorModificationView().getBtn_modify().addActionListener(actionEvent -> proceedWithModification());
-        getDoctorModificationView().getBtn_cancel().addActionListener(actionEvent -> cancelModification());
+        getDoctorRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithModification());
+        getDoctorRegisterView().getBtn_cancel().addActionListener(actionEvent -> cancelModification());
     }
     
     private void loadDoctorData(){
         int row = getDoctorManagerHelper().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
         int id = Integer.valueOf( getDoctorManagerHelper().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
-
         
         DoctorManager doctorManager = DoctorManager.GetInstance();
-        Doctor doctor = new Doctor( doctorManager.getDoctor(id) );
+        Doctor doctor =  doctorManager.getDoctor(id) ;
         
         setData(doctor);
-        
-
     }
     
     private void proceedWithModification(){
@@ -87,16 +96,27 @@ public class DoctorModificationHelper extends AbstractRegisterController {
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
+        String successStatus = "SUCCESS";
         
         if( isValidField ){
             DoctorManager doctorManager = DoctorManager.GetInstance();
-            doctorManager.modifyDoctor(data,id);
-            getDoctorManagerHelper().updateTable();
-            closeWindow();
+            message = doctorManager.modifyDoctor(data,id);
+            if(message.equals(successStatus)){
+                getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Doctor");
+                updateManagerViewTable();
+                closeWindow();
+            }else{
+                getNotifier().showWarningMessage( message );
+            } 
         }else{
-             message = "Rellene todos los campos";
+            message = "Rellene todos los campos";
             getNotifier().showWarningMessage( message );
+            resetFields();
         }
+    }
+    
+    private void updateManagerViewTable(){
+        getDoctorManagerHelper().updateTable();
     }
     
     private void cancelModification(){
@@ -104,7 +124,7 @@ public class DoctorModificationHelper extends AbstractRegisterController {
     }
     
     private void closeWindow(){
-        getDoctorModificationView().dispose();
+        getDoctorRegisterView().dispose();
     }
 
     /**
@@ -116,31 +136,31 @@ public class DoctorModificationHelper extends AbstractRegisterController {
     protected ArrayList<String> obtainData() {
         ArrayList<String> data = new ArrayList<String>();
         
-        String doctorName = getDoctorModificationView().getField_doctorName().getText();
+        String doctorName = getDoctorRegisterView().getField_doctorName().getText();
         data.add(doctorName);
         
-        String doctorPostalCode = getDoctorModificationView().getField_doctorAddressPostalCode().getText();
+        String doctorPostalCode = getDoctorRegisterView().getField_doctorAddressPostalCode().getText();
         data.add(doctorPostalCode);
         
-        String doctorAddressStreet = getDoctorModificationView().getField_doctorAddressStreet().getText();
+        String doctorAddressStreet = getDoctorRegisterView().getField_doctorAddressStreet().getText();
         data.add(doctorAddressStreet);
         
-        String doctorAddressColony = getDoctorModificationView().getField_doctorAddressColony().getText();
+        String doctorAddressColony = getDoctorRegisterView().getField_doctorAddressColony().getText();
         data.add(doctorAddressColony);
         
-        String doctorAddressCross = getDoctorModificationView().getField_doctorAddressCross().getText();
+        String doctorAddressCross = getDoctorRegisterView().getField_doctorAddressCross().getText();
         data.add(doctorAddressCross);
         
-        String doctorPhoneLada = getDoctorModificationView().getField_doctorPhoneLada().getText(); 
+        String doctorPhoneLada = getDoctorRegisterView().getField_doctorPhoneLada().getText(); 
         data.add(doctorPhoneLada);
         
-        String doctorPhoneNumber = getDoctorModificationView().getField_doctorPhoneNumber().getText();
+        String doctorPhoneNumber = getDoctorRegisterView().getField_doctorPhoneNumber().getText();
         data.add(doctorPhoneNumber);
         
-        String doctorRFC = getDoctorModificationView().getField_doctorRFC().getText();
+        String doctorRFC = getDoctorRegisterView().getField_doctorRFC().getText();
         data.add(doctorRFC);
         
-        String doctorProfessionalCode = getDoctorModificationView().getField_doctorProfessionalCode().getText();
+        String doctorProfessionalCode = getDoctorRegisterView().getField_doctorProfessionalCode().getText();
         data.add(doctorProfessionalCode);
           
         return data;
@@ -150,33 +170,47 @@ public class DoctorModificationHelper extends AbstractRegisterController {
         //setear datos de los campso
         
         String doctorName = doctor.getName().toString();
-        getDoctorModificationView().getField_doctorName().setText(doctorName);
+        getDoctorRegisterView().getField_doctorName().setText(doctorName);
         
         String doctorPostalCode = Integer.toString(doctor.getAddress().getZipCode());
-        getDoctorModificationView().getField_doctorAddressPostalCode().setText(doctorPostalCode);
+        getDoctorRegisterView().getField_doctorAddressPostalCode().setText(doctorPostalCode);
         
         String doctorStreet = doctor.getAddress().getStreet().toString();
-        getDoctorModificationView().getField_doctorAddressStreet().setText(doctorStreet);
+        getDoctorRegisterView().getField_doctorAddressStreet().setText(doctorStreet);
         
         String doctorColony = doctor.getAddress().getColony().toString();
-        getDoctorModificationView().getField_doctorAddressColony().setText(doctorColony);
+        getDoctorRegisterView().getField_doctorAddressColony().setText(doctorColony);
         
         String doctorCross = doctor.getAddress().getCrossovers().toString();
-        getDoctorModificationView().getField_doctorAddressCross().setText(doctorCross);
+        getDoctorRegisterView().getField_doctorAddressCross().setText(doctorCross);
         
         String doctorPhoneLada = doctor.getPhone().getLada().toString();
-        getDoctorModificationView().getField_doctorPhoneLada().setText(doctorPhoneLada);
+        getDoctorRegisterView().getField_doctorPhoneLada().setText(doctorPhoneLada);
         
         String doctorPhoneNumber = doctor.getPhone().getNumber().toString();
-        getDoctorModificationView().getField_doctorPhoneNumber().setText(doctorPhoneNumber);
+        getDoctorRegisterView().getField_doctorPhoneNumber().setText(doctorPhoneNumber);
         
         String doctorRFC = doctor.getRFC().toString();
-        getDoctorModificationView().getField_doctorRFC().setText(doctorRFC);
+        getDoctorRegisterView().getField_doctorRFC().setText(doctorRFC);
         
         String doctorIdentityCard = doctor.getIdentityCard().toString();
-        getDoctorModificationView().getField_doctorProfessionalCode().setText(doctorIdentityCard);
+        getDoctorRegisterView().getField_doctorProfessionalCode().setText(doctorIdentityCard);
         
+        String doctorUserName = doctor.getUser().getUserName().toString();
+        getDoctorRegisterView().getField_doctorUserName().setText(doctorUserName);
+        getDoctorRegisterView().getField_doctorUserName().setEditable(false);
+        
+        String doctorUserPassword = doctor.getUser().getUserPassword().toString();
+        getDoctorRegisterView().getField_doctorUserPassword().setText(doctorUserPassword);
+        getDoctorRegisterView().getField_doctorUserPassword().setEditable(false);
+        
+        String doctorUserEmail = doctor.getUser().getUserEmail().toString();
+        getDoctorRegisterView().getField_doctorEmail().setText(doctorUserEmail);
+        getDoctorRegisterView().getField_doctorEmail().setEditable(false);  
         
     }
     
+    private void resetFields(){
+        loadDoctorData();
+    }
 }

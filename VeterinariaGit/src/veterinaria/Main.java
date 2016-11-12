@@ -5,7 +5,9 @@
  */
 package veterinaria;
 
+import presentation.controllers.ClientManagerHelper;
 import presentation.controllers.DoctorManagerHelper;
+import presentation.controllers.EmployeeManagerHelper;
 import presentation.controllers.IntroController;
 
 /**
@@ -19,9 +21,15 @@ public class Main {
      */
     public static void main(String[] args) {
         //createIntroView();
-        DoctorManagerHelper doc = new DoctorManagerHelper();
-        doc.openWindow();
-        
+        /*
+            DoctorManagerHelper doc = new DoctorManagerHelper();
+            doc.openWindow();
+            EmployeeManagerHelper em = new EmployeeManagerHelper();
+            em.openWindow();
+        */
+            ClientManagerHelper cl = new ClientManagerHelper();
+            cl.openWindow();
+           
     }
     
     public static void createIntroView(){

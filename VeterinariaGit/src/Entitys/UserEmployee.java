@@ -10,37 +10,37 @@ import java.io.Serializable;
 
 /**
  *
- * @author diego
+ * @author mannu
  */
-public class Client extends Person implements Serializable{
-    private String clientEmail;
-    
-    public Client(String name, Address address, Phone phone, String clientEmail) throws InvalidFieldException{    
-        super(name, address, phone);
-        if(isValidEmailAddress(clientEmail)){
-            this.clientEmail = clientEmail;
-        }else{
+public class UserEmployee extends User implements Serializable{
+    private int passwordMinSize = 8;
+
+    public UserEmployee(String userName, String userPassword, String userEmail) throws InvalidFieldException {
+        super(userName, userPassword, userEmail);
+        
+        if(!isValidPassword(userPassword)){
+           throw new InvalidFieldException("La contraseña proporcionada es menor del tamaño solicitado!");
+        }
+        if(!isValidEmailAddress(userEmail)){
             throw new InvalidFieldException("El correo electronico introducido es incorrecto");    
         }
-           
-    }
-    public Client(){
         
     }
-            
     
-    public Client(Client client){
-        super(client.getName(), client.getAddress(), client.getPhone());
-        this.clientEmail = client.getClientEmail();
+    public UserEmployee(){};
+    
+    private boolean isValidPassword(String password){
+        boolean result = true;
+        if(password.length() < passwordMinSize){
+            result = false;
+        }
+        return result;
     }
     
-    public String getClientEmail() {
-        return clientEmail;
+    public UserEmployee(UserEmployee userEmployee) {
+        super(userEmployee.getUserName(),userEmployee.getUserPassword(),userEmployee.getUserEmail());
     }
-
-    public void setClientEmail(String clientEmail) {
-        this.clientEmail = clientEmail;
-    }
+    
     
     /*
     extraido de 
@@ -54,6 +54,4 @@ public class Client extends Person implements Serializable{
            java.util.regex.Matcher m = p.matcher(email);
            return m.matches();
     }
-    
-    
 }

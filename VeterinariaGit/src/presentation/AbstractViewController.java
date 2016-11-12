@@ -22,7 +22,7 @@ import javax.swing.WindowConstants;
 
 
 public abstract class AbstractViewController {
-    //private Notifier notifier = new Notifier();
+    private Notifier notifier = new Notifier();
 
 
     public abstract void openWindow();
@@ -39,5 +39,13 @@ public abstract class AbstractViewController {
 
     protected abstract void setEvents();
  
+    public Notifier getNotifier() {
+        return notifier;
+    }
+
+    public void setNotifier(Notifier notifier) {
+        this.notifier = notifier;
+    }
+    
 
 }

@@ -41,42 +41,48 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="lbl_customerName" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbl_clientName" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="field_customerName" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="field_clientName" min="-2" pref="105" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lbl_customerPhone" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_clientPhone" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lbl_customerAddressStreet" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lbl_customerAddress" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_clientAddressStreet" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_clientAddress" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="field_customerAddressStreet" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="field_clientAddressStreet" min="-2" pref="37" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="lbl_customerAddressColony" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbl_clientAddressColony" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="field_customerAddressColony" min="-2" pref="60" max="-2" attributes="0"/>
+                              <Component id="field_clientAddressColony" min="-2" pref="60" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="lbl_customerAddressPostalCode" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbl_clientAddressPostalCode" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="field_customerAddressPostalCode" min="-2" pref="47" max="-2" attributes="0"/>
+                              <Component id="field_clientAddressPostalCode" min="-2" pref="47" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="lbl_customerAddressCrossing" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbl_clientAddressCrossing" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="field_customerAddressCrossing" min="-2" pref="77" max="-2" attributes="0"/>
+                              <Component id="field_clientAddressCrossing" min="-2" pref="77" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="lbl_customerPhoneLada" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_clientPhoneLada" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="field_customerPhoneLada" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="field_clientPhoneLada" min="-2" pref="41" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                      <Component id="lbl_customerPhoneNumber" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_clientPhoneNumber" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="field_customerPhoneNumber" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="field_clientPhoneNumber" min="-2" pref="90" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lbl_clientEmail" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="field_clientEmail" min="-2" pref="137" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="25" max="32767" attributes="0"/>
@@ -89,32 +95,41 @@
               <Component id="lbl_tittle" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_customerName" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_customerName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbl_clientName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_clientName" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-              <Component id="lbl_customerPhone" min="-2" max="-2" attributes="0"/>
+              <Component id="lbl_clientPhone" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_customerPhoneLada" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_customerPhoneLada" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbl_customerPhoneNumber" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_customerPhoneNumber" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbl_clientPhoneLada" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_clientPhoneLada" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbl_clientPhoneNumber" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_clientPhoneNumber" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Component id="lbl_customerAddress" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_customerAddressStreet" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_customerAddressStreet" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbl_customerAddressColony" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_customerAddressColony" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbl_customerAddressPostalCode" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_customerAddressPostalCode" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbl_customerAddressCrossing" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_customerAddressCrossing" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Component id="lbl_clientAddress" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_clientAddressStreet" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_clientAddressStreet" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_clientAddressColony" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_clientAddressColony" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_clientAddressPostalCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_clientAddressPostalCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_clientAddressCrossing" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_clientAddressCrossing" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="36" max="32767" attributes="0"/>
+                      <Component id="lbl_clientEmail" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="field_clientEmail" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="74" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btn_register" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btn_cancel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -140,64 +155,74 @@
         <Property name="text" type="java.lang.String" value="Registro de Clientes"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_customerName">
+    <Component class="javax.swing.JLabel" name="lbl_clientName">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombre: "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_customerPhone">
+    <Component class="javax.swing.JLabel" name="lbl_clientPhone">
       <Properties>
         <Property name="text" type="java.lang.String" value="Telefono"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_customerAddress">
+    <Component class="javax.swing.JLabel" name="lbl_clientAddress">
       <Properties>
         <Property name="text" type="java.lang.String" value="Direccion"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_customerPhoneLada">
+    <Component class="javax.swing.JLabel" name="lbl_clientPhoneLada">
       <Properties>
         <Property name="text" type="java.lang.String" value="Lada:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="field_customerName">
+    <Component class="javax.swing.JTextField" name="field_clientName">
     </Component>
-    <Component class="javax.swing.JTextField" name="field_customerPhoneLada">
+    <Component class="javax.swing.JTextField" name="field_clientPhoneLada">
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_customerPhoneNumber">
+    <Component class="javax.swing.JLabel" name="lbl_clientPhoneNumber">
       <Properties>
         <Property name="text" type="java.lang.String" value="Digitos:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="field_customerPhoneNumber">
+    <Component class="javax.swing.JTextField" name="field_clientPhoneNumber">
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_customerAddressStreet">
+    <Component class="javax.swing.JLabel" name="lbl_clientAddressStreet">
       <Properties>
         <Property name="text" type="java.lang.String" value="Calle:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="field_customerAddressStreet">
+    <Component class="javax.swing.JTextField" name="field_clientAddressStreet">
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_customerAddressColony">
+    <Component class="javax.swing.JLabel" name="lbl_clientAddressColony">
       <Properties>
         <Property name="text" type="java.lang.String" value="Colonia:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="field_customerAddressColony">
+    <Component class="javax.swing.JTextField" name="field_clientAddressColony">
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_customerAddressPostalCode">
+    <Component class="javax.swing.JLabel" name="lbl_clientAddressPostalCode">
       <Properties>
         <Property name="text" type="java.lang.String" value="Numero Postal:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="field_customerAddressPostalCode">
+    <Component class="javax.swing.JTextField" name="field_clientAddressPostalCode">
     </Component>
-    <Component class="javax.swing.JLabel" name="lbl_customerAddressCrossing">
+    <Component class="javax.swing.JLabel" name="lbl_clientAddressCrossing">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cruzamientos:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="field_customerAddressCrossing">
+    <Component class="javax.swing.JTextField" name="field_clientAddressCrossing">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbl_clientEmail">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Correo Electronico:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="field_clientEmail">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="field_clientEmailActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

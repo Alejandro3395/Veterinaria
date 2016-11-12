@@ -57,8 +57,12 @@ public class Phone implements Serializable{
         return lada;
     }
 
-    public void setLada(String lada) {
-        this.lada = lada;
+    public void setLada(String lada) throws InvalidFieldException{
+        if(isValidLada(lada)){
+            this.lada = lada;
+        }else{
+            throw new InvalidFieldException("Datos invalidos en el LADA!");
+        }
     }
 
     public String getNumber() {
@@ -66,7 +70,11 @@ public class Phone implements Serializable{
     }
 
     public void setNumber(String number) {
-        this.number = number;
+        if (isValidNumber(number)){
+            this.number = number;
+        }else{
+            throw new InvalidFieldException("DAtos invalidos Numero");
+        }
     }
     
     

@@ -160,8 +160,7 @@ public class DoctorManager {
             ArrayList<String> doctorData = new ArrayList<>( getDoctorData(doctor) );
             
             if(isNewData(doctorData, newDoctorData)){
-                //procedemos a mover los datos de el objeto doctor contra los de newDoctorData 
-                Doctor updatedDoctor = updateData(doctor,newDoctorData); //EXCEPCION
+                Doctor updatedDoctor = updateData(doctor,newDoctorData);
                 updateDoctor(updatedDoctor);
                 message = "SUCCESS";
             }else{
@@ -176,7 +175,6 @@ public class DoctorManager {
     
     private Doctor updateData(Doctor doctor, ArrayList<String> newDoctorData) throws InvalidFieldException{
         
-        //obtenemos los valores del arraylist
         String newDoctorName = newDoctorData.get(nameIndex);
         int  newDoctorPostalCode = Integer.valueOf(newDoctorData.get(postalCodeIndex));
         String newDoctorAddressStreet = newDoctorData.get(adressStreetIndex);
@@ -187,7 +185,6 @@ public class DoctorManager {
         String newDoctorRFC = newDoctorData.get(RFCIndex);
         String newDoctorIdentityCard = newDoctorData.get(identityCardIndex);
         
-        //sustituimos valores
         doctor.setName(newDoctorName);
         
         Address newAddress = new Address(newDoctorPostalCode,newDoctorAddressStreet,newDoctorAddressColony,newDoctorAddressCross);
@@ -257,19 +254,5 @@ public class DoctorManager {
         return (ArrayList<Doctor>) doctorDAO.getList();
     }
     
-    public int getDoctorId(ArrayList<String> doctorData){
-        int id = 0;
-        
-        ArrayList<Doctor> doctorList = getDoctorList();
-        String doctorUserName = doctorData.get(userNameIndex);
-        
-        for(int i =0; i < doctorList.size(); i++){
-            String userName = doctorList.get(i).getUser().getUserName().toString();
-            if(doctorUserName.equals(userName)){
-               id = (int) doctorList.get(i).getId();
-            }
-        }
-        
-        return id;
-    }
+   
 }

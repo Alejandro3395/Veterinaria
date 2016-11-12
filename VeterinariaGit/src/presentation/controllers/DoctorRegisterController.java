@@ -25,8 +25,9 @@ import presentation.views.DoctorRegisterView;
 public class DoctorRegisterController extends AbstractRegisterController {
     private DoctorRegisterView doctorRegisterView;
     private DoctorManagerHelper doctorManagerHelper;
-    private static int registerOption = 1;
     
+    private static int doctorDataIndex = 0;
+    private static int userDoctorDataIndex = 1;
     
     public DoctorRegisterController(DoctorManagerHelper doctorManager){
         setDoctorRegisterView(new DoctorRegisterView());
@@ -43,9 +44,6 @@ public class DoctorRegisterController extends AbstractRegisterController {
         this.doctorManagerHelper = doctorManagerHelper;
     }
 
-
-
-
     public DoctorRegisterView getDoctorRegisterView() {
         return doctorRegisterView;
     }
@@ -54,9 +52,8 @@ public class DoctorRegisterController extends AbstractRegisterController {
         this.doctorRegisterView = doctorRegisterView;
     }
     
-    private void updateTable(){
+    private void updateManagerViewTable(){
         getDoctorManagerHelper().updateTable();
-        
     }
     
     @Override
@@ -78,6 +75,7 @@ public class DoctorRegisterController extends AbstractRegisterController {
     protected void setEvents() {
         getDoctorRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
         getDoctorRegisterView().getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
+        
     }
     
     private void cancelRegistration(){
@@ -94,9 +92,11 @@ public class DoctorRegisterController extends AbstractRegisterController {
     private void proceedWithRegistration(){
         
         ArrayList<String> data = new ArrayList<String>(obtainData());
-        
-        ArrayList<String> doctorData = new ArrayList<String>(data.subList(0, 9));
-        ArrayList<String> userDoctorData = new ArrayList<String>(data.subList(9, data.size()));
+
+        ArrayList<ArrayList> parsedData = new ArrayList<ArrayList>(parseData(data));
+
+        ArrayList<String> doctorData = new ArrayList<String>(parsedData.get(doctorDataIndex));
+        ArrayList<String> userDoctorData = new ArrayList<String>(parsedData.get(userDoctorDataIndex));
         
         boolean isValidField =!isEmptyFields(data);
         
@@ -107,10 +107,8 @@ public class DoctorRegisterController extends AbstractRegisterController {
             DoctorManager doctorManager = DoctorManager.GetInstance();
             message = doctorManager.registerDoctor(doctorData,userDoctorData);
             if(message.equals(successStatus)){
-                getNotifier().showSuccessMessage("Success", message);
-                //UserDoctor userDoctor = new UserDoctor( doctorManager.createUserDoctor(userDoctorData) );
-                int id = doctorManager.getDoctorId(userDoctorData);
-                updateTable();
+                getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Doctor");
+                updateManagerViewTable();
                 closeWindow();
             }else{
                 getNotifier().showWarningMessage( message );
@@ -119,6 +117,17 @@ public class DoctorRegisterController extends AbstractRegisterController {
             message = "Rellene todos los campos";
             getNotifier().showWarningMessage( message );
         }
+    }
+
+    private ArrayList<ArrayList> parseData(ArrayList<String> data){
+        ArrayList<String> doctorData = new ArrayList<String>(data.subList(0, 9));
+        ArrayList<String> userDoctorData = new ArrayList<String>(data.subList(9, data.size()));
+        
+        ArrayList<ArrayList> parsedData = new ArrayList<ArrayList>();
+        parsedData.add(doctorData);
+        parsedData.add(userDoctorData);
+
+        return parsedData;
     }
     
      /**

@@ -14,12 +14,12 @@ import javax.swing.JTable;
  *
  * @author mannu
  */
-public class DoctorManagerView extends javax.swing.JFrame {
+public class ClientManagerView extends javax.swing.JFrame {
 
     /**
      * Creates new form DoctorCRUDView
      */
-    public DoctorManagerView() {
+    public ClientManagerView() {
         initComponents();
     }
 
@@ -32,29 +32,26 @@ public class DoctorManagerView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        btn_modifyDoctor = new javax.swing.JButton();
-        btn_addDoctor = new javax.swing.JButton();
-        btn_deleteDoctor = new javax.swing.JButton();
+        btn_modifyClient = new javax.swing.JButton();
+        btn_addClient = new javax.swing.JButton();
+        btn_deleteClient = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_doctorTable = new javax.swing.JTable();
+        table_clientTable = new javax.swing.JTable();
         btn_back = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Doctor");
+        btn_modifyClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/modify.png"))); // NOI18N
+        btn_modifyClient.setText("Modificar Cliente");
 
-        btn_modifyDoctor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/modify.png"))); // NOI18N
-        btn_modifyDoctor.setText("Modificar Doctor");
+        btn_addClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/add.png"))); // NOI18N
+        btn_addClient.setText("Añadir Cliente");
 
-        btn_addDoctor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/add.png"))); // NOI18N
-        btn_addDoctor.setText("Añadir Doctor");
+        btn_deleteClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/delete.png"))); // NOI18N
+        btn_deleteClient.setText("Eliminar Cliente");
 
-        btn_deleteDoctor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/delete.png"))); // NOI18N
-        btn_deleteDoctor.setText("Eliminar Doctor");
-
-        table_doctorTable.setModel(new javax.swing.table.DefaultTableModel(
+        table_clientTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -77,7 +74,7 @@ public class DoctorManagerView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(table_doctorTable);
+        jScrollPane1.setViewportView(table_clientTable);
 
         btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/back-arrow.png"))); // NOI18N
         btn_back.addActionListener(new java.awt.event.ActionListener() {
@@ -87,7 +84,7 @@ public class DoctorManagerView extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Registros de Doctor");
+        jLabel2.setText("Registros de Empleado");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,47 +93,38 @@ public class DoctorManagerView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(30, 30, 30))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(257, 257, 257)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_deleteDoctor)
-                        .addGap(91, 91, 91)
-                        .addComponent(btn_addDoctor)
+                        .addComponent(btn_deleteClient)
+                        .addGap(96, 96, 96)
+                        .addComponent(btn_addClient)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_modifyDoctor)))
+                        .addComponent(btn_modifyClient)))
                 .addGap(48, 48, 48))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_modifyDoctor)
+                        .addComponent(btn_modifyClient)
                         .addGap(17, 17, 17))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_deleteDoctor)
-                        .addComponent(btn_addDoctor)))
+                        .addComponent(btn_deleteClient)
+                        .addComponent(btn_addClient)))
                 .addGap(30, 30, 30))
         );
 
@@ -164,31 +152,37 @@ public class DoctorManagerView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DoctorManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DoctorManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DoctorManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DoctorManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DoctorManagerView().setVisible(true);
+                new ClientManagerView().setVisible(true);
             }
         });
     }
 
-    public JButton getBtn_addDoctor() {
-        return btn_addDoctor;
+    public JButton getBtn_addClient() {
+        return btn_addClient;
     }
 
-    public void setBtn_addDoctor(JButton btn_addDoctor) {
-        this.btn_addDoctor = btn_addDoctor;
+    public void setBtn_addClient(JButton btn_addClient) {
+        this.btn_addClient = btn_addClient;
     }
 
     public JButton getBtn_back() {
@@ -199,28 +193,20 @@ public class DoctorManagerView extends javax.swing.JFrame {
         this.btn_back = btn_back;
     }
 
-    public JButton getBtn_deleteDoctor() {
-        return btn_deleteDoctor;
+    public JButton getBtn_deleteClient() {
+        return btn_deleteClient;
     }
 
-    public void setBtn_deleteDoctor(JButton btn_deleteDoctor) {
-        this.btn_deleteDoctor = btn_deleteDoctor;
+    public void setBtn_deleteClient(JButton btn_deleteClient) {
+        this.btn_deleteClient = btn_deleteClient;
     }
 
-    public JButton getBtn_modifyDoctor() {
-        return btn_modifyDoctor;
+    public JButton getBtn_modifyClient() {
+        return btn_modifyClient;
     }
 
-    public void setBtn_modifyDoctor(JButton btn_modifyDoctor) {
-        this.btn_modifyDoctor = btn_modifyDoctor;
-    }
-
-    public JLabel getjLabel1() {
-        return jLabel1;
-    }
-
-    public void setjLabel1(JLabel jLabel1) {
-        this.jLabel1 = jLabel1;
+    public void setBtn_modifyClient(JButton btn_modifyClient) {
+        this.btn_modifyClient = btn_modifyClient;
     }
 
     public JLabel getjLabel2() {
@@ -239,23 +225,23 @@ public class DoctorManagerView extends javax.swing.JFrame {
         this.jScrollPane1 = jScrollPane1;
     }
 
-    public JTable getTable_doctorTable() {
-        return table_doctorTable;
+    public JTable getTable_clientTable() {
+        return table_clientTable;
     }
 
-    public void setTable_doctorTable(JTable table_doctorTable) {
-        this.table_doctorTable = table_doctorTable;
+    public void setTable_clientTable(JTable table_clientTable) {
+        this.table_clientTable = table_clientTable;
     }
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_addDoctor;
+    private javax.swing.JButton btn_addClient;
     private javax.swing.JButton btn_back;
-    private javax.swing.JButton btn_deleteDoctor;
-    private javax.swing.JButton btn_modifyDoctor;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btn_deleteClient;
+    private javax.swing.JButton btn_modifyClient;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable table_doctorTable;
+    private javax.swing.JTable table_clientTable;
     // End of variables declaration//GEN-END:variables
 }
