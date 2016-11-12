@@ -9,6 +9,7 @@ import presentation.controllers.ClientManagerHelper;
 import presentation.controllers.DoctorManagerHelper;
 import presentation.controllers.EmployeeManagerHelper;
 import presentation.controllers.IntroController;
+import presentation.controllers.SupplierManagerHelper;
 
 /**
  *
@@ -26,9 +27,11 @@ public class Main {
             doc.openWindow();
             EmployeeManagerHelper em = new EmployeeManagerHelper();
             em.openWindow();
-        */
             ClientManagerHelper cl = new ClientManagerHelper();
             cl.openWindow();
+        */
+            SupplierManagerHelper sp = new SupplierManagerHelper();
+            sp.openWindow();
            
     }
     

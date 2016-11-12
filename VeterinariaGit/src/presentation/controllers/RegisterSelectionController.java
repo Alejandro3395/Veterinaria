@@ -25,7 +25,7 @@ import presentation.views.RegisterSelectionView;
 public class RegisterSelectionController extends AbstractViewController {
     private RegisterSelectionView registerSelectionView;
     private EmployeeManagerHelper employeeManagerHelper;
-    private SupplierRegisterController supplierRegisterController;
+    private SupplierManagerHelper supplierManagerHelper;
     private ProductSelectionController productRegisterController;
     private ClientManagerHelper clientManagerHelper;
     private PetRegisterController petRegisterController;
@@ -35,7 +35,7 @@ public class RegisterSelectionController extends AbstractViewController {
         setRegisterSelectionView(new RegisterSelectionView());
         setEmployeeManagerHelper(new EmployeeManagerHelper());
         setDoctorManagerHelper( new DoctorManagerHelper());
-        setSupplierRegisterController(new SupplierRegisterController());
+        setSupplierManagerHelper(new SupplierManagerHelper());
         setProductRegisterController(new ProductSelectionController());
         setClientManagerHelper(new ClientManagerHelper());
         setPetRegisterController(new PetRegisterController());
@@ -75,17 +75,15 @@ public class RegisterSelectionController extends AbstractViewController {
     public void setPetRegisterController(PetRegisterController petRegisterController) {
         this.petRegisterController = petRegisterController;
     }
+
+    public SupplierManagerHelper getSupplierManagerHelper() {
+        return supplierManagerHelper;
+    }
+
+    public void setSupplierManagerHelper(SupplierManagerHelper supplierManagerHelper) {
+        this.supplierManagerHelper = supplierManagerHelper;
+    }
  
-
-
-
-    public SupplierRegisterController getSupplierRegisterController() {
-        return supplierRegisterController;
-    }
-
-    public void setSupplierRegisterController(SupplierRegisterController supplierRegisterController) {
-        this.supplierRegisterController = supplierRegisterController;
-    }
 
     public ProductSelectionController getProductRegisterController() {
         return productRegisterController;
@@ -143,7 +141,7 @@ public class RegisterSelectionController extends AbstractViewController {
             break;
             
             case 3:
-                getSupplierRegisterController().openWindow();
+                getSupplierManagerHelper().openWindow();
             break;
             
             case 4:
