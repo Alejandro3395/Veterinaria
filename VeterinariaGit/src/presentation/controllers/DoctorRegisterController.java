@@ -54,8 +54,8 @@ public class DoctorRegisterController extends AbstractRegisterController {
         this.doctorRegisterView = doctorRegisterView;
     }
     
-    private void updateTable(int option, int id){
-        getDoctorManagerHelper().updateTable(option,id);
+    private void updateTable(){
+        getDoctorManagerHelper().updateTable();
         
     }
     
@@ -110,7 +110,7 @@ public class DoctorRegisterController extends AbstractRegisterController {
                 getNotifier().showSuccessMessage("Success", message);
                 //UserDoctor userDoctor = new UserDoctor( doctorManager.createUserDoctor(userDoctorData) );
                 int id = doctorManager.getDoctorId(userDoctorData);
-                updateTable(registerOption,id);
+                updateTable();
                 closeWindow();
             }else{
                 getNotifier().showWarningMessage( message );

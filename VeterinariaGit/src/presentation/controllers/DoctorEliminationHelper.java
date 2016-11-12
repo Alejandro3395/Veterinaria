@@ -18,7 +18,6 @@ import presentation.views.DoctorEliminationView;
 public class DoctorEliminationHelper extends AbstractViewController {
     private DoctorEliminationView doctorEliminationView;
     private DoctorManagerHelper doctorManagerHelper;
-    private static int modifyOption = 2;
     
     public DoctorEliminationHelper(DoctorManagerHelper doctorManager){
         setDoctorEliminationView( new DoctorEliminationView());
@@ -72,18 +71,23 @@ public class DoctorEliminationHelper extends AbstractViewController {
         DoctorManager doctorManager = DoctorManager.GetInstance();
         doctorManager.eliminateDoctor(id);
         
-        Doctor doctor = doctorManager.getDoctor(id);
+        //Doctor doctor = doctorManager.getDoctor(id);
         
-        updateTable(modifyOption ,id);
+        updateTable();
     }
     
     private void cancelElimination(){
         getDoctorEliminationView().dispose();
     }
     
-    private void updateTable(int option, int id){
-        getDoctorManagerHelper().updateTable(option,id);
+    private void updateTable(){
+        closeWindow();
         
     }
     
+    
+    private void closeWindow(){
+        getDoctorManagerHelper().updateTable();
+
+    }
 }

@@ -27,7 +27,6 @@ public class DoctorManagerHelper extends AbstractViewController {
     private DoctorRegisterController doctorRegisterController;
     private DoctorModificationHelper doctorModificationHelper;
     private DoctorEliminationHelper doctorEliminationHelper;
-    public static int index = 0;
     private static int registerOption = 1;
     private static int modifyOption = 2;
     
@@ -99,11 +98,21 @@ public class DoctorManagerHelper extends AbstractViewController {
     
     public void loadDoctorRegister(){
         
+        DefaultTableModel model = (DefaultTableModel) getDoctorManagerView().getTable_doctorTable().getModel();
+        
+        int rowCount = model.getRowCount();
+        System.out.println(rowCount);
+        
+        if(rowCount !=0){model.setRowCount(0);}
+        
+        
         DoctorManager doctorManager = DoctorManager.GetInstance();
         
         ArrayList<Doctor> doctorList = doctorManager.getDoctorList() ;
 
         setTableContent(doctorList);
+        
+        
     }
     
     private void openModificationView(){
@@ -138,7 +147,7 @@ public class DoctorManagerHelper extends AbstractViewController {
     
     private void setTableContent(ArrayList<Doctor> doctorList){
         
-        for(index =0; index < doctorList.size(); index++ ){
+        for(int index =0; index < doctorList.size(); index++ ){
             Doctor doctorData = doctorList.get(index) ;
             addDoctorToTable(doctorData);
         }
@@ -166,46 +175,8 @@ public class DoctorManagerHelper extends AbstractViewController {
         model.addRow(row); 
     }
     
-    private void modifyDoctorValue(Doctor doctor,int id){
-        //falta buscar la row con los datos proporcionados y eliminarla
-        
-        DefaultTableModel model = (DefaultTableModel) getDoctorManagerView().getTable_doctorTable().getModel();
-        
-        long doctorId = doctor.getId();
-        //long id = index +1;
-        String doctorName = doctor.getName();
-        String doctorStreet =  doctor.getAddress().getStreet();
-        int doctorPostalCode = doctor.getAddress().getZipCode();
-        String doctorColony = doctor.getAddress().getColony();
-        String doctorCross = doctor.getAddress().getCrossovers();
-        String doctorLada = doctor.getPhone().getLada();
-        String doctorNumber = doctor.getPhone().getNumber();
-        
-        model.setValueAt(doctorId, id-1, 0);
-        model.setValueAt(doctorName, id-1, 1);
-        model.setValueAt(doctorStreet, id-1, 2);
-        model.setValueAt(doctorPostalCode, id-1, 3);
-        model.setValueAt(doctorCross, id-1, 4);
-        model.setValueAt(doctorLada, id-1, 5);
-        model.setValueAt(doctorNumber, id-1, 6);
-        
-    }
-    
-    public void updateTable(int option,int id){
-        
-        DoctorManager doctorManager = DoctorManager.GetInstance();
-        Doctor doctor = doctorManager.getDoctor(id);
-        
-        switch(option){
-            
-            case 1:
-                addDoctorToTable(doctor);
-            break;
-            
-            case 2:
-                modifyDoctorValue(doctor,id);
-            break;    
-        }   
+    public void updateTable(){
+        loadDoctorRegister();
     }
     
     

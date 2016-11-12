@@ -91,7 +91,8 @@ public class DoctorModificationHelper extends AbstractRegisterController {
         if( isValidField ){
             DoctorManager doctorManager = DoctorManager.GetInstance();
             doctorManager.modifyDoctor(data,id);
-            getDoctorManagerHelper().updateTable(modifyOption, id);
+            getDoctorManagerHelper().updateTable();
+            closeWindow();
         }else{
              message = "Rellene todos los campos";
             getNotifier().showWarningMessage( message );
@@ -99,6 +100,10 @@ public class DoctorModificationHelper extends AbstractRegisterController {
     }
     
     private void cancelModification(){
+        closeWindow();
+    }
+    
+    private void closeWindow(){
         getDoctorModificationView().dispose();
     }
 
