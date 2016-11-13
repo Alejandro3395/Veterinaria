@@ -21,7 +21,10 @@ public class Pet implements Serializable{
     
     
     //Constructor
-
+    public Pet(){
+        
+    }
+    
     public Pet( String name, String breed,int age) {
         this.name = name;
         this.breed = breed;

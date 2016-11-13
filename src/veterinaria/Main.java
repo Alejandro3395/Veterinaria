@@ -17,6 +17,8 @@ import Entitys.UserEmployee;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
+import org.jvnet.substance.SubstanceLookAndFeel;
 import presentation.controllers.IntroController;
 import presentation.controllers.LoginMainViewHelper;
 import presentation.views.LoginMainView;
@@ -31,6 +33,8 @@ public class Main implements Runnable{
      * @param args the command line arguments
      */
     public static void main(String[] args)  throws InvalidFieldException   {
+        JFrame.setDefaultLookAndFeelDecorated(true); //que nos permite dejar a Substance la decoracion ( por asi decirlo) 
+SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.MagmaSkin"); // Setencia que aplica el skin Creme de Substance
         createIntroView();
     }
 
@@ -44,11 +48,27 @@ public class Main implements Runnable{
         
         Address address = new Address(97320, "64", "Francisco I Madero", "31 y 33");
         Phone phone= new Phone( "969", "1234567890");
-        Client client = new Client("Manuel Alejandro", address, phone, "Mannuel_3395@hotmail.com");
-        client.addPets(pet1);
-        client.addPets(pet2);
-        
+        Client client = new Client(" Alejandro Bojorquez", address, phone, "Mannuel_3395@hotmail.com");
+        client.getPets().add(pet1);
+        client.getPets().add(pet2);
+        //Se agrega el cliente
         clientDAO.add(client);
+        //se obtiene el cliente agregado
+        Client client2= (Client) clientDAO.get(1);
+        
+
+        
+        Pet pet4 = new Pet("Camil", "Frech", 8);
+        
+        client2.getPets().add(pet4);
+        clientDAO.update(client2);
+        
+        System.out.println(((Client)clientDAO.get(1)).getPets().size());
+        
+        Client client3 = (Client) clientDAO.get(1);
+        client3.getPets().remove(client3.getPets().get(1));
+        clientDAO.update(client3);
+        
         
         //UserEmployee user= new UserEmployee("Kinster", "Bojorquez3395","mannuel_3395@hotmail.com");
         
@@ -61,8 +81,8 @@ public class Main implements Runnable{
         
         //employeeDAO.update(employee);
 
-        //IntroController IntroController = new IntroController();
-        //IntroController.openWindow();
+        /*IntroController IntroController = new IntroController();
+        IntroController.openWindow();*/
     }
 
     @Override
