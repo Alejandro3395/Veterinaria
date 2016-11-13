@@ -67,11 +67,11 @@ public class EmployeeLoginViewHelper extends AbstractRegisterController {
         ArrayList<String> data = new ArrayList<String>(obtainData());
         boolean isValidField =!isEmptyFields(data);
         boolean isValidUser = false;
+        SessionManager sessionManager = SessionManager.GetInstance();
         
         
-        if(isValidField){
-            SessionManager sessionManager = SessionManager.GetInstance();
-            isValidUser = sessionManager.EmployeeUserAuthentification(data);
+        if(isValidField){  
+            isValidUser = sessionManager.employeeUserAuthentification(data);
         }
         
         if(isValidUser){
@@ -80,7 +80,7 @@ public class EmployeeLoginViewHelper extends AbstractRegisterController {
         
     }
         
-
+    //Se obtiene la informacion de la vista
     @Override
     protected ArrayList<String> obtainData() {
         ArrayList<String> data = new ArrayList<String>();

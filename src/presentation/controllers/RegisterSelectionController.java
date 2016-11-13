@@ -24,31 +24,49 @@ import presentation.views.RegisterSelectionView;
  */
 public class RegisterSelectionController extends AbstractViewController {
     private RegisterSelectionView registerSelectionView;
-    private EmployeeRegisterController employeeRegisterController;
-    private DoctorRegisterController doctorRegisterController;
-    private SupplierRegisterController supplierRegisterController;
+    private EmployeeManagerHelper employeeManagerHelper;
+    private SupplierManagerHelper supplierManagerHelper;
     private ProductSelectionController productRegisterController;
-    private ClientRegisterController customerRegisterController;
+    private ClientManagerHelper clientManagerHelper;
     private PetRegisterController petRegisterController;
+    private DoctorManagerHelper doctorManagerHelper;
     
     public RegisterSelectionController(){
         setRegisterSelectionView(new RegisterSelectionView());
-        setEmployeeRegisterController(new EmployeeRegisterController());
-        setDoctorRegisterController(new DoctorRegisterController());
-        setSupplierRegisterController(new SupplierRegisterController());
+        setEmployeeManagerHelper(new EmployeeManagerHelper());
+        setDoctorManagerHelper( new DoctorManagerHelper());
+        setSupplierManagerHelper(new SupplierManagerHelper());
         setProductRegisterController(new ProductSelectionController());
-        setClientRegisterController(new ClientRegisterController());
+        setClientManagerHelper(new ClientManagerHelper());
         setPetRegisterController(new PetRegisterController());
         initializeView();
     }
 
-    public ClientRegisterController getClientRegisterController() {
-        return customerRegisterController;
+    public DoctorManagerHelper getDoctorManagerHelper() {
+        return doctorManagerHelper;
     }
 
-    public void setClientRegisterController(ClientRegisterController customerRegisterController) {
-        this.customerRegisterController = customerRegisterController;
+    public void setDoctorManagerHelper(DoctorManagerHelper doctorManagerHelper) {
+        this.doctorManagerHelper = doctorManagerHelper;
     }
+
+    public EmployeeManagerHelper getEmployeeManagerHelper() {
+        return employeeManagerHelper;
+    }
+
+    public void setEmployeeManagerHelper(EmployeeManagerHelper employeeManagerHelper) {
+        this.employeeManagerHelper = employeeManagerHelper;
+    }
+
+    public ClientManagerHelper getClientManagerHelper() {
+        return clientManagerHelper;
+    }
+
+    public void setClientManagerHelper(ClientManagerHelper clientManagerHelper) {
+        this.clientManagerHelper = clientManagerHelper;
+    }
+    
+ 
 
     public PetRegisterController getPetRegisterController() {
         return petRegisterController;
@@ -57,30 +75,15 @@ public class RegisterSelectionController extends AbstractViewController {
     public void setPetRegisterController(PetRegisterController petRegisterController) {
         this.petRegisterController = petRegisterController;
     }
-    
-    public EmployeeRegisterController getEmployeeRegisterController() {
-        return employeeRegisterController;
+
+    public SupplierManagerHelper getSupplierManagerHelper() {
+        return supplierManagerHelper;
     }
 
-    public void setEmployeeRegisterController(EmployeeRegisterController employeeRegisterController) {
-        this.employeeRegisterController = employeeRegisterController;
+    public void setSupplierManagerHelper(SupplierManagerHelper supplierManagerHelper) {
+        this.supplierManagerHelper = supplierManagerHelper;
     }
-
-    public DoctorRegisterController getDoctorRegisterController() {
-        return doctorRegisterController;
-    }
-
-    public void setDoctorRegisterController(DoctorRegisterController doctorRegisterController) {
-        this.doctorRegisterController = doctorRegisterController;
-    }
-
-    public SupplierRegisterController getSupplierRegisterController() {
-        return supplierRegisterController;
-    }
-
-    public void setSupplierRegisterController(SupplierRegisterController supplierRegisterController) {
-        this.supplierRegisterController = supplierRegisterController;
-    }
+ 
 
     public ProductSelectionController getProductRegisterController() {
         return productRegisterController;
@@ -118,27 +121,27 @@ public class RegisterSelectionController extends AbstractViewController {
      */
     @Override
     protected void setEvents() {
-        getRegisterSelectionView().getBtn_accept().addActionListener(actionEvent -> getValue());
+        getRegisterSelectionView().getBtn_accept().addActionListener(actionEvent -> getSelectedOption());
     }
      
     /**
      *  This method redirects the user to the selected view.
      */
-    private void getValue(){
+    private void getSelectedOption(){
         
         int value = registerSelectionView.getRadioGroupValue();
         switch(value){
             
             case 1:
-                getEmployeeRegisterController().openWindow();
+                getEmployeeManagerHelper().openWindow();
             break;
             
             case 2:
-                getDoctorRegisterController().openWindow();
+                getDoctorManagerHelper().openWindow();
             break;
             
             case 3:
-                getSupplierRegisterController().openWindow();
+                getSupplierManagerHelper().openWindow();
             break;
             
             case 4:
@@ -146,7 +149,7 @@ public class RegisterSelectionController extends AbstractViewController {
             break;
             
             case 5:
-                getClientRegisterController().openWindow();
+                getClientManagerHelper().openWindow();
             break;
             
             case 6:

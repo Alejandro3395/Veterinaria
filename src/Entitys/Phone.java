@@ -25,12 +25,16 @@ public class Phone implements Serializable{
 
     public Phone(String lada, String number) throws InvalidFieldException {
         
-        if(isValidLada(lada) && isValidNumber(number)){
-            this.lada = lada;
-            this.number = number;
+        if(isValidLada(lada)){
+            if (isValidNumber(number)){
+                this.lada = lada;
+                this.number = number;
+            }else{
+                throw new InvalidFieldException("DAtos invalidos Numero");
+            }
         }else{
-            throw new InvalidFieldException("Datos invalidos en el telefono!");
-        }
+            throw new InvalidFieldException("Datos invalidos en el LADA!");
+        } 
         
     }
     
@@ -54,16 +58,24 @@ public class Phone implements Serializable{
         return lada;
     }
 
-    public void setLada(String lada) {
-        this.lada = lada;
+    public void setLada(String lada) throws InvalidFieldException {
+        if(isValidLada(lada)){
+            this.lada = lada;
+        }else{
+            throw new InvalidFieldException("Datos invalidos en el LADA!");
+        }
     }
 
     public String getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setNumber(String number) throws InvalidFieldException {
+        if (isValidNumber(number)){
+            this.number = number;
+        }else{
+            throw new InvalidFieldException("DAtos invalidos Numero");
+        }
     }
     
     

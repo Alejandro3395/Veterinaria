@@ -35,7 +35,7 @@ public class SessionManager {
     
     
     
-    public Boolean ValidateUserDoctor(ArrayList<String> dataUserDoctor){
+    public Boolean validateUserDoctor(ArrayList<String> dataUserDoctor){
          List<UserDoctor> userDoctorData;
          Boolean isValid = false;
          
@@ -48,12 +48,12 @@ public class SessionManager {
          return isValid;
     }
     
-    public Boolean EmployeeUserAuthentification(ArrayList<String> dataUserEmployee){
+    public Boolean employeeUserAuthentification(ArrayList<String> dataUserEmployee){
          List<Employee> employeeData;
          UserEmployee userEmployee;
          Boolean isValid = false;
          
-         employeeData = employeeDAO.getPassAndUser();
+         employeeData = employeeDAO.getEmployeeList();
          for(Employee employee : employeeData){
              userEmployee = employee.getUser();
              if( dataUserEmployee.get(0).equals( userEmployee.getUserName() ) &&

@@ -16,8 +16,8 @@
     
     <!--Propiedades importantes-->
     <property name="show_sql">true</property>
-    <!--
-    <property name="hbm2ddl.auto">create-drop</property>--> <!--  Propiedad para eliminar y crear la base de datos-->
+   <!-- 
+    <property name="hbm2ddl.auto">create-drop</property>--><!--  Propiedad para eliminar y crear la base de datos-->
     
     <!-- Archivos de mapeo -->
     <mapping resource="Data/Mapping/medicine.hbm.xml"/>
@@ -26,6 +26,9 @@
     <mapping resource="Data/Mapping/Doctor.hbm.xml"/>
     <mapping resource="Data/Mapping/Employee.hbm.xml"/>
     <mapping resource="Data/Mapping/Client.hbm.xml"/>
+    <mapping resource="Data/Mapping/Pet.hbm.xml"/>
+    <mapping resource="Data/Mapping/Supplier.hbm.xml"/>
+    
    <!-- <mapping resource="Data/Mapping/Supplier.hbm.xml"/> -->
   </session-factory>
 </hibernate-configuration>

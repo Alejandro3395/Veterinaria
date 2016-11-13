@@ -48,9 +48,11 @@ public class MedicineManager {
     }
     
     
-    private void saveMedicine(Medicine medicine) {
+    private void addMedicine(Medicine medicine) {
         medicineDAO.add(medicine);
     }
+    
+    
     
 
     /**
@@ -77,7 +79,7 @@ public class MedicineManager {
         
         try{
             Medicine medicine = new Medicine(medicineName,medicineSupplier,medicineQuantity,medicineSellPrice,medicineDose,medicineExpirationDate,medicineAdministrationWay);
-            medicineManager.saveMedicine(medicine);
+            medicineManager.addMedicine(medicine);
         }catch(InvalidFieldException exception){
             System.out.println(exception.getMessage());
         }

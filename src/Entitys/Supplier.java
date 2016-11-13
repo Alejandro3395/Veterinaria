@@ -12,6 +12,8 @@
 */
 package Entitys;
 
+import exceptions.InvalidFieldException;
+
 
 public class Supplier {
     
@@ -30,6 +32,15 @@ public class Supplier {
         this.phone = phone;
     
         
+    }
+    
+    public Supplier(){
+        
+    }
+    
+    public Supplier(Supplier supplier) throws InvalidFieldException {
+        this.companyName = supplier.getCompanyName();
+        this.phone =  new Phone(supplier.getPhone().getLada(),supplier.getPhone().getNumber());
     }
     
     //Gets y sets

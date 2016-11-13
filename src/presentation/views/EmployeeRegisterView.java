@@ -60,7 +60,7 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
         btn_cancel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         field_employeeEmail = new javax.swing.JTextField();
-        field_employeePassword = new javax.swing.JTextField();
+        field_employeeUserPassword = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         field_employeeRFC = new javax.swing.JTextField();
 
@@ -150,7 +150,7 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(field_employeeUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                                     .addComponent(field_employeeEmail)
-                                    .addComponent(field_employeePassword)))
+                                    .addComponent(field_employeeUserPassword)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(56, 56, 56)
                                 .addComponent(lbl_employeePhoneNumber)
@@ -263,7 +263,7 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_employeePassword)
-                    .addComponent(field_employeePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(field_employeeUserPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(field_employeeEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -429,12 +429,12 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
         this.field_employeeName = field_employeeName;
     }
 
-    public JTextField getField_employeePassword() {
-        return field_employeePassword;
+    public JTextField getField_employeeUserPassword() {
+        return field_employeeUserPassword;
     }
 
-    public void setField_employeePassword(JPasswordField field_employeePassword) {
-        this.field_employeePassword = field_employeePassword;
+    public void setField_employeeUserPassword(JPasswordField field_employeePassword) {
+        this.field_employeeUserPassword = field_employeePassword;
     }
 
     public JTextField getField_employeePhoneLada() {
@@ -590,11 +590,11 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
     private javax.swing.JTextField field_employeeAddressStreet;
     private javax.swing.JTextField field_employeeEmail;
     private javax.swing.JTextField field_employeeName;
-    private javax.swing.JTextField field_employeePassword;
     private javax.swing.JTextField field_employeePhoneLada;
     private javax.swing.JTextField field_employeePhoneNumber;
     private javax.swing.JTextField field_employeeRFC;
     private javax.swing.JTextField field_employeeUserName;
+    private javax.swing.JTextField field_employeeUserPassword;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;

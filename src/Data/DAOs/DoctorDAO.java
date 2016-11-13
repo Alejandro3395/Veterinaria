@@ -100,6 +100,7 @@ public class DoctorDAO extends AbstractDAO<Doctor> {
       try{
          openSession();
          listDatos = session.createQuery("SELECT d.user FROM Doctor d").list();
+         
          transaction.commit();
       }catch (HibernateException e) {
          if (transaction!=null) transaction.rollback();

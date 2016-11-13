@@ -6,11 +6,7 @@
 package presentation.controllers;
 
 import bussiness.EmployeeManager;
-import exceptions.InvalidFieldException;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.WindowConstants;
 import presentation.AbstractRegisterController;
 import presentation.AbstractViewController;
@@ -29,11 +25,24 @@ import presentation.views.EmployeeRegisterView;
 */
 public class EmployeeRegisterController  extends AbstractRegisterController{
     private EmployeeRegisterView employeeRegisterView;
+    private EmployeeManagerHelper employeeManagerHelper;
+    private static int employeeDataIndex = 0;
+    private static int userEmployeeDataIndex = 1;
     
-    public EmployeeRegisterController(){
+    
+    public EmployeeRegisterController(EmployeeManagerHelper employeeManager){
         setEmployeeRegisterView(new EmployeeRegisterView());
+        setEmployeeManagerHelper( employeeManager);
         
         initializeView();
+    }
+
+    public EmployeeManagerHelper getEmployeeManagerHelper() {
+        return employeeManagerHelper;
+    }
+
+    public void setEmployeeManagerHelper(EmployeeManagerHelper employeeManagerHelper) {
+        this.employeeManagerHelper = employeeManagerHelper;
     }
 
     public EmployeeRegisterView getEmployeeRegisterView() {
@@ -43,9 +52,7 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
     public void setEmployeeRegisterView(EmployeeRegisterView employeeRegisterView) {
         this.employeeRegisterView = employeeRegisterView;
     }
-    
-    
-    
+ 
     @Override
     public void openWindow() {
         getEmployeeRegisterView().setVisible(true);
@@ -64,35 +71,49 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
      */
     @Override
     protected void setEvents() {
-        getEmployeeRegisterView().getBtn_register().addActionListener(actionEvent -> {
-            try {
-                registerEmployee();
-            } catch (InvalidFieldException ex) {
-                Logger.getLogger(EmployeeRegisterController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
+        getEmployeeRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
     }
     
-    /**
-     *  This method uses sends the data the view provides to the manager.
-     */
-    private void registerEmployee() throws InvalidFieldException {
-        
-          ArrayList<String> data = new ArrayList<String>(obtainData());
-        
-        ArrayList<String> employeeData = new ArrayList<String>(data.subList(0, 8));
-        ArrayList<String> userEmployeeData = new ArrayList<String>(data.subList(8, data.size()));
-        
+    private void proceedWithRegistration(){
+        ArrayList<String> data = new ArrayList<String>(obtainData());
+
+        ArrayList<ArrayList> parsedData = new ArrayList<ArrayList>(parseData(data));
+
+        ArrayList<String> employeeData = new ArrayList<String>(parsedData.get(employeeDataIndex));
+        ArrayList<String> userEmployeeData = new ArrayList<String>(parsedData.get(userEmployeeDataIndex));
         
         boolean isValidField =!isEmptyFields(data);
         
+        String message="";
+        String successStatus="SUCCESS";
+        
         if(isValidField){
             EmployeeManager employeeManager = EmployeeManager.GetInstance();
-                 employeeManager.createEntity(employeeData,userEmployeeData);
+            message = employeeManager.registerEmployee(employeeData,userEmployeeData);
+            if(message.equals(successStatus)){
+                getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Doctor");
+                updateManagerViewTable();
+                closeWindow();
+            }else{
+                getNotifier().showWarningMessage( message );
+            }
+        }else{
+            message = "Rellene todos los campos";
+            getNotifier().showWarningMessage( message );
         }
-        
     }
+    
+    private ArrayList<ArrayList> parseData(ArrayList<String> data){
+        ArrayList<String> doctorData = new ArrayList<String>(data.subList(0, 8));
+        ArrayList<String> userDoctorData = new ArrayList<String>(data.subList(8, data.size()));
+        
+        ArrayList<ArrayList> parsedData = new ArrayList<ArrayList>();
+        parsedData.add(doctorData);
+        parsedData.add(userDoctorData);
 
+        return parsedData;
+    }
+    
     /**
      * This method transforms the view form into an arraylist of strings for future
      * parsing.
@@ -131,7 +152,7 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
         String employeeUserName = getEmployeeRegisterView().getField_employeeUserName().getText();
         data.add(employeeUserName);
         
-        String employeeUserPassword = getEmployeeRegisterView().getField_employeePassword().getText();
+        String employeeUserPassword = getEmployeeRegisterView().getField_employeeUserPassword().getText();
         data.add(employeeUserPassword);
         
         String employeeUserEmail = getEmployeeRegisterView().getField_employeeEmail().getText();
@@ -139,5 +160,15 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
         
         return data;
     }
+
+    private void closeWindow() {
+        getEmployeeRegisterView().dispose();
+    }
+
+    private void updateManagerViewTable() {
+        getEmployeeManagerHelper().updateTable();
+    }
     
 }
+    
+

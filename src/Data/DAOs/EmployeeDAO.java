@@ -92,12 +92,19 @@ public class EmployeeDAO extends AbstractDAO<Employee> {
      
      
      /* Method to get a list with all the employees*/
-     public List <Employee> getPassAndUser(){
+     public List <Employee> getEmployeeList(){
          List<Employee> employeeDataList= null;
          
          try{
          openSession();
          employeeDataList = session.createQuery(" FROM Employee ").list();
+         /*Iterator<Employee> it =  employeeDataList.iterator();
+         while(it.hasNext()){
+             Employee var = it.next();
+             System.out.println("ID: "+ var.getId());
+             
+         } */     
+            
          transaction.commit();
          }catch (HibernateException e) {
          if (transaction!=null) transaction.rollback();

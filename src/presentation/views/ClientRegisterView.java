@@ -34,24 +34,24 @@ public class ClientRegisterView extends javax.swing.JFrame {
         btn_register = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
         lbl_tittle = new javax.swing.JLabel();
-        lbl_customerName = new javax.swing.JLabel();
-        lbl_customerPhone = new javax.swing.JLabel();
-        lbl_customerAddress = new javax.swing.JLabel();
-        lbl_customerPhoneLada = new javax.swing.JLabel();
-        field_customerName = new javax.swing.JTextField();
-        field_customerPhoneLada = new javax.swing.JTextField();
-        lbl_customerPhoneNumber = new javax.swing.JLabel();
-        field_customerPhoneNumber = new javax.swing.JTextField();
-        lbl_customerAddressStreet = new javax.swing.JLabel();
-        field_customerAddressStreet = new javax.swing.JTextField();
-        lbl_customerAddressColony = new javax.swing.JLabel();
-        field_customerAddressColony = new javax.swing.JTextField();
-        lbl_customerAddressPostalCode = new javax.swing.JLabel();
-        field_customerAddressPostalCode = new javax.swing.JTextField();
-        lbl_customerAddressCrossing = new javax.swing.JLabel();
-        field_customerAddressCrossing = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        field_customerEmail = new javax.swing.JTextField();
+        lbl_clientName = new javax.swing.JLabel();
+        lbl_clientPhone = new javax.swing.JLabel();
+        lbl_clientAddress = new javax.swing.JLabel();
+        lbl_clientPhoneLada = new javax.swing.JLabel();
+        field_clientName = new javax.swing.JTextField();
+        field_clientPhoneLada = new javax.swing.JTextField();
+        lbl_clientPhoneNumber = new javax.swing.JLabel();
+        field_clientPhoneNumber = new javax.swing.JTextField();
+        lbl_clientAddressStreet = new javax.swing.JLabel();
+        field_clientAddressStreet = new javax.swing.JTextField();
+        lbl_clientAddressColony = new javax.swing.JLabel();
+        field_clientAddressColony = new javax.swing.JTextField();
+        lbl_clientAddressPostalCode = new javax.swing.JLabel();
+        field_clientAddressPostalCode = new javax.swing.JTextField();
+        lbl_clientAddressCrossing = new javax.swing.JLabel();
+        field_clientAddressCrossing = new javax.swing.JTextField();
+        lbl_clientEmail = new javax.swing.JLabel();
+        field_clientEmail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,29 +61,29 @@ public class ClientRegisterView extends javax.swing.JFrame {
 
         lbl_tittle.setText("Registro de Clientes");
 
-        lbl_customerName.setText("Nombre: ");
+        lbl_clientName.setText("Nombre: ");
 
-        lbl_customerPhone.setText("Telefono");
+        lbl_clientPhone.setText("Telefono");
 
-        lbl_customerAddress.setText("Direccion");
+        lbl_clientAddress.setText("Direccion");
 
-        lbl_customerPhoneLada.setText("Lada:");
+        lbl_clientPhoneLada.setText("Lada:");
 
-        lbl_customerPhoneNumber.setText("Digitos:");
+        lbl_clientPhoneNumber.setText("Digitos:");
 
-        lbl_customerAddressStreet.setText("Calle:");
+        lbl_clientAddressStreet.setText("Calle:");
 
-        lbl_customerAddressColony.setText("Colonia:");
+        lbl_clientAddressColony.setText("Colonia:");
 
-        lbl_customerAddressPostalCode.setText("Numero Postal:");
+        lbl_clientAddressPostalCode.setText("Numero Postal:");
 
-        lbl_customerAddressCrossing.setText("Cruzamientos:");
+        lbl_clientAddressCrossing.setText("Cruzamientos:");
 
-        jLabel1.setText("Correo Electronico:");
+        lbl_clientEmail.setText("Correo Electronico:");
 
-        field_customerEmail.addActionListener(new java.awt.event.ActionListener() {
+        field_clientEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                field_customerEmailActionPerformed(evt);
+                field_clientEmailActionPerformed(evt);
             }
         });
 
@@ -107,42 +107,42 @@ public class ClientRegisterView extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbl_customerName)
+                                .addComponent(lbl_clientName)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(field_customerName, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lbl_customerPhone)
+                                .addComponent(field_clientName, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbl_clientPhone)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lbl_customerAddressStreet)
-                                    .addComponent(lbl_customerAddress))
+                                    .addComponent(lbl_clientAddressStreet)
+                                    .addComponent(lbl_clientAddress))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(field_customerAddressStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(field_clientAddressStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lbl_customerAddressColony)
+                                .addComponent(lbl_clientAddressColony)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(field_customerAddressColony, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(field_clientAddressColony, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lbl_customerAddressPostalCode)
+                                .addComponent(lbl_clientAddressPostalCode)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(field_customerAddressPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(field_clientAddressPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lbl_customerAddressCrossing)
+                                .addComponent(lbl_clientAddressCrossing)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(field_customerAddressCrossing, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(field_clientAddressCrossing, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addComponent(lbl_customerPhoneLada)
+                        .addComponent(lbl_clientPhoneLada)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(field_customerPhoneLada, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(field_clientPhoneLada, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(65, 65, 65)
-                        .addComponent(lbl_customerPhoneNumber)
+                        .addComponent(lbl_clientPhoneNumber)
                         .addGap(18, 18, 18)
-                        .addComponent(field_customerPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(field_clientPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1)
+                        .addComponent(lbl_clientEmail)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(field_customerEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(field_clientEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -151,35 +151,34 @@ public class ClientRegisterView extends javax.swing.JFrame {
                 .addComponent(lbl_tittle)
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_customerName)
-                    .addComponent(field_customerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_clientName)
+                    .addComponent(field_clientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
-                .addComponent(lbl_customerPhone)
+                .addComponent(lbl_clientPhone)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_customerPhoneLada)
-                    .addComponent(field_customerPhoneLada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_customerPhoneNumber)
-                    .addComponent(field_customerPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_clientPhoneLada)
+                    .addComponent(field_clientPhoneLada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_clientPhoneNumber)
+                    .addComponent(field_clientPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
-                .addComponent(lbl_customerAddress)
-                .addGap(18, 18, 18)
+                .addComponent(lbl_clientAddress)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_customerAddressStreet)
-                            .addComponent(field_customerAddressStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_customerAddressColony)
-                            .addComponent(field_customerAddressColony, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_customerAddressPostalCode)
-                            .addComponent(field_customerAddressPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_customerAddressCrossing)
-                            .addComponent(field_customerAddressCrossing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbl_clientAddressStreet)
+                            .addComponent(field_clientAddressStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_clientAddressColony)
+                            .addComponent(field_clientAddressColony, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_clientAddressPostalCode)
+                            .addComponent(field_clientAddressPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_clientAddressCrossing)
+                            .addComponent(field_clientAddressCrossing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addComponent(jLabel1))
+                        .addComponent(lbl_clientEmail))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(field_customerEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(field_clientEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_register)
@@ -190,9 +189,9 @@ public class ClientRegisterView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void field_customerEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_customerEmailActionPerformed
+    private void field_clientEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_clientEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_field_customerEmailActionPerformed
+    }//GEN-LAST:event_field_clientEmailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,152 +241,152 @@ public class ClientRegisterView extends javax.swing.JFrame {
         return btn_register;
     }
 
-    public JTextField getField_customerEmail() {
-        return field_customerEmail;
-    }
-
-    public void setField_customerEmail(JTextField field_customerEmail) {
-        this.field_customerEmail = field_customerEmail;
-    }
-
-    public JLabel getjLabel1() {
-        return jLabel1;
-    }
-
-    public void setjLabel1(JLabel jLabel1) {
-        this.jLabel1 = jLabel1;
-    }
-
     public void setBtn_register(JButton btn_register) {
         this.btn_register = btn_register;
     }
 
-    public JTextField getField_customerAddressColony() {
-        return field_customerAddressColony;
+    public JTextField getField_clientAddressColony() {
+        return field_clientAddressColony;
     }
 
-    public void setField_customerAddressColony(JTextField field_customerAddressColony) {
-        this.field_customerAddressColony = field_customerAddressColony;
+    public void setField_clientAddressColony(JTextField field_clientAddressColony) {
+        this.field_clientAddressColony = field_clientAddressColony;
     }
 
-    public JTextField getField_customerAddressCrossing() {
-        return field_customerAddressCrossing;
+    public JTextField getField_clientAddressCrossing() {
+        return field_clientAddressCrossing;
     }
 
-    public void setField_customerAddressCrossing(JTextField field_customerAddressCrossing) {
-        this.field_customerAddressCrossing = field_customerAddressCrossing;
+    public void setField_clientAddressCrossing(JTextField field_clientAddressCrossing) {
+        this.field_clientAddressCrossing = field_clientAddressCrossing;
     }
 
-    public JTextField getField_customerAddressPostalCode() {
-        return field_customerAddressPostalCode;
+    public JTextField getField_clientAddressPostalCode() {
+        return field_clientAddressPostalCode;
     }
 
-    public void setField_customerAddressPostalCode(JTextField field_customerAddressPostalCode) {
-        this.field_customerAddressPostalCode = field_customerAddressPostalCode;
+    public void setField_clientAddressPostalCode(JTextField field_clientAddressPostalCode) {
+        this.field_clientAddressPostalCode = field_clientAddressPostalCode;
     }
 
-    public JTextField getField_customerAddressStreet() {
-        return field_customerAddressStreet;
+    public JTextField getField_clientAddressStreet() {
+        return field_clientAddressStreet;
     }
 
-    public void setField_customerAddressStreet(JTextField field_customerAddressStreet) {
-        this.field_customerAddressStreet = field_customerAddressStreet;
+    public void setField_clientAddressStreet(JTextField field_clientAddressStreet) {
+        this.field_clientAddressStreet = field_clientAddressStreet;
     }
 
-    public JTextField getField_customerName() {
-        return field_customerName;
+    public JTextField getField_clientEmail() {
+        return field_clientEmail;
     }
 
-    public void setField_customerName(JTextField field_customerName) {
-        this.field_customerName = field_customerName;
+    public void setField_clientEmail(JTextField field_clientEmail) {
+        this.field_clientEmail = field_clientEmail;
     }
 
-    public JTextField getField_customerPhoneLada() {
-        return field_customerPhoneLada;
+    public JTextField getField_clientName() {
+        return field_clientName;
     }
 
-    public void setField_customerPhoneLada(JTextField field_customerPhoneLada) {
-        this.field_customerPhoneLada = field_customerPhoneLada;
+    public void setField_clientName(JTextField field_clientName) {
+        this.field_clientName = field_clientName;
     }
 
-    public JTextField getField_customerPhoneNumber() {
-        return field_customerPhoneNumber;
+    public JTextField getField_clientPhoneLada() {
+        return field_clientPhoneLada;
     }
 
-    public void setField_customerPhoneNumber(JTextField field_customerPhoneNumber) {
-        this.field_customerPhoneNumber = field_customerPhoneNumber;
+    public void setField_clientPhoneLada(JTextField field_clientPhoneLada) {
+        this.field_clientPhoneLada = field_clientPhoneLada;
     }
 
-    public JLabel getLbl_customerAddress() {
-        return lbl_customerAddress;
+    public JTextField getField_clientPhoneNumber() {
+        return field_clientPhoneNumber;
     }
 
-    public void setLbl_customerAddress(JLabel lbl_customerAddress) {
-        this.lbl_customerAddress = lbl_customerAddress;
+    public void setField_clientPhoneNumber(JTextField field_clientPhoneNumber) {
+        this.field_clientPhoneNumber = field_clientPhoneNumber;
     }
 
-    public JLabel getLbl_customerAddressColony() {
-        return lbl_customerAddressColony;
+    public JLabel getLbl_clientAddress() {
+        return lbl_clientAddress;
     }
 
-    public void setLbl_customerAddressColony(JLabel lbl_customerAddressColony) {
-        this.lbl_customerAddressColony = lbl_customerAddressColony;
+    public void setLbl_clientAddress(JLabel lbl_clientAddress) {
+        this.lbl_clientAddress = lbl_clientAddress;
     }
 
-    public JLabel getLbl_customerAddressCrossing() {
-        return lbl_customerAddressCrossing;
+    public JLabel getLbl_clientAddressColony() {
+        return lbl_clientAddressColony;
     }
 
-    public void setLbl_customerAddressCrossing(JLabel lbl_customerAddressCrossing) {
-        this.lbl_customerAddressCrossing = lbl_customerAddressCrossing;
+    public void setLbl_clientAddressColony(JLabel lbl_clientAddressColony) {
+        this.lbl_clientAddressColony = lbl_clientAddressColony;
     }
 
-    public JLabel getLbl_customerAddressPostalCode() {
-        return lbl_customerAddressPostalCode;
+    public JLabel getLbl_clientAddressCrossing() {
+        return lbl_clientAddressCrossing;
     }
 
-    public void setLbl_customerAddressPostalCode(JLabel lbl_customerAddressPostalCode) {
-        this.lbl_customerAddressPostalCode = lbl_customerAddressPostalCode;
+    public void setLbl_clientAddressCrossing(JLabel lbl_clientAddressCrossing) {
+        this.lbl_clientAddressCrossing = lbl_clientAddressCrossing;
     }
 
-    public JLabel getLbl_customerAddressStreet() {
-        return lbl_customerAddressStreet;
+    public JLabel getLbl_clientAddressPostalCode() {
+        return lbl_clientAddressPostalCode;
     }
 
-    public void setLbl_customerAddressStreet(JLabel lbl_customerAddressStreet) {
-        this.lbl_customerAddressStreet = lbl_customerAddressStreet;
+    public void setLbl_clientAddressPostalCode(JLabel lbl_clientAddressPostalCode) {
+        this.lbl_clientAddressPostalCode = lbl_clientAddressPostalCode;
     }
 
-    public JLabel getLbl_customerName() {
-        return lbl_customerName;
+    public JLabel getLbl_clientAddressStreet() {
+        return lbl_clientAddressStreet;
     }
 
-    public void setLbl_customerName(JLabel lbl_customerName) {
-        this.lbl_customerName = lbl_customerName;
+    public void setLbl_clientAddressStreet(JLabel lbl_clientAddressStreet) {
+        this.lbl_clientAddressStreet = lbl_clientAddressStreet;
     }
 
-    public JLabel getLbl_customerPhone() {
-        return lbl_customerPhone;
+    public JLabel getLbl_clientEmail() {
+        return lbl_clientEmail;
     }
 
-    public void setLbl_customerPhone(JLabel lbl_customerPhone) {
-        this.lbl_customerPhone = lbl_customerPhone;
+    public void setLbl_clientEmail(JLabel lbl_clientEmail) {
+        this.lbl_clientEmail = lbl_clientEmail;
     }
 
-    public JLabel getLbl_customerPhoneLada() {
-        return lbl_customerPhoneLada;
+    public JLabel getLbl_clientName() {
+        return lbl_clientName;
     }
 
-    public void setLbl_customerPhoneLada(JLabel lbl_customerPhoneLada) {
-        this.lbl_customerPhoneLada = lbl_customerPhoneLada;
+    public void setLbl_clientName(JLabel lbl_clientName) {
+        this.lbl_clientName = lbl_clientName;
     }
 
-    public JLabel getLbl_customerPhoneNumber() {
-        return lbl_customerPhoneNumber;
+    public JLabel getLbl_clientPhone() {
+        return lbl_clientPhone;
     }
 
-    public void setLbl_customerPhoneNumber(JLabel lbl_customerPhoneNumber) {
-        this.lbl_customerPhoneNumber = lbl_customerPhoneNumber;
+    public void setLbl_clientPhone(JLabel lbl_clientPhone) {
+        this.lbl_clientPhone = lbl_clientPhone;
+    }
+
+    public JLabel getLbl_clientPhoneLada() {
+        return lbl_clientPhoneLada;
+    }
+
+    public void setLbl_clientPhoneLada(JLabel lbl_clientPhoneLada) {
+        this.lbl_clientPhoneLada = lbl_clientPhoneLada;
+    }
+
+    public JLabel getLbl_clientPhoneNumber() {
+        return lbl_clientPhoneNumber;
+    }
+
+    public void setLbl_clientPhoneNumber(JLabel lbl_clientPhoneNumber) {
+        this.lbl_clientPhoneNumber = lbl_clientPhoneNumber;
     }
 
     public JLabel getLbl_tittle() {
@@ -397,29 +396,30 @@ public class ClientRegisterView extends javax.swing.JFrame {
     public void setLbl_tittle(JLabel lbl_tittle) {
         this.lbl_tittle = lbl_tittle;
     }
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_register;
-    private javax.swing.JTextField field_customerAddressColony;
-    private javax.swing.JTextField field_customerAddressCrossing;
-    private javax.swing.JTextField field_customerAddressPostalCode;
-    private javax.swing.JTextField field_customerAddressStreet;
-    private javax.swing.JTextField field_customerEmail;
-    private javax.swing.JTextField field_customerName;
-    private javax.swing.JTextField field_customerPhoneLada;
-    private javax.swing.JTextField field_customerPhoneNumber;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lbl_customerAddress;
-    private javax.swing.JLabel lbl_customerAddressColony;
-    private javax.swing.JLabel lbl_customerAddressCrossing;
-    private javax.swing.JLabel lbl_customerAddressPostalCode;
-    private javax.swing.JLabel lbl_customerAddressStreet;
-    private javax.swing.JLabel lbl_customerName;
-    private javax.swing.JLabel lbl_customerPhone;
-    private javax.swing.JLabel lbl_customerPhoneLada;
-    private javax.swing.JLabel lbl_customerPhoneNumber;
+    private javax.swing.JTextField field_clientAddressColony;
+    private javax.swing.JTextField field_clientAddressCrossing;
+    private javax.swing.JTextField field_clientAddressPostalCode;
+    private javax.swing.JTextField field_clientAddressStreet;
+    private javax.swing.JTextField field_clientEmail;
+    private javax.swing.JTextField field_clientName;
+    private javax.swing.JTextField field_clientPhoneLada;
+    private javax.swing.JTextField field_clientPhoneNumber;
+    private javax.swing.JLabel lbl_clientAddress;
+    private javax.swing.JLabel lbl_clientAddressColony;
+    private javax.swing.JLabel lbl_clientAddressCrossing;
+    private javax.swing.JLabel lbl_clientAddressPostalCode;
+    private javax.swing.JLabel lbl_clientAddressStreet;
+    private javax.swing.JLabel lbl_clientEmail;
+    private javax.swing.JLabel lbl_clientName;
+    private javax.swing.JLabel lbl_clientPhone;
+    private javax.swing.JLabel lbl_clientPhoneLada;
+    private javax.swing.JLabel lbl_clientPhoneNumber;
     private javax.swing.JLabel lbl_tittle;
     // End of variables declaration//GEN-END:variables
 }

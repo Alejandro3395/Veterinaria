@@ -38,7 +38,7 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="field_employeeUserName" pref="153" max="32767" attributes="0"/>
                                   <Component id="field_employeeEmail" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="field_employeePassword" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="field_employeeUserPassword" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
@@ -183,7 +183,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbl_employeePassword" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_employeePassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_employeeUserPassword" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -318,7 +318,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="field_employeeEmailActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="field_employeePassword">
+    <Component class="javax.swing.JTextField" name="field_employeeUserPassword">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>

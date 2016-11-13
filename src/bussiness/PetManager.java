@@ -78,7 +78,7 @@ public class PetManager {
         Pet petData;
         
         
-         petData = new Pet(petAge, petName, petBreed );
+         petData = new Pet(petName, petBreed,petAge);
          
         insertPet( petData );
         

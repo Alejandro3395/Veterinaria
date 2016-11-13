@@ -39,7 +39,7 @@ public class SupplierRegisterView extends javax.swing.JFrame {
         field_supplierPhoneLada = new javax.swing.JTextField();
         field_supplierPhoneNumber = new javax.swing.JTextField();
         field_supplierName = new javax.swing.JTextField();
-        btn_Register = new javax.swing.JButton();
+        btn_register = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,7 +66,7 @@ public class SupplierRegisterView extends javax.swing.JFrame {
             }
         });
 
-        btn_Register.setText("Registrar");
+        btn_register.setText("Registrar");
 
         btn_cancel.setText("Cancelar");
 
@@ -102,7 +102,7 @@ public class SupplierRegisterView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_tittle, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_Register)
+                        .addComponent(btn_register)
                         .addGap(98, 98, 98))))
         );
         layout.setVerticalGroup(
@@ -123,7 +123,7 @@ public class SupplierRegisterView extends javax.swing.JFrame {
                     .addComponent(field_supplierPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Register)
+                    .addComponent(btn_register)
                     .addComponent(btn_cancel))
                 .addContainerGap())
         );
@@ -174,12 +174,12 @@ public class SupplierRegisterView extends javax.swing.JFrame {
         });
     }
 
-    public JButton getBtn_Register() {
-        return btn_Register;
+    public JButton getBtn_register() {
+        return btn_register;
     }
 
-    public void setBtn_Register(JButton btn_Register) {
-        this.btn_Register = btn_Register;
+    public void setBtn_register(JButton btn_Register) {
+        this.btn_register = btn_Register;
     }
 
     public JButton getBtn_cancel() {
@@ -255,8 +255,8 @@ public class SupplierRegisterView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Register;
     private javax.swing.JButton btn_cancel;
+    private javax.swing.JButton btn_register;
     private javax.swing.JTextField field_supplierName;
     private javax.swing.JTextField field_supplierPhoneLada;
     private javax.swing.JTextField field_supplierPhoneNumber;

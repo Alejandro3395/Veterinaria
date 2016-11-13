@@ -6,34 +6,40 @@
 package presentation.controllers;
 
 import bussiness.ClientManager;
-import exceptions.InvalidFieldException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.WindowConstants;
 import presentation.AbstractRegisterController;
-import presentation.AbstractViewController;
 import presentation.views.ClientRegisterView;
 
 /**
  *
- * @author Jorge
+ * @author Mannuel
  */
 public class ClientRegisterController extends AbstractRegisterController{
-    private ClientRegisterView customerRegisterView;
+    private ClientRegisterView clientRegisterView;
+    private ClientManagerHelper clientManagerHelper;
     
-    public ClientRegisterController(){
+    public ClientRegisterController(ClientManagerHelper clientManager){
         setClientRegisterView(new ClientRegisterView());
+        setClientManagerHelper( clientManager  );
         
         initializeView();
     }
 
     public ClientRegisterView getClientRegisterView() {
-        return customerRegisterView;
+        return clientRegisterView;
     }
 
-    public void setClientRegisterView(ClientRegisterView customerRegisterView) {
-        this.customerRegisterView = customerRegisterView;
+    public void setClientRegisterView(ClientRegisterView clientRegisterView) {
+        this.clientRegisterView = clientRegisterView;
+    }
+
+    public ClientManagerHelper getClientManagerHelper() {
+        return clientManagerHelper;
+    }
+
+    public void setClientManagerHelper(ClientManagerHelper clientManagerHelper) {
+        this.clientManagerHelper = clientManagerHelper;
     }
     
     @Override
@@ -50,58 +56,75 @@ public class ClientRegisterController extends AbstractRegisterController{
 
     @Override
     protected void setEvents() {
-        getClientRegisterView().getBtn_register().addActionListener(actionEvent -> {
-            try {
-                registerClient();
-            } catch (InvalidFieldException ex) {
-                Logger.getLogger(ClientRegisterController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
+        getClientRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        getClientRegisterView().getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
     }
     
-    private void registerClient() throws InvalidFieldException{
-           ArrayList<String> clientData = new ArrayList<String>(obtainData());
-        
-
-        
+    private void proceedWithRegistration(){
+        ArrayList<String> clientData = new ArrayList<String>(obtainData());
+              
         boolean isValidField =!isEmptyFields(clientData);
+        
+        String message="";
+        String successStatus="SUCCESS";
         
         if(isValidField){
             ClientManager clientManager = ClientManager.GetInstance();
-                 clientManager.createEntity(clientData);
+            message = clientManager.registerClient(clientData);
+            if(message.equals(successStatus)){
+                getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Client");
+                updateManagerViewTable();
+                closeWindow();
+            }else{
+                getNotifier().showWarningMessage( message );
+            }
+        }else{
+            message = "Rellene todos los campos";
+            getNotifier().showWarningMessage( message );
         }
-        
     }
-
+    
+    private void cancelRegistration(){
+        closeWindow();
+    }
+    
+    private void closeWindow(){
+        getClientRegisterView().dispose();
+    }
+    
+    private void updateManagerViewTable(){
+        getClientManagerHelper().updateTable();
+    }
+    
     @Override
     protected ArrayList<String> obtainData() {
+        
         ArrayList<String> data = new ArrayList<String>();
         
-        String clientName = getClientRegisterView().getField_customerName().getText();
+        String clientName = getClientRegisterView().getField_clientName().getText();
         data.add(clientName);
         
-        String clientPostalCode = getClientRegisterView().getField_customerAddressPostalCode().getText() ;
+        String clientPostalCode = getClientRegisterView().getField_clientAddressPostalCode().getText() ;
         data.add(clientPostalCode);
         
-        String clientAddressStreet = getClientRegisterView().getField_customerAddressStreet().getText();
+        String clientAddressStreet = getClientRegisterView().getField_clientAddressStreet().getText();
         data.add(clientAddressStreet);
         
-        String clientAddressColony = getClientRegisterView().getField_customerAddressColony().getText() ;
+        String clientAddressColony = getClientRegisterView().getField_clientAddressColony().getText() ;
         data.add(clientAddressColony);
         
-        String clientAddressCross = getClientRegisterView().getField_customerAddressCrossing().getText() ;
+        String clientAddressCross = getClientRegisterView().getField_clientAddressCrossing().getText() ;
         data.add(clientAddressCross);
         
-        String clientPhoneLada = getClientRegisterView().getField_customerPhoneLada().getText();
+        String clientPhoneLada = getClientRegisterView().getField_clientPhoneLada().getText();
         data.add(clientPhoneLada);
         
-        String clientPhoneNumber = getClientRegisterView().getField_customerPhoneNumber().getText() ;
+        String clientPhoneNumber = getClientRegisterView().getField_clientPhoneNumber().getText() ;
         data.add(clientPhoneNumber);
         
-        String clientEmail = getClientRegisterView().getField_customerEmail().getText() ;
+        String clientEmail = getClientRegisterView().getField_clientEmail().getText() ;
         data.add(clientEmail);
         
         return data;
     }
-    
 }

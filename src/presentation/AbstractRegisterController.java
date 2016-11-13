@@ -21,10 +21,13 @@ package presentation;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+import exceptions.InvalidFieldException;
 
 public abstract class AbstractRegisterController  {
-    
+    protected abstract ArrayList<String> obtainData();
     public abstract void openWindow();
+    
+    private Notifier notifier = new Notifier();
 
     protected void configureWindow(JFrame window) {
         window.setLocationRelativeTo(null);
@@ -37,6 +40,15 @@ public abstract class AbstractRegisterController  {
     protected abstract void initializeView();
 
     protected abstract void setEvents();
+
+    public Notifier getNotifier() {
+        return notifier;
+    }
+
+    public void setNotifier(Notifier notifier) {
+        this.notifier = notifier;
+    }
+    
     
     /**
      * This method checks if there is an empty field in the form.
@@ -53,6 +65,5 @@ public abstract class AbstractRegisterController  {
         }
         return result;
     }
-    protected abstract ArrayList<String> obtainData();
     
 }

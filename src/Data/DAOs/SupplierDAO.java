@@ -77,7 +77,7 @@ public class SupplierDAO extends AbstractDAO<Supplier> {
         
         try{
             openSession();
-            ProviderList = (ArrayList) session.createQuery("from supplier").list();
+            ProviderList = (ArrayList) session.createQuery("from Supplier").list();
             
             
         }finally{

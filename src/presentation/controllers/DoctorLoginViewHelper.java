@@ -70,7 +70,7 @@ public class DoctorLoginViewHelper extends AbstractRegisterController{
         
         if(isValidField){
             SessionManager sessionManager = SessionManager.GetInstance();
-            isValidUser = sessionManager.ValidateUserDoctor(data);
+            isValidUser = sessionManager.validateUserDoctor(data);
         }
         
         if(isValidUser){
