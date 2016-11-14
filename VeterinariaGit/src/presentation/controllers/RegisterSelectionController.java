@@ -28,7 +28,7 @@ public class RegisterSelectionController extends AbstractViewController {
     private SupplierManagerHelper supplierManagerHelper;
     private ProductSelectionController productRegisterController;
     private ClientManagerHelper clientManagerHelper;
-    private PetRegisterController petRegisterController;
+    private PetManagerHelper petManagerHelper;
     private DoctorManagerHelper doctorManagerHelper;
     
     public RegisterSelectionController(){
@@ -38,7 +38,7 @@ public class RegisterSelectionController extends AbstractViewController {
         setSupplierManagerHelper(new SupplierManagerHelper());
         setProductRegisterController(new ProductSelectionController());
         setClientManagerHelper(new ClientManagerHelper());
-        setPetRegisterController(new PetRegisterController());
+        setPetManagerHelper(new PetManagerHelper());
         initializeView();
     }
 
@@ -65,15 +65,13 @@ public class RegisterSelectionController extends AbstractViewController {
     public void setClientManagerHelper(ClientManagerHelper clientManagerHelper) {
         this.clientManagerHelper = clientManagerHelper;
     }
-    
- 
 
-    public PetRegisterController getPetRegisterController() {
-        return petRegisterController;
+    public PetManagerHelper getPetManagerHelper() {
+        return petManagerHelper;
     }
 
-    public void setPetRegisterController(PetRegisterController petRegisterController) {
-        this.petRegisterController = petRegisterController;
+    public void setPetManagerHelper(PetManagerHelper petManagerHelper) {
+        this.petManagerHelper = petManagerHelper;
     }
 
     public SupplierManagerHelper getSupplierManagerHelper() {
@@ -153,7 +151,7 @@ public class RegisterSelectionController extends AbstractViewController {
             break;
             
             case 6:
-                getPetRegisterController().openWindow();
+                getPetManagerHelper().openWindow();
             break;
         }
         

@@ -5,6 +5,11 @@
     <key column="id"/>
     
     <property name="clientEmail" type="string" column="correo"/>
-  
+    
+    <list name="pets" cascade="all-delete-orphan" fetch="join" optimistic-lock="false"> 
+        <key column="id" /> 
+        <index column="ORDEN" /> 
+        <one-to-many class="Entitys.Pet" /> 
+    </list>
   </joined-subclass>
 </hibernate-mapping>

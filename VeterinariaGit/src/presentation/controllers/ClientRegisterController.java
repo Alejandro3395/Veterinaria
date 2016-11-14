@@ -18,14 +18,26 @@ import presentation.views.ClientRegisterView;
 public class ClientRegisterController extends AbstractRegisterController{
     private ClientRegisterView clientRegisterView;
     private ClientManagerHelper clientManagerHelper;
+    private PetRegisterController petRegisterController;
     
     public ClientRegisterController(ClientManagerHelper clientManager){
         setClientRegisterView(new ClientRegisterView());
         setClientManagerHelper( clientManager  );
         
+        
         initializeView();
     }
 
+    public PetRegisterController getPetRegisterController() {
+        return petRegisterController;
+    }
+
+    public void setPetRegisterController(PetRegisterController petRegisterController) {
+        this.petRegisterController = petRegisterController;
+    }
+    
+    
+    
     public ClientRegisterView getClientRegisterView() {
         return clientRegisterView;
     }
@@ -74,6 +86,9 @@ public class ClientRegisterController extends AbstractRegisterController{
             if(message.equals(successStatus)){
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Client");
                 updateManagerViewTable();
+                
+                setPetRegisterController(new PetRegisterController(clientData.get(0).toString()));
+                getPetRegisterController().openWindow();
                 closeWindow();
             }else{
                 getNotifier().showWarningMessage( message );

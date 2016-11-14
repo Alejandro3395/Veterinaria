@@ -5,27 +5,39 @@
  */
 package Entitys;
 
+import java.io.Serializable;
+
 /**
  *
  * @author diego
  */
-public class Pet {
+public class Pet implements Serializable{
     
     //Parametros
-    
+    private long id;
     private int age;
     private String name;
     private String breed;
     
     
     //Constructor
-
-    public Pet(int age, String name, String breed) {
-        this.age = age;
+    public Pet(){
+        
+    }
+    
+    public Pet( String name, String breed,int age) {
         this.name = name;
         this.breed = breed;
+        this.age = age;
+        
+        
     }
 
+    public Pet(Pet pet){
+       this.name = pet.getName().toString();
+       this.breed = pet.getBreed().toString();
+       this.age = pet.getAge();
+    }
     
     
     
@@ -53,9 +65,14 @@ public class Pet {
     public void setBreed(String breed) {
         this.breed = breed;
     }
-    
-    
-    
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
     
     
     

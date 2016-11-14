@@ -27,7 +27,6 @@ public class ClientManagerHelper extends AbstractViewController{
         setClientRegisterController(new ClientRegisterController(this));
         setClientModificationHelper(new ClientModificationHelper(this));
         
-        loadClientRegisterToTable();
         initializeView();
     }
 
@@ -59,6 +58,8 @@ public class ClientManagerHelper extends AbstractViewController{
     @Override
     public void openWindow() {
         getClientManagerView().setVisible(true);
+        loadClientRegisterToTable();
+
     }
 
     @Override

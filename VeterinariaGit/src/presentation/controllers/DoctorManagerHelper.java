@@ -31,7 +31,6 @@ public class DoctorManagerHelper extends AbstractViewController {
         setDoctorRegisterController(new DoctorRegisterController(this));
         setDoctorModificationHelper(new DoctorModificationHelper(this));
         
-        loadDoctorRegisterToTable();
         initializeView();
     }
 
@@ -63,6 +62,8 @@ public class DoctorManagerHelper extends AbstractViewController {
     @Override
     public void openWindow() {
         getDoctorManagerView().setVisible(true);
+        loadDoctorRegisterToTable();
+
     }
 
     @Override

@@ -68,4 +68,14 @@ public class ClientDAO extends AbstractDAO<Client> {
         return clientList;
     }
     
+    public Client getClientByName(String clientName){
+        Client result=null;
+        try{
+            openSession();
+            result = (Client) session.createQuery("from Client c left join fetch c.pets WHERE c.name = :name").setParameter("name",  clientName).uniqueResult();
+        }finally{
+            session.close();
+        }
+        return result;
+    }
 }

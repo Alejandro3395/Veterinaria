@@ -14,12 +14,12 @@ import javax.swing.JTable;
  *
  * @author mannu
  */
-public class SupplierManagerView extends javax.swing.JFrame {
+public class MedicineManagerView extends javax.swing.JFrame {
 
     /**
      * Creates new form DoctorCRUDView
      */
-    public SupplierManagerView() {
+    public MedicineManagerView() {
         initComponents();
     }
 
@@ -32,38 +32,38 @@ public class SupplierManagerView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btn_modifySupplier = new javax.swing.JButton();
-        btn_addSupplier = new javax.swing.JButton();
-        btn_deleteSupplier = new javax.swing.JButton();
+        btn_modifyMedicine = new javax.swing.JButton();
+        btn_addMedicine = new javax.swing.JButton();
+        btn_deleteMedicine = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_supplierTable = new javax.swing.JTable();
+        table_medicineTable = new javax.swing.JTable();
         btn_back = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btn_modifySupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/modify.png"))); // NOI18N
-        btn_modifySupplier.setText("Modificar Proveedor");
+        btn_modifyMedicine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/modify.png"))); // NOI18N
+        btn_modifyMedicine.setText("Modificar Medicamento");
 
-        btn_addSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/add.png"))); // NOI18N
-        btn_addSupplier.setText("Añadir Proveedor");
+        btn_addMedicine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/add.png"))); // NOI18N
+        btn_addMedicine.setText("Añadir Medicamento");
 
-        btn_deleteSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/delete.png"))); // NOI18N
-        btn_deleteSupplier.setText("Eliminar Proveedor");
+        btn_deleteMedicine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/delete.png"))); // NOI18N
+        btn_deleteMedicine.setText("Eliminar Medicamento");
 
-        table_supplierTable.setModel(new javax.swing.table.DefaultTableModel(
+        table_medicineTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Nombre", "Clave LADA", "Numero Telefonico"
+                "Id", "Nombre", "Calle", "Codigo Postal", "Colonia", "Cruzamientos", "Clave LADA", "Numero Telefonico"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -74,7 +74,7 @@ public class SupplierManagerView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(table_supplierTable);
+        jScrollPane1.setViewportView(table_medicineTable);
 
         btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/back-arrow.png"))); // NOI18N
         btn_back.addActionListener(new java.awt.event.ActionListener() {
@@ -84,7 +84,7 @@ public class SupplierManagerView extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Registros de Proveedor");
+        jLabel2.setText("Registros de Medicamento");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,19 +93,19 @@ public class SupplierManagerView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(161, 161, 161)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 355, Short.MAX_VALUE))
+                .addGap(224, 224, 224)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_deleteSupplier)
-                        .addGap(91, 91, 91)
-                        .addComponent(btn_addSupplier)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_modifySupplier)))
+                        .addComponent(btn_deleteMedicine)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addComponent(btn_addMedicine)
+                        .addGap(41, 41, 41)
+                        .addComponent(btn_modifyMedicine)))
                 .addGap(48, 48, 48))
         );
         layout.setVerticalGroup(
@@ -120,11 +120,11 @@ public class SupplierManagerView extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_modifySupplier)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_modifyMedicine)
+                            .addComponent(btn_addMedicine))
                         .addGap(17, 17, 17))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_deleteSupplier)
-                        .addComponent(btn_addSupplier)))
+                    .addComponent(btn_deleteMedicine))
                 .addGap(30, 30, 30))
         );
 
@@ -152,13 +152,13 @@ public class SupplierManagerView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SupplierManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedicineManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SupplierManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedicineManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SupplierManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedicineManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SupplierManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedicineManagerView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -168,76 +168,21 @@ public class SupplierManagerView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SupplierManagerView().setVisible(true);
+                new MedicineManagerView().setVisible(true);
             }
         });
     }
 
-    public JButton getBtn_addSupplier() {
-        return btn_addSupplier;
-    }
-
-    public void setBtn_addSupplier(JButton btn_addSupplier) {
-        this.btn_addSupplier = btn_addSupplier;
-    }
-
-    public JButton getBtn_back() {
-        return btn_back;
-    }
-
-    public void setBtn_back(JButton btn_back) {
-        this.btn_back = btn_back;
-    }
-
-    public JButton getBtn_deleteSupplier() {
-        return btn_deleteSupplier;
-    }
-
-    public void setBtn_deleteSupplier(JButton btn_deleteSupplier) {
-        this.btn_deleteSupplier = btn_deleteSupplier;
-    }
-
-    public JButton getBtn_modifySupplier() {
-        return btn_modifySupplier;
-    }
-
-    public void setBtn_modifySupplier(JButton btn_modifySupplier) {
-        this.btn_modifySupplier = btn_modifySupplier;
-    }
-
-    public JLabel getjLabel2() {
-        return jLabel2;
-    }
-
-    public void setjLabel2(JLabel jLabel2) {
-        this.jLabel2 = jLabel2;
-    }
-
-    public JScrollPane getjScrollPane1() {
-        return jScrollPane1;
-    }
-
-    public void setjScrollPane1(JScrollPane jScrollPane1) {
-        this.jScrollPane1 = jScrollPane1;
-    }
-
-    public JTable getTable_supplierTable() {
-        return table_supplierTable;
-    }
-
-    public void setTable_supplierTable(JTable table_supplierTable) {
-        this.table_supplierTable = table_supplierTable;
-    }
-
+   
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_addSupplier;
+    private javax.swing.JButton btn_addMedicine;
     private javax.swing.JButton btn_back;
-    private javax.swing.JButton btn_deleteSupplier;
-    private javax.swing.JButton btn_modifySupplier;
+    private javax.swing.JButton btn_deleteMedicine;
+    private javax.swing.JButton btn_modifyMedicine;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable table_supplierTable;
+    private javax.swing.JTable table_medicineTable;
     // End of variables declaration//GEN-END:variables
 }

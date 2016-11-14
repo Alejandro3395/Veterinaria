@@ -34,8 +34,6 @@ public class PetRegisterView extends javax.swing.JFrame {
     private void initComponents() {
 
         lbl_tittle = new javax.swing.JLabel();
-        lbl_petOwner = new javax.swing.JLabel();
-        combo_petOwner = new javax.swing.JComboBox<>();
         lbl_petBreed = new javax.swing.JLabel();
         combo_petBreed = new javax.swing.JComboBox<>();
         lbl_petName = new javax.swing.JLabel();
@@ -48,10 +46,6 @@ public class PetRegisterView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lbl_tittle.setText("Registro de Mascotas");
-
-        lbl_petOwner.setText("Dueño:");
-
-        combo_petOwner.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lbl_petBreed.setText("Raza:");
 
@@ -91,18 +85,13 @@ public class PetRegisterView extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_cancel)
                         .addGap(42, 42, 42)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_register)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbl_petOwner)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(combo_petOwner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btn_register)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lbl_petBreed)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(combo_petBreed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(89, 89, 89))
+                        .addComponent(lbl_petBreed)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(combo_petBreed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(90, 90, 90))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,10 +108,7 @@ public class PetRegisterView extends javax.swing.JFrame {
                             .addComponent(lbl_petAge)
                             .addComponent(spiner_petAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_petOwner)
-                            .addComponent(combo_petOwner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
+                        .addGap(59, 59, 59)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_petBreed)
                             .addComponent(combo_petBreed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -196,13 +182,6 @@ public class PetRegisterView extends javax.swing.JFrame {
         this.combo_petBreed = combo_petBreed;
     }
 
-    public JComboBox<String> getCombo_petOwner() {
-        return combo_petOwner;
-    }
-
-    public void setCombo_petOwner(JComboBox<String> combo_petOwner) {
-        this.combo_petOwner = combo_petOwner;
-    }
 
     public JTextField getField_petName() {
         return field_petName;
@@ -236,13 +215,6 @@ public class PetRegisterView extends javax.swing.JFrame {
         this.lbl_petName = lbl_petName;
     }
 
-    public JLabel getLbl_petOwner() {
-        return lbl_petOwner;
-    }
-
-    public void setLbl_petOwner(JLabel lbl_petOwner) {
-        this.lbl_petOwner = lbl_petOwner;
-    }
 
     public JLabel getLbl_tittle() {
         return lbl_tittle;
@@ -265,12 +237,10 @@ public class PetRegisterView extends javax.swing.JFrame {
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_register;
     private javax.swing.JComboBox<String> combo_petBreed;
-    private javax.swing.JComboBox<String> combo_petOwner;
     private javax.swing.JTextField field_petName;
     private javax.swing.JLabel lbl_petAge;
     private javax.swing.JLabel lbl_petBreed;
     private javax.swing.JLabel lbl_petName;
-    private javax.swing.JLabel lbl_petOwner;
     private javax.swing.JLabel lbl_tittle;
     private javax.swing.JSpinner spiner_petAge;
     // End of variables declaration//GEN-END:variables

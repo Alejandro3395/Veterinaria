@@ -56,12 +56,16 @@ public class ClientManager {
         clientDAO.delete(client);
     }
     
-    private void updateClient(Client client){
+    public void updateClient(Client client){
         clientDAO.update(client);
     }
     
     public Client getClient(int id){
         return (Client) clientDAO.get(id);
+    }
+    
+    public Client getClientData(String clientName){
+        return clientDAO.getClientByName(clientName);
     }
      
     public void eliminateClient(int id){
@@ -201,6 +205,7 @@ public class ClientManager {
         clientList = new ArrayList<Client> (getClients());
         return clientList; 
     }
+    
     
     
     public ArrayList<Client> getClients(){

@@ -27,7 +27,6 @@ public class SupplierManagerHelper extends AbstractViewController {
         setSupplierRegisterController(new SupplierRegisterController(this));
         setSupplierModificationHelper(new SupplierModificationHelper(this));
         
-        loadSupplierRegisterToTable();
         initializeView();
     }
 
@@ -59,6 +58,8 @@ public class SupplierManagerHelper extends AbstractViewController {
     @Override
     public void openWindow() {
         getSupplierManagerView().setVisible(true);
+        loadSupplierRegisterToTable();
+
     }
 
     @Override

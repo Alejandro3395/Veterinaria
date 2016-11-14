@@ -27,7 +27,6 @@ public class EmployeeManagerHelper extends AbstractViewController {
         setEmployeeRegisterController(new EmployeeRegisterController(this));
         setEmployeeModificationHelper(new EmployeeModificationHelper(this));
         
-        loadEmployeeRegisterToTable();
         initializeView();
     }
 
@@ -60,6 +59,8 @@ public class EmployeeManagerHelper extends AbstractViewController {
     @Override
     public void openWindow() {
         getEmployeeManagerView().setVisible(true);
+        loadEmployeeRegisterToTable();
+
     }
 
     @Override
