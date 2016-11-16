@@ -13,6 +13,8 @@
 package Entitys;
 
 import exceptions.InvalidFieldException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Supplier {
@@ -21,7 +23,8 @@ public class Supplier {
     
     private String companyName;
     private Phone phone;
-    long id;
+    List<Medicine> medicines = new ArrayList<Medicine>();
+    long id_Supplier;
     
     
     //Constructor
@@ -61,15 +64,24 @@ public class Supplier {
         this.phone = phone;
     }
 
-    public long getId() {
-        return id;
+    public long getId_Supplier() {
+        return id_Supplier;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId_Supplier(long id_Supplier) {
+        this.id_Supplier = id_Supplier;
+    }
+
+    public void addMedicines(Medicine medicine){
+        this.medicines.add(medicine);
+    }
+
+    public List<Medicine> getMedicines() {
+        return medicines;
+    }
+
+    public void setMedicines(List<Medicine> medicines) {
+        this.medicines = medicines;
     }
     
-    
-    
-    
-    }
+}

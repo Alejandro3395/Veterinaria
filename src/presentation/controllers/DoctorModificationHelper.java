@@ -22,14 +22,24 @@ public class DoctorModificationHelper extends AbstractRegisterController {
     private DoctorRegisterView doctorRegisterView;
     private DoctorManagerHelper doctorManagerHelper;
     
-    public DoctorModificationHelper(DoctorManagerHelper doctorManager){
+    private static DoctorModificationHelper doctorModificationHelper = null;
+
+    
+    public DoctorModificationHelper(){
         setDoctorModificationView( new DoctorModificationView());
         setDoctorRegisterView( new DoctorRegisterView() );
-        setDoctorManagerHelper( doctorManager);
+        //setDoctorManagerHelper( doctorManager);
         
         initializeView();
     }
 
+    public static DoctorModificationHelper getInstance(){
+        if( doctorModificationHelper== null) {
+         doctorModificationHelper =  new DoctorModificationHelper();
+        }
+        return doctorModificationHelper;
+    }
+    
     public DoctorRegisterView getDoctorRegisterView() {
         return doctorRegisterView;
     }
@@ -78,8 +88,8 @@ public class DoctorModificationHelper extends AbstractRegisterController {
     }
     
     private void loadDoctorData(){
-        int row = getDoctorManagerHelper().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
-        int id = Integer.valueOf( getDoctorManagerHelper().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
+        int row = DoctorManagerHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
+        int id = Integer.valueOf( DoctorManagerHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
         
         DoctorManager doctorManager = DoctorManager.GetInstance();
         Doctor doctor =  doctorManager.getDoctor(id) ;
@@ -90,9 +100,9 @@ public class DoctorModificationHelper extends AbstractRegisterController {
     private void proceedWithModification(){
         ArrayList<String> data = new ArrayList<String>(obtainData());
         
-        int row = getDoctorManagerHelper().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
+        int row = DoctorManagerHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
         
-        int id = Integer.valueOf( getDoctorManagerHelper().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
+        int id = Integer.valueOf( DoctorManagerHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
@@ -116,7 +126,7 @@ public class DoctorModificationHelper extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        getDoctorManagerHelper().updateTable();
+        DoctorManagerHelper.getInstance().updateTable();
     }
     
     private void cancelModification(){

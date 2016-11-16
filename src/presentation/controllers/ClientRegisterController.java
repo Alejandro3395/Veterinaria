@@ -16,16 +16,33 @@ import presentation.views.ClientRegisterView;
  * @author Mannuel
  */
 public class ClientRegisterController extends AbstractRegisterController{
+    private static ClientRegisterController clientRegisterController;
     private ClientRegisterView clientRegisterView;
     private ClientManagerHelper clientManagerHelper;
+    private PetRegisterController petRegisterController;
     
-    public ClientRegisterController(ClientManagerHelper clientManager){
+    public ClientRegisterController(){
         setClientRegisterView(new ClientRegisterView());
-        setClientManagerHelper( clientManager  );
+        //setClientManagerHelper( clientManager  );
         
         initializeView();
     }
+    
+    public static ClientRegisterController getInstance(){
+        if( clientRegisterController== null) {
+         clientRegisterController = new ClientRegisterController();
+        }
+        return clientRegisterController;
+    }
 
+    public PetRegisterController getPetRegisterController() {
+        return petRegisterController;
+    }
+
+    public void setPetRegisterController(PetRegisterController petRegisterController) {
+        this.petRegisterController = petRegisterController;
+    }
+    
     public ClientRegisterView getClientRegisterView() {
         return clientRegisterView;
     }
@@ -61,6 +78,7 @@ public class ClientRegisterController extends AbstractRegisterController{
     }
     
     private void proceedWithRegistration(){
+        
         ArrayList<String> clientData = new ArrayList<String>(obtainData());
               
         boolean isValidField =!isEmptyFields(clientData);
@@ -74,6 +92,11 @@ public class ClientRegisterController extends AbstractRegisterController{
             if(message.equals(successStatus)){
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Client");
                 updateManagerViewTable();
+                 //setPetRegisterController(PetRegisterController.getInstance());
+                    PetRegisterController.getInstance().setOwner(clientData.get(0).toString());
+                    PetRegisterController.getInstance().setMode(0);
+                    PetRegisterController.getInstance().openWindow();
+                resetFields();
                 closeWindow();
             }else{
                 getNotifier().showWarningMessage( message );
@@ -93,7 +116,7 @@ public class ClientRegisterController extends AbstractRegisterController{
     }
     
     private void updateManagerViewTable(){
-        getClientManagerHelper().updateTable();
+        ClientManagerHelper.getInstance().updateTable();
     }
     
     @Override
@@ -126,5 +149,23 @@ public class ClientRegisterController extends AbstractRegisterController{
         data.add(clientEmail);
         
         return data;
+    }
+    
+     private void resetFields(){
+        getClientRegisterView().getField_clientName().setText("");
+        
+        getClientRegisterView().getField_clientAddressPostalCode().setText("") ;
+        
+        getClientRegisterView().getField_clientAddressStreet().setText("");
+                
+        getClientRegisterView().getField_clientAddressColony().setText("");
+        
+        getClientRegisterView().getField_clientAddressCrossing().setText("");
+        
+        getClientRegisterView().getField_clientPhoneLada().setText("");
+        
+        getClientRegisterView().getField_clientPhoneNumber().setText("");
+        
+        getClientRegisterView().getField_clientEmail().setText("");
     }
 }

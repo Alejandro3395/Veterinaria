@@ -3,7 +3,7 @@
 <hibernate-mapping>
 
     <class name="Entitys.Supplier" table = "Supplier">
-        <id name="id" >
+        <id name="id_Supplier" >
             <generator class="identity"/>
         </id>
         
@@ -13,5 +13,12 @@
             <property name="lada" type="string" column="lada"/>
             <property name="number" type= "string" column="number" />
         </component>
+        
+        <list name="medicines" cascade="all-delete-orphan" fetch="join" optimistic-lock="false"> 
+            <key column="id_Supplier" /> 
+            <index column="ORDEN" /> 
+            <one-to-many class="Entitys.Medicine" /> 
+        </list>
+        
     </class>
 </hibernate-mapping>

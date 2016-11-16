@@ -59,7 +59,7 @@ public class SupplierManager {
         supplierDAO.delete(supplier);
     }
     
-    private void updateSupplier(Supplier supplier){
+    public void updateSupplier(Supplier supplier){
         supplierDAO.update(supplier);
     }
     
@@ -71,6 +71,9 @@ public class SupplierManager {
        deleteSupplier((Supplier)(supplierDAO.get(id)));
     }
     
+    public Supplier getSupplierData(String supplierName){
+        return supplierDAO.getSupplierByName(supplierName);
+    }
     
      /**
      * The method recieves the data array from the view and parse it 
@@ -198,6 +201,9 @@ public class SupplierManager {
         return (ArrayList<Supplier>) supplierDAO.getList();
     }
      
+    
+
+    
      
      
      }

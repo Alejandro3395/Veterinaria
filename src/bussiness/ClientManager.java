@@ -52,20 +52,24 @@ public class ClientManager {
     }
     
     
-    private void addClient(Client client)  {
+    public void addClient(Client client)  {
         clientDAO.add(client);
     }
     
-    private void deleteClient(Client client){
+    public void deleteClient(Client client){
         clientDAO.delete(client);
     }
     
-    private void updateClient(Client client){
+    public void updateClient(Client client){
         clientDAO.update(client);
     }
     
     public Client getClient(int id){
         return (Client) clientDAO.get(id);
+    }
+    
+    public Client getClientData(String clientName){
+        return clientDAO.getClientByName(clientName);
     }
      
     public void eliminateClient(int id){

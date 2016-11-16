@@ -18,19 +18,27 @@ import presentation.views.EmployeeManagerView;
  * @author Jorge
  */
 public class EmployeeManagerHelper extends AbstractViewController {
+    private static EmployeeManagerHelper employeeManagerHelper = null;
     private EmployeeManagerView employeeManagerView;
     private EmployeeRegisterController employeeRegisterController;
     private EmployeeModificationHelper employeeModificationHelper;
     
     public EmployeeManagerHelper(){
         setEmployeeManagerView(new EmployeeManagerView());
-        setEmployeeRegisterController(new EmployeeRegisterController(this));
-        setEmployeeModificationHelper(new EmployeeModificationHelper(this));
+        setEmployeeRegisterController( EmployeeRegisterController.getInstance());
         
-        loadEmployeeRegisterToTable();
+        setEmployeeModificationHelper(EmployeeModificationHelper.getInstance());
+        
         initializeView();
     }
 
+    public static EmployeeManagerHelper getInstance(){
+        if( employeeManagerHelper== null) {
+         employeeManagerHelper = new EmployeeManagerHelper();
+        }
+        return employeeManagerHelper;
+    }
+    
     public EmployeeManagerView getEmployeeManagerView() {
         return employeeManagerView;
     }
@@ -59,6 +67,7 @@ public class EmployeeManagerHelper extends AbstractViewController {
 
     @Override
     public void openWindow() {
+        loadEmployeeRegisterToTable();
         getEmployeeManagerView().setVisible(true);
     }
 
@@ -149,7 +158,7 @@ public class EmployeeManagerHelper extends AbstractViewController {
     }
     
     private void openRegisterView(){
-        getEmployeeRegisterController().openWindow();
+        employeeRegisterController.openWindow();
     }
     
     private void addEmployeeToTable(Employee employee){

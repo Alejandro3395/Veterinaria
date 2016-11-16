@@ -33,6 +33,7 @@ public class Client extends Person implements Serializable{
     public Client(Client client){
         super(client.getName(), client.getAddress(), client.getPhone());
         this.clientEmail = client.getClientEmail();
+        this.pets = client.getPets();
     }
     
     public String getClientEmail() {

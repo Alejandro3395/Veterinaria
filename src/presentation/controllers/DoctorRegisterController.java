@@ -25,15 +25,23 @@ import presentation.views.DoctorRegisterView;
 public class DoctorRegisterController extends AbstractRegisterController {
     private DoctorRegisterView doctorRegisterView;
     private DoctorManagerHelper doctorManagerHelper;
+    private static DoctorRegisterController doctorRegisterController = null;
     
     private static int doctorDataIndex = 0;
     private static int userDoctorDataIndex = 1;
     
-    public DoctorRegisterController(DoctorManagerHelper doctorManager){
+    public DoctorRegisterController(){
         setDoctorRegisterView(new DoctorRegisterView());
-        setDoctorManagerHelper( doctorManager  );
+        //(setDoctorManagerHelper( doctorManager  );
         
         initializeView();
+    }
+    
+    public static DoctorRegisterController getInstance(){
+        if( doctorRegisterController== null) {
+         doctorRegisterController = new DoctorRegisterController();
+        }
+        return doctorRegisterController;
     }
 
     public DoctorManagerHelper getDoctorManagerHelper() {
@@ -53,7 +61,7 @@ public class DoctorRegisterController extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        getDoctorManagerHelper().updateTable();
+        DoctorManagerHelper.getInstance().updateTable();
     }
     
     @Override
@@ -109,6 +117,7 @@ public class DoctorRegisterController extends AbstractRegisterController {
             if(message.equals(successStatus)){
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Doctor");
                 updateManagerViewTable();
+                resetFields();
                 closeWindow();
             }else{
                 getNotifier().showWarningMessage( message );
@@ -176,6 +185,33 @@ public class DoctorRegisterController extends AbstractRegisterController {
         data.add(doctorUserEmail);
         
         return data;
+    }
+    
+    private void resetFields(){
+        getDoctorRegisterView().getField_doctorName().setText("");
+        
+        getDoctorRegisterView().getField_doctorAddressPostalCode().setText("");
+        
+        getDoctorRegisterView().getField_doctorAddressStreet().setText("");
+        
+        getDoctorRegisterView().getField_doctorAddressColony().setText("");
+        
+        getDoctorRegisterView().getField_doctorAddressCross().setText("");
+        
+        getDoctorRegisterView().getField_doctorPhoneLada().setText(""); 
+        
+        getDoctorRegisterView().getField_doctorPhoneNumber().setText("");
+        
+        getDoctorRegisterView().getField_doctorRFC().setText("");
+        
+        getDoctorRegisterView().getField_doctorProfessionalCode().setText("");
+        
+        getDoctorRegisterView().getField_doctorUserName().setText("");
+        
+        getDoctorRegisterView().getField_doctorUserPassword().setText("");
+        
+        getDoctorRegisterView().getField_doctorEmail().setText("");
+        
     }
 
     

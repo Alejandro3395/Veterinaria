@@ -19,6 +19,7 @@ import presentation.views.MedicineRegisterView;
 import presentation.views.ProductSelectionView;
 
 public class ProductSelectionController extends AbstractViewController {
+    private static ProductSelectionController productSelectionController = null;
     private ProductSelectionView productSelectionView;
     private MedicineRegisterController medicineRegisterController;
     
@@ -28,6 +29,13 @@ public class ProductSelectionController extends AbstractViewController {
         setMedicineRegisterController(new MedicineRegisterController());
         
         initializeView();
+    }
+    
+    public static ProductSelectionController getInstance(){
+        if( productSelectionController== null) {
+         productSelectionController = new ProductSelectionController();
+        }
+        return productSelectionController;
     }
 
     public ProductSelectionView getProductSelectionView() {

@@ -17,20 +17,27 @@ import presentation.views.ClientManagerView;
  *
  * @author Jorge
  */
-public class ClientManagerHelper extends AbstractViewController{
+public class ClientManagerHelper extends AbstractViewController {
+    private static ClientManagerHelper clientManagerHelper = null;
     private ClientManagerView clientManagerView;
     private ClientRegisterController clientRegisterController;
     private ClientModificationHelper clientModificationHelper;
     
     public ClientManagerHelper(){
         setClientManagerView(new ClientManagerView());
-        setClientRegisterController(new ClientRegisterController(this));
-        setClientModificationHelper(new ClientModificationHelper(this));
+        setClientRegisterController( ClientRegisterController.getInstance());
+        setClientModificationHelper( ClientModificationHelper.getInstance());
         
-        loadClientRegisterToTable();
         initializeView();
     }
 
+    public static ClientManagerHelper getInstance(){
+        if( clientManagerHelper== null) {
+         clientManagerHelper = new ClientManagerHelper();
+        }
+        return clientManagerHelper;
+    }
+    
     public ClientModificationHelper getClientModificationHelper() {
         return clientModificationHelper;
     }
@@ -58,6 +65,7 @@ public class ClientManagerHelper extends AbstractViewController{
 
     @Override
     public void openWindow() {
+        loadClientRegisterToTable();
         getClientManagerView().setVisible(true);
     }
 
@@ -169,7 +177,6 @@ public class ClientManagerHelper extends AbstractViewController{
     }
     
     private boolean isDeletionConfirmed() {
-        System.out.println("llegue");
         String messageConfirm = "¿Estas seguro que deseas eliminarlo?";
         int optionSelected = getNotifier().showConfirmDialog( messageConfirm );
         return optionSelected == getNotifier().getYES_OPTION();

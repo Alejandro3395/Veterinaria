@@ -14,7 +14,6 @@ import java.io.Serializable;
 public abstract class Product implements Serializable {
     private long id;
     private String name;
-    private String supplier;
     private int amount;
     private double cost;
     private String expiration_date;
@@ -24,12 +23,10 @@ public abstract class Product implements Serializable {
 
     
     public Product(String name ,
-                   String supplier, 
                    int amount, 
                    double cost, 
                    String expiration_date) {
         this.name = name;
-        this.supplier =  supplier; 
         this.amount = amount;
         this.cost = cost;
         this.expiration_date = expiration_date;
@@ -55,7 +52,7 @@ public abstract class Product implements Serializable {
         return cost;
     }
 
-    public void setCost(float cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 
@@ -74,16 +71,5 @@ public abstract class Product implements Serializable {
     public void setExpiration_date(String expiration_date) {
         this.expiration_date = expiration_date;
     }
-
-    public String getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
-    }
-    
-    
-    
-    
+  
 }

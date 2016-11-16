@@ -32,7 +32,6 @@ public class SupplierManagerView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         btn_modifySupplier = new javax.swing.JButton();
         btn_addSupplier = new javax.swing.JButton();
         btn_deleteSupplier = new javax.swing.JButton();
@@ -43,16 +42,14 @@ public class SupplierManagerView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Doctor");
-
         btn_modifySupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/modify.png"))); // NOI18N
-        btn_modifySupplier.setText("Modificar Doctor");
+        btn_modifySupplier.setText("Modificar Proveedor");
 
         btn_addSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/add.png"))); // NOI18N
-        btn_addSupplier.setText("Añadir Doctor");
+        btn_addSupplier.setText("Añadir Proveedor");
 
         btn_deleteSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/delete.png"))); // NOI18N
-        btn_deleteSupplier.setText("Eliminar Doctor");
+        btn_deleteSupplier.setText("Eliminar Proveedor");
 
         table_supplierTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,7 +84,7 @@ public class SupplierManagerView extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Registros de Doctor");
+        jLabel2.setText("Registros de Proveedor");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,15 +93,9 @@ public class SupplierManagerView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(30, 30, 30))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(161, 161, 161)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 355, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,13 +111,10 @@ public class SupplierManagerView extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
@@ -217,14 +205,6 @@ public class SupplierManagerView extends javax.swing.JFrame {
         this.btn_modifySupplier = btn_modifySupplier;
     }
 
-    public JLabel getjLabel1() {
-        return jLabel1;
-    }
-
-    public void setjLabel1(JLabel jLabel1) {
-        this.jLabel1 = jLabel1;
-    }
-
     public JLabel getjLabel2() {
         return jLabel2;
     }
@@ -256,7 +236,6 @@ public class SupplierManagerView extends javax.swing.JFrame {
     private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_deleteSupplier;
     private javax.swing.JButton btn_modifySupplier;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table_supplierTable;

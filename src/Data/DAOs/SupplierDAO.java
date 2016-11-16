@@ -85,4 +85,15 @@ public class SupplierDAO extends AbstractDAO<Supplier> {
         }
         return ProviderList;
     }
+    
+    public Supplier getSupplierByName(String supplierName){
+        Supplier result=null;
+        try{
+            openSession();
+            result= (Supplier) session.createQuery("from Supplier c left join fetch c.medicines WHERE c.companyName = :companyName " ).setParameter("companyName", supplierName).uniqueResult();
+        }finally{
+            session.close();
+        }
+        return result;
+    }
 }

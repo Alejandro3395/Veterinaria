@@ -19,15 +19,23 @@ import presentation.views.SupplierRegisterView;
 public class SupplierRegisterController extends AbstractRegisterController{
     private SupplierRegisterView supplierRegisterView;
     private SupplierManagerHelper supplierManagerHelper;
+    private static SupplierRegisterController supplierRegisterContrller;
     
     private static int supplierDataIndex = 0;
     private static int userSupplierDataIndex = 1;
     
-    public SupplierRegisterController(SupplierManagerHelper supplierManager){
+    public SupplierRegisterController(){
         setSupplierRegisterView(new SupplierRegisterView());
-        setSupplierManagerHelper( supplierManager  );
+        //setSupplierManagerHelper(  SupplierManagerHelper.getInstance() );
         
         initializeView();
+    }
+    
+    public static SupplierRegisterController getInstance(){
+        if( supplierRegisterContrller== null) {
+         supplierRegisterContrller = new SupplierRegisterController();
+        }
+        return supplierRegisterContrller;
     }
 
     public SupplierManagerHelper getSupplierManagerHelper() {
@@ -47,7 +55,7 @@ public class SupplierRegisterController extends AbstractRegisterController{
     }
     
     private void updateManagerViewTable(){
-        getSupplierManagerHelper().updateTable();
+        SupplierManagerHelper.getInstance().updateTable();
     }
     
     @Override
@@ -98,6 +106,7 @@ public class SupplierRegisterController extends AbstractRegisterController{
             if(message.equals(successStatus)){
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el proveedor");
                 updateManagerViewTable();
+                resetFields();
                 closeWindow();
             }else{
                 getNotifier().showWarningMessage( message );
@@ -129,4 +138,12 @@ public class SupplierRegisterController extends AbstractRegisterController{
         return data;
     }
 
+    private void resetFields(){
+        getSupplierRegisterView().getField_supplierName().setText("");
+        
+        getSupplierRegisterView().getField_supplierPhoneLada().setText("");
+       
+        getSupplierRegisterView().getField_supplierPhoneNumber().setText("");
+        
+    }
 }

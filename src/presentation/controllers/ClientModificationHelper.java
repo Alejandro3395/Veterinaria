@@ -17,14 +17,22 @@ import presentation.views.ClientRegisterView;
  * @author Jorge
  */
 public class ClientModificationHelper extends AbstractRegisterController {
+    private static ClientModificationHelper clientModificationHelper = null;
     private ClientRegisterView clientRegisterView;
     private ClientManagerHelper clientManagerHelper;
     
-    public ClientModificationHelper(ClientManagerHelper clientManager){
+    public ClientModificationHelper(){
         setClientRegisterView( new ClientRegisterView() );
-        setClientManagerHelper( clientManager);
+        //setClientManagerHelper( clientManager);
         
         initializeView();
+    }
+    
+    public static ClientModificationHelper getInstance(){
+        if( clientModificationHelper== null) {
+         clientModificationHelper = new ClientModificationHelper();
+        }
+        return clientModificationHelper;
     }
 
     public ClientRegisterView getClientRegisterView() {
@@ -64,8 +72,8 @@ public class ClientModificationHelper extends AbstractRegisterController {
     }
     
     private void loadClientData(){
-        int row = getClientManagerHelper().getClientManagerView().getTable_clientTable().getSelectedRow();
-        int id = Integer.valueOf( getClientManagerHelper().getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
+        int row = ClientManagerHelper.getInstance().getClientManagerView().getTable_clientTable().getSelectedRow();
+        int id = Integer.valueOf( ClientManagerHelper.getInstance().getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
         
         ClientManager clientManager = ClientManager.GetInstance();
         Client client =  clientManager.getClient(id) ;
@@ -76,9 +84,9 @@ public class ClientModificationHelper extends AbstractRegisterController {
     private void proceedWithModification(){
         ArrayList<String> data = new ArrayList<String>(obtainData());
         
-        int row = getClientManagerHelper().getClientManagerView().getTable_clientTable().getSelectedRow();
+        int row = ClientManagerHelper.getInstance().getClientManagerView().getTable_clientTable().getSelectedRow();
         
-        int id = Integer.valueOf( getClientManagerHelper().getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
+        int id = Integer.valueOf( ClientManagerHelper.getInstance().getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
@@ -102,7 +110,7 @@ public class ClientModificationHelper extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        getClientManagerHelper().updateTable();
+        ClientManagerHelper.getInstance().updateTable();
     }
     
     private void cancelModification(){

@@ -22,19 +22,26 @@ import presentation.controllers.DoctorRegisterController;
  * @author Jorge
  */
 public class DoctorManagerHelper extends AbstractViewController {
+    private static DoctorManagerHelper doctorManagerHelper = null;
     private DoctorManagerView doctorManagerView;
     private DoctorRegisterController doctorRegisterController;
     private DoctorModificationHelper doctorModificationHelper;
     
     public DoctorManagerHelper(){
         setDoctorManagerView(new DoctorManagerView());
-        setDoctorRegisterController(new DoctorRegisterController(this));
-        setDoctorModificationHelper(new DoctorModificationHelper(this));
-        
-        loadDoctorRegisterToTable();
+        setDoctorRegisterController( DoctorRegisterController.getInstance() );
+        setDoctorModificationHelper( DoctorModificationHelper.getInstance());        
         initializeView();
     }
 
+    public static DoctorManagerHelper getInstance(){
+        if( doctorManagerHelper== null) {
+         doctorManagerHelper = new DoctorManagerHelper();
+        }
+        return doctorManagerHelper;
+    }
+    
+    
     public DoctorModificationHelper getDoctorModificationHelper() {
         return doctorModificationHelper;
     }
@@ -62,6 +69,7 @@ public class DoctorManagerHelper extends AbstractViewController {
 
     @Override
     public void openWindow() {
+        loadDoctorRegisterToTable();
         getDoctorManagerView().setVisible(true);
     }
 

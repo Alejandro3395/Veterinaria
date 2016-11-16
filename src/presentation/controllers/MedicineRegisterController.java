@@ -19,13 +19,58 @@ import javax.swing.WindowConstants;
 import presentation.AbstractRegisterController;
 import presentation.views.MedicineRegisterView;
 
-public class MedicineRegisterController extends AbstractRegisterController  {
+public class MedicineRegisterController extends AbstractRegisterController {
+    private static MedicineRegisterController medicineRegisterController;
     private MedicineRegisterView medicineRegisterView;
+    private MedicineManagerHelper medicineManagerHelper = null;
     
+    private String owner = null ;
+    private static int registerMedicineMode = 0;
+    private static int registerClientMode = 1;
+    private int mode = 0;
     
     public MedicineRegisterController(){
         setMedicineRegisterView(new MedicineRegisterView());
+        //setMedicineManagerHelper( medicineManager  );
+        
         initializeView();
+    }
+
+    public MedicineRegisterController( String owner ) {
+        setMedicineRegisterView( new MedicineRegisterView());
+        this.owner = owner;
+        initializeView();
+    }
+    
+    public static MedicineRegisterController getInstance(){
+        if( medicineRegisterController== null) {
+         medicineRegisterController = new MedicineRegisterController();
+        }
+        return medicineRegisterController;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+    
+    public MedicineManagerHelper getMedicineManagerHelper() {
+        return medicineManagerHelper;
+    }
+
+    public void setMedicineManagerHelper(MedicineManagerHelper medicineManagerHelper) {
+        this.medicineManagerHelper = medicineManagerHelper;
     }
 
     public MedicineRegisterView getMedicineRegisterView() {
@@ -36,6 +81,9 @@ public class MedicineRegisterController extends AbstractRegisterController  {
         this.medicineRegisterView = medicineRegisterView;
     }
     
+    private void updateManagerViewTable(){
+        MedicineManagerHelper.getInstance().updateTable();
+    }
     
     @Override
     public void openWindow() {
@@ -54,23 +102,53 @@ public class MedicineRegisterController extends AbstractRegisterController  {
      */
     @Override
     protected void setEvents() {
-       getMedicineRegisterView().getBtn_register().addActionListener(actionEvent -> registerMedicine());
+        getMedicineRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        getMedicineRegisterView().getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
+        
+    }
+    
+    private void cancelRegistration(){
+        closeWindow();
+    }
+    
+    private void closeWindow(){
+        getMedicineRegisterView().dispose();
     }
     
     /**
      *  This method uses sends the data the view provides to the manager.
      */
-    private void registerMedicine(){
+    private void proceedWithRegistration(){
+        ArrayList<String> medicineData = new ArrayList<String>(obtainData());
         
-        ArrayList<String> data = new ArrayList<String>(obtainData());
-        boolean isValidField = !isEmptyFields(data);
-
+        boolean isValidField =!isEmptyFields(medicineData);
+        
+        if(mode != 0){
+            owner = MedicineManagerHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
+        }
+        
+        String message="";
+        String successStatus="SUCCESS";
+        
         if(isValidField){
-                 MedicineManager medicineManager = MedicineManager.GetInstance();
-                 medicineManager.createMedicine(data);
+            MedicineManager medicineManager = MedicineManager.GetInstance();
+            message = medicineManager.registerMedicine(medicineData,owner);
+            if(message.equals(successStatus)){
+                getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Medicine");
+                if(mode == registerClientMode ){
+                    updateManagerViewTable();
+                }
+                resetFields();
+                closeWindow();
+            }else{
+                getNotifier().showWarningMessage( message );
+            }
+        }else{
+            message = "Rellene todos los campos";
+            getNotifier().showWarningMessage( message );
         }
     }
-    
+
     /**
      * This method transforms the view form into an arraylist of strings for future
      * parsing.
@@ -89,9 +167,6 @@ public class MedicineRegisterController extends AbstractRegisterController  {
         
         String medicinePrice = getMedicineRegisterView().getField_productSellPrize().getText();
         data.add(medicinePrice);
-        
-        String medicineSupplier = getMedicineRegisterView().getCombo_productSupplier().getSelectedItem().toString();
-        data.add(medicineSupplier);
         
         String medicineAdministrationWay = getMedicineRegisterView().getCombo_productAdministrationWay().getSelectedItem().toString();
         data.add(medicineAdministrationWay);
@@ -122,4 +197,18 @@ public class MedicineRegisterController extends AbstractRegisterController  {
         return data;
     }
     
+    
+    private void resetFields(){
+        getMedicineRegisterView().getField_productName().setText("");
+        getMedicineRegisterView().getField_productQuantity().setText( "");
+        getMedicineRegisterView().getField_productSellPrize().setText("");
+        getMedicineRegisterView().getCombo_productAdministrationWay().setSelectedIndex(0);
+        getMedicineRegisterView().getSpinner_productExpirationDay().setValue(0);
+        getMedicineRegisterView().getSpinner_productExpirationMonth().setValue(0);
+        getMedicineRegisterView().getSpinner_productExpirationYear().setValue(0);
+        getMedicineRegisterView().getSpinner_productDoseQuantity().setValue(0);
+        getMedicineRegisterView().getCombo_productDoseQuantityType().setSelectedIndex(0);
+        getMedicineRegisterView().getSpinner_productDosePeriod().setValue(0);
+        getMedicineRegisterView().getCombo_dosePeriodType().setSelectedIndex(0);
+    }
 }

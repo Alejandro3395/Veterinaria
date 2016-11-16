@@ -16,6 +16,8 @@ package Data.DAOs;
 import Entitys.Medicine;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import org.hibernate.HibernateException;
 
 /**
  *
@@ -68,7 +70,7 @@ public class MedicineDAO extends AbstractDAO<Medicine> {
     }
     
     /**
-     * This method returns the collection of elements from the medicine type.
+     * This method returns the collection of elements from the medicine type. Posiblemente hay que quitar
      * @return 
      */
     @Override
@@ -84,6 +86,29 @@ public class MedicineDAO extends AbstractDAO<Medicine> {
             session.close();
         }
         return medicineList;
+    }
+    
+    public List<Medicine> getMedicineDataList (){
+        List<Medicine> medicineDataList= null;
+         
+         try{
+         openSession();
+         medicineDataList = session.createQuery(" FROM Medicine ").list();
+         /*Iterator<Employee> it =  employeeDataList.iterator();
+         while(it.hasNext()){
+             Employee var = it.next();
+             System.out.println("ID: "+ var.getId());
+             
+         } */     
+            
+         transaction.commit();
+         }catch (HibernateException e) {
+         if (transaction!=null) transaction.rollback();
+         e.printStackTrace(); 
+      }finally {
+         session.close(); 
+      }
+          return medicineDataList;
     }
     
     

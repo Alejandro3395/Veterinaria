@@ -16,16 +16,26 @@ import presentation.views.LoginMainView;
  */
 public class LoginMainViewHelper extends AbstractViewController{
     private LoginMainView loginMainView;
+    private static LoginMainViewHelper loginMainViewHelper;
     private DoctorLoginViewHelper doctorLoginViewHelper;
     private EmployeeLoginViewHelper employeeLoginViewHelper;
     
     public LoginMainViewHelper(){
         setLoginView(new LoginMainView());
-        setDoctorLoginViewHelper(new DoctorLoginViewHelper());
-        setEmployeeLoginViewHelper(new EmployeeLoginViewHelper());
+        
+        setDoctorLoginViewHelper(DoctorLoginViewHelper.getInstance());
+        setEmployeeLoginViewHelper(EmployeeLoginViewHelper.getInstance());
+        
         initializeView();
     }
 
+    public static LoginMainViewHelper getInstance(){
+        if(loginMainViewHelper == null) {
+           loginMainViewHelper = new LoginMainViewHelper();
+        }
+        return loginMainViewHelper;
+    }
+    
     public DoctorLoginViewHelper getDoctorLoginViewHelper() {
         return doctorLoginViewHelper;
     }

@@ -16,14 +16,22 @@ import presentation.views.EmployeeLoginView;
  * @author mannu
  */
 public class EmployeeLoginViewHelper extends AbstractRegisterController {
-    EmployeeLoginView employeeLoginView;
-    IntroController introController;
+    private EmployeeLoginView employeeLoginView;
+    private static EmployeeLoginViewHelper employeeLoginViewHelper;
+    private MainMenuController mainMenuController ;
 
-    EmployeeLoginViewHelper(){
+    public EmployeeLoginViewHelper(){
         setEmployeeLoginView(new EmployeeLoginView());
-        setIntroControllerView(new IntroController());
+        setMainMenuController(MainMenuController.getInstance());
         initializeView();
         
+    }
+    
+     public static EmployeeLoginViewHelper getInstance(){
+        if(employeeLoginViewHelper == null) {
+         employeeLoginViewHelper = new EmployeeLoginViewHelper();
+        }
+        return employeeLoginViewHelper;
     }
 
     public EmployeeLoginView getEmployeeLoginView() {
@@ -34,13 +42,15 @@ public class EmployeeLoginViewHelper extends AbstractRegisterController {
         this.employeeLoginView = employeeLoginView;
     }
 
-    public IntroController getIntroController() {
-        return introController;
+    public MainMenuController getMainMenuController() {
+        return mainMenuController;
     }
 
-    public void setIntroControllerView(IntroController introController) {
-        this.introController = introController;
+    public void setMainMenuController(MainMenuController mainMenuController) {
+        this.mainMenuController = mainMenuController;
     }
+
+    
     
     
     
@@ -95,7 +105,7 @@ public class EmployeeLoginViewHelper extends AbstractRegisterController {
     }
     
      private void openIntroView(){
-        getIntroController().openWindow();
+        mainMenuController.openWindow();
     }
     
 }

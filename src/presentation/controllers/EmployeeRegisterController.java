@@ -24,19 +24,27 @@ import presentation.views.EmployeeRegisterView;
 * 
 */
 public class EmployeeRegisterController  extends AbstractRegisterController{
-    private EmployeeRegisterView employeeRegisterView;
+    private static EmployeeRegisterController employeeRegisterController = null;
+
     private EmployeeManagerHelper employeeManagerHelper;
     private static int employeeDataIndex = 0;
     private static int userEmployeeDataIndex = 1;
+    private EmployeeRegisterView employeeRegisterView;
     
     
-    public EmployeeRegisterController(EmployeeManagerHelper employeeManager){
+    public EmployeeRegisterController(){
         setEmployeeRegisterView(new EmployeeRegisterView());
-        setEmployeeManagerHelper( employeeManager);
         
         initializeView();
     }
 
+    public static EmployeeRegisterController getInstance(){
+        if( employeeRegisterController== null) {
+         employeeRegisterController = new EmployeeRegisterController();
+        }
+        return employeeRegisterController;
+    }
+    
     public EmployeeManagerHelper getEmployeeManagerHelper() {
         return employeeManagerHelper;
     }
@@ -91,8 +99,9 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
             EmployeeManager employeeManager = EmployeeManager.GetInstance();
             message = employeeManager.registerEmployee(employeeData,userEmployeeData);
             if(message.equals(successStatus)){
-                getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Doctor");
+                getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Empleado");
                 updateManagerViewTable();
+                resetFields();
                 closeWindow();
             }else{
                 getNotifier().showWarningMessage( message );
@@ -104,12 +113,12 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
     }
     
     private ArrayList<ArrayList> parseData(ArrayList<String> data){
-        ArrayList<String> doctorData = new ArrayList<String>(data.subList(0, 8));
-        ArrayList<String> userDoctorData = new ArrayList<String>(data.subList(8, data.size()));
+        ArrayList<String> employeeData = new ArrayList<String>(data.subList(0, 8));
+        ArrayList<String> userEmployeeData = new ArrayList<String>(data.subList(8, data.size()));
         
         ArrayList<ArrayList> parsedData = new ArrayList<ArrayList>();
-        parsedData.add(doctorData);
-        parsedData.add(userDoctorData);
+        parsedData.add(employeeData);
+        parsedData.add(userEmployeeData);
 
         return parsedData;
     }
@@ -166,9 +175,32 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
     }
 
     private void updateManagerViewTable() {
-        getEmployeeManagerHelper().updateTable();
+        EmployeeManagerHelper.getInstance().updateTable();
     }
     
+    private void resetFields(){
+        getEmployeeRegisterView().getField_employeeName().setText("");
+        
+        getEmployeeRegisterView().getField_employeeAddressPostalCode().setText("");
+        
+        getEmployeeRegisterView().getField_employeeAddressStreet().setText("");
+        
+        getEmployeeRegisterView().getField_employeeAddressColony().setText("");
+        
+        getEmployeeRegisterView().getField_employeeAddressCross().setText("");
+        
+        getEmployeeRegisterView().getField_employeePhoneLada().setText(""); 
+        
+        getEmployeeRegisterView().getField_employeePhoneNumber().setText("");
+        
+        getEmployeeRegisterView().getField_employeeRFC().setText("");
+
+        getEmployeeRegisterView().getField_employeeUserName().setText("");
+        
+        getEmployeeRegisterView().getField_employeeUserPassword().setText("");
+        
+        getEmployeeRegisterView().getField_employeeEmail().setText("");
+    }
 }
     
 

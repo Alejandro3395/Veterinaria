@@ -23,25 +23,46 @@ import presentation.views.RegisterSelectionView;
  * @author Jorge
  */
 public class RegisterSelectionController extends AbstractViewController {
+    private static RegisterSelectionController registerSelectionController = null;
     private RegisterSelectionView registerSelectionView;
     private EmployeeManagerHelper employeeManagerHelper;
     private SupplierManagerHelper supplierManagerHelper;
-    private ProductSelectionController productRegisterController;
+    //private ProductSelectionController productRegisterController;
+    private MedicineManagerHelper medicineManagerHelper;
     private ClientManagerHelper clientManagerHelper;
-    private PetRegisterController petRegisterController;
+    private PetManagerHelper petManagerHelper;
     private DoctorManagerHelper doctorManagerHelper;
     
     public RegisterSelectionController(){
         setRegisterSelectionView(new RegisterSelectionView());
-        setEmployeeManagerHelper(new EmployeeManagerHelper());
-        setDoctorManagerHelper( new DoctorManagerHelper());
-        setSupplierManagerHelper(new SupplierManagerHelper());
-        setProductRegisterController(new ProductSelectionController());
-        setClientManagerHelper(new ClientManagerHelper());
-        setPetRegisterController(new PetRegisterController());
+        setEmployeeManagerHelper(EmployeeManagerHelper.getInstance());
+        setDoctorManagerHelper( DoctorManagerHelper.getInstance());
+        setSupplierManagerHelper(SupplierManagerHelper.getInstance());
+        //setProductRegisterController(ProductSelectionController.getInstance());
+        setMedicineManagerHelper(MedicineManagerHelper.getInstance() );
+        
+        setClientManagerHelper(ClientManagerHelper.getInstance());
+        setPetManagerHelper(PetManagerHelper.getInstance());
         initializeView();
     }
 
+    public static RegisterSelectionController getInstance(){
+        if( registerSelectionController== null) {
+         registerSelectionController = new RegisterSelectionController();
+        }
+        return registerSelectionController;
+    }
+
+    public MedicineManagerHelper getMedicineManagerHelper() {
+        return medicineManagerHelper;
+    }
+
+    public void setMedicineManagerHelper(MedicineManagerHelper medicineManagerHelper) {
+        this.medicineManagerHelper = medicineManagerHelper;
+    }
+    
+    
+    
     public DoctorManagerHelper getDoctorManagerHelper() {
         return doctorManagerHelper;
     }
@@ -65,15 +86,13 @@ public class RegisterSelectionController extends AbstractViewController {
     public void setClientManagerHelper(ClientManagerHelper clientManagerHelper) {
         this.clientManagerHelper = clientManagerHelper;
     }
-    
- 
 
-    public PetRegisterController getPetRegisterController() {
-        return petRegisterController;
+    public PetManagerHelper getPetManagerHelper() {
+        return petManagerHelper;
     }
 
-    public void setPetRegisterController(PetRegisterController petRegisterController) {
-        this.petRegisterController = petRegisterController;
+    public void setPetManagerHelper(PetManagerHelper petManagerHelper) {
+        this.petManagerHelper = petManagerHelper;
     }
 
     public SupplierManagerHelper getSupplierManagerHelper() {
@@ -85,13 +104,6 @@ public class RegisterSelectionController extends AbstractViewController {
     }
  
 
-    public ProductSelectionController getProductRegisterController() {
-        return productRegisterController;
-    }
-
-    public void setProductRegisterController(ProductSelectionController productRegisterController) {
-        this.productRegisterController = productRegisterController;
-    }
 
    
 
@@ -133,7 +145,7 @@ public class RegisterSelectionController extends AbstractViewController {
         switch(value){
             
             case 1:
-                getEmployeeManagerHelper().openWindow();
+                employeeManagerHelper.openWindow();
             break;
             
             case 2:
@@ -145,7 +157,7 @@ public class RegisterSelectionController extends AbstractViewController {
             break;
             
             case 4:
-                getProductRegisterController().openWindow();
+                getMedicineManagerHelper().openWindow();
             break;
             
             case 5:
@@ -153,7 +165,7 @@ public class RegisterSelectionController extends AbstractViewController {
             break;
             
             case 6:
-                getPetRegisterController().openWindow();
+                getPetManagerHelper().openWindow();
             break;
         }
         

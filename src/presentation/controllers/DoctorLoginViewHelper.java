@@ -16,14 +16,23 @@ import presentation.views.DoctorLoginView;
  * @author mannu
  */
 public class DoctorLoginViewHelper extends AbstractRegisterController{
+    private static DoctorLoginViewHelper doctorLoginViewHelper= null; 
     private DoctorLoginView doctorLoginView;
-    private IntroController introcontroller ;
+    private MainMenuController mainMenuController ;
 
-    DoctorLoginViewHelper(){
+    public DoctorLoginViewHelper(){
         setDoctorLoginView(new DoctorLoginView());
-        setIntroController (new IntroController());
+        setMainMenuController (MainMenuController.getInstance());
         initializeView();
     }
+    
+     public static DoctorLoginViewHelper getInstance(){
+        if( doctorLoginViewHelper== null) {
+         doctorLoginViewHelper = new DoctorLoginViewHelper();
+        }
+        return doctorLoginViewHelper;
+    }
+    
     
     public DoctorLoginView getDoctorLoginView() {
         return doctorLoginView;
@@ -33,14 +42,15 @@ public class DoctorLoginViewHelper extends AbstractRegisterController{
         this.doctorLoginView = doctorLoginView;
     }
 
-    public IntroController getIntroController() {
-        return introcontroller;
+    public MainMenuController getMainMenuController() {
+        return mainMenuController;
     }
 
-    public void setIntroController(IntroController introcontroller) {
-        this.introcontroller = introcontroller;
+    public void setMainMenuController(MainMenuController mainMenuController) {
+        this.mainMenuController = mainMenuController;
     }
-    
+
+  
     
     
     
@@ -92,7 +102,7 @@ public class DoctorLoginViewHelper extends AbstractRegisterController{
     }
     
     private void openIntroView(){
-        getIntroController().openWindow();
+        mainMenuController.openWindow();
     }
     
     

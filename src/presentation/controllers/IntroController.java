@@ -14,26 +14,34 @@ import presentation.views.IntroView;
  * @author Jorge
  */
 public class IntroController extends AbstractViewController {
+    private static IntroController introController ; 
     private IntroView introView;
-    private MainMenuController mainMenuController;
+    private LoginMainViewHelper loginMainViewHelper;
 
     
 
     public IntroController() {
         setIntroView(new IntroView());
-        setMainMenuController(new MainMenuController());
+        setLoginMainViewHelper(LoginMainViewHelper.getInstance());
 
         initializeView();
     }
     
-    public MainMenuController getMainMenuController() {
-        return mainMenuController;
+    public static IntroController getInstance(){
+        if(introController == null) {
+         introController = new IntroController();
+        }
+        return introController;
     }
 
-    public void setMainMenuController(MainMenuController mainMenuController) {
-        this.mainMenuController = mainMenuController;
+    public LoginMainViewHelper getLoginMainViewHelper() {
+        return loginMainViewHelper;
     }
 
+    public void setLoginMainViewHelper(LoginMainViewHelper loginMainViewHelper) {
+        this.loginMainViewHelper = loginMainViewHelper;
+    }
+    
     public IntroView getIntroView() {
         return introView;
     }
@@ -61,7 +69,7 @@ public class IntroController extends AbstractViewController {
     
     
     private void openMenu(){
-        getMainMenuController().openWindow();
+        loginMainViewHelper.openWindow();
     }
     
     

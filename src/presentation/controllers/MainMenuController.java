@@ -14,18 +14,35 @@ import presentation.views.MainMenuView;
  * @author Jorge
  */
 public class MainMenuController extends AbstractViewController {
+    private static MainMenuController mainMenuController = null;
     private MainMenuView mainView;
     private RegisterSelectionController registerSelectionController;
+    private SalesViewHelper salesViewHelper;
+   
+    
     
     
     public MainMenuController (){
         setMainView(new MainMenuView());
-        setRegisterSelectionController(new RegisterSelectionController());
+        setRegisterSelectionController(RegisterSelectionController.getInstance());
+        setSalesViewHelper(SalesViewHelper.getInstance());
+        
         initializeView();
     }
 
+     public static MainMenuController getInstance(){
+        if( mainMenuController== null) {
+         mainMenuController = new MainMenuController();
+        }
+        return mainMenuController;
+    }
+
+    public void setSalesViewHelper(SalesViewHelper salesViewHelper) {
+        this.salesViewHelper = salesViewHelper;
+    }
     
-    
+     
+     
     private void openRegisterSelection(){
         getRegisterSelectionController().openWindow();
     }
@@ -63,6 +80,12 @@ public class MainMenuController extends AbstractViewController {
     @Override
     protected void setEvents() {
         getMainView().getBtn_register().addActionListener(actionEvent -> openRegisterSelection());
+        getMainView().getBtn_sales().addActionListener(actionEvent -> openSalesView());
+       
+    }
+    
+    private void openSalesView(){
+        salesViewHelper.openWindow();
     }
     
 }

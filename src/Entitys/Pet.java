@@ -33,7 +33,11 @@ public class Pet implements Serializable{
         
     }
 
-    
+    public Pet(Pet pet){
+       this.name = pet.getName().toString();
+       this.breed = pet.getBreed().toString();
+       this.age = pet.getAge();
+    }
     
     
     //Gets y Sets

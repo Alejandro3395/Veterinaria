@@ -18,17 +18,24 @@ import presentation.views.SupplierManagerView;
  * @author Jorge
  */
 public class SupplierManagerHelper extends AbstractViewController {
+    private static SupplierManagerHelper supplierManagerHelper = null;
     private SupplierManagerView supplierManagerView;
     private SupplierRegisterController supplierRegisterController;
     private SupplierModificationHelper supplierModificationHelper;
     
     public SupplierManagerHelper(){
         setSupplierManagerView(new SupplierManagerView());
-        setSupplierRegisterController(new SupplierRegisterController(this));
-        setSupplierModificationHelper(new SupplierModificationHelper(this));
+        setSupplierRegisterController(SupplierRegisterController.getInstance());
+        setSupplierModificationHelper(SupplierModificationHelper.getInstance());
         
-        loadSupplierRegisterToTable();
         initializeView();
+    }
+    
+    public static SupplierManagerHelper getInstance(){
+        if( supplierManagerHelper == null) {
+         supplierManagerHelper = new SupplierManagerHelper();
+        }
+        return supplierManagerHelper;
     }
 
     public SupplierModificationHelper getSupplierModificationHelper() {
@@ -59,6 +66,8 @@ public class SupplierManagerHelper extends AbstractViewController {
     @Override
     public void openWindow() {
         getSupplierManagerView().setVisible(true);
+        loadSupplierRegisterToTable();
+
     }
 
     @Override
@@ -155,7 +164,7 @@ public class SupplierManagerHelper extends AbstractViewController {
         
         DefaultTableModel model = (DefaultTableModel) getSupplierManagerView().getTable_supplierTable().getModel();
         
-        long id = supplier.getId();
+        long id = supplier.getId_Supplier();
         String name = supplier.getCompanyName();
         String lada = supplier.getPhone().getLada();
         String number = supplier.getPhone().getNumber();

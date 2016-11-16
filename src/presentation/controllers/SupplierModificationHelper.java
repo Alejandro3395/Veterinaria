@@ -16,16 +16,23 @@ import presentation.views.SupplierRegisterView;
  * @author Jorge
  */
 public class SupplierModificationHelper extends AbstractRegisterController {
+    private static SupplierModificationHelper supplierModificationHelper;
     private SupplierRegisterView supplierRegisterView;
     private SupplierManagerHelper supplierManagerHelper;
     
-    public SupplierModificationHelper(SupplierManagerHelper supplierManager){
+    public SupplierModificationHelper(){
         setSupplierRegisterView( new SupplierRegisterView() );
-        setSupplierManagerHelper( supplierManager);
         
         initializeView();
     }
 
+    public static SupplierModificationHelper getInstance(){
+        if( supplierModificationHelper == null) {
+            supplierModificationHelper = new SupplierModificationHelper();
+        }
+        return supplierModificationHelper;
+    }
+    
     public SupplierRegisterView getSupplierRegisterView() {
         return supplierRegisterView;
     }
@@ -62,8 +69,8 @@ public class SupplierModificationHelper extends AbstractRegisterController {
     }
     
     private void loadSupplierData(){
-        int row = getSupplierManagerHelper().getSupplierManagerView().getTable_supplierTable().getSelectedRow();
-        int id = Integer.valueOf( getSupplierManagerHelper().getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
+        int row = SupplierManagerHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getSelectedRow();
+        int id = Integer.valueOf( SupplierManagerHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
         
         SupplierManager supplierManager = SupplierManager.GetInstance();
         Supplier supplier =  supplierManager.getSupplier(id) ;
@@ -74,9 +81,9 @@ public class SupplierModificationHelper extends AbstractRegisterController {
     private void proceedWithModification(){
         ArrayList<String> data = new ArrayList<String>(obtainData());
         
-        int row = getSupplierManagerHelper().getSupplierManagerView().getTable_supplierTable().getSelectedRow();
+        int row = SupplierManagerHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getSelectedRow();
         
-        int id = Integer.valueOf( getSupplierManagerHelper().getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
+        int id = Integer.valueOf( SupplierManagerHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
@@ -100,7 +107,7 @@ public class SupplierModificationHelper extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        getSupplierManagerHelper().updateTable();
+        SupplierManagerHelper.getInstance().updateTable();
     }
     
     private void cancelModification(){
