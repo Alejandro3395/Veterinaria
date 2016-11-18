@@ -5,7 +5,6 @@
  */
 package Entitys;
 
-import exceptions.InvalidFieldException;
 import java.io.Serializable;
 
 /**
@@ -22,18 +21,15 @@ import java.io.Serializable;
     
     
     //Constructor
-    public Person(String name, Address address, Phone phone )throws InvalidFieldException{
-        
-        
-            this.name = name;
-            this.address= address;
-            this.phone = phone;
-
-    }
-
-    public Person() {
+    public Person(String name, Address address, Phone phone){
+        this.name = name;
+        this.address= address;
+        this.phone = phone;
     }
     
+    public Person(){
+        
+    }
     
     //gets y sets
 

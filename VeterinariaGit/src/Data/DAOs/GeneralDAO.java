@@ -4,11 +4,6 @@
  * and open the template in the editor.
  */
 package Data.DAOs;
-
-/**
- *
- * @author mannu
- */
 import Data.SessionGenerator;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -18,9 +13,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by Bojorquez on 15/10/2016.
- */
-public abstract class AbstractDAO<Entity> {
+* class: AbstractDao (GeneralDAO.java)
+* @author: Manuel Bojorquez
+* 
+* date: October 27, 2016
+* 
+* 
+* 
+*/
+public abstract class GeneralDAO<Entity> {
     protected Session session;
     protected Transaction transaction;
 
@@ -41,7 +42,7 @@ public abstract class AbstractDAO<Entity> {
 
     public abstract void update(Entity entity);
 
-    public abstract Object get(int objectId);
+    public abstract Object get(long objectId);
 
     public abstract ArrayList<?> getList();
 
@@ -78,7 +79,6 @@ public abstract class AbstractDAO<Entity> {
             openSession();
 
             session.update(entity);
-
             transaction.commit();
         } catch (HibernateException hibernateException) {
             exceptionManagement(hibernateException);

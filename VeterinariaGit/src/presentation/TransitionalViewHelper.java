@@ -21,7 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 
-public abstract class AbstractViewController {
+public abstract class TransitionalViewHelper {
     private Notifier notifier = new Notifier();
 
 

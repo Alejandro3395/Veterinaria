@@ -1,20 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: supplierManager (SupplierManager.java)
+* @author: Diego Nicoli
+* 
+* date: October 27, 2016
+* 
+* This class represent the manager for the Supplier entitys.
+* The objective of the class is to recieve the data that the view
+* collects and pass it to the entity class to insert it to the database.
+* 
+*/
 package bussiness;
 
 import Data.DAOs.SupplierDAO;
-import Entitys.Address;
-import Entitys.Phone;
 import Entitys.Supplier;
-import exceptions.InvalidFieldException;
+import Entitys.Phone;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import exceptions.InvalidFieldException;
 
 /**
  *
- * @author Jorge
+ * @author diego
  */
 public class SupplierManager {
     private static final SupplierManager supplierManager = new SupplierManager();
@@ -23,6 +29,7 @@ public class SupplierManager {
     /**
      * Constants to use with the createSupplier method
      */
+    
     private static final int nameIndex = 0;
     private static final int phoneLadaIndex = 1;
     private static final int phoneNumberIndex = 2;
@@ -33,11 +40,12 @@ public class SupplierManager {
         this.supplierDAO = SupplierDAO.GetInstance();
     }
     
-    /**
+     /**
      * This method returns an instance of the class that the other classes can
      * use.
      * @return 
      */
+    
     public static SupplierManager GetInstance(){
         return supplierManager;
     }
@@ -51,7 +59,7 @@ public class SupplierManager {
         supplierDAO.delete(supplier);
     }
     
-    private void updateSupplier(Supplier supplier){
+    public void updateSupplier(Supplier supplier){
         supplierDAO.update(supplier);
     }
     
@@ -63,18 +71,21 @@ public class SupplierManager {
        deleteSupplier((Supplier)(supplierDAO.get(id)));
     }
     
-   
-
-    /**
+    public Supplier getSupplierData(String supplierName){
+        return supplierDAO.getSupplierByName(supplierName);
+    }
+    
+     /**
      * The method recieves the data array from the view and parse it 
-     * so that the supplier entity can understand it, finally we create a 
+     * so that the Supplier entity can understand it, finally we create a 
      * new entity, the method assumes that the data is passed in the correct order.
      * 
-     * @param data
+     * @paramdata
      * @return data
      * @throws InvalidFieldException 
      */
-    public Supplier createSupplier(ArrayList<String> data) throws InvalidFieldException {
+    
+     public Supplier createSupplier(ArrayList<String> data) throws InvalidFieldException {
         String companyName = data.get(nameIndex);
         String supplierPhoneLada = data.get(phoneLadaIndex);
         String supplierPhoneNumber = data.get(phoneNumberIndex);
@@ -87,8 +98,9 @@ public class SupplierManager {
 
         return supplierData;
     }
-
-    /**
+     
+     
+     /**
      * The method recieves the data from the view and uses it to create the new 
      * entitys, an exception is thrown if there's an invalid data.
      * 
@@ -112,16 +124,11 @@ public class SupplierManager {
         String message = "";
  
         try{
-            Supplier supplier =  (getSupplier(id));
-            ArrayList<String> supplierData = new ArrayList<>( getSupplierData(supplier) );
-            
-            if(isNewData(supplierData, newSupplierData)){
-                Supplier updatedSupplier = updateData(supplier,newSupplierData);
-                updateSupplier(updatedSupplier);
-                message = "SUCCESS";
-            }else{
-                System.out.println("datos sin cambio");
-            }
+            Supplier supplier =  (getSupplier(id));   
+            Supplier updatedSupplier = createSupplier(newSupplierData);
+            updatedSupplier.setId_Supplier(supplier.getId_Supplier());
+            updateSupplier(updatedSupplier);
+            message = "SUCCESS";
         }catch(InvalidFieldException exception){
             System.out.println(exception.getMessage());
             message = exception.getMessage();
@@ -129,57 +136,10 @@ public class SupplierManager {
         return message;
     }
     
-    private Supplier updateData(Supplier supplier, ArrayList<String> newSupplierData) throws InvalidFieldException{
-        
-        String newcompanyName = newSupplierData.get(nameIndex);
-        String newsupplierPhoneLada = newSupplierData.get(phoneLadaIndex);
-        String newsupplierPhoneNumber = newSupplierData.get(phoneNumberIndex);
-        
-        supplier.setCompanyName(newcompanyName);
-        
-        Phone newPhone = new Phone(newsupplierPhoneLada,newsupplierPhoneNumber);
-        supplier.setPhone(newPhone);
-       
-        return supplier;
-    }
-    
-    private ArrayList<String> getSupplierData(Supplier supplier){
-        
-        ArrayList<String> data = new ArrayList<String>();
-        
-        data.add(supplier.getCompanyName().toString());
-        data.add(supplier.getPhone().getLada().toString());
-        data.add(supplier.getPhone().getNumber().toString());
-
-        
-        return data;
-    }
-    
-    private boolean isNewData(ArrayList<String> supplierData, ArrayList<String> newSupplierData){
-        boolean result = false;
-        int diferences = 0;
-        
-        for(int index = 0; index < newSupplierData.size(); index++){
-            
-            if(!( supplierData.get(index).equals(newSupplierData.get(index) ) ) ){
-                diferences++;
-            }
-        }
-        
-        if (diferences>0) { result = true;  }
-        
-        return result;
-    }
-    
     public ArrayList<Supplier> getSupplierList(){
         ArrayList<Supplier> supplierList;
-        supplierList = new ArrayList<Supplier> (getSuppliers());
+        supplierList = new ArrayList<Supplier> ((ArrayList<Supplier>) supplierDAO.getList());
         return supplierList; 
-    }
-    
-    
-    public ArrayList<Supplier> getSuppliers(){
-        return (ArrayList<Supplier>) supplierDAO.getList();
-    }
-    
+    } 
+     
 }

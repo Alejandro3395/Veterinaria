@@ -10,32 +10,40 @@ import bussiness.SupplierManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.AbstractViewController;
+import presentation.TransitionalViewHelper;
 import presentation.views.SupplierManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class SupplierManagerHelper extends AbstractViewController {
+public class SupplierManagerViewHelper extends TransitionalViewHelper {
+    private static SupplierManagerViewHelper supplierManagerViewHelper = null;
     private SupplierManagerView supplierManagerView;
-    private SupplierRegisterController supplierRegisterController;
-    private SupplierModificationHelper supplierModificationHelper;
+    private SupplierRegisterViewHelper supplierRegisterViewHelper;
+    private SupplierModificationViewHelper supplierModificationViewHelper;
     
-    public SupplierManagerHelper(){
+    public SupplierManagerViewHelper(){
         setSupplierManagerView(new SupplierManagerView());
-        setSupplierRegisterController(new SupplierRegisterController(this));
-        setSupplierModificationHelper(new SupplierModificationHelper(this));
+        setSupplierRegisterViewHelper(SupplierRegisterViewHelper.getInstance());
+        setSupplierModificationViewHelper(SupplierModificationViewHelper.getInstance());
         
         initializeView();
     }
-
-    public SupplierModificationHelper getSupplierModificationHelper() {
-        return supplierModificationHelper;
+    
+    public static SupplierManagerViewHelper getInstance(){
+        if( supplierManagerViewHelper == null) {
+         supplierManagerViewHelper = new SupplierManagerViewHelper();
+        }
+        return supplierManagerViewHelper;
     }
 
-    public void setSupplierModificationHelper(SupplierModificationHelper supplierModificationHelper) {
-        this.supplierModificationHelper = supplierModificationHelper;
+    public SupplierModificationViewHelper getSupplierModificationViewHelper() {
+        return supplierModificationViewHelper;
+    }
+
+    public void setSupplierModificationViewHelper(SupplierModificationViewHelper supplierModificationViewHelper) {
+        this.supplierModificationViewHelper = supplierModificationViewHelper;
     }
     
     public SupplierManagerView getSupplierManagerView() {
@@ -47,12 +55,12 @@ public class SupplierManagerHelper extends AbstractViewController {
     }
 
 
-    public SupplierRegisterController getSupplierRegisterController() {
-        return supplierRegisterController;
+    public SupplierRegisterViewHelper getSupplierRegisterViewHelper() {
+        return supplierRegisterViewHelper;
     }
 
-    public void setSupplierRegisterController(SupplierRegisterController supplierRegisterController) {
-        this.supplierRegisterController = supplierRegisterController;
+    public void setSupplierRegisterViewHelper(SupplierRegisterViewHelper supplierRegisterViewHelper) {
+        this.supplierRegisterViewHelper = supplierRegisterViewHelper;
     } 
 
     @Override
@@ -96,7 +104,7 @@ public class SupplierManagerHelper extends AbstractViewController {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getSupplierModificationHelper().openWindow();
+            getSupplierModificationViewHelper().openWindow();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -149,14 +157,14 @@ public class SupplierManagerHelper extends AbstractViewController {
     }
     
     private void openRegisterView(){
-        getSupplierRegisterController().openWindow();
+        getSupplierRegisterViewHelper().openWindow();
     }
     
     private void addSupplierToTable(Supplier supplier){
         
         DefaultTableModel model = (DefaultTableModel) getSupplierManagerView().getTable_supplierTable().getModel();
         
-        long id = supplier.getId();
+        long id = supplier.getId_Supplier();
         String name = supplier.getCompanyName();
         String lada = supplier.getPhone().getLada();
         String number = supplier.getPhone().getNumber();

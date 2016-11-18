@@ -10,26 +10,35 @@ import bussiness.EmployeeManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.AbstractViewController;
+import presentation.TransitionalViewHelper;
 import presentation.views.EmployeeManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class EmployeeManagerHelper extends AbstractViewController {
+public class EmployeeManagerViewHelper extends TransitionalViewHelper {
+    private static EmployeeManagerViewHelper employeeManagerViewHelper = null;
     private EmployeeManagerView employeeManagerView;
-    private EmployeeRegisterController employeeRegisterController;
-    private EmployeeModificationHelper employeeModificationHelper;
+    private EmployeeRegisterViewHelper employeeRegisterViewHelper;
+    private EmployeeModificationViewHelper employeeModificationViewHelper;
     
-    public EmployeeManagerHelper(){
+    public EmployeeManagerViewHelper(){
         setEmployeeManagerView(new EmployeeManagerView());
-        setEmployeeRegisterController(new EmployeeRegisterController(this));
-        setEmployeeModificationHelper(new EmployeeModificationHelper(this));
+        setEmployeeRegisterViewHelper( EmployeeRegisterViewHelper.getInstance());
+        
+        setEmployeeModificationViewHelper(EmployeeModificationViewHelper.getInstance());
         
         initializeView();
     }
 
+    public static EmployeeManagerViewHelper getInstance(){
+        if( employeeManagerViewHelper== null) {
+         employeeManagerViewHelper = new EmployeeManagerViewHelper();
+        }
+        return employeeManagerViewHelper;
+    }
+    
     public EmployeeManagerView getEmployeeManagerView() {
         return employeeManagerView;
     }
@@ -38,29 +47,28 @@ public class EmployeeManagerHelper extends AbstractViewController {
         this.employeeManagerView = employeeManagerView;
     }
 
-    public EmployeeRegisterController getEmployeeRegisterController() {
-        return employeeRegisterController;
+    public EmployeeRegisterViewHelper getEmployeeRegisterViewHelper() {
+        return employeeRegisterViewHelper;
     }
 
-    public void setEmployeeRegisterController(EmployeeRegisterController employeeRegisterController) {
-        this.employeeRegisterController = employeeRegisterController;
+    public void setEmployeeRegisterViewHelper(EmployeeRegisterViewHelper employeeRegisterViewHelper) {
+        this.employeeRegisterViewHelper = employeeRegisterViewHelper;
     }
 
-    public EmployeeModificationHelper getEmployeeModificationHelper() {
-        return employeeModificationHelper;
+    public EmployeeModificationViewHelper getEmployeeModificationViewHelper() {
+        return employeeModificationViewHelper;
     }
 
-    public void setEmployeeModificationHelper(EmployeeModificationHelper employeeModificationHelper) {
-        this.employeeModificationHelper = employeeModificationHelper;
+    public void setEmployeeModificationViewHelper(EmployeeModificationViewHelper employeeModificationViewHelper) {
+        this.employeeModificationViewHelper = employeeModificationViewHelper;
     }
 
     
 
     @Override
     public void openWindow() {
-        getEmployeeManagerView().setVisible(true);
         loadEmployeeRegisterToTable();
-
+        getEmployeeManagerView().setVisible(true);
     }
 
     @Override
@@ -97,7 +105,7 @@ public class EmployeeManagerHelper extends AbstractViewController {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getEmployeeModificationHelper().openWindow();
+            getEmployeeModificationViewHelper().openWindow();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -150,7 +158,7 @@ public class EmployeeManagerHelper extends AbstractViewController {
     }
     
     private void openRegisterView(){
-        getEmployeeRegisterController().openWindow();
+        employeeRegisterViewHelper.openWindow();
     }
     
     private void addEmployeeToTable(Employee employee){

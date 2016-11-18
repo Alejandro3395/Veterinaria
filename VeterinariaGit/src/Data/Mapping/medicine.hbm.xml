@@ -7,8 +7,8 @@
     <joined-subclass name="Entitys.Medicine" table="Medicine" extends="Entitys.Product">
         <key column="id" /> <!--Columna que contendra la llave foranea-->
         
-        <property name= "dose"/>
-        <property name= "administration"/>
+        <property name= "dose" type="string" column="dose" />
+        <property name= "administration" type="string" column="administration" />
     </joined-subclass>
     
 </hibernate-mapping>

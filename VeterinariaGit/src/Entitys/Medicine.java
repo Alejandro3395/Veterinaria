@@ -21,6 +21,8 @@ public class Medicine extends Product implements Serializable{
     private String dose;
     private String administration;
 
+    public Medicine(){ 
+    }
     
     public Medicine(
             String dose, 
@@ -31,22 +33,34 @@ public class Medicine extends Product implements Serializable{
 
     public Medicine( 
             String name,
-            String supplier,
             int amount,
             double cost,
             String dose,
             String expiration_date,
             String administration
             ) throws InvalidFieldException{
-        super(name,supplier, amount, cost,expiration_date);
+        
+        super(name, amount, cost,expiration_date);
         if(isValidAmount(amount)){
             this.dose = dose;
             this.administration = administration;
         }else{
             throw new InvalidFieldException("La cantidad de un nuevo medicamento no puede ser 0!");
         }
+    }
+
+    public Medicine(Medicine newMedicine) throws InvalidFieldException {
+        super(newMedicine.getName(), newMedicine.getAmount(), newMedicine.getCost(),newMedicine.getExpiration_date());
+
+        String newMedicineDose = newMedicine.getDose();
+        String newMedicineAdministrationWay = newMedicine.getAdministration();
         
-        
+        if(isValidAmount(newMedicine.getAmount())){
+            this.dose = newMedicineDose;
+            this.administration = newMedicineAdministrationWay;
+        }else{
+            throw new InvalidFieldException("La cantidad de un nuevo medicamento no puede ser 0!");
+        }
     }
 
     public boolean isValidAmount(int amount){
@@ -72,6 +86,8 @@ public class Medicine extends Product implements Serializable{
     public void setAdministration(String administration) {
         this.administration = administration;
     }
+    
+    
     
     
     

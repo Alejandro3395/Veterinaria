@@ -6,15 +6,16 @@
 package Data.DAOs;
 
 import Entitys.Client;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  *
- * @author Jorge
+ * @author mannu
  */
-public class ClientDAO extends AbstractDAO<Client> {
+public class ClientDAO extends GeneralDAO<Client> {
 
-    private static final ClientDAO clientDAO = new ClientDAO();
+     private static final ClientDAO clientDAO = new ClientDAO();
 
     public ClientDAO() {
     }
@@ -40,13 +41,13 @@ public class ClientDAO extends AbstractDAO<Client> {
     }
 
     @Override
-    public Object get(int objectId) {
+    public Object get(long objectId) {
         Client client = null;
-        long id = (long) objectId;
+        
         try{
             openSession();
             
-            client = (Client) session.get(Client.class,id);
+            client = (Client) session.get(Client.class,objectId);
         }finally{
             session.close();
         }
@@ -67,12 +68,12 @@ public class ClientDAO extends AbstractDAO<Client> {
         }
         return clientList;
     }
-    
+
     public Client getClientByName(String clientName){
         Client result=null;
         try{
             openSession();
-            result = (Client) session.createQuery("from Client c left join fetch c.pets WHERE c.name = :name").setParameter("name",  clientName).uniqueResult();
+            result= (Client) session.createQuery("from Client c left join fetch c.pets WHERE c.name = :name " ).setParameter("name", clientName).uniqueResult();
         }finally{
             session.close();
         }

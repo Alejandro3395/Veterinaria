@@ -9,23 +9,30 @@ import Entitys.Supplier;
 import bussiness.SupplierManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
+import presentation.OperationalViewHelper;
 import presentation.views.SupplierRegisterView;
 /**
  *
  * @author Jorge
  */
-public class SupplierModificationHelper extends AbstractRegisterController {
+public class SupplierModificationViewHelper extends OperationalViewHelper {
+    private static SupplierModificationViewHelper supplierModificationViewHelper;
     private SupplierRegisterView supplierRegisterView;
-    private SupplierManagerHelper supplierManagerHelper;
+    private SupplierManagerViewHelper supplierManagerViewHelper;
     
-    public SupplierModificationHelper(SupplierManagerHelper supplierManager){
+    public SupplierModificationViewHelper(){
         setSupplierRegisterView( new SupplierRegisterView() );
-        setSupplierManagerHelper( supplierManager);
         
         initializeView();
     }
 
+    public static SupplierModificationViewHelper getInstance(){
+        if( supplierModificationViewHelper == null) {
+            supplierModificationViewHelper = new SupplierModificationViewHelper();
+        }
+        return supplierModificationViewHelper;
+    }
+    
     public SupplierRegisterView getSupplierRegisterView() {
         return supplierRegisterView;
     }
@@ -34,12 +41,12 @@ public class SupplierModificationHelper extends AbstractRegisterController {
         this.supplierRegisterView = supplierRegisterView;
     }
 
-    public SupplierManagerHelper getSupplierManagerHelper() {
-        return supplierManagerHelper;
+    public SupplierManagerViewHelper getSupplierManagerHelper() {
+        return supplierManagerViewHelper;
     }
 
-    public void setSupplierManagerHelper(SupplierManagerHelper supplierManagerHelper) {
-        this.supplierManagerHelper = supplierManagerHelper;
+    public void setSupplierManagerViewHelper(SupplierManagerViewHelper supplierManagerViewHelper) {
+        this.supplierManagerViewHelper = supplierManagerViewHelper;
     }
 
     @Override
@@ -62,8 +69,8 @@ public class SupplierModificationHelper extends AbstractRegisterController {
     }
     
     private void loadSupplierData(){
-        int row = getSupplierManagerHelper().getSupplierManagerView().getTable_supplierTable().getSelectedRow();
-        int id = Integer.valueOf( getSupplierManagerHelper().getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
+        int row = SupplierManagerViewHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getSelectedRow();
+        int id = Integer.valueOf( SupplierManagerViewHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
         
         SupplierManager supplierManager = SupplierManager.GetInstance();
         Supplier supplier =  supplierManager.getSupplier(id) ;
@@ -74,9 +81,9 @@ public class SupplierModificationHelper extends AbstractRegisterController {
     private void proceedWithModification(){
         ArrayList<String> data = new ArrayList<String>(obtainData());
         
-        int row = getSupplierManagerHelper().getSupplierManagerView().getTable_supplierTable().getSelectedRow();
+        int row = SupplierManagerViewHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getSelectedRow();
         
-        int id = Integer.valueOf( getSupplierManagerHelper().getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
+        int id = Integer.valueOf( SupplierManagerViewHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
@@ -100,7 +107,7 @@ public class SupplierModificationHelper extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        getSupplierManagerHelper().updateTable();
+        SupplierManagerViewHelper.getInstance().updateTable();
     }
     
     private void cancelModification(){

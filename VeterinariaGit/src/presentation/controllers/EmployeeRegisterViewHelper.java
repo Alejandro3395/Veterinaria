@@ -8,34 +8,49 @@ package presentation.controllers;
 import bussiness.EmployeeManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
-import presentation.AbstractViewController;
+import presentation.OperationalViewHelper;
+import presentation.TransitionalViewHelper;
 import presentation.views.EmployeeRegisterView;
 
 /**
- *
- * @author Jorge
- */
-public class EmployeeRegisterController  extends AbstractRegisterController{
-    private EmployeeRegisterView employeeRegisterView;
-    private EmployeeManagerHelper employeeManagerHelper;
+* class: EmployeeRegisterViewHelper (EmployeeRegisterViewHelper.java)
+* @author: Manuel Bojorquez
+* 
+* date: October 27, 2016
+* 
+* This class represent the controller for the client entitys.
+* The objective of the class is to listen the events that the view
+* provides and pass the data to the manager class.
+* 
+*/
+public class EmployeeRegisterViewHelper  extends OperationalViewHelper{
+    private static EmployeeRegisterViewHelper employeeRegisterViewHelper = null;
+
+    private EmployeeManagerViewHelper employeeManagerViewHelper;
     private static int employeeDataIndex = 0;
     private static int userEmployeeDataIndex = 1;
+    private EmployeeRegisterView employeeRegisterView;
     
     
-    public EmployeeRegisterController(EmployeeManagerHelper employeeManager){
+    public EmployeeRegisterViewHelper(){
         setEmployeeRegisterView(new EmployeeRegisterView());
-        setEmployeeManagerHelper( employeeManager);
         
         initializeView();
     }
 
-    public EmployeeManagerHelper getEmployeeManagerHelper() {
-        return employeeManagerHelper;
+    public static EmployeeRegisterViewHelper getInstance(){
+        if( employeeRegisterViewHelper== null) {
+         employeeRegisterViewHelper = new EmployeeRegisterViewHelper();
+        }
+        return employeeRegisterViewHelper;
+    }
+    
+    public EmployeeManagerViewHelper getEmployeeManagerViewHelper() {
+        return employeeManagerViewHelper;
     }
 
-    public void setEmployeeManagerHelper(EmployeeManagerHelper employeeManagerHelper) {
-        this.employeeManagerHelper = employeeManagerHelper;
+    public void setEmployeeManagerViewHelper(EmployeeManagerViewHelper employeeManagerViewHelper) {
+        this.employeeManagerViewHelper = employeeManagerViewHelper;
     }
 
     public EmployeeRegisterView getEmployeeRegisterView() {
@@ -84,8 +99,9 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
             EmployeeManager employeeManager = EmployeeManager.GetInstance();
             message = employeeManager.registerEmployee(employeeData,userEmployeeData);
             if(message.equals(successStatus)){
-                getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Doctor");
+                getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Empleado");
                 updateManagerViewTable();
+                resetFields();
                 closeWindow();
             }else{
                 getNotifier().showWarningMessage( message );
@@ -97,12 +113,12 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
     }
     
     private ArrayList<ArrayList> parseData(ArrayList<String> data){
-        ArrayList<String> doctorData = new ArrayList<String>(data.subList(0, 8));
-        ArrayList<String> userDoctorData = new ArrayList<String>(data.subList(8, data.size()));
+        ArrayList<String> employeeData = new ArrayList<String>(data.subList(0, 8));
+        ArrayList<String> userEmployeeData = new ArrayList<String>(data.subList(8, data.size()));
         
         ArrayList<ArrayList> parsedData = new ArrayList<ArrayList>();
-        parsedData.add(doctorData);
-        parsedData.add(userDoctorData);
+        parsedData.add(employeeData);
+        parsedData.add(userEmployeeData);
 
         return parsedData;
     }
@@ -159,7 +175,32 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
     }
 
     private void updateManagerViewTable() {
-        getEmployeeManagerHelper().updateTable();
+        EmployeeManagerViewHelper.getInstance().updateTable();
     }
     
+    private void resetFields(){
+        getEmployeeRegisterView().getField_employeeName().setText("");
+        
+        getEmployeeRegisterView().getField_employeeAddressPostalCode().setText("");
+        
+        getEmployeeRegisterView().getField_employeeAddressStreet().setText("");
+        
+        getEmployeeRegisterView().getField_employeeAddressColony().setText("");
+        
+        getEmployeeRegisterView().getField_employeeAddressCross().setText("");
+        
+        getEmployeeRegisterView().getField_employeePhoneLada().setText(""); 
+        
+        getEmployeeRegisterView().getField_employeePhoneNumber().setText("");
+        
+        getEmployeeRegisterView().getField_employeeRFC().setText("");
+
+        getEmployeeRegisterView().getField_employeeUserName().setText("");
+        
+        getEmployeeRegisterView().getField_employeeUserPassword().setText("");
+        
+        getEmployeeRegisterView().getField_employeeEmail().setText("");
+    }
 }
+    
+

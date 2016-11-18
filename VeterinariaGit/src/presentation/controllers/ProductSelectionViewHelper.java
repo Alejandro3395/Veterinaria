@@ -14,20 +14,28 @@
 package presentation.controllers;
 
 import javax.swing.WindowConstants;
-import presentation.AbstractViewController;
+import presentation.TransitionalViewHelper;
 import presentation.views.MedicineRegisterView;
 import presentation.views.ProductSelectionView;
 
-public class ProductSelectionController extends AbstractViewController {
+public class ProductSelectionViewHelper extends TransitionalViewHelper {
+    private static ProductSelectionViewHelper productSelectionViewHelper = null;
     private ProductSelectionView productSelectionView;
-    private MedicineRegisterController medicineRegisterController;
+    private MedicineRegisterViewHelper medicineRegisterViewHelper;
     
     
-    public ProductSelectionController(){
+    public ProductSelectionViewHelper(){
         setProductSelectionView(new ProductSelectionView());
-        setMedicineRegisterController(new MedicineRegisterController());
+        setMedicineRegisterViewHelper(new MedicineRegisterViewHelper());
         
         initializeView();
+    }
+    
+    public static ProductSelectionViewHelper getInstance(){
+        if( productSelectionViewHelper== null) {
+         productSelectionViewHelper = new ProductSelectionViewHelper();
+        }
+        return productSelectionViewHelper;
     }
 
     public ProductSelectionView getProductSelectionView() {
@@ -40,12 +48,12 @@ public class ProductSelectionController extends AbstractViewController {
     
     
 
-    public MedicineRegisterController getMedicineRegisterController() {
-        return medicineRegisterController;
+    public MedicineRegisterViewHelper getMedicineRegisterViewHelper() {
+        return medicineRegisterViewHelper;
     }
 
-    public void setMedicineRegisterController(MedicineRegisterController medicineRegisterController) {
-        this.medicineRegisterController = medicineRegisterController;
+    public void setMedicineRegisterViewHelper(MedicineRegisterViewHelper medicineRegisterViewHelper) {
+        this.medicineRegisterViewHelper = medicineRegisterViewHelper;
     }
     
     @Override
@@ -76,7 +84,7 @@ public class ProductSelectionController extends AbstractViewController {
         switch(value){
             
             case 1:
-                getMedicineRegisterController().openWindow();
+                getMedicineRegisterViewHelper().openWindow();
             break;
             
             case 2:

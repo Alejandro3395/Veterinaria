@@ -11,12 +11,10 @@ import Entitys.Employee;
 import Entitys.Phone;
 import Entitys.UserEmployee;
 import exceptions.InvalidFieldException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- *
- * @author Jorge
- */
+
 public class EmployeeManager {
     private static final EmployeeManager employeeManager = new EmployeeManager();
     private EmployeeDAO employeeDAO;
@@ -40,11 +38,10 @@ public class EmployeeManager {
     private static final int userPasswordIndex = 1;
     private static final int userEmailIndex = 2;
     
-    
-    
     public EmployeeManager(){
         this.employeeDAO = EmployeeDAO.GetInstance();
     }
+    
     
     /**
      * This method returns an instance of the class that the other classes can
@@ -56,15 +53,16 @@ public class EmployeeManager {
     }
     
     
-    private void addEmployee(Employee employee) {
+    private void addEmployee(Employee employee)  {
         employeeDAO.add(employee);
     }
+ 
     
     private void deleteEmployee(Employee employee){
         employeeDAO.delete(employee);
     }
     
-    private void updateDoctor(Employee employee){
+    private void updateEmployee(Employee employee){
         employeeDAO.update(employee);
     }
     
@@ -75,17 +73,15 @@ public class EmployeeManager {
     public void eliminateEmployee(int id){
        deleteEmployee((Employee)(employeeDAO.get(id)));
     }
+    
+    
+    
+    
 
-    /**
-     * The method recieves the data array from the view and parse it 
-     * so that the doctor entity can understand it, finally we create a 
-     * new entity, the method assumes that the data is passed in the correct order.
-     * 
-     * @param data
-     * @return data
-     * @throws InvalidFieldException 
-     */
+    
     public Employee createEmployee(ArrayList<String> data) throws InvalidFieldException {
+        
+        //  public Employee(String name, Address address, Phone phone, String RFC) {
         
         String employeeName = data.get(nameIndex);
         int  employeePostalCode = Integer.valueOf(data.get(postalCodeIndex));
@@ -96,24 +92,22 @@ public class EmployeeManager {
         String employeePhoneNumber = data.get(phoneNumberIndex);
         String employeeRFC = data.get(RFCIndex);
         
+
+        
         Employee employeeData;
         
-        Address employeeAddress = new Address(employeePostalCode,employeeAddressStreet,employeeAddressColony,employeeAddressCross);
+        Address employeeAddress = new Address(employeePostalCode,
+                                              employeeAddressStreet ,
+                                              employeeAddressColony ,
+                                              employeeAddressCross);
+        
         Phone employeePhone = new Phone(employeePhoneLada,employeePhoneNumber);
         
-        employeeData = new Employee(employeeName,employeeAddress,employeePhone,employeeRFC);
+         employeeData = new Employee(employeeName,employeeAddress,employeePhone,employeeRFC);
 
         return employeeData;
     }
-     /**
-     * The method recieves the data array from the view and parse it 
-     * so that the UserDoctor entity can understand it, finally we create a 
-     * new entity, the method assumes that the data is passed in the correct order.
-     * 
-     * @param data
-     * @return data
-     * @throws InvalidFieldException 
-     */
+    
     public UserEmployee createUserEmployee(ArrayList<String> data) throws InvalidFieldException{
         
         String employeeUserName = data.get(userNameIndex);
@@ -125,13 +119,7 @@ public class EmployeeManager {
         return userEmployee;
         
     }
-    /**
-     * The method recieves the data from the view and uses it to create the new 
-     * entitys, an exception is thrown if there's an invalid data.
-     * 
-     * @param doctorData
-     * @param userDoctorData 
-     */
+    
     public String registerEmployee(ArrayList<String> employeeData, ArrayList<String> userEmployeeData){
         String message ="";
         
@@ -152,15 +140,11 @@ public class EmployeeManager {
  
         try{
             Employee employee =  (getEmployee(id));
-            ArrayList<String> employeeData = new ArrayList<>( getEmployeeData(employee) );
-            
-            if(isNewData(employeeData, newEmployeeData)){
-                Employee updatedEmployee = updateData(employee,newEmployeeData);
-                updateDoctor(updatedEmployee);
+            Employee updatedEmployee = createEmployee(newEmployeeData);
+            updatedEmployee.setId(employee.getId());
+            updatedEmployee.setUser(employee.getUser());
+            updateEmployee(updatedEmployee);
                 message = "SUCCESS";
-            }else{
-                System.out.println("datos sin cambio");
-            }
         }catch(InvalidFieldException exception){
             System.out.println(exception.getMessage());
             message = exception.getMessage();
@@ -168,65 +152,9 @@ public class EmployeeManager {
         return message;
     }
     
-    private Employee updateData(Employee employee, ArrayList<String> newEmployeeData) throws InvalidFieldException{
-        
-        String newEmployeeName = newEmployeeData.get(nameIndex);
-        int  newEmployeePostalCode = Integer.valueOf(newEmployeeData.get(postalCodeIndex));
-        String newEmployeeAddressStreet = newEmployeeData.get(adressStreetIndex);
-        String newEmployeeAddressColony = newEmployeeData.get(addressColonyIndex);
-        String newEmployeeAddressCross = newEmployeeData.get(addressCrossIndex);
-        String newEmployeePhoneLada = newEmployeeData.get(phoneLadaIndex);
-        String newEmployeePhoneNumber = newEmployeeData.get(phoneNumberIndex);
-        String newEmployeeRFC = newEmployeeData.get(RFCIndex);
-        
-        employee.setName(newEmployeeName);
-        
-        Address newAddress = new Address(newEmployeePostalCode,newEmployeeAddressStreet,newEmployeeAddressColony,newEmployeeAddressCross);
-        employee.setAddress(newAddress);
-        
-        Phone newPhone = new Phone(newEmployeePhoneLada,newEmployeePhoneNumber);
-        employee.setPhone(newPhone);
-        
-        employee.setRFC(newEmployeeRFC);
-       
-        return employee;
-    }
-    
-    private ArrayList<String> getEmployeeData(Employee employee){
-        
-        ArrayList<String> data = new ArrayList<String>();
-        
-        data.add(employee.getName().toString());
-        data.add( Integer.toString( employee.getAddress().getZipCode() ) );
-        data.add(employee.getAddress().getStreet().toString());
-        data.add(employee.getAddress().getColony().toString());
-        data.add(employee.getAddress().getCrossovers().toString());
-        data.add(employee.getPhone().getLada().toString());
-        data.add(employee.getPhone().getNumber().toString());
-        data.add(employee.getRFC().toString());
-        
-        return data;
-    }
-    
-    private boolean isNewData(ArrayList<String> employeeData, ArrayList<String> newEmployeeData){
-        boolean result = false;
-        int diferences = 0;
-        
-        for(int index = 0; index < newEmployeeData.size(); index++){
-            
-            if(!( employeeData.get(index).equals(newEmployeeData.get(index) ) ) ){
-                diferences++;
-            }
-        }
-        
-        if (diferences>0) { result = true;  }
-        
-        return result;
-    }
-    
     public ArrayList<Employee> getEmployeeList(){
         ArrayList<Employee> employeeList;
-        employeeList = new ArrayList<Employee> (getEmployees());
+        employeeList = new ArrayList<Employee> ( (ArrayList<Employee>) employeeDAO.getList() );
         return employeeList; 
     }
     
@@ -241,9 +169,5 @@ public class EmployeeManager {
         employeeManager.addEmployee(employee);
     }
     
-    public ArrayList<Employee> getEmployees(){
-        return (ArrayList<Employee>) employeeDAO.getList();
-    }
-    
-    
+
 }

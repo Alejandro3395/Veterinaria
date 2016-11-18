@@ -11,25 +11,31 @@ import bussiness.PetManager;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
+import presentation.OperationalViewHelper;
 import presentation.views.PetRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class PetModificationHelper extends AbstractRegisterController {
+public class PetModificationViewHelper extends OperationalViewHelper {
+    private static PetModificationViewHelper petModificationViewHelper;
     private PetRegisterView petRegisterView;
-    private PetManagerHelper petManagerHelper;
+    private PetManagerViewHelper petManagerViewHelper;
     private String owner = null;
     
-    public PetModificationHelper(PetManagerHelper petManager){
+    public PetModificationViewHelper(){
         setPetRegisterView( new PetRegisterView() );
-        setPetManagerHelper( petManager);
         
         initializeView();
     }
 
+    public static PetModificationViewHelper getInstance(){
+        if( petModificationViewHelper== null) {
+         petModificationViewHelper = new PetModificationViewHelper();
+        }
+        return petModificationViewHelper;
+    }
 
     public PetRegisterView getPetRegisterView() {
         return petRegisterView;
@@ -39,12 +45,12 @@ public class PetModificationHelper extends AbstractRegisterController {
         this.petRegisterView = petRegisterView;
     }
 
-    public PetManagerHelper getPetManagerHelper() {
-        return petManagerHelper;
+    public PetManagerViewHelper getPetManagerViewHelper() {
+        return petManagerViewHelper;
     }
 
-    public void setPetManagerHelper(PetManagerHelper petManagerHelper) {
-        this.petManagerHelper = petManagerHelper;
+    public void setPetManagerViewHelper(PetManagerViewHelper petManagerViewHelper) {
+        this.petManagerViewHelper = petManagerViewHelper;
     }
 
     @Override
@@ -67,8 +73,8 @@ public class PetModificationHelper extends AbstractRegisterController {
     }
     
     private void loadPetData(){
-        int rowIndex = getPetManagerHelper().getPetManagerView().getTable_petTable().getSelectedRow();
-        String petOwner = getPetManagerHelper().getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
+        int rowIndex = PetManagerViewHelper.getInstance().getPetManagerView().getTable_petTable().getSelectedRow();
+        String petOwner = PetManagerViewHelper.getInstance().getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
         
         PetManager petManager = PetManager.GetInstance();
         List<Pet> petList =  petManager.getPetList(petOwner);
@@ -80,8 +86,8 @@ public class PetModificationHelper extends AbstractRegisterController {
     private void proceedWithModification(){
         ArrayList<String> data = new ArrayList<String>(obtainData());
         
-        int rowIndex = getPetManagerHelper().getPetManagerView().getTable_petTable().getSelectedRow();
-        String petOwner = getPetManagerHelper().getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
+        int rowIndex = PetManagerViewHelper.getInstance().getPetManagerView().getTable_petTable().getSelectedRow();
+        String petOwner = PetManagerViewHelper.getInstance().getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
@@ -105,7 +111,7 @@ public class PetModificationHelper extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        getPetManagerHelper().updateTable();
+        PetManagerViewHelper.getInstance().updateTable();
     }
     
     private void cancelModification(){

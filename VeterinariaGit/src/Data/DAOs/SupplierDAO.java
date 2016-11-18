@@ -1,18 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: SupplierDAO (SupplierDAO.java)
+* @author: Diego Nicoli
+* 
+* date: October 27, 2016
+* 
+* This class represent the data section of the Supplier class.
+* 
+* The main objective of this class is to make the comunication with the 
+* database.
+* 
+*/
 package Data.DAOs;
 
+
 import Entitys.Supplier;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- *
- * @author Jorge
- */
-public class SupplierDAO extends AbstractDAO<Supplier> {
+
+public class SupplierDAO extends GeneralDAO<Supplier> {
     private static final SupplierDAO SupplierDAO = new SupplierDAO();
 
     public SupplierDAO() {
@@ -46,13 +52,13 @@ public class SupplierDAO extends AbstractDAO<Supplier> {
      */
     
     @Override
-    public Object get(int objectId) {
+    public Object get(long objectId) {
         Supplier Supplier = null;
-        long id = (long) objectId;
+        
         try{
             openSession();
             
-            Supplier = (Supplier) session.get(Supplier.class,id);
+            Supplier = (Supplier) session.get(Supplier.class,objectId);
         }finally{
             session.close();
         }
@@ -80,4 +86,14 @@ public class SupplierDAO extends AbstractDAO<Supplier> {
         return ProviderList;
     }
     
+    public Supplier getSupplierByName(String supplierName){
+        Supplier result=null;
+        try{
+            openSession();
+            result= (Supplier) session.createQuery("from Supplier c left join fetch c.medicines WHERE c.companyName = :companyName " ).setParameter("companyName", supplierName).uniqueResult();
+        }finally{
+            session.close();
+        }
+        return result;
+    }
 }

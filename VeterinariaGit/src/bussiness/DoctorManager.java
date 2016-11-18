@@ -80,7 +80,6 @@ public class DoctorManager {
        deleteDoctor((Doctor)(doctorDAO.get(id)));
     }
     
-   
 
     /**
      * The method recieves the data array from the view and parse it 
@@ -131,6 +130,7 @@ public class DoctorManager {
         return userDoctor;
         
     }
+
     /**
      * The method recieves the data from the view and uses it to create the new 
      * entitys, an exception is thrown if there's an invalid data.
@@ -152,20 +152,17 @@ public class DoctorManager {
         return message;
     }
     
-    public String modifyDoctor(ArrayList<String> newDoctorData , int id){
+     public String modifyDoctor(ArrayList<String> newDoctorData , int id){
         String message = "";
  
         try{
             Doctor doctor =  (getDoctor(id));
-            ArrayList<String> doctorData = new ArrayList<>( getDoctorData(doctor) );
-            
-            if(isNewData(doctorData, newDoctorData)){
-                Doctor updatedDoctor = updateData(doctor,newDoctorData);
-                updateDoctor(updatedDoctor);
+            Doctor updatedDoctor = createDoctor(newDoctorData);
+            updatedDoctor.setId(doctor.getId());
+            updatedDoctor.setUser(doctor.getUser());
+            updateDoctor(updatedDoctor);
                 message = "SUCCESS";
-            }else{
-                System.out.println("datos sin cambio");
-            }
+            
         }catch(InvalidFieldException exception){
             System.out.println(exception.getMessage());
             message = exception.getMessage();
@@ -173,73 +170,13 @@ public class DoctorManager {
         return message;
     }
     
-    private Doctor updateData(Doctor doctor, ArrayList<String> newDoctorData) throws InvalidFieldException{
-        
-        String newDoctorName = newDoctorData.get(nameIndex);
-        int  newDoctorPostalCode = Integer.valueOf(newDoctorData.get(postalCodeIndex));
-        String newDoctorAddressStreet = newDoctorData.get(adressStreetIndex);
-        String newDoctorAddressColony = newDoctorData.get(addressColonyIndex);
-        String newDoctorAddressCross = newDoctorData.get(addressCrossIndex);
-        String newDoctorPhoneLada = newDoctorData.get(phoneLadaIndex);
-        String newDoctorPhoneNumber = newDoctorData.get(phoneNumberIndex);
-        String newDoctorRFC = newDoctorData.get(RFCIndex);
-        String newDoctorIdentityCard = newDoctorData.get(identityCardIndex);
-        
-        doctor.setName(newDoctorName);
-        
-        Address newAddress = new Address(newDoctorPostalCode,newDoctorAddressStreet,newDoctorAddressColony,newDoctorAddressCross);
-        doctor.setAddress(newAddress);
-        
-        Phone newPhone = new Phone(newDoctorPhoneLada,newDoctorPhoneNumber);
-        doctor.setPhone(newPhone);
-        
-        doctor.setRFC(newDoctorRFC);
-    
-        doctor.setIdentityCard(newDoctorIdentityCard);
-       
-        return doctor;
-    }
-    
-    private ArrayList<String> getDoctorData(Doctor doctor){
-        
-        ArrayList<String> data = new ArrayList<String>();
-        
-        data.add(doctor.getName().toString());
-        data.add( Integer.toString( doctor.getAddress().getZipCode() ) );
-        data.add(doctor.getAddress().getStreet().toString());
-        data.add(doctor.getAddress().getColony().toString());
-        data.add(doctor.getAddress().getCrossovers().toString());
-        data.add(doctor.getPhone().getLada().toString());
-        data.add(doctor.getPhone().getNumber().toString());
-        data.add(doctor.getRFC().toString());
-        data.add(doctor.getIdentityCard().toString());
-        
-        return data;
-    }
-    
-    private boolean isNewData(ArrayList<String> doctorData, ArrayList<String> newDoctorData){
-        boolean result = false;
-        int diferences = 0;
-        
-        for(int index = 0; index < newDoctorData.size(); index++){
-            
-            if(!( doctorData.get(index).equals(newDoctorData.get(index) ) ) ){
-                diferences++;
-            }
-        }
-        
-        if (diferences>0) { result = true;  }
-        
-        return result;
-    }
-    
     public ArrayList<Doctor> getDoctorList(){
         ArrayList<Doctor> doctorList;
-        doctorList = new ArrayList<Doctor> (getDoctors());
+        doctorList = new ArrayList<Doctor> ((ArrayList<Doctor>) doctorDAO.getList());
         return doctorList; 
     }
     
-    /**
+     /**
      * The method recieves the doctor and the userDoctor entitys to set the user to the doctor 
      * and then insert the doctor into the DataBase.
      * @param doctor
@@ -249,10 +186,5 @@ public class DoctorManager {
         doctor.setUser(userDoctor);
         doctorManager.addDoctor(doctor);
     }
-    
-    public ArrayList<Doctor> getDoctors(){
-        return (ArrayList<Doctor>) doctorDAO.getList();
-    }
-    
-   
+
 }

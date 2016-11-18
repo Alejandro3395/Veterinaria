@@ -16,12 +16,14 @@ package Data.DAOs;
 import Entitys.Medicine;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import org.hibernate.HibernateException;
 
 /**
  *
  * @author mannu
  */
-public class MedicineDAO extends AbstractDAO<Medicine> {
+public class MedicineDAO extends GeneralDAO<Medicine> {
     private static final MedicineDAO medicineDAO = new MedicineDAO();
 
     public MedicineDAO() {
@@ -48,19 +50,19 @@ public class MedicineDAO extends AbstractDAO<Medicine> {
     }
     
     /**
-     * This method recieves a medicine object and checks if exists in the 
-     * database.
-     * @param objectId
-     * @return 
+     *Return the persistent instance of the given entity class with the given 
+     * identifier, or null if there is no such persistent instance.
+     * @param medicineId
+     * @return null
      */
     @Override
-    public Object get(int objectId) {
+    public Medicine get(long medicineId) {
         Medicine medicine = null;
         
         try{
             openSession();
             
-            medicine = (Medicine) session.get(Medicine.class,objectId);
+            medicine = (Medicine) session.get(Medicine.class,medicineId);
         }finally{
             session.close();
         }
@@ -68,7 +70,7 @@ public class MedicineDAO extends AbstractDAO<Medicine> {
     }
     
     /**
-     * This method returns the collection of elements from the medicine type.
+     * This method returns the collection of elements from the medicine type. Posiblemente hay que quitar
      * @return 
      */
     @Override
@@ -84,6 +86,29 @@ public class MedicineDAO extends AbstractDAO<Medicine> {
             session.close();
         }
         return medicineList;
+    }
+    
+    public List<Medicine> getMedicineDataList (){
+        List<Medicine> medicineDataList= null;
+         
+         try{
+         openSession();
+         medicineDataList = session.createQuery(" FROM Medicine ").list();
+         /*Iterator<Employee> it =  employeeDataList.iterator();
+         while(it.hasNext()){
+             Employee var = it.next();
+             System.out.println("ID: "+ var.getId());
+             
+         } */     
+            
+         transaction.commit();
+         }catch (HibernateException e) {
+         if (transaction!=null) transaction.rollback();
+         e.printStackTrace(); 
+      }finally {
+         session.close(); 
+      }
+          return medicineDataList;
     }
     
     

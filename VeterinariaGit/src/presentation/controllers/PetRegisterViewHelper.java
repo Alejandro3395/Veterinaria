@@ -1,48 +1,84 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* class: PetRegisterController (PetRegisterController.java)
+* @author: Diego Nicoli
+* 
+* date: October 27, 2016
+* 
+* This class represent the controller for the Pet entitys.
+* The objective of the class is to listen the events that the view
+* provides and pass the data to the manager class.
+* 
+*/
 package presentation.controllers;
 
 import bussiness.PetManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
-import presentation.AbstractViewController;
+import presentation.OperationalViewHelper;
+import presentation.TransitionalViewHelper;
 import presentation.views.PetRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class PetRegisterController extends AbstractRegisterController {
+public class PetRegisterViewHelper extends OperationalViewHelper {
+    private static PetRegisterViewHelper petRegisterViewHelper;
     private PetRegisterView petRegisterView;
-    private PetManagerHelper petManagerHelper = null;
+    private PetManagerViewHelper petManagerViewHelper = null;
     
-    private String owner ;
+    private String owner = null ;
+    private static int registerPetMode = 0;
+    private static int registerClientMode = 1;
+    private int mode = 0;
     
-    public PetRegisterController(PetManagerHelper petManager){
+    public PetRegisterViewHelper(){
         setPetRegisterView(new PetRegisterView());
-        setPetManagerHelper( petManager  );
+        //setPetManagerViewHelper( petManager  );
         
         initializeView();
     }
 
-    public PetRegisterController( String owner ) {
+    public PetRegisterViewHelper( String owner ) {
         setPetRegisterView( new PetRegisterView());
         this.owner = owner;
         initializeView();
     }
     
-    
-
-    public PetManagerHelper getPetManagerHelper() {
-        return petManagerHelper;
+    public static PetRegisterViewHelper getInstance(){
+        if( petRegisterViewHelper== null) {
+         petRegisterViewHelper = new PetRegisterViewHelper();
+        }
+        return petRegisterViewHelper;
     }
 
-    public void setPetManagerHelper(PetManagerHelper petManagerHelper) {
-        this.petManagerHelper = petManagerHelper;
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+    
+    
+    
+    
+    
+
+    public PetManagerViewHelper getPetManagerViewHelper() {
+        return petManagerViewHelper;
+    }
+
+    public void setPetManagerViewHelper(PetManagerViewHelper petManagerViewHelper) {
+        this.petManagerViewHelper = petManagerViewHelper;
     }
 
     public PetRegisterView getPetRegisterView() {
@@ -54,7 +90,7 @@ public class PetRegisterController extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        getPetManagerHelper().updateTable();
+        PetManagerViewHelper.getInstance().updateTable();
     }
     
     @Override
@@ -91,13 +127,12 @@ public class PetRegisterController extends AbstractRegisterController {
      *  This method uses sends the data the view provides to the manager.
      */
     private void proceedWithRegistration(){
-        
         ArrayList<String> petData = new ArrayList<String>(obtainData());
         
         boolean isValidField =!isEmptyFields(petData);
         
-        if(petManagerHelper != null){
-            owner = petManagerHelper.getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
+        if(mode != 0){
+            owner = PetManagerViewHelper.getInstance().getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
         }
         
         String message="";
@@ -108,9 +143,10 @@ public class PetRegisterController extends AbstractRegisterController {
             message = petManager.registerPet(petData,owner);
             if(message.equals(successStatus)){
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Pet");
-                if(petManagerHelper != null){
+                if(mode == registerClientMode ){
                     updateManagerViewTable();
                 }
+                resetFields();
                 closeWindow();
             }else{
                 getNotifier().showWarningMessage( message );
@@ -143,4 +179,11 @@ public class PetRegisterController extends AbstractRegisterController {
         return data;
     }
     
+    private void resetFields(){
+        getPetRegisterView().getField_petName().setText("");
+        
+        getPetRegisterView().getSpiner_petAge().setValue(0);
+        
+        getPetRegisterView().getCombo_petBreed().setSelectedIndex(0);
+    }
 }

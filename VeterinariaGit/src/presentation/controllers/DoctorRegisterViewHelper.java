@@ -18,30 +18,37 @@ import bussiness.DoctorManager;
 import presentation.controllers.*;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
+import presentation.OperationalViewHelper;
 import presentation.views.DoctorRegisterView;
 
 
-public class DoctorRegisterController extends AbstractRegisterController {
+public class DoctorRegisterViewHelper extends OperationalViewHelper {
     private DoctorRegisterView doctorRegisterView;
-    private DoctorManagerHelper doctorManagerHelper;
+    private DoctorManagerViewHelper doctorManagerViewHelper;
+    private static DoctorRegisterViewHelper doctorRegisterViewHelper = null;
     
     private static int doctorDataIndex = 0;
     private static int userDoctorDataIndex = 1;
     
-    public DoctorRegisterController(DoctorManagerHelper doctorManager){
+    public DoctorRegisterViewHelper(){
         setDoctorRegisterView(new DoctorRegisterView());
-        setDoctorManagerHelper( doctorManager  );
         
         initializeView();
     }
-
-    public DoctorManagerHelper getDoctorManagerHelper() {
-        return doctorManagerHelper;
+    
+    public static DoctorRegisterViewHelper getInstance(){
+        if( doctorRegisterViewHelper== null) {
+         doctorRegisterViewHelper = new DoctorRegisterViewHelper();
+        }
+        return doctorRegisterViewHelper;
     }
 
-    public void setDoctorManagerHelper(DoctorManagerHelper doctorManagerHelper) {
-        this.doctorManagerHelper = doctorManagerHelper;
+    public DoctorManagerViewHelper getDoctorManagerViewHelper() {
+        return doctorManagerViewHelper;
+    }
+
+    public void setDoctorManagerViewHelper(DoctorManagerViewHelper doctorManagerViewHelper) {
+        this.doctorManagerViewHelper = doctorManagerViewHelper;
     }
 
     public DoctorRegisterView getDoctorRegisterView() {
@@ -53,7 +60,7 @@ public class DoctorRegisterController extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        getDoctorManagerHelper().updateTable();
+        DoctorManagerViewHelper.getInstance().updateTable();
     }
     
     @Override
@@ -109,6 +116,7 @@ public class DoctorRegisterController extends AbstractRegisterController {
             if(message.equals(successStatus)){
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Doctor");
                 updateManagerViewTable();
+                resetFields();
                 closeWindow();
             }else{
                 getNotifier().showWarningMessage( message );
@@ -176,6 +184,33 @@ public class DoctorRegisterController extends AbstractRegisterController {
         data.add(doctorUserEmail);
         
         return data;
+    }
+    
+    private void resetFields(){
+        getDoctorRegisterView().getField_doctorName().setText("");
+        
+        getDoctorRegisterView().getField_doctorAddressPostalCode().setText("");
+        
+        getDoctorRegisterView().getField_doctorAddressStreet().setText("");
+        
+        getDoctorRegisterView().getField_doctorAddressColony().setText("");
+        
+        getDoctorRegisterView().getField_doctorAddressCross().setText("");
+        
+        getDoctorRegisterView().getField_doctorPhoneLada().setText(""); 
+        
+        getDoctorRegisterView().getField_doctorPhoneNumber().setText("");
+        
+        getDoctorRegisterView().getField_doctorRFC().setText("");
+        
+        getDoctorRegisterView().getField_doctorProfessionalCode().setText("");
+        
+        getDoctorRegisterView().getField_doctorUserName().setText("");
+        
+        getDoctorRegisterView().getField_doctorUserPassword().setText("");
+        
+        getDoctorRegisterView().getField_doctorEmail().setText("");
+        
     }
 
     

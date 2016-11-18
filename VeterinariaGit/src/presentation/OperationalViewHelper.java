@@ -23,7 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import exceptions.InvalidFieldException;
 
-public abstract class AbstractRegisterController  {
+public abstract class OperationalViewHelper  {
     protected abstract ArrayList<String> obtainData();
     public abstract void openWindow();
     

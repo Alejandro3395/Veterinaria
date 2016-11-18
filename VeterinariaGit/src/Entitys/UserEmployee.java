@@ -14,20 +14,22 @@ import java.io.Serializable;
  */
 public class UserEmployee extends User implements Serializable{
     private int passwordMinSize = 8;
-
+    
     public UserEmployee(String userName, String userPassword, String userEmail) throws InvalidFieldException {
         super(userName, userPassword, userEmail);
-        
         if(!isValidPassword(userPassword)){
            throw new InvalidFieldException("La contraseña proporcionada es menor del tamaño solicitado!");
         }
         if(!isValidEmailAddress(userEmail)){
             throw new InvalidFieldException("El correo electronico introducido es incorrecto");    
         }
-        
     }
     
     public UserEmployee(){};
+    
+    public UserEmployee(UserEmployee userEmployee) {
+        super(userEmployee.getUserName(),userEmployee.getUserPassword(),userEmployee.getUserEmail());
+    }
     
     private boolean isValidPassword(String password){
         boolean result = true;
@@ -37,16 +39,6 @@ public class UserEmployee extends User implements Serializable{
         return result;
     }
     
-    public UserEmployee(UserEmployee userEmployee) {
-        super(userEmployee.getUserName(),userEmployee.getUserPassword(),userEmployee.getUserEmail());
-    }
-    
-    
-    /*
-    extraido de 
-    url: http://stackoverflow.com/questions/624581/what-is-the-best-java-email-address-validation-method
-    
-    */
     
     public boolean isValidEmailAddress(String email) {
            String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";

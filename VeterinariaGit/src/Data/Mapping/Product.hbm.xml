@@ -10,11 +10,10 @@
             <generator class = "identity" />
         </id>
         
-        <property name= "name"/>
-        <property name= "supplier"/>
-        <property name= "amount"/>
-        <property name= "cost"/> 
-        <property name= "expiration_date"/>
+        <property name= "name" type="string" column="name"/>
+        <property name= "amount" type="integer" column="amount"/>
+        <property name= "cost" type="double" column="cost"/> 
+        <property name= "expiration_date" type="string" column="expiration_date" />
         
     </class>
     

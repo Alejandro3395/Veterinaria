@@ -9,22 +9,31 @@ import Entitys.Employee;
 import bussiness.EmployeeManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
+import presentation.OperationalViewHelper;
 import presentation.views.EmployeeRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class EmployeeModificationHelper extends AbstractRegisterController {
-    private EmployeeRegisterView employeeRegisterView;
-    private EmployeeManagerHelper employeeManagerHelper;
+public class EmployeeModificationViewHelper extends OperationalViewHelper {
     
-    public EmployeeModificationHelper(EmployeeManagerHelper employeeManager){
+    private static EmployeeModificationViewHelper employeeModificationViewHelper = null;
+    private EmployeeRegisterView employeeRegisterView;
+    private EmployeeManagerViewHelper employeeManagerViewHelper;
+    
+    public EmployeeModificationViewHelper(){
         setEmployeeRegisterView( new EmployeeRegisterView() );
-        setEmployeeManagerHelper( employeeManager);
+        //setEmployeeManagerViewHelper( EmployeeManagerViewHelper.getInstance());
         
         initializeView();
+    }
+    
+    public static EmployeeModificationViewHelper getInstance(){
+        if( employeeModificationViewHelper== null) {
+         employeeModificationViewHelper = new EmployeeModificationViewHelper();
+        }
+        return employeeModificationViewHelper;
     }
 
     public EmployeeRegisterView getEmployeeRegisterView() {
@@ -36,12 +45,12 @@ public class EmployeeModificationHelper extends AbstractRegisterController {
     }
     
     
-    public EmployeeManagerHelper getEmployeeManagerHelper() {
-        return employeeManagerHelper;
+    public EmployeeManagerViewHelper getEmployeeManagerViewHelper() {
+        return employeeManagerViewHelper;
     }
 
-    public void setEmployeeManagerHelper(EmployeeManagerHelper employeeManagerHelper) {
-        this.employeeManagerHelper = employeeManagerHelper;
+    public void setEmployeeManagerViewHelper(EmployeeManagerViewHelper employeeManagerViewHelper) {
+        this.employeeManagerViewHelper = employeeManagerViewHelper;
     }
 
     @Override
@@ -64,8 +73,8 @@ public class EmployeeModificationHelper extends AbstractRegisterController {
     }
     
     private void loadEmployeeData(){
-        int row = getEmployeeManagerHelper().getEmployeeManagerView().getTable_employeeTable().getSelectedRow();
-        int id = Integer.valueOf( getEmployeeManagerHelper().getEmployeeManagerView().getTable_employeeTable().getValueAt(row, 0).toString() );
+        int row = EmployeeManagerViewHelper.getInstance().getEmployeeManagerView().getTable_employeeTable().getSelectedRow();
+        int id = Integer.valueOf( EmployeeManagerViewHelper.getInstance().getEmployeeManagerView().getTable_employeeTable().getValueAt(row, 0).toString() );
         
         EmployeeManager employeeManager = EmployeeManager.GetInstance();
         Employee employee =  employeeManager.getEmployee(id) ;
@@ -76,9 +85,9 @@ public class EmployeeModificationHelper extends AbstractRegisterController {
     private void proceedWithModification(){
         ArrayList<String> data = new ArrayList<String>(obtainData());
         
-        int row = getEmployeeManagerHelper().getEmployeeManagerView().getTable_employeeTable().getSelectedRow();
+        int row = EmployeeManagerViewHelper.getInstance().getEmployeeManagerView().getTable_employeeTable().getSelectedRow();
         
-        int id = Integer.valueOf( getEmployeeManagerHelper().getEmployeeManagerView().getTable_employeeTable().getValueAt(row, 0).toString() );
+        int id = Integer.valueOf( EmployeeManagerViewHelper.getInstance().getEmployeeManagerView().getTable_employeeTable().getValueAt(row, 0).toString() );
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
@@ -102,7 +111,7 @@ public class EmployeeModificationHelper extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        getEmployeeManagerHelper().updateTable();
+        EmployeeManagerViewHelper.getInstance().updateTable();
     }
     
     private void cancelModification(){

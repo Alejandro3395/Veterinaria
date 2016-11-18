@@ -35,9 +35,10 @@ public class Phone implements Serializable{
         }else{
             throw new InvalidFieldException("Datos invalidos en el LADA!");
         } 
+        
     }
     
-    public boolean isValidLada(String lada){
+    private boolean isValidLada(String lada){
         boolean result = true;
         if(lada.length() != ladaSize){
             result = false;
@@ -45,7 +46,7 @@ public class Phone implements Serializable{
         return result;
     }
     
-    public boolean isValidNumber(String number){
+    private boolean isValidNumber(String number){
         boolean result = true;
         if(number.length() != numberSize){
             result = false;
@@ -57,7 +58,7 @@ public class Phone implements Serializable{
         return lada;
     }
 
-    public void setLada(String lada) throws InvalidFieldException{
+    public void setLada(String lada) throws InvalidFieldException {
         if(isValidLada(lada)){
             this.lada = lada;
         }else{
@@ -69,7 +70,7 @@ public class Phone implements Serializable{
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(String number) throws InvalidFieldException {
         if (isValidNumber(number)){
             this.number = number;
         }else{

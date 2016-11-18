@@ -10,31 +10,39 @@ import bussiness.ClientManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.AbstractViewController;
+import presentation.TransitionalViewHelper;
 import presentation.views.ClientManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class ClientManagerHelper extends AbstractViewController{
+public class ClientManagerViewHelper extends TransitionalViewHelper {
+    private static ClientManagerViewHelper clientManagerViewHelper = null;
     private ClientManagerView clientManagerView;
-    private ClientRegisterController clientRegisterController;
-    private ClientModificationHelper clientModificationHelper;
+    private ClientRegisterViewHelper clientRegisterViewHelper;
+    private ClientModificationViewHelper clientModificationHelper;
     
-    public ClientManagerHelper(){
+    public ClientManagerViewHelper(){
         setClientManagerView(new ClientManagerView());
-        setClientRegisterController(new ClientRegisterController(this));
-        setClientModificationHelper(new ClientModificationHelper(this));
+        setClientRegisterViewHelper( ClientRegisterViewHelper.getInstance());
+        setClientModificationHelper( ClientModificationViewHelper.getInstance());
         
         initializeView();
     }
 
-    public ClientModificationHelper getClientModificationHelper() {
+    public static ClientManagerViewHelper getInstance(){
+        if( clientManagerViewHelper== null) {
+         clientManagerViewHelper = new ClientManagerViewHelper();
+        }
+        return clientManagerViewHelper;
+    }
+    
+    public ClientModificationViewHelper getClientModificationHelper() {
         return clientModificationHelper;
     }
 
-    public void setClientModificationHelper(ClientModificationHelper clientModificationHelper) {
+    public void setClientModificationHelper(ClientModificationViewHelper clientModificationHelper) {
         this.clientModificationHelper = clientModificationHelper;
     }
     
@@ -47,19 +55,18 @@ public class ClientManagerHelper extends AbstractViewController{
     }
 
 
-    public ClientRegisterController getClientRegisterController() {
-        return clientRegisterController;
+    public ClientRegisterViewHelper getClientRegisterViewHelper() {
+        return clientRegisterViewHelper;
     }
 
-    public void setClientRegisterController(ClientRegisterController clientRegisterController) {
-        this.clientRegisterController = clientRegisterController;
+    public void setClientRegisterViewHelper(ClientRegisterViewHelper clientRegisterViewHelper) {
+        this.clientRegisterViewHelper = clientRegisterViewHelper;
     } 
 
     @Override
     public void openWindow() {
-        getClientManagerView().setVisible(true);
         loadClientRegisterToTable();
-
+        getClientManagerView().setVisible(true);
     }
 
     @Override
@@ -123,7 +130,7 @@ public class ClientManagerHelper extends AbstractViewController{
         int id = Integer.valueOf( getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
 
         ClientManager clientManager = ClientManager.GetInstance();
-        clientManager.eliminateClient(id);
+        clientManager.deleteClient(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Client");
         updateTable();
     }
@@ -149,7 +156,7 @@ public class ClientManagerHelper extends AbstractViewController{
     }
     
     private void openRegisterView(){
-        getClientRegisterController().openWindow();
+        getClientRegisterViewHelper().openWindow();
     }
     
     private void addClientToTable(Client client){
@@ -170,7 +177,6 @@ public class ClientManagerHelper extends AbstractViewController{
     }
     
     private boolean isDeletionConfirmed() {
-        System.out.println("llegue");
         String messageConfirm = "¿Estas seguro que deseas eliminarlo?";
         int optionSelected = getNotifier().showConfirmDialog( messageConfirm );
         return optionSelected == getNotifier().getYES_OPTION();

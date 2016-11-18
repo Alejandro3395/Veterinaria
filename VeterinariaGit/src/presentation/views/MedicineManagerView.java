@@ -6,6 +6,7 @@
 package presentation.views;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -39,11 +40,18 @@ public class MedicineManagerView extends javax.swing.JFrame {
         table_medicineTable = new javax.swing.JTable();
         btn_back = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        combo_medicineSupplier = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btn_modifyMedicine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/modify.png"))); // NOI18N
         btn_modifyMedicine.setText("Modificar Medicamento");
+        btn_modifyMedicine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modifyMedicineActionPerformed(evt);
+            }
+        });
 
         btn_addMedicine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/add.png"))); // NOI18N
         btn_addMedicine.setText("Añadir Medicamento");
@@ -56,14 +64,14 @@ public class MedicineManagerView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Nombre", "Calle", "Codigo Postal", "Colonia", "Cruzamientos", "Clave LADA", "Numero Telefonico"
+                "Id", "Nombre", "Costo", "Cantidad", "Fecha de Expiracion"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -84,29 +92,43 @@ public class MedicineManagerView extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Registros de Medicamento");
+        jLabel2.setText("Registros de Medicamentos");
+
+        combo_medicineSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel1.setText("Cliente:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(224, 224, 224)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
                         .addComponent(btn_deleteMedicine)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addGap(28, 28, 28)
                         .addComponent(btn_addMedicine)
-                        .addGap(41, 41, 41)
-                        .addComponent(btn_modifyMedicine)))
-                .addGap(48, 48, 48))
+                        .addGap(37, 37, 37)
+                        .addComponent(btn_modifyMedicine))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(217, 217, 217)
+                        .addComponent(jLabel2)))
+                .addContainerGap(118, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(97, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(combo_medicineSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,17 +137,20 @@ public class MedicineManagerView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_modifyMedicine)
-                            .addComponent(btn_addMedicine))
-                        .addGap(17, 17, 17))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(combo_medicineSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_modifyMedicine)
+                    .addComponent(btn_addMedicine)
                     .addComponent(btn_deleteMedicine))
-                .addGap(30, 30, 30))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -134,6 +159,10 @@ public class MedicineManagerView extends javax.swing.JFrame {
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_backActionPerformed
+
+    private void btn_modifyMedicineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifyMedicineActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_modifyMedicineActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,6 +193,10 @@ public class MedicineManagerView extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -173,14 +206,89 @@ public class MedicineManagerView extends javax.swing.JFrame {
         });
     }
 
-   
+    public JButton getBtn_addMedicine() {
+        return btn_addMedicine;
+    }
+
+    public void setBtn_addMedicine(JButton btn_addMedicine) {
+        this.btn_addMedicine = btn_addMedicine;
+    }
+
+    public JButton getBtn_back() {
+        return btn_back;
+    }
+
+    public void setBtn_back(JButton btn_back) {
+        this.btn_back = btn_back;
+    }
+
+    public JButton getBtn_deleteMedicine() {
+        return btn_deleteMedicine;
+    }
+
+    public void setBtn_deleteMedicine(JButton btn_deleteMedicine) {
+        this.btn_deleteMedicine = btn_deleteMedicine;
+    }
+
+    public JButton getBtn_modifyMedicine() {
+        return btn_modifyMedicine;
+    }
+
+    public void setBtn_modifyMedicine(JButton btn_modifyMedicine) {
+        this.btn_modifyMedicine = btn_modifyMedicine;
+    }
+
+    public JComboBox<String> getCombo_medicineSupplier() {
+        return combo_medicineSupplier;
+    }
+
+    public void setCombo_medicineSupplier(JComboBox<String> combo_medicineSupplier) {
+        this.combo_medicineSupplier = combo_medicineSupplier;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setjScrollPane1(JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public JTable getTable_medicineTable() {
+        return table_medicineTable;
+    }
+
+    public void setTable_medicineTable(JTable table_medicineTable) {
+        this.table_medicineTable = table_medicineTable;
+    }
     
+    
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_addMedicine;
     private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_deleteMedicine;
     private javax.swing.JButton btn_modifyMedicine;
+    private javax.swing.JComboBox<String> combo_medicineSupplier;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table_medicineTable;

@@ -17,7 +17,7 @@ import org.hibernate.Query;
  *
  * @author mannu
  */
-public class EmployeeDAO extends AbstractDAO<Employee> {
+public class EmployeeDAO extends GeneralDAO<Employee> {
     private static final EmployeeDAO employeeDAO = new EmployeeDAO();
 
     public EmployeeDAO() {
@@ -50,15 +50,13 @@ public class EmployeeDAO extends AbstractDAO<Employee> {
      * @return null
      */
     @Override
-    public Object get(int objectId) {
+    public Employee get(long employeeId) {
         Employee employee = null;
-        
-        long id = (long) objectId;
         
         try{
             openSession();
             
-            employee = (Employee) session.get(Employee.class,id);
+            employee = (Employee) session.get(Employee.class,employeeId);
         }finally{
             session.close();
         }
@@ -94,12 +92,19 @@ public class EmployeeDAO extends AbstractDAO<Employee> {
      
      
      /* Method to get a list with all the employees*/
-     public List <Employee> getPassAndUser(){
+     public List <Employee> getEmployeeList(){
          List<Employee> employeeDataList= null;
          
          try{
          openSession();
          employeeDataList = session.createQuery(" FROM Employee ").list();
+         /*Iterator<Employee> it =  employeeDataList.iterator();
+         while(it.hasNext()){
+             Employee var = it.next();
+             System.out.println("ID: "+ var.getId());
+             
+         } */     
+            
          transaction.commit();
          }catch (HibernateException e) {
          if (transaction!=null) transaction.rollback();
@@ -109,6 +114,5 @@ public class EmployeeDAO extends AbstractDAO<Employee> {
       }
           return employeeDataList;
    }
-
     
 }

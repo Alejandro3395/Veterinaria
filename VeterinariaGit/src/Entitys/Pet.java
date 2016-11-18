@@ -40,7 +40,6 @@ public class Pet implements Serializable{
     }
     
     
-    
     //Gets y Sets
     public int getAge() {
         return age;
@@ -73,6 +72,9 @@ public class Pet implements Serializable{
     public void setId(long id) {
         this.id = id;
     }
+    
+    
+    
     
     
     

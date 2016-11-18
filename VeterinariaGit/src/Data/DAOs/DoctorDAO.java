@@ -15,14 +15,19 @@ package Data.DAOs;
 
 import Entitys.Doctor;
 import Entitys.Medicine;
+import Entitys.UserDoctor;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
 
 /**
  *
  * @author Jorge
  */
-public class DoctorDAO extends AbstractDAO<Doctor> {
+public class DoctorDAO extends GeneralDAO<Doctor> {
     private static final DoctorDAO doctorDAO = new DoctorDAO();
     
     
@@ -49,22 +54,20 @@ public class DoctorDAO extends AbstractDAO<Doctor> {
     }
     
     
-    /**
-     * This method recieves a doctor object and checks if exists in the 
-     * database.
-     * @param objectId
-     * @return 
+     /**
+     *Return the persistent instance of the given entity class with the given 
+     * identifier, or null if there is no such persistent instance.
+     * @param doctorId
+     * @return null
      */
     @Override
-    public Object get(int objectId) {
-        
-        long id = (long) objectId;
+    public Doctor get(long doctorId) {
         Doctor doctor = null;
         
         try{
             openSession();
             
-            doctor = (Doctor) session.get(Doctor.class,id);
+            doctor = (Doctor) session.get(Doctor.class,doctorId);
         }finally{
             session.close();
         }
@@ -76,16 +79,60 @@ public class DoctorDAO extends AbstractDAO<Doctor> {
      * @return 
      */
     @Override
-    public ArrayList<Doctor> getList() {
+    public ArrayList<?> getList() {
         ArrayList<Doctor> doctorList = null;
         
         try{
             openSession();
             doctorList = (ArrayList) session.createQuery("from Doctor").list();
+            
         } finally{
             session.close();
         }
         return doctorList;
     }
+    
+   
+    
+    public List <UserDoctor> getPassAndUser(){
+         List<UserDoctor> listDatos = null;
+         
+      try{
+         openSession();
+         listDatos = session.createQuery("SELECT d.user FROM Doctor d").list();
+         
+         transaction.commit();
+      }catch (HibernateException e) {
+         if (transaction!=null) transaction.rollback();
+         e.printStackTrace(); 
+      }finally {
+         session.close(); 
+      }
+          return listDatos;
+   }
+    
+     /* Method to get a list with all the employees*/
+     public List <Doctor> getDoctorList(){
+         List<Doctor> employeeDataList= null;
+         
+         try{
+         openSession();
+         employeeDataList = session.createQuery(" FROM Doctor ").list();
+         /*Iterator<Employee> it =  employeeDataList.iterator();
+         while(it.hasNext()){
+             Employee var = it.next();
+             System.out.println("ID: "+ var.getId());
+             
+         } */     
+            
+         transaction.commit();
+         }catch (HibernateException e) {
+         if (transaction!=null) transaction.rollback();
+         e.printStackTrace(); 
+      }finally {
+         session.close(); 
+      }
+          return employeeDataList;
+   }
     
 }

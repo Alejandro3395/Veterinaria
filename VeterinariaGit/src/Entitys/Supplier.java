@@ -1,23 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+ /**
+* class: Supplier (Supplier.java)
+* @author: Diego Nicoli
+* 
+* date: October 27, 2016
+* 
+* A class to model the Supplier entity.
+* This file contains the access routines for a Supplier
+* and provides an object to act as a container for the
+* manipulation of a Supplier's data.
+* 
+*/
 package Entitys;
 
-import java.io.Serializable;
+import exceptions.InvalidFieldException;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author Jorge
- */
-public class Supplier implements Serializable {
+
+public class Supplier {
     
     //Parametros
     
     private String companyName;
     private Phone phone;
-    long id;
+    List<Medicine> medicines = new ArrayList<Medicine>();
+    long id_Supplier;
     
     
     //Constructor
@@ -33,8 +40,8 @@ public class Supplier implements Serializable {
     public Supplier(){
         
     }
-
-    public Supplier(Supplier supplier) {
+    
+    public Supplier(Supplier supplier) throws InvalidFieldException {
         this.companyName = supplier.getCompanyName();
         this.phone =  new Phone(supplier.getPhone().getLada(),supplier.getPhone().getNumber());
     }
@@ -57,12 +64,24 @@ public class Supplier implements Serializable {
         this.phone = phone;
     }
 
-    public long getId() {
-        return id;
+    public long getId_Supplier() {
+        return id_Supplier;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId_Supplier(long id_Supplier) {
+        this.id_Supplier = id_Supplier;
+    }
+
+    public void addMedicines(Medicine medicine){
+        this.medicines.add(medicine);
+    }
+
+    public List<Medicine> getMedicines() {
+        return medicines;
+    }
+
+    public void setMedicines(List<Medicine> medicines) {
+        this.medicines = medicines;
     }
     
 }

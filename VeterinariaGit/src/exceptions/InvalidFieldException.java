@@ -9,7 +9,7 @@ package exceptions;
  *
  * @author Jorge
  */
-public class InvalidFieldException extends RuntimeException {
+public class InvalidFieldException extends Exception {
     private String message;
     
     public InvalidFieldException (String message){

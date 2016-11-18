@@ -10,11 +10,23 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+ /**
+* class: SessionGenerator (SessionGenerator.java)
+* @author: Manuel Bojorquez
+* 
+* date: October 25, 2016
+* 
+* The objective of the class is to initialize a SessionFactory object.
+* @param sessionFactory object responsible for managing sessions connecting to the database
+* static: To ensure that there is only one instance. 
+* final: To that the reference can not be changed once assigned
+*/
+
 public class SessionGenerator {
-    /*static: Para asegurar de que solo exista una instancia.
-      final: para que la referencia no pueda ser cambiada una vez que se haya asignado*/
     private static final SessionFactory sessionFactory;
 
+    
+    
     static {
         try {
             sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -24,6 +36,10 @@ public class SessionGenerator {
         }
     }
 
+    /**
+     * Method responsible of provides a session to connect with the Data Base
+     * @return sessionFactory 
+     */
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
