@@ -103,6 +103,9 @@ public class PetManagerViewHelper extends TransitionalViewHelper {
         
         if(!isEmptyList()){
             if(!hasDataChanged()){
+                
+                
+                
                 PetManager petManager = PetManager.GetInstance();
                 String ownerName = getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
             
@@ -111,6 +114,17 @@ public class PetManagerViewHelper extends TransitionalViewHelper {
             }
         } 
         
+    }
+    
+    private boolean isEmptyCombo(){
+        boolean result = false;
+        
+        //String comboItem = getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
+        int comboSize = getPetManagerView().getCombo_petOwner().getItemCount();
+        if(comboSize<1){
+            result = true;
+        }
+        return result;
     }
     
     private boolean isEmptyList(){
@@ -207,8 +221,13 @@ public class PetManagerViewHelper extends TransitionalViewHelper {
     }
     
     private void openRegisterView(){ 
-        PetRegisterViewHelper.getInstance().setMode(1);
-        PetRegisterViewHelper.getInstance().openWindow();
+        if(!isEmptyCombo()){
+            PetRegisterViewHelper.getInstance().setMode(1);
+            PetRegisterViewHelper.getInstance().openWindow();
+        }else{
+            getNotifier().showWarningMessage( "No es posible añadir mascota debido a que no hay clientes registrados" );
+        }
+        
     }
     
     private void addPetToTable(Pet pet, int index){

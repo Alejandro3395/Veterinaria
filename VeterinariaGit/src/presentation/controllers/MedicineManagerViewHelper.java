@@ -125,6 +125,17 @@ public class MedicineManagerViewHelper extends TransitionalViewHelper {
         return result;
     }
     
+    private boolean isEmptyCombo(){
+        boolean result = false;
+        
+        //String comboItem = getMedicineManagerView().getCombo_petOwner().getSelectedItem().toString();
+        int comboSize = getMedicineManagerView().getCombo_medicineSupplier().getItemCount();
+        if(comboSize<1){
+            result = true;
+        }
+        return result;
+    }
+    
     private boolean hasDataChanged(){
         boolean result = false;
         
@@ -209,8 +220,12 @@ public class MedicineManagerViewHelper extends TransitionalViewHelper {
     }
     
     private void openRegisterView(){ 
-        MedicineRegisterViewHelper.getInstance().setMode(1);
-        MedicineRegisterViewHelper.getInstance().openWindow();
+        if(!isEmptyCombo()){
+            MedicineRegisterViewHelper.getInstance().setMode(1);
+            MedicineRegisterViewHelper.getInstance().openWindow();
+        }else{
+            getNotifier().showWarningMessage( "No es posible añadir mascota debido a que no hay clientes registrados" );
+        }
     }
     
     private void addMedicineToTable(Medicine medicine, int index){
