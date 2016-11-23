@@ -30,7 +30,6 @@ import org.hibernate.Query;
 public class DoctorDAO extends GeneralDAO<Doctor> {
     private static final DoctorDAO doctorDAO = new DoctorDAO();
     
-    
     public DoctorDAO(){
     }
     
@@ -52,7 +51,6 @@ public class DoctorDAO extends GeneralDAO<Doctor> {
     public void update(Doctor entity) {
         updateEntity(entity);
     }
-    
     
      /**
      *Return the persistent instance of the given entity class with the given 
@@ -79,37 +77,23 @@ public class DoctorDAO extends GeneralDAO<Doctor> {
      * @return 
      */
     @Override
-    public ArrayList<?> getList() {
-        ArrayList<Doctor> doctorList = null;
+    public List<Doctor> getList() {
+        List<Doctor> doctorList = null;
         
         try{
             openSession();
-            doctorList = (ArrayList) session.createQuery("from Doctor").list();
-            
+            doctorList =  session.createQuery("from Doctor").list();
+            transaction.commit();
+        }catch (HibernateException e) {
+            if (transaction!=null) transaction.rollback();
+                e.printStackTrace(); 
         } finally{
             session.close();
         }
         return doctorList;
     }
     
-   
-    
-    public List <UserDoctor> getPassAndUser(){
-         List<UserDoctor> listDatos = null;
-         
-      try{
-         openSession();
-         listDatos = session.createQuery("SELECT d.user FROM Doctor d").list();
-         
-         transaction.commit();
-      }catch (HibernateException e) {
-         if (transaction!=null) transaction.rollback();
-         e.printStackTrace(); 
-      }finally {
-         session.close(); 
-      }
-          return listDatos;
-   }
+
     
      /* Method to get a list with all the employees*/
      public List <Doctor> getDoctorList(){
@@ -118,17 +102,11 @@ public class DoctorDAO extends GeneralDAO<Doctor> {
          try{
          openSession();
          employeeDataList = session.createQuery(" FROM Doctor ").list();
-         /*Iterator<Employee> it =  employeeDataList.iterator();
-         while(it.hasNext()){
-             Employee var = it.next();
-             System.out.println("ID: "+ var.getId());
-             
-         } */     
-            
+
          transaction.commit();
          }catch (HibernateException e) {
-         if (transaction!=null) transaction.rollback();
-         e.printStackTrace(); 
+             if (transaction!=null) transaction.rollback();
+            e.printStackTrace(); 
       }finally {
          session.close(); 
       }

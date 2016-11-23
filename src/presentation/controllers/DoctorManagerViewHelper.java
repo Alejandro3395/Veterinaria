@@ -27,7 +27,7 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
     private DoctorRegisterViewHelper doctorRegisterViewHelper;
     private DoctorModificationViewHelper doctorModificationViewHelper;
     
-    public DoctorManagerViewHelper(){
+    private DoctorManagerViewHelper(){
         setDoctorManagerView(new DoctorManagerView());
         setDoctorRegisterViewHelper(DoctorRegisterViewHelper.getInstance() );
         setDoctorModificationViewHelper( DoctorModificationViewHelper.getInstance());        
@@ -40,8 +40,7 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
         }
         return doctorManagerViewHelper;
     }
-    
-    
+     
     public DoctorModificationViewHelper getDoctorModificationViewHelper() {
         return doctorModificationViewHelper;
     }
@@ -58,7 +57,6 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
         this.doctorManagerView = doctorManagerView;
     }
 
-
     public DoctorRegisterViewHelper getDoctorRegisterViewHelper() {
         return doctorRegisterViewHelper;
     }
@@ -66,7 +64,22 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
     public void setDoctorRegisterViewHelper(DoctorRegisterViewHelper doctorRegisterViewHelper) {
         this.doctorRegisterViewHelper = doctorRegisterViewHelper;
     } 
-
+    
+    private void setTableContent(ArrayList<Doctor> doctorList){    
+        for(int index =0; index < doctorList.size(); index++ ){
+            Doctor doctorData = doctorList.get(index) ;
+            insertDoctorToTable(doctorData);
+        }
+    }
+    
+    @Override
+    protected void setEvents() {
+        getDoctorManagerView().getBtn_addDoctor().addActionListener(actionEvent -> openRegisterView());
+        getDoctorManagerView().getBtn_modifyDoctor().addActionListener(actionEvent -> openModificationView());
+        getDoctorManagerView().getBtn_deleteDoctor().addActionListener(actionEvent -> displayConfirmationMessage());
+        getDoctorManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
+    }
+    
     @Override
     public void loadView() {
         loadDoctorRegisterToTable();
@@ -83,16 +96,8 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
     
     /**
      * This method set the listeners into the view buttons.
-     */
-    @Override
-    protected void setEvents() {
-        getDoctorManagerView().getBtn_addDoctor().addActionListener(actionEvent -> openRegisterView());
-        getDoctorManagerView().getBtn_modifyDoctor().addActionListener(actionEvent -> openModificationView());
-        getDoctorManagerView().getBtn_deleteDoctor().addActionListener(actionEvent -> openEliminationConfirmationView());
-        getDoctorManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
-    }
-    
-    public void loadDoctorRegisterToTable(){
+     */ 
+    private void loadDoctorRegisterToTable(){
         
         DefaultTableModel model = (DefaultTableModel) getDoctorManagerView().getTable_doctorTable().getModel();
         
@@ -101,7 +106,7 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
         
         DoctorManager doctorManager = DoctorManager.GetInstance();
         
-        ArrayList<Doctor> doctorList = doctorManager.getDoctorList() ;
+        ArrayList<Doctor> doctorList = doctorManager.getDoctors() ;
         setTableContent(doctorList);
     }
     
@@ -113,7 +118,7 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
         }
     }
     
-    private void openEliminationConfirmationView(){
+    private void displayConfirmationMessage(){
         
         if(isRowSelected()){
             if(isDeletionConfirmed()){
@@ -134,7 +139,7 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
         int id = Integer.valueOf( getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
 
         DoctorManager doctorManager = DoctorManager.GetInstance();
-        doctorManager.eliminateDoctor(id);
+        doctorManager.deleteDoctor(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Doctor");
         updateTable();
     }
@@ -152,18 +157,11 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
         return result;
     }
     
-    private void setTableContent(ArrayList<Doctor> doctorList){    
-        for(int index =0; index < doctorList.size(); index++ ){
-            Doctor doctorData = doctorList.get(index) ;
-            addDoctorToTable(doctorData);
-        }
-    }
-    
     private void openRegisterView(){
         getDoctorRegisterViewHelper().loadView();
     }
     
-    private void addDoctorToTable(Doctor doctor){
+    private void insertDoctorToTable(Doctor doctor){
         
         DefaultTableModel model = (DefaultTableModel) getDoctorManagerView().getTable_doctorTable().getModel();
         
@@ -190,4 +188,4 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
     public void updateTable(){
         loadDoctorRegisterToTable();
     }
-}
+} 

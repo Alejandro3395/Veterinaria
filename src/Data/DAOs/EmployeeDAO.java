@@ -64,16 +64,19 @@ public class EmployeeDAO extends GeneralDAO<Employee> {
     }
 
     @Override
-    public ArrayList<Employee> getList() {
-        ArrayList<Employee> employeeList = null;
+    public List<Employee> getList() {
+        List<Employee> employeeList = null;
         
         try{
             openSession();
-            employeeList = (ArrayList) session.createQuery("from Employee").list();
+            employeeList =  session.createQuery("from Employee").list();
             
             
-        }finally{
-            session.close();
+        }catch (HibernateException e) {
+            if (transaction!=null) transaction.rollback();
+            e.printStackTrace(); 
+        }finally {
+          session.close(); 
         }
         return employeeList;
     }

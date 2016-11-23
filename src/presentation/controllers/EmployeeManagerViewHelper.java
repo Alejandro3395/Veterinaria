@@ -23,7 +23,7 @@ public class EmployeeManagerViewHelper extends CommonBehaviorViewHelper {
     private EmployeeRegisterViewHelper employeeRegisterViewHelper;
     private EmployeeModificationViewHelper employeeModificationViewHelper;
     
-    public EmployeeManagerViewHelper(){
+    private EmployeeManagerViewHelper(){
         setEmployeeManagerView(new EmployeeManagerView());
         setEmployeeRegisterViewHelper( EmployeeRegisterViewHelper.getInstance());
         
@@ -99,7 +99,7 @@ public class EmployeeManagerViewHelper extends CommonBehaviorViewHelper {
         
         EmployeeManager employeeManager = EmployeeManager.GetInstance();
         
-        ArrayList<Employee> employeeList = employeeManager.getEmployeeList() ;
+        ArrayList<Employee> employeeList = employeeManager.getEmployees() ;
         setTableContent(employeeList);
     }
     
@@ -132,7 +132,7 @@ public class EmployeeManagerViewHelper extends CommonBehaviorViewHelper {
         int id = Integer.valueOf( getEmployeeManagerView().getTable_employeeTable().getValueAt(row, 0).toString() );
 
         EmployeeManager employeeManager = EmployeeManager.GetInstance();
-        employeeManager.eliminateEmployee(id);
+        employeeManager.deleteEmployee(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Employee");
         updateTable();
     }

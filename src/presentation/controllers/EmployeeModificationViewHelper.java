@@ -24,8 +24,6 @@ public class EmployeeModificationViewHelper extends DataViewHelper {
     
     public EmployeeModificationViewHelper(){
         setEmployeeRegisterView( new EmployeeRegisterView() );
-        //setEmployeeManagerViewHelper( EmployeeManagerViewHelper.getInstance());
-        
         initializeView();
     }
     
@@ -43,7 +41,6 @@ public class EmployeeModificationViewHelper extends DataViewHelper {
     public void setEmployeeRegisterView(EmployeeRegisterView employeeRegisterView) {
         this.employeeRegisterView = employeeRegisterView;
     }
-    
     
     public EmployeeManagerViewHelper getEmployeeManagerViewHelper() {
         return employeeManagerViewHelper;

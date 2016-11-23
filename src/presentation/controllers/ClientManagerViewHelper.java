@@ -23,7 +23,7 @@ public class ClientManagerViewHelper extends CommonBehaviorViewHelper {
     private ClientRegisterViewHelper clientRegisterViewHelper;
     private ClientModificationViewHelper clientModificationHelper;
     
-    public ClientManagerViewHelper(){
+    private ClientManagerViewHelper(){
         setClientManagerView(new ClientManagerView());
         setClientRegisterViewHelper( ClientRegisterViewHelper.getInstance());
         setClientModificationHelper( ClientModificationViewHelper.getInstance());

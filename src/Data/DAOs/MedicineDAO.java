@@ -74,12 +74,12 @@ public class MedicineDAO extends GeneralDAO<Medicine> {
      * @return 
      */
     @Override
-    public ArrayList<Medicine> getList() {
-        ArrayList<Medicine> medicineList = null;
+    public List<Medicine> getList() {
+        List<Medicine> medicineList = null;
         
         try{
             openSession();
-            medicineList = (ArrayList) session.createQuery("from Medicine").list();
+            medicineList =  session.createQuery("from Medicine").list();
             
             
         }finally{

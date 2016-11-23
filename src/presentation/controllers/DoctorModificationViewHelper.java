@@ -18,18 +18,14 @@ import presentation.views.DoctorRegisterView;
  * @author Jorge
  */
 public class DoctorModificationViewHelper extends DataViewHelper {
-    private DoctorModificationView doctorModificationView;
     private DoctorRegisterView doctorRegisterView;
     private DoctorManagerViewHelper doctorManagerViewHelper;
-    
     private static DoctorModificationViewHelper doctorModificationHelper = null;
 
     
-    public DoctorModificationViewHelper(){
-        setDoctorModificationView( new DoctorModificationView());
-        setDoctorRegisterView( new DoctorRegisterView() );
-        //setDoctorManagerViewHelper( doctorManager);
+    private DoctorModificationViewHelper(){
         
+        setDoctorRegisterView( new DoctorRegisterView() ); 
         initializeView();
     }
 
@@ -47,21 +43,15 @@ public class DoctorModificationViewHelper extends DataViewHelper {
     public void setDoctorRegisterView(DoctorRegisterView doctorRegisterView) {
         this.doctorRegisterView = doctorRegisterView;
     }
-    
-    
-
-    public DoctorModificationView getDoctorModificationView() {
-        return doctorModificationView;
-    }
-
-    public void setDoctorModificationView(DoctorModificationView doctorModificationView) {
-        this.doctorModificationView = doctorModificationView;
-    }
-
-    
 
     public DoctorManagerViewHelper getDoctorManagerViewHelper() {
         return doctorManagerViewHelper;
+    }
+    
+    @Override
+    protected void setEvents() {
+        getDoctorRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithModification());
+        getDoctorRegisterView().getBtn_cancel().addActionListener(actionEvent -> cancelModification());
     }
 
     public void setDoctorManagerViewHelper(DoctorManagerViewHelper doctorManagerViewHelper) {
@@ -81,12 +71,6 @@ public class DoctorModificationViewHelper extends DataViewHelper {
         setEvents();
     }
 
-    @Override
-    protected void setEvents() {
-        getDoctorRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithModification());
-        getDoctorRegisterView().getBtn_cancel().addActionListener(actionEvent -> cancelModification());
-    }
-    
     private void loadDoctorData(){
         int row = DoctorManagerViewHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
         int id = Integer.valueOf( DoctorManagerViewHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
@@ -94,7 +78,7 @@ public class DoctorModificationViewHelper extends DataViewHelper {
         DoctorManager doctorManager = DoctorManager.GetInstance();
         Doctor doctor =  doctorManager.getDoctor(id) ;
         
-        setData(doctor);
+        setDataToView(doctor);
     }
     
     private void proceedWithModification(){
@@ -176,7 +160,7 @@ public class DoctorModificationViewHelper extends DataViewHelper {
         return data;
     }
     
-    private void setData(Doctor doctor){
+    private void setDataToView(Doctor doctor){
         //setear datos de los campso
         
         String doctorName = doctor.getName().toString();

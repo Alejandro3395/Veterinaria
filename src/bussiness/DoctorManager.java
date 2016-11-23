@@ -44,9 +44,7 @@ public class DoctorManager {
     private static final int userPasswordIndex = 1;
     private static final int userEmailIndex = 2;
     
-    
-    
-    public DoctorManager(){
+    private DoctorManager(){
         this.doctorDAO = DoctorDAO.GetInstance();
     }
     
@@ -59,28 +57,40 @@ public class DoctorManager {
         return doctorManager;
     }
     
+    /**
+     * The method recieves the doctor and the userDoctor entitys to set the user to the doctor 
+     * and then insert the doctor into the DataBase.
+     * @param doctor
+     * @param userDoctor 
+     */
+    public void setDoctorUser(Doctor doctor, UserDoctor userDoctor){
+        doctor.setUser(userDoctor);
+        doctorManager.addDoctor(doctor);
+    }
+    
+    public Doctor getDoctor(int id){
+        return (Doctor) doctorDAO.get(id);
+    }
+    
+    public ArrayList<Doctor> getDoctors(){
+        ArrayList<Doctor> doctorList;
+        doctorList = new ArrayList<Doctor> ((ArrayList<Doctor>) doctorDAO.getList());
+        return doctorList; 
+    }
     
     private void addDoctor(Doctor doctor) {
         doctorDAO.add(doctor);
-    }
-    
-    private void deleteDoctor(Doctor doctor){
-        doctorDAO.delete(doctor);
     }
     
     private void updateDoctor(Doctor doctor){
         doctorDAO.update(doctor);
     }
     
-    public Doctor getDoctor(int id){
-        return (Doctor) doctorDAO.get(id);
-    }
-     
-    public void eliminateDoctor(int id){
-       deleteDoctor((Doctor)(doctorDAO.get(id)));
+    public void deleteDoctor(int id){
+       Doctor doctor =  (Doctor)(doctorDAO.get(id));
+        doctorDAO.delete(doctor);
     }
     
-
     /**
      * The method recieves the data array from the view and parse it 
      * so that the doctor entity can understand it, finally we create a 
@@ -90,7 +100,7 @@ public class DoctorManager {
      * @return data
      * @throws InvalidFieldException 
      */
-    public Doctor createDoctor(ArrayList<String> data) throws InvalidFieldException {
+    private Doctor createDoctor(ArrayList<String> data) throws InvalidFieldException {
         String doctorName = data.get(nameIndex);
         int  doctorPostalCode = Integer.valueOf(data.get(postalCodeIndex));
         String doctorAddressStreet = data.get(adressStreetIndex);
@@ -110,6 +120,7 @@ public class DoctorManager {
 
         return doctorData;
     }
+    
      /**
      * The method recieves the data array from the view and parse it 
      * so that the UserDoctor entity can understand it, finally we create a 
@@ -119,7 +130,7 @@ public class DoctorManager {
      * @return data
      * @throws InvalidFieldException 
      */
-    public UserDoctor createUserDoctor(ArrayList<String> data) throws InvalidFieldException{
+    private UserDoctor createUserDoctor(ArrayList<String> data) throws InvalidFieldException{
         
         String doctorUserName = data.get(userNameIndex);
         String doctorUserPassword = data.get(userPasswordIndex);
@@ -152,7 +163,7 @@ public class DoctorManager {
         return message;
     }
     
-     public String modifyDoctor(ArrayList<String> newDoctorData , int id){
+    public String modifyDoctor(ArrayList<String> newDoctorData , int id){
         String message = "";
  
         try{
@@ -170,21 +181,8 @@ public class DoctorManager {
         return message;
     }
     
-    public ArrayList<Doctor> getDoctorList(){
-        ArrayList<Doctor> doctorList;
-        doctorList = new ArrayList<Doctor> ((ArrayList<Doctor>) doctorDAO.getList());
-        return doctorList; 
-    }
     
-     /**
-     * The method recieves the doctor and the userDoctor entitys to set the user to the doctor 
-     * and then insert the doctor into the DataBase.
-     * @param doctor
-     * @param userDoctor 
-     */
-    public void setDoctorUser(Doctor doctor, UserDoctor userDoctor){
-        doctor.setUser(userDoctor);
-        doctorManager.addDoctor(doctor);
-    }
+    
+    
 
 }

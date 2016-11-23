@@ -30,7 +30,7 @@ public class DoctorRegisterViewHelper extends DataViewHelper {
     private static int doctorDataIndex = 0;
     private static int userDoctorDataIndex = 1;
     
-    public DoctorRegisterViewHelper(){
+    private DoctorRegisterViewHelper(){
         setDoctorRegisterView(new DoctorRegisterView());
         
         initializeView();
@@ -59,6 +59,15 @@ public class DoctorRegisterViewHelper extends DataViewHelper {
         this.doctorRegisterView = doctorRegisterView;
     }
     
+    /**
+     * This method set the listeners into the view buttons.
+     */
+    @Override
+    protected void setEvents() {
+        getDoctorRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        getDoctorRegisterView().getBtn_cancel().addActionListener(actionEvent -> cancelRegistration());     
+    }
+    
     private void updateManagerViewTable(){
         DoctorManagerViewHelper.getInstance().updateTable();
     }
@@ -67,22 +76,12 @@ public class DoctorRegisterViewHelper extends DataViewHelper {
     public void loadView() {
         getDoctorRegisterView().setVisible(true);
     }
-
+    
     @Override
     protected void initializeView() {
         configureView( getDoctorRegisterView() );
         getDoctorRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
-    }
-    
-    /**
-     * This method set the listeners into the view buttons.
-     */
-    @Override
-    protected void setEvents() {
-        getDoctorRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
-        getDoctorRegisterView().getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
-        
     }
     
     private void cancelRegistration(){
