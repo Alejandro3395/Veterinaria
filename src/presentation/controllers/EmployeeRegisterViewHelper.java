@@ -8,12 +8,12 @@ package presentation.controllers;
 import bussiness.EmployeeManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
-import presentation.AbstractViewController;
+import presentation.DataViewHelper;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.EmployeeRegisterView;
 
 /**
-* class: EmployeeRegisterController (EmployeeRegisterController.java)
+* class: EmployeeRegisterViewHelper (EmployeeRegisterViewHelper.java)
 * @author: Manuel Bojorquez
 * 
 * date: October 27, 2016
@@ -23,34 +23,34 @@ import presentation.views.EmployeeRegisterView;
 * provides and pass the data to the manager class.
 * 
 */
-public class EmployeeRegisterController  extends AbstractRegisterController{
-    private static EmployeeRegisterController employeeRegisterController = null;
+public class EmployeeRegisterViewHelper  extends DataViewHelper{
+    private static EmployeeRegisterViewHelper employeeRegisterViewHelper = null;
 
-    private EmployeeManagerHelper employeeManagerHelper;
+    private EmployeeManagerViewHelper employeeManagerViewHelper;
     private static int employeeDataIndex = 0;
     private static int userEmployeeDataIndex = 1;
     private EmployeeRegisterView employeeRegisterView;
     
     
-    public EmployeeRegisterController(){
+    public EmployeeRegisterViewHelper(){
         setEmployeeRegisterView(new EmployeeRegisterView());
         
         initializeView();
     }
 
-    public static EmployeeRegisterController getInstance(){
-        if( employeeRegisterController== null) {
-         employeeRegisterController = new EmployeeRegisterController();
+    public static EmployeeRegisterViewHelper getInstance(){
+        if( employeeRegisterViewHelper== null) {
+         employeeRegisterViewHelper = new EmployeeRegisterViewHelper();
         }
-        return employeeRegisterController;
+        return employeeRegisterViewHelper;
     }
     
-    public EmployeeManagerHelper getEmployeeManagerHelper() {
-        return employeeManagerHelper;
+    public EmployeeManagerViewHelper getEmployeeManagerViewHelper() {
+        return employeeManagerViewHelper;
     }
 
-    public void setEmployeeManagerHelper(EmployeeManagerHelper employeeManagerHelper) {
-        this.employeeManagerHelper = employeeManagerHelper;
+    public void setEmployeeManagerViewHelper(EmployeeManagerViewHelper employeeManagerViewHelper) {
+        this.employeeManagerViewHelper = employeeManagerViewHelper;
     }
 
     public EmployeeRegisterView getEmployeeRegisterView() {
@@ -62,13 +62,13 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
     }
  
     @Override
-    public void openWindow() {
+    public void loadView() {
         getEmployeeRegisterView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getEmployeeRegisterView() );
+        configureView( getEmployeeRegisterView() );
         getEmployeeRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
@@ -83,7 +83,7 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
     }
     
     private void proceedWithRegistration(){
-        ArrayList<String> data = new ArrayList<String>(obtainData());
+        ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
 
         ArrayList<ArrayList> parsedData = new ArrayList<ArrayList>(parseData(data));
 
@@ -129,7 +129,7 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
      * @return 
      */
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
         String employeeName = getEmployeeRegisterView().getField_employeeName().getText();
@@ -175,7 +175,7 @@ public class EmployeeRegisterController  extends AbstractRegisterController{
     }
 
     private void updateManagerViewTable() {
-        EmployeeManagerHelper.getInstance().updateTable();
+        EmployeeManagerViewHelper.getInstance().updateTable();
     }
     
     private void resetFields(){

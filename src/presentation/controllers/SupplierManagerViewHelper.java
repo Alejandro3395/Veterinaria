@@ -10,40 +10,40 @@ import bussiness.SupplierManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.AbstractViewController;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.SupplierManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class SupplierManagerHelper extends AbstractViewController {
-    private static SupplierManagerHelper supplierManagerHelper = null;
+public class SupplierManagerViewHelper extends CommonBehaviorViewHelper {
+    private static SupplierManagerViewHelper supplierManagerViewHelper = null;
     private SupplierManagerView supplierManagerView;
-    private SupplierRegisterController supplierRegisterController;
-    private SupplierModificationHelper supplierModificationHelper;
+    private SupplierRegisterViewHelper supplierRegisterViewHelper;
+    private SupplierModificationViewHelper supplierModificationViewHelper;
     
-    public SupplierManagerHelper(){
+    public SupplierManagerViewHelper(){
         setSupplierManagerView(new SupplierManagerView());
-        setSupplierRegisterController(SupplierRegisterController.getInstance());
-        setSupplierModificationHelper(SupplierModificationHelper.getInstance());
+        setSupplierRegisterViewHelper(SupplierRegisterViewHelper.getInstance());
+        setSupplierModificationViewHelper(SupplierModificationViewHelper.getInstance());
         
         initializeView();
     }
     
-    public static SupplierManagerHelper getInstance(){
-        if( supplierManagerHelper == null) {
-         supplierManagerHelper = new SupplierManagerHelper();
+    public static SupplierManagerViewHelper getInstance(){
+        if( supplierManagerViewHelper == null) {
+         supplierManagerViewHelper = new SupplierManagerViewHelper();
         }
-        return supplierManagerHelper;
+        return supplierManagerViewHelper;
     }
 
-    public SupplierModificationHelper getSupplierModificationHelper() {
-        return supplierModificationHelper;
+    public SupplierModificationViewHelper getSupplierModificationViewHelper() {
+        return supplierModificationViewHelper;
     }
 
-    public void setSupplierModificationHelper(SupplierModificationHelper supplierModificationHelper) {
-        this.supplierModificationHelper = supplierModificationHelper;
+    public void setSupplierModificationViewHelper(SupplierModificationViewHelper supplierModificationViewHelper) {
+        this.supplierModificationViewHelper = supplierModificationViewHelper;
     }
     
     public SupplierManagerView getSupplierManagerView() {
@@ -55,16 +55,16 @@ public class SupplierManagerHelper extends AbstractViewController {
     }
 
 
-    public SupplierRegisterController getSupplierRegisterController() {
-        return supplierRegisterController;
+    public SupplierRegisterViewHelper getSupplierRegisterViewHelper() {
+        return supplierRegisterViewHelper;
     }
 
-    public void setSupplierRegisterController(SupplierRegisterController supplierRegisterController) {
-        this.supplierRegisterController = supplierRegisterController;
+    public void setSupplierRegisterViewHelper(SupplierRegisterViewHelper supplierRegisterViewHelper) {
+        this.supplierRegisterViewHelper = supplierRegisterViewHelper;
     } 
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         getSupplierManagerView().setVisible(true);
         loadSupplierRegisterToTable();
 
@@ -72,7 +72,7 @@ public class SupplierManagerHelper extends AbstractViewController {
 
     @Override
     protected void initializeView() {
-        configureWindow( getSupplierManagerView() );
+        configureView( getSupplierManagerView() );
         getSupplierManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -104,7 +104,7 @@ public class SupplierManagerHelper extends AbstractViewController {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getSupplierModificationHelper().openWindow();
+            getSupplierModificationViewHelper().loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -157,7 +157,7 @@ public class SupplierManagerHelper extends AbstractViewController {
     }
     
     private void openRegisterView(){
-        getSupplierRegisterController().openWindow();
+        getSupplierRegisterViewHelper().loadView();
     }
     
     private void addSupplierToTable(Supplier supplier){

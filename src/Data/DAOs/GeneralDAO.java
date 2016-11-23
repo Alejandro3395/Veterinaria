@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
-* class: AbstractDao (AbstractDAO.java)
+* class: AbstractDao (GeneralDAO.java)
 * @author: Manuel Bojorquez
 * 
 * date: October 27, 2016
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 * 
 * 
 */
-public abstract class AbstractDAO<Entity> {
+public abstract class GeneralDAO<Entity> {
     protected Session session;
     protected Transaction transaction;
 

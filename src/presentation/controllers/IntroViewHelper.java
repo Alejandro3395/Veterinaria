@@ -6,32 +6,32 @@
 package presentation.controllers;
 
 import javax.swing.WindowConstants;
-import presentation.AbstractViewController;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.IntroView;
 
 /**
  *
  * @author Jorge
  */
-public class IntroController extends AbstractViewController {
-    private static IntroController introController ; 
+public class IntroViewHelper extends CommonBehaviorViewHelper {
+    private static IntroViewHelper introViewHelper ; 
     private IntroView introView;
     private LoginMainViewHelper loginMainViewHelper;
 
     
 
-    public IntroController() {
+    public IntroViewHelper() {
         setIntroView(new IntroView());
         setLoginMainViewHelper(LoginMainViewHelper.getInstance());
 
         initializeView();
     }
     
-    public static IntroController getInstance(){
-        if(introController == null) {
-         introController = new IntroController();
+    public static IntroViewHelper getInstance(){
+        if(introViewHelper == null) {
+         introViewHelper = new IntroViewHelper();
         }
-        return introController;
+        return introViewHelper;
     }
 
     public LoginMainViewHelper getLoginMainViewHelper() {
@@ -51,13 +51,13 @@ public class IntroController extends AbstractViewController {
     }
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         getIntroView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getIntroView() );
+        configureView( getIntroView() );
         getIntroView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
@@ -69,7 +69,7 @@ public class IntroController extends AbstractViewController {
     
     
     private void openMenu(){
-        loginMainViewHelper.openWindow();
+        loginMainViewHelper.loadView();
     }
     
     

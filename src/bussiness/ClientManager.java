@@ -56,7 +56,8 @@ public class ClientManager {
         clientDAO.add(client);
     }
     
-    public void deleteClient(Client client){
+    public void deleteClient(int id){
+        Client client =  (Client)(clientDAO.get(id));
         clientDAO.delete(client);
     }
     
@@ -72,9 +73,6 @@ public class ClientManager {
         return clientDAO.getClientByName(clientName);
     }
      
-    public void eliminateClient(int id){
-       deleteClient((Client)(clientDAO.get(id)));
-    }
     
     /**
      * The method recieves the data array from the view and parse it 
@@ -141,15 +139,10 @@ public class ClientManager {
  
         try{
             Client client =  (getClient(id));
-            ArrayList<String> clientData = new ArrayList<>( getClientData(client) );
-            
-            if(isNewData(clientData, newClientData)){
-                Client updatedClient = updateData(client,newClientData);
-                updateClient(updatedClient);
-                message = "SUCCESS";
-            }else{
-                System.out.println("datos sin cambio");
-            }
+            Client updatedClient = createClient(newClientData);
+            updatedClient.setId(client.getId());
+            updateClient(updatedClient);
+            message = "SUCCESS";
         }catch(InvalidFieldException exception){
             System.out.println(exception.getMessage());
             message = exception.getMessage();
@@ -157,101 +150,10 @@ public class ClientManager {
         return message;
     }
     
-    private Client updateData(Client client, ArrayList<String> newClientData) throws InvalidFieldException{
-        
-        String newClientName = newClientData.get(nameIndex);
-        int  newClientPostalCode = Integer.valueOf(newClientData.get(postalCodeIndex));
-        String newClientAddressStreet = newClientData.get(adressStreetIndex);
-        String newClientAddressColony = newClientData.get(addressColonyIndex);
-        String newClientAddressCross = newClientData.get(addressCrossIndex);
-        String newClientPhoneLada = newClientData.get(phoneLadaIndex);
-        String newClientPhoneNumber = newClientData.get(phoneNumberIndex);
-        String newClientEmail = newClientData.get(emailIndex);
-        
-        client.setName(newClientName);
-        
-        Address newAddress = new Address(newClientPostalCode,newClientAddressStreet,newClientAddressColony,newClientAddressCross);
-        client.setAddress(newAddress);
-        
-        Phone newPhone = new Phone(newClientPhoneLada,newClientPhoneNumber);
-        client.setPhone(newPhone);
-        
-        client.setClientEmail(newClientEmail);
-
-        return client;
-    }
-    
-    
-    private ArrayList<String> getClientData(Client client){
-        
-        ArrayList<String> data = new ArrayList<String>();
-        
-        data.add(client.getName().toString());
-        data.add( Integer.toString( client.getAddress().getZipCode() ) );
-        data.add(client.getAddress().getStreet().toString());
-        data.add(client.getAddress().getColony().toString());
-        data.add(client.getAddress().getCrossovers().toString());
-        data.add(client.getPhone().getLada().toString());
-        data.add(client.getPhone().getNumber().toString());
-        data.add(client.getClientEmail().toString());
-        
-        return data;
-    }
-    
-    private boolean isNewData(ArrayList<String> clientData, ArrayList<String> newClientData){
-        boolean result = false;
-        int diferences = 0;
-        
-        for(int index = 0; index < newClientData.size(); index++){
-            
-            if(!( clientData.get(index).equals(newClientData.get(index) ) ) ){
-                diferences++;
-            }
-        }
-        
-        if (diferences>0) { result = true;  }
-        
-        return result;
-    }
-    
-    
-    //Posiblemente se elimine uno
     public ArrayList<Client> getClientList(){
         ArrayList<Client> clientList;
-        clientList = new ArrayList<Client> (getClients());
+        clientList = new ArrayList<Client> ( (ArrayList<Client>) clientDAO.getList() );
         return clientList; 
-    }
-    
-    
-    public ArrayList<Client> getClients(){
-        return (ArrayList<Client>) clientDAO.getList();
-    }     
-    
-    
-    ///Revisar este metodo
-    /**
-     * The method recieves the data from the view and uses it to create the new 
-     * entitys, an exception is thrown if there's an invalid data.
-     * 
-     * @param clientData
-     */
- 
-    public void createEntity(ArrayList<String> clientData) throws InvalidFieldException {
-        
-        Client client = new Client(createClient(clientData));
-        insertClient(client);
-        
-    }
-    
-    
-    /**
-     * The method recieves the client entity to insert the client into the DataBase.
-     * @param client
-     */
-    public void insertClient(Client client) {
-        
-        clientManager.addClient(client);
-
     }
     
 }

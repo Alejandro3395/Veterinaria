@@ -9,7 +9,7 @@ import Entitys.Doctor;
 import bussiness.DoctorManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
+import presentation.DataViewHelper;
 import presentation.views.DoctorModificationView;
 import presentation.views.DoctorRegisterView;
 
@@ -17,25 +17,25 @@ import presentation.views.DoctorRegisterView;
  *
  * @author Jorge
  */
-public class DoctorModificationHelper extends AbstractRegisterController {
+public class DoctorModificationViewHelper extends DataViewHelper {
     private DoctorModificationView doctorModificationView;
     private DoctorRegisterView doctorRegisterView;
-    private DoctorManagerHelper doctorManagerHelper;
+    private DoctorManagerViewHelper doctorManagerViewHelper;
     
-    private static DoctorModificationHelper doctorModificationHelper = null;
+    private static DoctorModificationViewHelper doctorModificationHelper = null;
 
     
-    public DoctorModificationHelper(){
+    public DoctorModificationViewHelper(){
         setDoctorModificationView( new DoctorModificationView());
         setDoctorRegisterView( new DoctorRegisterView() );
-        //setDoctorManagerHelper( doctorManager);
+        //setDoctorManagerViewHelper( doctorManager);
         
         initializeView();
     }
 
-    public static DoctorModificationHelper getInstance(){
+    public static DoctorModificationViewHelper getInstance(){
         if( doctorModificationHelper== null) {
-         doctorModificationHelper =  new DoctorModificationHelper();
+         doctorModificationHelper =  new DoctorModificationViewHelper();
         }
         return doctorModificationHelper;
     }
@@ -60,23 +60,23 @@ public class DoctorModificationHelper extends AbstractRegisterController {
 
     
 
-    public DoctorManagerHelper getDoctorManagerHelper() {
-        return doctorManagerHelper;
+    public DoctorManagerViewHelper getDoctorManagerViewHelper() {
+        return doctorManagerViewHelper;
     }
 
-    public void setDoctorManagerHelper(DoctorManagerHelper doctorManagerHelper) {
-        this.doctorManagerHelper = doctorManagerHelper;
+    public void setDoctorManagerViewHelper(DoctorManagerViewHelper doctorManagerViewHelper) {
+        this.doctorManagerViewHelper = doctorManagerViewHelper;
     }
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         loadDoctorData();
         getDoctorRegisterView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getDoctorRegisterView() );
+        configureView( getDoctorRegisterView() );
         getDoctorRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
@@ -88,8 +88,8 @@ public class DoctorModificationHelper extends AbstractRegisterController {
     }
     
     private void loadDoctorData(){
-        int row = DoctorManagerHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
-        int id = Integer.valueOf( DoctorManagerHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
+        int row = DoctorManagerViewHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
+        int id = Integer.valueOf( DoctorManagerViewHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
         
         DoctorManager doctorManager = DoctorManager.GetInstance();
         Doctor doctor =  doctorManager.getDoctor(id) ;
@@ -98,11 +98,11 @@ public class DoctorModificationHelper extends AbstractRegisterController {
     }
     
     private void proceedWithModification(){
-        ArrayList<String> data = new ArrayList<String>(obtainData());
+        ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
-        int row = DoctorManagerHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
+        int row = DoctorManagerViewHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
         
-        int id = Integer.valueOf( DoctorManagerHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
+        int id = Integer.valueOf( DoctorManagerViewHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
@@ -126,7 +126,7 @@ public class DoctorModificationHelper extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        DoctorManagerHelper.getInstance().updateTable();
+        DoctorManagerViewHelper.getInstance().updateTable();
     }
     
     private void cancelModification(){
@@ -143,7 +143,7 @@ public class DoctorModificationHelper extends AbstractRegisterController {
      * @return 
      */
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
         String doctorName = getDoctorRegisterView().getField_doctorName().getText();

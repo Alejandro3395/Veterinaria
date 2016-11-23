@@ -16,37 +16,37 @@ import Entitys.Medicine;
 import bussiness.MedicineManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
+import presentation.DataViewHelper;
 import presentation.views.MedicineRegisterView;
 
-public class MedicineRegisterController extends AbstractRegisterController {
-    private static MedicineRegisterController medicineRegisterController;
+public class MedicineRegisterViewHelper extends DataViewHelper {
+    private static MedicineRegisterViewHelper medicineRegisterViewHelper;
     private MedicineRegisterView medicineRegisterView;
-    private MedicineManagerHelper medicineManagerHelper = null;
+    private MedicineManagerViewHelper medicineManagerViewHelper = null;
     
     private String owner = null ;
     private static int registerMedicineMode = 0;
     private static int registerClientMode = 1;
     private int mode = 0;
     
-    public MedicineRegisterController(){
+    public MedicineRegisterViewHelper(){
         setMedicineRegisterView(new MedicineRegisterView());
-        //setMedicineManagerHelper( medicineManager  );
+        //setMedicineManagerViewHelper( medicineManager  );
         
         initializeView();
     }
 
-    public MedicineRegisterController( String owner ) {
+    public MedicineRegisterViewHelper( String owner ) {
         setMedicineRegisterView( new MedicineRegisterView());
         this.owner = owner;
         initializeView();
     }
     
-    public static MedicineRegisterController getInstance(){
-        if( medicineRegisterController== null) {
-         medicineRegisterController = new MedicineRegisterController();
+    public static MedicineRegisterViewHelper getInstance(){
+        if( medicineRegisterViewHelper== null) {
+         medicineRegisterViewHelper = new MedicineRegisterViewHelper();
         }
-        return medicineRegisterController;
+        return medicineRegisterViewHelper;
     }
 
     public String getOwner() {
@@ -65,12 +65,12 @@ public class MedicineRegisterController extends AbstractRegisterController {
         this.mode = mode;
     }
     
-    public MedicineManagerHelper getMedicineManagerHelper() {
-        return medicineManagerHelper;
+    public MedicineManagerViewHelper getMedicineManagerViewHelper() {
+        return medicineManagerViewHelper;
     }
 
-    public void setMedicineManagerHelper(MedicineManagerHelper medicineManagerHelper) {
-        this.medicineManagerHelper = medicineManagerHelper;
+    public void setMedicineManagerViewHelper(MedicineManagerViewHelper medicineManagerViewHelper) {
+        this.medicineManagerViewHelper = medicineManagerViewHelper;
     }
 
     public MedicineRegisterView getMedicineRegisterView() {
@@ -82,17 +82,17 @@ public class MedicineRegisterController extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        MedicineManagerHelper.getInstance().updateTable();
+        MedicineManagerViewHelper.getInstance().updateTable();
     }
     
     @Override
-    public void openWindow() {
+    public void loadView() {
         getMedicineRegisterView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getMedicineRegisterView() );
+        configureView( getMedicineRegisterView() );
         getMedicineRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
@@ -119,12 +119,12 @@ public class MedicineRegisterController extends AbstractRegisterController {
      *  This method uses sends the data the view provides to the manager.
      */
     private void proceedWithRegistration(){
-        ArrayList<String> medicineData = new ArrayList<String>(obtainData());
+        ArrayList<String> medicineData = new ArrayList<String>(obtainDataFromView());
         
         boolean isValidField =!isEmptyFields(medicineData);
         
         if(mode != 0){
-            owner = MedicineManagerHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
+            owner = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         }
         
         String message="";
@@ -155,7 +155,7 @@ public class MedicineRegisterController extends AbstractRegisterController {
      * @return 
      */
     @Override
-    protected ArrayList<String> obtainData(){
+    protected ArrayList<String> obtainDataFromView(){
         
         ArrayList<String> data = new ArrayList<String>();
         

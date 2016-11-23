@@ -8,21 +8,21 @@ package presentation.controllers;
 import bussiness.SessionManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
+import presentation.DataViewHelper;
 import presentation.views.EmployeeLoginView;
 
 /**
  *
  * @author mannu
  */
-public class EmployeeLoginViewHelper extends AbstractRegisterController {
+public class EmployeeLoginViewHelper extends DataViewHelper {
     private EmployeeLoginView employeeLoginView;
     private static EmployeeLoginViewHelper employeeLoginViewHelper;
-    private MainMenuController mainMenuController ;
+    private MainMenuViewHelper mainMenuController ;
 
     public EmployeeLoginViewHelper(){
         setEmployeeLoginView(new EmployeeLoginView());
-        setMainMenuController(MainMenuController.getInstance());
+        setMainMenuController(MainMenuViewHelper.getInstance());
         initializeView();
         
     }
@@ -42,39 +42,34 @@ public class EmployeeLoginViewHelper extends AbstractRegisterController {
         this.employeeLoginView = employeeLoginView;
     }
 
-    public MainMenuController getMainMenuController() {
+    public MainMenuViewHelper getMainMenuController() {
         return mainMenuController;
     }
 
-    public void setMainMenuController(MainMenuController mainMenuController) {
+    public void setMainMenuController(MainMenuViewHelper mainMenuController) {
         this.mainMenuController = mainMenuController;
     }
 
-    
-    
-    
-    
     @Override
-    public void openWindow() {
+    public void loadView() {
         getEmployeeLoginView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getEmployeeLoginView() );
+        configureView( getEmployeeLoginView() );
         getEmployeeLoginView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
     @Override
     protected void setEvents() {
-        getEmployeeLoginView().getLogin_Bttn().addActionListener( actionEvent -> sendDataLoginEmployee() );
+        getEmployeeLoginView().getLogin_Bttn().addActionListener( actionEvent -> validateEmployeeUserAccess() );
     }
-    
-    
+   
     /*Posiblemente habra que separar este metodo en 2*/
-    public void sendDataLoginEmployee(){
-        ArrayList<String> data = new ArrayList<String>(obtainData());
+    public void validateEmployeeUserAccess(){
+        ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         boolean isValidField =!isEmptyFields(data);
         boolean isValidUser = false;
         SessionManager sessionManager = SessionManager.GetInstance();
@@ -92,7 +87,7 @@ public class EmployeeLoginViewHelper extends AbstractRegisterController {
         
     //Se obtiene la informacion de la vista
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
         String employeeUser = getEmployeeLoginView().getField_UserEmployee().getText();
@@ -105,7 +100,7 @@ public class EmployeeLoginViewHelper extends AbstractRegisterController {
     }
     
      private void openIntroView(){
-        mainMenuController.openWindow();
+        mainMenuController.loadView();
     }
     
 }

@@ -14,42 +14,42 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.AbstractViewController;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.MedicineManagerView;
 
 /**
  *
  * @author mannu
  */
-public class MedicineManagerHelper extends AbstractViewController {
-    private static MedicineManagerHelper medicineManagerHelper = null;
+public class MedicineManagerViewHelper extends CommonBehaviorViewHelper {
+    private static MedicineManagerViewHelper medicineManagerViewHelper = null;
     private MedicineManagerView medicineManagerView;
-    private MedicineRegisterController medicineRegisterController;
-    private MedicineModificationHelper medicineModificationHelper;
+    private MedicineRegisterViewHelper medicineRegisterViewHelper;
+    private MedicineModificationViewHelper medicineModificationViewHelper;
     private MedicineDAO medicineDAO = new MedicineDAO();
     private int comoboSize;
     
-    public MedicineManagerHelper(){
+    public MedicineManagerViewHelper(){
         setMedicineManagerView(new MedicineManagerView());
-        setMedicineRegisterController(MedicineRegisterController.getInstance());
-        setMedicineModificationHelper(MedicineModificationHelper.getInstance());
+        setMedicineRegisterViewHelper(MedicineRegisterViewHelper.getInstance());
+        setMedicineModificationViewHelper(MedicineModificationViewHelper.getInstance());
         
         initializeView();
     }
     
-    public static MedicineManagerHelper getInstance(){
-        if( medicineManagerHelper== null) {
-         medicineManagerHelper = new MedicineManagerHelper();
+    public static MedicineManagerViewHelper getInstance(){
+        if( medicineManagerViewHelper== null) {
+         medicineManagerViewHelper = new MedicineManagerViewHelper();
         }
-        return medicineManagerHelper;
+        return medicineManagerViewHelper;
     }
 
-    public MedicineModificationHelper getMedicineModificationHelper() {
-        return medicineModificationHelper;
+    public MedicineModificationViewHelper getMedicineModificationViewHelper() {
+        return medicineModificationViewHelper;
     }
 
-    public void setMedicineModificationHelper(MedicineModificationHelper medicineModificationHelper) {
-        this.medicineModificationHelper = medicineModificationHelper;
+    public void setMedicineModificationViewHelper(MedicineModificationViewHelper medicineModificationViewHelper) {
+        this.medicineModificationViewHelper = medicineModificationViewHelper;
     }
     
     public MedicineManagerView getMedicineManagerView() {
@@ -61,16 +61,16 @@ public class MedicineManagerHelper extends AbstractViewController {
     }
 
 
-    public MedicineRegisterController getMedicineRegisterController() {
-        return medicineRegisterController;
+    public MedicineRegisterViewHelper getMedicineRegisterViewHelper() {
+        return medicineRegisterViewHelper;
     }
 
-    public void setMedicineRegisterController(MedicineRegisterController medicineRegisterController) {
-        this.medicineRegisterController = medicineRegisterController;
+    public void setMedicineRegisterViewHelper(MedicineRegisterViewHelper medicineRegisterViewHelper) {
+        this.medicineRegisterViewHelper = medicineRegisterViewHelper;
     } 
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         getMedicineManagerView().setVisible(true);
         loadSupplierRegisterToCombo();
         loadMedicineRegisterToTable();
@@ -79,7 +79,7 @@ public class MedicineManagerHelper extends AbstractViewController {
 
     @Override
     protected void initializeView() {
-        configureWindow( getMedicineManagerView() );
+        configureView( getMedicineManagerView() );
         getMedicineManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -125,6 +125,17 @@ public class MedicineManagerHelper extends AbstractViewController {
         return result;
     }
     
+    private boolean isEmptyCombo(){
+        boolean result = false;
+        
+        //String comboItem = getMedicineManagerView().getCombo_petOwner().getSelectedItem().toString();
+        int comboSize = getMedicineManagerView().getCombo_medicineSupplier().getItemCount();
+        if(comboSize<1){
+            result = true;
+        }
+        return result;
+    }
+    
     private boolean hasDataChanged(){
         boolean result = false;
         
@@ -152,7 +163,7 @@ public class MedicineManagerHelper extends AbstractViewController {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getMedicineModificationHelper().openWindow();
+            getMedicineModificationViewHelper().loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -209,8 +220,12 @@ public class MedicineManagerHelper extends AbstractViewController {
     }
     
     private void openRegisterView(){ 
-        MedicineRegisterController.getInstance().setMode(1);
-        MedicineRegisterController.getInstance().openWindow();
+        if(!isEmptyCombo()){
+            MedicineRegisterViewHelper.getInstance().setMode(1);
+            MedicineRegisterViewHelper.getInstance().loadView();
+        }else{
+            getNotifier().showWarningMessage( "No es posible añadir mascota debido a que no hay clientes registrados" );
+        }
     }
     
     private void addMedicineToTable(Medicine medicine, int index){

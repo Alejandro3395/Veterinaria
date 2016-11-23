@@ -7,6 +7,7 @@ package bussiness;
 
 import Data.DAOs.DoctorDAO;
 import Data.DAOs.EmployeeDAO;
+import Entitys.Doctor;
 import Entitys.Employee;
 import Entitys.UserDoctor;
 import Entitys.UserEmployee;
@@ -21,10 +22,10 @@ public class SessionManager {
     private static final SessionManager sessionManager = new SessionManager();
     private DoctorDAO doctorDAO;
     private EmployeeDAO employeeDAO;
-    
-    
-    
-    SessionManager(){
+    private static int nameIndex = 0;
+    private static int passwordIndex = 1;
+     
+    private SessionManager(){
         this.doctorDAO = DoctorDAO.GetInstance();
         this.employeeDAO =  EmployeeDAO.GetInstance();
     }
@@ -32,19 +33,22 @@ public class SessionManager {
     public static SessionManager GetInstance(){
         return sessionManager;
     }
-    
-    
-    
-    public Boolean validateUserDoctor(ArrayList<String> dataUserDoctor){
-         List<UserDoctor> userDoctorData;
+      
+    public Boolean doctorUserAuthentification(ArrayList<String> dataUserDoctor){
+         List<Doctor> doctorData;
          Boolean isValid = false;
+         UserDoctor userDoctor;
+         doctorData = doctorDAO.getDoctorList();
          
-         userDoctorData = doctorDAO.getPassAndUser();
-         for(UserDoctor data : userDoctorData){
-             if( dataUserDoctor.get(0).equals( data.getUserName() ) && dataUserDoctor.get(1).equals(data.getUserPassword() ) ){
+         
+         for(Doctor doctor : doctorData){
+             userDoctor = doctor.getUser();
+             if( dataUserDoctor.get(nameIndex).equals( userDoctor.getUserName() ) &&
+                 dataUserDoctor.get(passwordIndex).equals( userDoctor.getUserPassword()) ){
                  isValid= true;
              }   
          }
+         
          return isValid;
     }
     
@@ -56,8 +60,8 @@ public class SessionManager {
          employeeData = employeeDAO.getEmployeeList();
          for(Employee employee : employeeData){
              userEmployee = employee.getUser();
-             if( dataUserEmployee.get(0).equals( userEmployee.getUserName() ) &&
-                 dataUserEmployee.get(1).equals( userEmployee.getUserPassword()) ){
+             if( dataUserEmployee.get(nameIndex).equals( userEmployee.getUserName() ) &&
+                 dataUserEmployee.get(passwordIndex).equals( userEmployee.getUserPassword()) ){
                  isValid= true;
              }   
          }

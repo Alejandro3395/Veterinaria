@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import javax.swing.WindowConstants;
-import presentation.AbstractViewController;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.DoctorLoginView;
 import presentation.views.LoginMainView;
 
@@ -14,7 +14,7 @@ import presentation.views.LoginMainView;
  *
  * @author mannu
  */
-public class LoginMainViewHelper extends AbstractViewController{
+public class LoginMainViewHelper extends CommonBehaviorViewHelper{
     private LoginMainView loginMainView;
     private static LoginMainViewHelper loginMainViewHelper;
     private DoctorLoginViewHelper doctorLoginViewHelper;
@@ -43,10 +43,15 @@ public class LoginMainViewHelper extends AbstractViewController{
     public void setDoctorLoginViewHelper(DoctorLoginViewHelper doctorLoginViewHelper) {
         this.doctorLoginViewHelper = doctorLoginViewHelper;
     }
-    
-    
+      
     private void setLoginView(LoginMainView loginMainView) {
         this.loginMainView = loginMainView;
+    }
+    
+    @Override
+    protected void setEvents() {
+        getLoginView().getDoctorLoginBttn().addActionListener(actionEvent -> openDoctorLoginView());
+        getLoginView().getEmployeeLoginBttn().addActionListener( actionEvent -> openEmployeeLoginView());
     }
 
     public LoginMainView getLoginView() {
@@ -61,33 +66,24 @@ public class LoginMainViewHelper extends AbstractViewController{
         this.employeeLoginViewHelper = employeeLoginViewHelper;
     }
     
-    
-    
-
     @Override
-    public void openWindow() {
+    public void loadView() {
         getLoginView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getLoginView() );
+        configureView( getLoginView() );
         getLoginView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
-    @Override
-    protected void setEvents() {
-        getLoginView().getDoctorLoginBttn().addActionListener(actionEvent -> openDoctorLoginView());
-        getLoginView().getEmployeeLoginBttn().addActionListener( actionEvent -> openEmployeeLoginView());
-    }
-
     public void openDoctorLoginView(){
-        doctorLoginViewHelper.openWindow();
+        doctorLoginViewHelper.loadView();
     }
     
     public void openEmployeeLoginView(){
-        employeeLoginViewHelper.openWindow();
+        employeeLoginViewHelper.loadView();
     }
     
 }

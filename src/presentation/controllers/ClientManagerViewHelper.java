@@ -10,39 +10,39 @@ import bussiness.ClientManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.AbstractViewController;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.ClientManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class ClientManagerHelper extends AbstractViewController {
-    private static ClientManagerHelper clientManagerHelper = null;
+public class ClientManagerViewHelper extends CommonBehaviorViewHelper {
+    private static ClientManagerViewHelper clientManagerViewHelper = null;
     private ClientManagerView clientManagerView;
-    private ClientRegisterController clientRegisterController;
-    private ClientModificationHelper clientModificationHelper;
+    private ClientRegisterViewHelper clientRegisterViewHelper;
+    private ClientModificationViewHelper clientModificationHelper;
     
-    public ClientManagerHelper(){
+    public ClientManagerViewHelper(){
         setClientManagerView(new ClientManagerView());
-        setClientRegisterController( ClientRegisterController.getInstance());
-        setClientModificationHelper( ClientModificationHelper.getInstance());
+        setClientRegisterViewHelper( ClientRegisterViewHelper.getInstance());
+        setClientModificationHelper( ClientModificationViewHelper.getInstance());
         
         initializeView();
     }
 
-    public static ClientManagerHelper getInstance(){
-        if( clientManagerHelper== null) {
-         clientManagerHelper = new ClientManagerHelper();
+    public static ClientManagerViewHelper getInstance(){
+        if( clientManagerViewHelper== null) {
+         clientManagerViewHelper = new ClientManagerViewHelper();
         }
-        return clientManagerHelper;
+        return clientManagerViewHelper;
     }
     
-    public ClientModificationHelper getClientModificationHelper() {
+    public ClientModificationViewHelper getClientModificationHelper() {
         return clientModificationHelper;
     }
 
-    public void setClientModificationHelper(ClientModificationHelper clientModificationHelper) {
+    public void setClientModificationHelper(ClientModificationViewHelper clientModificationHelper) {
         this.clientModificationHelper = clientModificationHelper;
     }
     
@@ -55,23 +55,23 @@ public class ClientManagerHelper extends AbstractViewController {
     }
 
 
-    public ClientRegisterController getClientRegisterController() {
-        return clientRegisterController;
+    public ClientRegisterViewHelper getClientRegisterViewHelper() {
+        return clientRegisterViewHelper;
     }
 
-    public void setClientRegisterController(ClientRegisterController clientRegisterController) {
-        this.clientRegisterController = clientRegisterController;
+    public void setClientRegisterViewHelper(ClientRegisterViewHelper clientRegisterViewHelper) {
+        this.clientRegisterViewHelper = clientRegisterViewHelper;
     } 
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         loadClientRegisterToTable();
         getClientManagerView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getClientManagerView() );
+        configureView( getClientManagerView() );
         getClientManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -103,7 +103,7 @@ public class ClientManagerHelper extends AbstractViewController {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getClientModificationHelper().openWindow();
+            getClientModificationHelper().loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -130,7 +130,7 @@ public class ClientManagerHelper extends AbstractViewController {
         int id = Integer.valueOf( getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
 
         ClientManager clientManager = ClientManager.GetInstance();
-        clientManager.eliminateClient(id);
+        clientManager.deleteClient(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Client");
         updateTable();
     }
@@ -156,7 +156,7 @@ public class ClientManagerHelper extends AbstractViewController {
     }
     
     private void openRegisterView(){
-        getClientRegisterController().openWindow();
+        getClientRegisterViewHelper().loadView();
     }
     
     private void addClientToTable(Client client){

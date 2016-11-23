@@ -8,42 +8,42 @@ package presentation.controllers;
 import bussiness.SupplierManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
-import presentation.AbstractViewController;
+import presentation.DataViewHelper;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.SupplierRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class SupplierRegisterController extends AbstractRegisterController{
+public class SupplierRegisterViewHelper extends DataViewHelper{
     private SupplierRegisterView supplierRegisterView;
-    private SupplierManagerHelper supplierManagerHelper;
-    private static SupplierRegisterController supplierRegisterContrller;
+    private SupplierManagerViewHelper supplierManagerViewHelper;
+    private static SupplierRegisterViewHelper supplierRegisterViewHelper;
     
     private static int supplierDataIndex = 0;
     private static int userSupplierDataIndex = 1;
     
-    public SupplierRegisterController(){
+    public SupplierRegisterViewHelper(){
         setSupplierRegisterView(new SupplierRegisterView());
-        //setSupplierManagerHelper(  SupplierManagerHelper.getInstance() );
+        //setSupplierManagerViewHelper(  SupplierManagerViewHelper.getInstance() );
         
         initializeView();
     }
     
-    public static SupplierRegisterController getInstance(){
-        if( supplierRegisterContrller== null) {
-         supplierRegisterContrller = new SupplierRegisterController();
+    public static SupplierRegisterViewHelper getInstance(){
+        if( supplierRegisterViewHelper== null) {
+         supplierRegisterViewHelper = new SupplierRegisterViewHelper();
         }
-        return supplierRegisterContrller;
+        return supplierRegisterViewHelper;
     }
 
-    public SupplierManagerHelper getSupplierManagerHelper() {
-        return supplierManagerHelper;
+    public SupplierManagerViewHelper getSupplierManagerViewHelper() {
+        return supplierManagerViewHelper;
     }
 
-    public void setSupplierManagerHelper(SupplierManagerHelper supplierManagerHelper) {
-        this.supplierManagerHelper = supplierManagerHelper;
+    public void setSupplierManagerViewHelper(SupplierManagerViewHelper supplierManagerViewHelper) {
+        this.supplierManagerViewHelper = supplierManagerViewHelper;
     }
 
     public SupplierRegisterView getSupplierRegisterView() {
@@ -55,17 +55,17 @@ public class SupplierRegisterController extends AbstractRegisterController{
     }
     
     private void updateManagerViewTable(){
-        SupplierManagerHelper.getInstance().updateTable();
+        SupplierManagerViewHelper.getInstance().updateTable();
     }
     
     @Override
-    public void openWindow() {
+    public void loadView() {
         getSupplierRegisterView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getSupplierRegisterView() );
+        configureView( getSupplierRegisterView() );
         getSupplierRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
@@ -93,7 +93,7 @@ public class SupplierRegisterController extends AbstractRegisterController{
      */
     private void proceedWithRegistration(){
         
-        ArrayList<String> supplierData = new ArrayList<String>(obtainData());
+        ArrayList<String> supplierData = new ArrayList<String>(obtainDataFromView());
         
         boolean isValidField =!isEmptyFields(supplierData);
         
@@ -123,7 +123,7 @@ public class SupplierRegisterController extends AbstractRegisterController{
      * @return 
      */
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
         String companyName = getSupplierRegisterView().getField_supplierName().getText();

@@ -27,7 +27,7 @@ import org.hibernate.Query;
  *
  * @author Jorge
  */
-public class DoctorDAO extends AbstractDAO<Doctor> {
+public class DoctorDAO extends GeneralDAO<Doctor> {
     private static final DoctorDAO doctorDAO = new DoctorDAO();
     
     
@@ -109,6 +109,30 @@ public class DoctorDAO extends AbstractDAO<Doctor> {
          session.close(); 
       }
           return listDatos;
+   }
+    
+     /* Method to get a list with all the employees*/
+     public List <Doctor> getDoctorList(){
+         List<Doctor> employeeDataList= null;
+         
+         try{
+         openSession();
+         employeeDataList = session.createQuery(" FROM Doctor ").list();
+         /*Iterator<Employee> it =  employeeDataList.iterator();
+         while(it.hasNext()){
+             Employee var = it.next();
+             System.out.println("ID: "+ var.getId());
+             
+         } */     
+            
+         transaction.commit();
+         }catch (HibernateException e) {
+         if (transaction!=null) transaction.rollback();
+         e.printStackTrace(); 
+      }finally {
+         session.close(); 
+      }
+          return employeeDataList;
    }
     
 }

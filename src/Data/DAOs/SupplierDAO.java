@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class SupplierDAO extends AbstractDAO<Supplier> {
+public class SupplierDAO extends GeneralDAO<Supplier> {
     private static final SupplierDAO SupplierDAO = new SupplierDAO();
 
     public SupplierDAO() {

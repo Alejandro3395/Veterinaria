@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import org.jvnet.substance.SubstanceLookAndFeel;
-import presentation.controllers.IntroController;
+import presentation.controllers.IntroViewHelper;
 import presentation.controllers.LoginMainViewHelper;
 import presentation.views.LoginMainView;
 
@@ -107,7 +107,7 @@ public class Main implements Runnable{
         //employeeDAO.add(employee);
         
 
-       IntroController.getInstance().openWindow();
+       IntroViewHelper.getInstance().loadView();
         
     }
 

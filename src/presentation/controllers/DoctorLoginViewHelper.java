@@ -8,21 +8,21 @@ package presentation.controllers;
 import bussiness.SessionManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
+import presentation.DataViewHelper;
 import presentation.views.DoctorLoginView;
 
 /**
  *
  * @author mannu
  */
-public class DoctorLoginViewHelper extends AbstractRegisterController{
+public class DoctorLoginViewHelper extends DataViewHelper{
     private static DoctorLoginViewHelper doctorLoginViewHelper= null; 
     private DoctorLoginView doctorLoginView;
-    private MainMenuController mainMenuController ;
+    private MainMenuViewHelper mainMenuController ;
 
     public DoctorLoginViewHelper(){
         setDoctorLoginView(new DoctorLoginView());
-        setMainMenuController (MainMenuController.getInstance());
+        setMainMenuController (MainMenuViewHelper.getInstance());
         initializeView();
     }
     
@@ -33,7 +33,6 @@ public class DoctorLoginViewHelper extends AbstractRegisterController{
         return doctorLoginViewHelper;
     }
     
-    
     public DoctorLoginView getDoctorLoginView() {
         return doctorLoginView;
     }
@@ -42,45 +41,40 @@ public class DoctorLoginViewHelper extends AbstractRegisterController{
         this.doctorLoginView = doctorLoginView;
     }
 
-    public MainMenuController getMainMenuController() {
+    public MainMenuViewHelper getMainMenuController() {
         return mainMenuController;
     }
 
-    public void setMainMenuController(MainMenuController mainMenuController) {
+    public void setMainMenuController(MainMenuViewHelper mainMenuController) {
         this.mainMenuController = mainMenuController;
     }
-
-  
-    
-    
     
     @Override
-    public void openWindow() {
+    protected void setEvents() {
+         getDoctorLoginView().getLogin_Bttn().addActionListener(actionEvent -> validateDoctorUserAccess() );
+    }
+    
+    @Override
+    public void loadView() {
         getDoctorLoginView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getDoctorLoginView() );
+        configureView( getDoctorLoginView() );
         getDoctorLoginView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
-    @Override
-    protected void setEvents() {
-         getDoctorLoginView().getLogin_Bttn().addActionListener(actionEvent -> sendDataLoginDoctor() );
-    }
-
-    /*Crear un session manager que verifique las credenciales y haga el cambio de  ventana */
-    public void sendDataLoginDoctor(){
-        ArrayList<String> data = new ArrayList<String>(obtainData());
+    public void validateDoctorUserAccess(){
+        ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         boolean isValidField =!isEmptyFields(data);
         boolean isValidUser = false;
         
         
         if(isValidField){
             SessionManager sessionManager = SessionManager.GetInstance();
-            isValidUser = sessionManager.validateUserDoctor(data);
+            isValidUser = sessionManager.doctorUserAuthentification(data);
         }
         
         if(isValidUser){
@@ -89,7 +83,7 @@ public class DoctorLoginViewHelper extends AbstractRegisterController{
     }
     
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
         String doctorUser = getDoctorLoginView().getField_UserDoctor().getText();
@@ -102,9 +96,6 @@ public class DoctorLoginViewHelper extends AbstractRegisterController{
     }
     
     private void openIntroView(){
-        mainMenuController.openWindow();
+        mainMenuController.loadView();
     }
-    
-    
-    
 }

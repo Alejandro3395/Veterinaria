@@ -6,35 +6,35 @@
 package presentation.controllers;
 
 import javax.swing.WindowConstants;
-import presentation.AbstractViewController;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.MainMenuView;
 
 /**
  *
  * @author Jorge
  */
-public class MainMenuController extends AbstractViewController {
-    private static MainMenuController mainMenuController = null;
+public class MainMenuViewHelper extends CommonBehaviorViewHelper {
+    private static MainMenuViewHelper mainMenuViewHelper = null;
     private MainMenuView mainView;
-    private RegisterSelectionController registerSelectionController;
+    private RegisterSelectionViewHelper registerSelectionViewHelper;
     private SalesViewHelper salesViewHelper;
    
     
     
     
-    public MainMenuController (){
+    public MainMenuViewHelper (){
         setMainView(new MainMenuView());
-        setRegisterSelectionController(RegisterSelectionController.getInstance());
+        setRegisterSelectionController(RegisterSelectionViewHelper.getInstance());
         setSalesViewHelper(SalesViewHelper.getInstance());
         
         initializeView();
     }
 
-     public static MainMenuController getInstance(){
-        if( mainMenuController== null) {
-         mainMenuController = new MainMenuController();
+     public static MainMenuViewHelper getInstance(){
+        if( mainMenuViewHelper== null) {
+         mainMenuViewHelper = new MainMenuViewHelper();
         }
-        return mainMenuController;
+        return mainMenuViewHelper;
     }
 
     public void setSalesViewHelper(SalesViewHelper salesViewHelper) {
@@ -44,15 +44,15 @@ public class MainMenuController extends AbstractViewController {
      
      
     private void openRegisterSelection(){
-        getRegisterSelectionController().openWindow();
+        getRegisterSelectionController().loadView();
     }
     
-    public RegisterSelectionController getRegisterSelectionController() {
-        return registerSelectionController;
+    public RegisterSelectionViewHelper getRegisterSelectionController() {
+        return registerSelectionViewHelper;
     }
 
-    public void setRegisterSelectionController(RegisterSelectionController registerSelectionController) {
-        this.registerSelectionController = registerSelectionController;
+    public void setRegisterSelectionController(RegisterSelectionViewHelper registerSelectionViewHelper) {
+        this.registerSelectionViewHelper = registerSelectionViewHelper;
     }
     
     
@@ -66,13 +66,13 @@ public class MainMenuController extends AbstractViewController {
     }
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         getMainView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getMainView());
+        configureView( getMainView());
         getMainView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
@@ -85,7 +85,7 @@ public class MainMenuController extends AbstractViewController {
     }
     
     private void openSalesView(){
-        salesViewHelper.openWindow();
+        salesViewHelper.loadView();
     }
     
 }

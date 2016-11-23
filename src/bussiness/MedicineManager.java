@@ -50,12 +50,6 @@ public class MedicineManager {
     }
     
     
-    private void addMedicine(Medicine medicine) {
-        medicineDAO.add(medicine);
-    }
-    
-    
-    
 
     /**
      * The method recieves the data array from the view and parse it 
@@ -105,18 +99,13 @@ public class MedicineManager {
         try{
             List<Medicine> medicineList =  getMedicineList(medicineOwner);
             Medicine medicine = medicineList.get(index);
-            ArrayList<String> medicineData = new ArrayList<>( getMedicineData(medicine) );
-            
-            if(isNewData(medicineData, newMedicineData)){
-                Medicine updatedMedicine = updateData(medicine,newMedicineData);
-                SupplierManager supplierManager = SupplierManager.GetInstance();
-                Supplier supplier = supplierManager.getSupplierData(medicineOwner); //aqui se llama a lo de get por nombre
-                supplier.getMedicines().set(index,medicine);
-                supplierManager.updateSupplier(supplier);
-                message = "SUCCESS";
-            }else{
-                System.out.println("datos sin cambio");
-            }
+            Medicine updatedMedicine = createMedicine(newMedicineData);
+            medicine.setId(updatedMedicine.getId());
+            SupplierManager supplierManager = SupplierManager.GetInstance();
+            Supplier supplier = supplierManager.getSupplierData(medicineOwner); //aqui se llama a lo de get por nombre
+            supplier.getMedicines().set(index,updatedMedicine);
+            supplierManager.updateSupplier(supplier);
+            message = "SUCCESS";
         }catch(InvalidFieldException exception){
             System.out.println(exception.getMessage());
             message = exception.getMessage();
@@ -124,74 +113,14 @@ public class MedicineManager {
         return message;
     }
     
-    private Medicine updateData(Medicine medicine, ArrayList<String> newMedicineData) throws InvalidFieldException{
-        
-        /*
-        
-        private static final int nameIndex = 0;
-    private static final int quantityIndex = 1;
-    private static final int sellPriceIndex = 2;
-    //private static final int supplierIndex = 3;
-    private static final int administrationWayIndex = 3;
-    private static final int expirationDateIndex = 4;
-    private static final int doseIndex = 5;
-        */
-        
-        medicine.setName(newMedicineData.get(nameIndex));
-        medicine.setAmount( Integer.valueOf(newMedicineData.get(quantityIndex)));
-        medicine.setCost(Double.valueOf( newMedicineData.get(sellPriceIndex)));
-        medicine.setAdministration(newMedicineData.get(administrationWayIndex));
-        medicine.setExpiration_date(newMedicineData.get(expirationDateIndex));
-        medicine.setDose(newMedicineData.get(doseIndex));
-        
-        
-       
-        return medicine;
-    }
-    
-    private ArrayList<String> getMedicineData(Medicine medicine){
-        
-        ArrayList<String> data = new ArrayList<String>();
-        
-        data.add(medicine.getName().toString());
-        data.add( Integer.toString( medicine.getAmount()) );
-        data.add(Double.toString(medicine.getCost()));
-        data.add(medicine.getAdministration());
-        data.add(medicine.getExpiration_date());
-        data.add(medicine.getDose());
-        
-        return data;
-    }
-    
-    private boolean isNewData(ArrayList<String> medicineData, ArrayList<String> newMedicineData){
-        boolean result = false;
-        int diferences = 0;
-        
-        for(int index = 0; index < newMedicineData.size(); index++){
-            
-            if(!( medicineData.get(index).equals(newMedicineData.get(index) ) ) ){
-                diferences++;
-            }
-        }
-        
-        if (diferences>0) { result = true;  }
-        
-        return result;
-    }
-    
-    public List<Medicine> getMedicineList(String ownerName){
+    public List<Medicine> getMedicineList(String supplierName){
         
         SupplierManager supplierManager = SupplierManager.GetInstance();
         
-        Supplier ownerData = supplierManager.getSupplierData(ownerName);
+        Supplier supplierData = supplierManager.getSupplierData(supplierName);
         List<Medicine> medicineList;
-        medicineList = new ArrayList<Medicine>  (getMedicines(ownerData));
+        medicineList = new ArrayList<Medicine>  (supplierData.getMedicines());
         return medicineList; 
-    }
-    
-    public List<Medicine> getMedicines(Supplier ownerData){
-        //System.out.println("medicines: "+ownerData.getMedicines().get(0));
-        return ownerData.getMedicines();
     }
     
     public List<Medicine> getMedicineList(){

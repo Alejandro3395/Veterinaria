@@ -9,30 +9,30 @@ import Entitys.Client;
 import bussiness.ClientManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
+import presentation.DataViewHelper;
 import presentation.views.ClientRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class ClientModificationHelper extends AbstractRegisterController {
-    private static ClientModificationHelper clientModificationHelper = null;
+public class ClientModificationViewHelper extends DataViewHelper {
+    private static ClientModificationViewHelper clientModificationViewHelper = null;
     private ClientRegisterView clientRegisterView;
-    private ClientManagerHelper clientManagerHelper;
+    private ClientManagerViewHelper clientManagerViewHelper;
     
-    public ClientModificationHelper(){
+    public ClientModificationViewHelper(){
         setClientRegisterView( new ClientRegisterView() );
-        //setClientManagerHelper( clientManager);
+        //setClientManagerViewHelper( clientManager);
         
         initializeView();
     }
     
-    public static ClientModificationHelper getInstance(){
-        if( clientModificationHelper== null) {
-         clientModificationHelper = new ClientModificationHelper();
+    public static ClientModificationViewHelper getInstance(){
+        if( clientModificationViewHelper== null) {
+         clientModificationViewHelper = new ClientModificationViewHelper();
         }
-        return clientModificationHelper;
+        return clientModificationViewHelper;
     }
 
     public ClientRegisterView getClientRegisterView() {
@@ -44,23 +44,23 @@ public class ClientModificationHelper extends AbstractRegisterController {
     }
     
 
-    public ClientManagerHelper getClientManagerHelper() {
-        return clientManagerHelper;
+    public ClientManagerViewHelper getClientManagerViewHelper() {
+        return clientManagerViewHelper;
     }
 
-    public void setClientManagerHelper(ClientManagerHelper clientManagerHelper) {
-        this.clientManagerHelper = clientManagerHelper;
+    public void setClientManagerViewHelper(ClientManagerViewHelper clientManagerViewHelper) {
+        this.clientManagerViewHelper = clientManagerViewHelper;
     }
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         loadClientData();
         getClientRegisterView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getClientRegisterView() );
+        configureView( getClientRegisterView() );
         getClientRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
@@ -72,8 +72,8 @@ public class ClientModificationHelper extends AbstractRegisterController {
     }
     
     private void loadClientData(){
-        int row = ClientManagerHelper.getInstance().getClientManagerView().getTable_clientTable().getSelectedRow();
-        int id = Integer.valueOf( ClientManagerHelper.getInstance().getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
+        int row = ClientManagerViewHelper.getInstance().getClientManagerView().getTable_clientTable().getSelectedRow();
+        int id = Integer.valueOf( ClientManagerViewHelper.getInstance().getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
         
         ClientManager clientManager = ClientManager.GetInstance();
         Client client =  clientManager.getClient(id) ;
@@ -82,11 +82,11 @@ public class ClientModificationHelper extends AbstractRegisterController {
     }
     
     private void proceedWithModification(){
-        ArrayList<String> data = new ArrayList<String>(obtainData());
+        ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
-        int row = ClientManagerHelper.getInstance().getClientManagerView().getTable_clientTable().getSelectedRow();
+        int row = ClientManagerViewHelper.getInstance().getClientManagerView().getTable_clientTable().getSelectedRow();
         
-        int id = Integer.valueOf( ClientManagerHelper.getInstance().getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
+        int id = Integer.valueOf( ClientManagerViewHelper.getInstance().getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
@@ -110,7 +110,7 @@ public class ClientModificationHelper extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        ClientManagerHelper.getInstance().updateTable();
+        ClientManagerViewHelper.getInstance().updateTable();
     }
     
     private void cancelModification(){
@@ -127,7 +127,7 @@ public class ClientModificationHelper extends AbstractRegisterController {
      * @return 
      */
      @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
         String clientName = getClientRegisterView().getField_clientName().getText();

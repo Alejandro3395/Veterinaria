@@ -13,41 +13,41 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.AbstractViewController;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.PetManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class PetManagerHelper extends AbstractViewController {
-    private static PetManagerHelper petManagerHelper = null;
+public class PetManagerViewHelper extends CommonBehaviorViewHelper {
+    private static PetManagerViewHelper petManagerViewHelper = null;
     private PetManagerView petManagerView;
-    private PetRegisterController petRegisterController;
-    private PetModificationHelper petModificationHelper;
+    private PetRegisterViewHelper petRegisterViewHelper;
+    private PetModificationViewHelper petModificationViewHelper;
     private int comoboSize;
     
-    public PetManagerHelper(){
+    public PetManagerViewHelper(){
         setPetManagerView(new PetManagerView());
-        setPetRegisterController(PetRegisterController.getInstance());
-        setPetModificationHelper(PetModificationHelper.getInstance());
+        setPetRegisterViewHelper(PetRegisterViewHelper.getInstance());
+        setPetModificationViewHelper(PetModificationViewHelper.getInstance());
         
         initializeView();
     }
     
-    public static PetManagerHelper getInstance(){
-        if( petManagerHelper== null) {
-         petManagerHelper = new PetManagerHelper();
+    public static PetManagerViewHelper getInstance(){
+        if( petManagerViewHelper== null) {
+         petManagerViewHelper = new PetManagerViewHelper();
         }
-        return petManagerHelper;
+        return petManagerViewHelper;
     }
 
-    public PetModificationHelper getPetModificationHelper() {
-        return petModificationHelper;
+    public PetModificationViewHelper getPetModificationViewHelper() {
+        return petModificationViewHelper;
     }
 
-    public void setPetModificationHelper(PetModificationHelper petModificationHelper) {
-        this.petModificationHelper = petModificationHelper;
+    public void setPetModificationViewHelper(PetModificationViewHelper petModificationViewHelper) {
+        this.petModificationViewHelper = petModificationViewHelper;
     }
     
     public PetManagerView getPetManagerView() {
@@ -59,16 +59,16 @@ public class PetManagerHelper extends AbstractViewController {
     }
 
 
-    public PetRegisterController getPetRegisterController() {
-        return petRegisterController;
+    public PetRegisterViewHelper getPetRegisterViewHelper() {
+        return petRegisterViewHelper;
     }
 
-    public void setPetRegisterController(PetRegisterController petRegisterController) {
-        this.petRegisterController = petRegisterController;
+    public void setPetRegisterViewHelper(PetRegisterViewHelper petRegisterViewHelper) {
+        this.petRegisterViewHelper = petRegisterViewHelper;
     } 
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         getPetManagerView().setVisible(true);
         loadClientRegisterToCombo();
         loadPetRegisterToTable();
@@ -77,7 +77,7 @@ public class PetManagerHelper extends AbstractViewController {
 
     @Override
     protected void initializeView() {
-        configureWindow( getPetManagerView() );
+        configureView( getPetManagerView() );
         getPetManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -103,6 +103,9 @@ public class PetManagerHelper extends AbstractViewController {
         
         if(!isEmptyList()){
             if(!hasDataChanged()){
+                
+                
+                
                 PetManager petManager = PetManager.GetInstance();
                 String ownerName = getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
             
@@ -111,6 +114,17 @@ public class PetManagerHelper extends AbstractViewController {
             }
         } 
         
+    }
+    
+    private boolean isEmptyCombo(){
+        boolean result = false;
+        
+        //String comboItem = getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
+        int comboSize = getPetManagerView().getCombo_petOwner().getItemCount();
+        if(comboSize<1){
+            result = true;
+        }
+        return result;
     }
     
     private boolean isEmptyList(){
@@ -150,7 +164,7 @@ public class PetManagerHelper extends AbstractViewController {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getPetModificationHelper().openWindow();
+            getPetModificationViewHelper().loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -207,8 +221,13 @@ public class PetManagerHelper extends AbstractViewController {
     }
     
     private void openRegisterView(){ 
-        PetRegisterController.getInstance().setMode(1);
-        PetRegisterController.getInstance().openWindow();
+        if(!isEmptyCombo()){
+            PetRegisterViewHelper.getInstance().setMode(1);
+            PetRegisterViewHelper.getInstance().loadView();
+        }else{
+            getNotifier().showWarningMessage( "No es posible añadir mascota debido a que no hay clientes registrados" );
+        }
+        
     }
     
     private void addPetToTable(Pet pet, int index){

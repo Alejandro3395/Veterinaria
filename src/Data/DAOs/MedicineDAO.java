@@ -23,7 +23,7 @@ import org.hibernate.HibernateException;
  *
  * @author mannu
  */
-public class MedicineDAO extends AbstractDAO<Medicine> {
+public class MedicineDAO extends GeneralDAO<Medicine> {
     private static final MedicineDAO medicineDAO = new MedicineDAO();
 
     public MedicineDAO() {

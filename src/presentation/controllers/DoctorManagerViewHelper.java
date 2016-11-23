@@ -13,41 +13,41 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.AbstractViewController;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.DoctorManagerView;
-import presentation.controllers.DoctorRegisterController;
+import presentation.controllers.DoctorRegisterViewHelper;
 
 /**
  *
  * @author Jorge
  */
-public class DoctorManagerHelper extends AbstractViewController {
-    private static DoctorManagerHelper doctorManagerHelper = null;
+public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
+    private static DoctorManagerViewHelper doctorManagerViewHelper = null;
     private DoctorManagerView doctorManagerView;
-    private DoctorRegisterController doctorRegisterController;
-    private DoctorModificationHelper doctorModificationHelper;
+    private DoctorRegisterViewHelper doctorRegisterViewHelper;
+    private DoctorModificationViewHelper doctorModificationViewHelper;
     
-    public DoctorManagerHelper(){
+    public DoctorManagerViewHelper(){
         setDoctorManagerView(new DoctorManagerView());
-        setDoctorRegisterController( DoctorRegisterController.getInstance() );
-        setDoctorModificationHelper( DoctorModificationHelper.getInstance());        
+        setDoctorRegisterViewHelper(DoctorRegisterViewHelper.getInstance() );
+        setDoctorModificationViewHelper( DoctorModificationViewHelper.getInstance());        
         initializeView();
     }
 
-    public static DoctorManagerHelper getInstance(){
-        if( doctorManagerHelper== null) {
-         doctorManagerHelper = new DoctorManagerHelper();
+    public static DoctorManagerViewHelper getInstance(){
+        if( doctorManagerViewHelper== null) {
+         doctorManagerViewHelper = new DoctorManagerViewHelper();
         }
-        return doctorManagerHelper;
+        return doctorManagerViewHelper;
     }
     
     
-    public DoctorModificationHelper getDoctorModificationHelper() {
-        return doctorModificationHelper;
+    public DoctorModificationViewHelper getDoctorModificationViewHelper() {
+        return doctorModificationViewHelper;
     }
 
-    public void setDoctorModificationHelper(DoctorModificationHelper doctorModificationHelper) {
-        this.doctorModificationHelper = doctorModificationHelper;
+    public void setDoctorModificationViewHelper(DoctorModificationViewHelper doctorModificationViewHelper) {
+        this.doctorModificationViewHelper = doctorModificationViewHelper;
     }
     
     public DoctorManagerView getDoctorManagerView() {
@@ -59,23 +59,23 @@ public class DoctorManagerHelper extends AbstractViewController {
     }
 
 
-    public DoctorRegisterController getDoctorRegisterController() {
-        return doctorRegisterController;
+    public DoctorRegisterViewHelper getDoctorRegisterViewHelper() {
+        return doctorRegisterViewHelper;
     }
 
-    public void setDoctorRegisterController(DoctorRegisterController doctorRegisterController) {
-        this.doctorRegisterController = doctorRegisterController;
+    public void setDoctorRegisterViewHelper(DoctorRegisterViewHelper doctorRegisterViewHelper) {
+        this.doctorRegisterViewHelper = doctorRegisterViewHelper;
     } 
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         loadDoctorRegisterToTable();
         getDoctorManagerView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getDoctorManagerView() );
+        configureView( getDoctorManagerView() );
         getDoctorManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -107,7 +107,7 @@ public class DoctorManagerHelper extends AbstractViewController {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getDoctorModificationHelper().openWindow();
+            getDoctorModificationViewHelper().loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -160,7 +160,7 @@ public class DoctorManagerHelper extends AbstractViewController {
     }
     
     private void openRegisterView(){
-        getDoctorRegisterController().openWindow();
+        getDoctorRegisterViewHelper().loadView();
     }
     
     private void addDoctorToTable(Doctor doctor){

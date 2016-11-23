@@ -17,7 +17,7 @@ import org.hibernate.Query;
  *
  * @author mannu
  */
-public class EmployeeDAO extends AbstractDAO<Employee> {
+public class EmployeeDAO extends GeneralDAO<Employee> {
     private static final EmployeeDAO employeeDAO = new EmployeeDAO();
 
     public EmployeeDAO() {

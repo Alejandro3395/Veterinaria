@@ -46,13 +46,18 @@ public class MedicineManagerView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btn_modifyMedicine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/modify.png"))); // NOI18N
-        btn_modifyMedicine.setText("Modificar Mascota");
+        btn_modifyMedicine.setText("Modificar Medicamento");
+        btn_modifyMedicine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modifyMedicineActionPerformed(evt);
+            }
+        });
 
         btn_addMedicine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/add.png"))); // NOI18N
-        btn_addMedicine.setText("Añadir Mascota");
+        btn_addMedicine.setText("Añadir Medicamento");
 
         btn_deleteMedicine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/delete.png"))); // NOI18N
-        btn_deleteMedicine.setText("Eliminar Mascota");
+        btn_deleteMedicine.setText("Eliminar Medicamento");
 
         table_medicineTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,7 +92,7 @@ public class MedicineManagerView extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Registros de Mascotas");
+        jLabel2.setText("Registros de Medicamentos");
 
         combo_medicineSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -109,9 +114,9 @@ public class MedicineManagerView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(262, 262, 262)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(206, Short.MAX_VALUE))
+                        .addGap(217, 217, 217)
+                        .addComponent(jLabel2)))
+                .addContainerGap(118, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(97, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,6 +159,10 @@ public class MedicineManagerView extends javax.swing.JFrame {
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_backActionPerformed
+
+    private void btn_modifyMedicineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifyMedicineActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_modifyMedicineActionPerformed
 
     /**
      * @param args the command line arguments

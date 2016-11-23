@@ -124,86 +124,22 @@ public class SupplierManager {
         String message = "";
  
         try{
-            Supplier supplier =  (getSupplier(id));
-            ArrayList<String> supplierData = new ArrayList<>( getSupplierData(supplier) );
-            
-            if(isNewData(supplierData, newSupplierData)){
-                Supplier updatedSupplier = updateData(supplier,newSupplierData);
-                updateSupplier(updatedSupplier);
-                message = "SUCCESS";
-            }else{
-                System.out.println("datos sin cambio");
-            }
+            Supplier supplier =  (getSupplier(id));   
+            Supplier updatedSupplier = createSupplier(newSupplierData);
+            updatedSupplier.setId_Supplier(supplier.getId_Supplier());
+            updateSupplier(updatedSupplier);
+            message = "SUCCESS";
         }catch(InvalidFieldException exception){
             System.out.println(exception.getMessage());
             message = exception.getMessage();
         }
         return message;
     }
-     
-    
-    private Supplier updateData(Supplier supplier, ArrayList<String> newSupplierData) throws InvalidFieldException{
-        
-        String newcompanyName = newSupplierData.get(nameIndex);
-        String newsupplierPhoneLada = newSupplierData.get(phoneLadaIndex);
-        String newsupplierPhoneNumber = newSupplierData.get(phoneNumberIndex);
-        
-        supplier.setCompanyName(newcompanyName);
-        
-        Phone newPhone = new Phone(newsupplierPhoneLada,newsupplierPhoneNumber);
-        supplier.setPhone(newPhone);
-       
-        return supplier;
-    }
-        public void insertSupplier( Supplier supplier ){
-        
-        
-        supplierManager.addSupplier(supplier);
-
-    }
-        
-        private ArrayList<String> getSupplierData(Supplier supplier){
-        
-        ArrayList<String> data = new ArrayList<String>();
-        
-        data.add(supplier.getCompanyName().toString());
-        data.add(supplier.getPhone().getLada().toString());
-        data.add(supplier.getPhone().getNumber().toString());
-
-        
-        return data;
-    }
-    
-    private boolean isNewData(ArrayList<String> supplierData, ArrayList<String> newSupplierData){
-        boolean result = false;
-        int diferences = 0;
-        
-        for(int index = 0; index < newSupplierData.size(); index++){
-            
-            if(!( supplierData.get(index).equals(newSupplierData.get(index) ) ) ){
-                diferences++;
-            }
-        }
-        
-        if (diferences>0) { result = true;  }
-        
-        return result;
-    }
     
     public ArrayList<Supplier> getSupplierList(){
         ArrayList<Supplier> supplierList;
-        supplierList = new ArrayList<Supplier> (getSuppliers());
+        supplierList = new ArrayList<Supplier> ((ArrayList<Supplier>) supplierDAO.getList());
         return supplierList; 
-    }
-    
-    
-    public ArrayList<Supplier> getSuppliers(){
-        return (ArrayList<Supplier>) supplierDAO.getList();
-    }
+    } 
      
-    
-
-    
-     
-     
-     }
+}

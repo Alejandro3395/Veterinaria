@@ -12,7 +12,7 @@
 package bussiness;
 
 
-import Data.DAOs.PetDAO;
+
 import Entitys.Client;
 import Entitys.Pet;
 import exceptions.InvalidFieldException;
@@ -35,10 +35,9 @@ public class PetManager {
     static final int  ownerIndex = 3;
     
     private static final PetManager petManager = new PetManager();
-    private PetDAO petDAO;
     
     public PetManager(){
-        this.petDAO = PetDAO.GetInstance();
+       
     }
     
      /**
@@ -113,18 +112,13 @@ public class PetManager {
         try{
             List<Pet> petList =  getPetList(petOwner);
             Pet pet = petList.get(index);
-            ArrayList<String> petData = new ArrayList<>( getPetData(pet) );
-            
-            if(isNewData(petData, newPetData)){
-                Pet updatedPet = updateData(pet,newPetData);
-                ClientManager clientManager = ClientManager.GetInstance();
-                Client client = clientManager.getClientData(petOwner); //aqui se llama a lo de get por nombre
-                client.getPets().set(index,pet);
-                clientManager.updateClient(client);
-                message = "SUCCESS";
-            }else{
-                System.out.println("datos sin cambio");
-            }
+            Pet updatedPet = createPet(newPetData);
+            pet.setId(updatedPet.getId());
+            ClientManager clientManager = ClientManager.GetInstance();
+            Client client = clientManager.getClientData(petOwner); //aqui se llama a lo de get por nombre
+            client.getPets().set(index,updatedPet);
+            clientManager.updateClient(client);
+            message = "SUCCESS";
         }catch(InvalidFieldException exception){
             System.out.println(exception.getMessage());
             message = exception.getMessage();
@@ -132,64 +126,15 @@ public class PetManager {
         return message;
     }
     
-    private Pet updateData(Pet pet, ArrayList<String> newPetData) throws InvalidFieldException{
-        
-        String petName = newPetData.get(nameIndex);
-        int  petAge = Integer.valueOf(newPetData.get(ageIndex));
-        String petBreed = newPetData.get(breedIndex);
-        
-        pet.setName(petName);
-        
-        pet.setAge(petAge);
-        
-        pet.setBreed(petBreed);
-       
-        return pet;
-    }
-    
-    private ArrayList<String> getPetData(Pet pet){
-        
-        ArrayList<String> data = new ArrayList<String>();
-        
-        data.add(pet.getName().toString());
-        data.add( Integer.toString( pet.getAge()) );
-        data.add(pet.getBreed().toString());
-        
-        return data;
-    }
-    
-    private boolean isNewData(ArrayList<String> petData, ArrayList<String> newPetData){
-        boolean result = false;
-        int diferences = 0;
-        
-        for(int index = 0; index < newPetData.size(); index++){
-            
-            if(!( petData.get(index).equals(newPetData.get(index) ) ) ){
-                diferences++;
-            }
-        }
-        
-        if (diferences>0) { result = true;  }
-        
-        return result;
-    }
     
     public List<Pet> getPetList(String ownerName){
-        
-        //Client ownerData = getOwnerData(ownerName);
         ClientManager clientManager = ClientManager.GetInstance();
         
         Client ownerData = clientManager.getClientData(ownerName);
         List<Pet> petList;
-        petList = new ArrayList<Pet>  (getPets(ownerData));
+        petList = new ArrayList<Pet>  (ownerData.getPets());
         return petList; 
     }
-    
-    public List<Pet> getPets(Client ownerData){
-        //System.out.println("pets: "+ownerData.getPets().get(0));
-        return ownerData.getPets();
-    }
-     
      
     
 }

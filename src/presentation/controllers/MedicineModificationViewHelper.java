@@ -10,31 +10,31 @@ import bussiness.MedicineManager;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
+import presentation.DataViewHelper;
 import presentation.views.MedicineRegisterView;
 
 /**
  *
  * @author mannu
  */
-public class MedicineModificationHelper extends AbstractRegisterController {
-    private static MedicineModificationHelper medicineModificationHelper;
+public class MedicineModificationViewHelper extends DataViewHelper {
+    private static MedicineModificationViewHelper medicineModificationViewHelper;
     private MedicineRegisterView medicineRegisterView;
-    private MedicineManagerHelper medicineManagerHelper;
+    private MedicineManagerViewHelper medicineManagerViewHelper;
     private String owner = null;
     
-    public MedicineModificationHelper(){
+    public MedicineModificationViewHelper(){
         setMedicineRegisterView( new MedicineRegisterView() );
-        //setMedicineManagerHelper( medicineManager);
+        //setMedicineManagerViewHelper( medicineManager);
         
         initializeView();
     }
 
-    public static MedicineModificationHelper getInstance(){
-        if( medicineModificationHelper== null) {
-         medicineModificationHelper = new MedicineModificationHelper();
+    public static MedicineModificationViewHelper getInstance(){
+        if( medicineModificationViewHelper== null) {
+         medicineModificationViewHelper = new MedicineModificationViewHelper();
         }
-        return medicineModificationHelper;
+        return medicineModificationViewHelper;
     }
 
     public MedicineRegisterView getMedicineRegisterView() {
@@ -45,23 +45,23 @@ public class MedicineModificationHelper extends AbstractRegisterController {
         this.medicineRegisterView = medicineRegisterView;
     }
 
-    public MedicineManagerHelper getMedicineManagerHelper() {
-        return medicineManagerHelper;
+    public MedicineManagerViewHelper getMedicineManagerViewHelper() {
+        return medicineManagerViewHelper;
     }
 
-    public void setMedicineManagerHelper(MedicineManagerHelper medicineManagerHelper) {
-        this.medicineManagerHelper = medicineManagerHelper;
+    public void setMedicineManagerViewHelper(MedicineManagerViewHelper medicineManagerViewHelper) {
+        this.medicineManagerViewHelper = medicineManagerViewHelper;
     }
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         loadMedicineData();
         getMedicineRegisterView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getMedicineRegisterView() );
+        configureView( getMedicineRegisterView() );
         getMedicineRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
@@ -73,8 +73,8 @@ public class MedicineModificationHelper extends AbstractRegisterController {
     }
     
     private void loadMedicineData(){
-        int rowIndex = MedicineManagerHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
-        String medicineOwner = MedicineManagerHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
+        int rowIndex = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
+        String medicineOwner = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
         MedicineManager medicineManager = MedicineManager.GetInstance();
         List<Medicine> medicineList =  medicineManager.getMedicineList(medicineOwner);
@@ -84,10 +84,10 @@ public class MedicineModificationHelper extends AbstractRegisterController {
     }
     
     private void proceedWithModification(){
-        ArrayList<String> data = new ArrayList<String>(obtainData());
+        ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
-        int rowIndex = MedicineManagerHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
-        String medicineOwner = MedicineManagerHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
+        int rowIndex = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
+        String medicineOwner = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
@@ -111,7 +111,7 @@ public class MedicineModificationHelper extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        MedicineManagerHelper.getInstance().updateTable();
+        MedicineManagerViewHelper.getInstance().updateTable();
     }
     
     private void cancelModification(){
@@ -128,7 +128,7 @@ public class MedicineModificationHelper extends AbstractRegisterController {
      * @return 
      */
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
        ArrayList<String> data = new ArrayList<String>();
         
         String medicineName = getMedicineRegisterView().getField_productName().getText();
@@ -214,12 +214,13 @@ public class MedicineModificationHelper extends AbstractRegisterController {
         
         //obtener la dosis
         String medicineDose[] = medicine.getDose().split(" ");
+        System.out.println("dose: "+medicineDose);
         String doseQuantity = medicineDose[0];
         String doseType = medicineDose[1];
         String dosePeriod = medicineDose[2];
         String dosePeriodType = medicineDose[3];        
         
-        getMedicineRegisterView().getSpinner_productDoseQuantity().setValue(doseQuantity);
+        getMedicineRegisterView().getSpinner_productDoseQuantity().setValue(Integer.valueOf(doseQuantity));
         
         comboElements = getMedicineRegisterView().getCombo_productDoseQuantityType().getItemCount();
         int doseTypeIndex = 0;
@@ -232,7 +233,7 @@ public class MedicineModificationHelper extends AbstractRegisterController {
         
         getMedicineRegisterView().getCombo_productDoseQuantityType().setSelectedIndex(doseTypeIndex);
         
-        getMedicineRegisterView().getSpinner_productDosePeriod().setValue(dosePeriod);
+        getMedicineRegisterView().getSpinner_productDosePeriod().setValue(Integer.valueOf(dosePeriod));
         
         comboElements = getMedicineRegisterView().getCombo_dosePeriodType().getItemCount();
         int dosePeriodTypeIndex = 0;

@@ -8,39 +8,39 @@ package presentation.controllers;
 import bussiness.ClientManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
+import presentation.DataViewHelper;
 import presentation.views.ClientRegisterView;
 
 /**
  *
  * @author Mannuel
  */
-public class ClientRegisterController extends AbstractRegisterController{
-    private static ClientRegisterController clientRegisterController;
+public class ClientRegisterViewHelper extends DataViewHelper{
+    private static ClientRegisterViewHelper clientRegisterViewHelper;
     private ClientRegisterView clientRegisterView;
-    private ClientManagerHelper clientManagerHelper;
-    private PetRegisterController petRegisterController;
+    private ClientManagerViewHelper clientManagerViewHelper;
+    private PetRegisterViewHelper petRegisterViewHelper;
     
-    public ClientRegisterController(){
+    public ClientRegisterViewHelper(){
         setClientRegisterView(new ClientRegisterView());
         //setClientManagerHelper( clientManager  );
         
         initializeView();
     }
     
-    public static ClientRegisterController getInstance(){
-        if( clientRegisterController== null) {
-         clientRegisterController = new ClientRegisterController();
+    public static ClientRegisterViewHelper getInstance(){
+        if( clientRegisterViewHelper== null) {
+         clientRegisterViewHelper = new ClientRegisterViewHelper();
         }
-        return clientRegisterController;
+        return clientRegisterViewHelper;
     }
 
-    public PetRegisterController getPetRegisterController() {
-        return petRegisterController;
+    public PetRegisterViewHelper getPetRegisterViewHelper() {
+        return petRegisterViewHelper;
     }
 
-    public void setPetRegisterController(PetRegisterController petRegisterController) {
-        this.petRegisterController = petRegisterController;
+    public void setPetRegisterViewHelper(PetRegisterViewHelper petRegisterViewHelper) {
+        this.petRegisterViewHelper = petRegisterViewHelper;
     }
     
     public ClientRegisterView getClientRegisterView() {
@@ -51,22 +51,22 @@ public class ClientRegisterController extends AbstractRegisterController{
         this.clientRegisterView = clientRegisterView;
     }
 
-    public ClientManagerHelper getClientManagerHelper() {
-        return clientManagerHelper;
+    public ClientManagerViewHelper getClientManagerHelper() {
+        return clientManagerViewHelper;
     }
 
-    public void setClientManagerHelper(ClientManagerHelper clientManagerHelper) {
-        this.clientManagerHelper = clientManagerHelper;
+    public void setClientManagerHelper(ClientManagerViewHelper clientManagerViewHelper) {
+        this.clientManagerViewHelper = clientManagerViewHelper;
     }
     
     @Override
-    public void openWindow() {
+    public void loadView() {
         getClientRegisterView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getClientRegisterView() );
+        configureView( getClientRegisterView() );
         getClientRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
@@ -79,7 +79,7 @@ public class ClientRegisterController extends AbstractRegisterController{
     
     private void proceedWithRegistration(){
         
-        ArrayList<String> clientData = new ArrayList<String>(obtainData());
+        ArrayList<String> clientData = new ArrayList<String>(obtainDataFromView());
               
         boolean isValidField =!isEmptyFields(clientData);
         
@@ -92,10 +92,9 @@ public class ClientRegisterController extends AbstractRegisterController{
             if(message.equals(successStatus)){
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Client");
                 updateManagerViewTable();
-                 //setPetRegisterController(PetRegisterController.getInstance());
-                    PetRegisterController.getInstance().setOwner(clientData.get(0).toString());
-                    PetRegisterController.getInstance().setMode(0);
-                    PetRegisterController.getInstance().openWindow();
+                    PetRegisterViewHelper.getInstance().setOwner(clientData.get(0).toString());
+                    PetRegisterViewHelper.getInstance().setMode(0);
+                    PetRegisterViewHelper.getInstance().loadView();
                 resetFields();
                 closeWindow();
             }else{
@@ -116,11 +115,11 @@ public class ClientRegisterController extends AbstractRegisterController{
     }
     
     private void updateManagerViewTable(){
-        ClientManagerHelper.getInstance().updateTable();
+        ClientManagerViewHelper.getInstance().updateTable();
     }
     
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         
         ArrayList<String> data = new ArrayList<String>();
         

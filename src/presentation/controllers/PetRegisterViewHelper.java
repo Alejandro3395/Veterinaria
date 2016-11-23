@@ -14,42 +14,42 @@ package presentation.controllers;
 import bussiness.PetManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.AbstractRegisterController;
-import presentation.AbstractViewController;
+import presentation.DataViewHelper;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.PetRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class PetRegisterController extends AbstractRegisterController {
-    private static PetRegisterController petRegisterController;
+public class PetRegisterViewHelper extends DataViewHelper {
+    private static PetRegisterViewHelper petRegisterViewHelper;
     private PetRegisterView petRegisterView;
-    private PetManagerHelper petManagerHelper = null;
+    private PetManagerViewHelper petManagerViewHelper = null;
     
     private String owner = null ;
     private static int registerPetMode = 0;
     private static int registerClientMode = 1;
     private int mode = 0;
     
-    public PetRegisterController(){
+    public PetRegisterViewHelper(){
         setPetRegisterView(new PetRegisterView());
-        //setPetManagerHelper( petManager  );
+        //setPetManagerViewHelper( petManager  );
         
         initializeView();
     }
 
-    public PetRegisterController( String owner ) {
+    public PetRegisterViewHelper( String owner ) {
         setPetRegisterView( new PetRegisterView());
         this.owner = owner;
         initializeView();
     }
     
-    public static PetRegisterController getInstance(){
-        if( petRegisterController== null) {
-         petRegisterController = new PetRegisterController();
+    public static PetRegisterViewHelper getInstance(){
+        if( petRegisterViewHelper== null) {
+         petRegisterViewHelper = new PetRegisterViewHelper();
         }
-        return petRegisterController;
+        return petRegisterViewHelper;
     }
 
     public String getOwner() {
@@ -73,12 +73,12 @@ public class PetRegisterController extends AbstractRegisterController {
     
     
 
-    public PetManagerHelper getPetManagerHelper() {
-        return petManagerHelper;
+    public PetManagerViewHelper getPetManagerViewHelper() {
+        return petManagerViewHelper;
     }
 
-    public void setPetManagerHelper(PetManagerHelper petManagerHelper) {
-        this.petManagerHelper = petManagerHelper;
+    public void setPetManagerViewHelper(PetManagerViewHelper petManagerViewHelper) {
+        this.petManagerViewHelper = petManagerViewHelper;
     }
 
     public PetRegisterView getPetRegisterView() {
@@ -90,17 +90,17 @@ public class PetRegisterController extends AbstractRegisterController {
     }
     
     private void updateManagerViewTable(){
-        PetManagerHelper.getInstance().updateTable();
+        PetManagerViewHelper.getInstance().updateTable();
     }
     
     @Override
-    public void openWindow() {
+    public void loadView() {
         getPetRegisterView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getPetRegisterView() );
+        configureView( getPetRegisterView() );
         getPetRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
@@ -127,12 +127,12 @@ public class PetRegisterController extends AbstractRegisterController {
      *  This method uses sends the data the view provides to the manager.
      */
     private void proceedWithRegistration(){
-        ArrayList<String> petData = new ArrayList<String>(obtainData());
+        ArrayList<String> petData = new ArrayList<String>(obtainDataFromView());
         
         boolean isValidField =!isEmptyFields(petData);
         
         if(mode != 0){
-            owner = PetManagerHelper.getInstance().getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
+            owner = PetManagerViewHelper.getInstance().getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
         }
         
         String message="";
@@ -164,7 +164,7 @@ public class PetRegisterController extends AbstractRegisterController {
      * @return 
      */
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
         String petName = getPetRegisterView().getField_petName().getText();
