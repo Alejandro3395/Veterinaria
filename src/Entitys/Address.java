@@ -5,6 +5,7 @@
  */
 package Entitys;
 
+import exceptions.InvalidFieldException;
 import java.io.Serializable;
 
 /**
@@ -17,12 +18,27 @@ public class Address implements Serializable {
     private String street;
     private String colony;
     private String crossovers;
+    private int zipCodeMinSize = 10000;
+    private int zipCodeMaxSize = 99999;
 
-    public Address(int zipCode, String street, String colony, String crossovers) {
-        this.zipCode = zipCode;
-        this.street = street;
-        this.colony = colony;
-        this.crossovers = crossovers;
+    public Address(int zipCode, String street, String colony, String crossovers) throws InvalidFieldException {
+        
+        if(isValidZipCode(zipCode)){
+            this.zipCode = zipCode;
+            this.street = street;
+            this.colony = colony;
+            this.crossovers = crossovers;
+        }else{
+            throw new InvalidFieldException("Codigo postal erroneo!");
+        }       
+    }
+    
+    private boolean isValidZipCode(int zipCode){
+        boolean result = false;
+        if( (zipCode > zipCodeMinSize) && (zipCode < zipCodeMaxSize) ){
+            result = true;
+        }
+        return result;
     }
 
     public Address() {
@@ -33,8 +49,12 @@ public class Address implements Serializable {
         return zipCode;
     }
 
-    public void setZipCode(int zipCode) {
-        this.zipCode = zipCode;
+    public void setZipCode(int zipCode) throws InvalidFieldException {
+        if(isValidZipCode(zipCode)){
+            this.zipCode = zipCode;            
+        }else{
+            throw new InvalidFieldException("Codigo postal erroneo!");
+        }
     }
 
     public String getStreet() {

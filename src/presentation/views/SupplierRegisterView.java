@@ -5,6 +5,10 @@
  */
 package presentation.views;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Jorge
@@ -35,7 +39,7 @@ public class SupplierRegisterView extends javax.swing.JFrame {
         field_supplierPhoneLada = new javax.swing.JTextField();
         field_supplierPhoneNumber = new javax.swing.JTextField();
         field_supplierName = new javax.swing.JTextField();
-        btn_Register = new javax.swing.JButton();
+        btn_register = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,7 +66,7 @@ public class SupplierRegisterView extends javax.swing.JFrame {
             }
         });
 
-        btn_Register.setText("Registrar");
+        btn_register.setText("Registrar");
 
         btn_cancel.setText("Cancelar");
 
@@ -98,7 +102,7 @@ public class SupplierRegisterView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_tittle, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_Register)
+                        .addComponent(btn_register)
                         .addGap(98, 98, 98))))
         );
         layout.setVerticalGroup(
@@ -119,7 +123,7 @@ public class SupplierRegisterView extends javax.swing.JFrame {
                     .addComponent(field_supplierPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Register)
+                    .addComponent(btn_register)
                     .addComponent(btn_cancel))
                 .addContainerGap())
         );
@@ -170,9 +174,89 @@ public class SupplierRegisterView extends javax.swing.JFrame {
         });
     }
 
+    public JButton getBtn_register() {
+        return btn_register;
+    }
+
+    public void setBtn_register(JButton btn_Register) {
+        this.btn_register = btn_Register;
+    }
+
+    public JButton getBtn_cancel() {
+        return btn_cancel;
+    }
+
+    public void setBtn_cancel(JButton btn_cancel) {
+        this.btn_cancel = btn_cancel;
+    }
+
+    public JTextField getField_supplierName() {
+        return field_supplierName;
+    }
+
+    public void setField_supplierName(JTextField field_supplierName) {
+        this.field_supplierName = field_supplierName;
+    }
+
+    public JTextField getField_supplierPhoneLada() {
+        return field_supplierPhoneLada;
+    }
+
+    public void setField_supplierPhoneLada(JTextField field_supplierPhoneLada) {
+        this.field_supplierPhoneLada = field_supplierPhoneLada;
+    }
+
+    public JTextField getField_supplierPhoneNumber() {
+        return field_supplierPhoneNumber;
+    }
+
+    public void setField_supplierPhoneNumber(JTextField field_supplierPhoneNumber) {
+        this.field_supplierPhoneNumber = field_supplierPhoneNumber;
+    }
+
+    public JLabel getLbl_supplierName() {
+        return lbl_supplierName;
+    }
+
+    public void setLbl_supplierName(JLabel lbl_supplierName) {
+        this.lbl_supplierName = lbl_supplierName;
+    }
+
+    public JLabel getLbl_supplierPhone() {
+        return lbl_supplierPhone;
+    }
+
+    public void setLbl_supplierPhone(JLabel lbl_supplierPhone) {
+        this.lbl_supplierPhone = lbl_supplierPhone;
+    }
+
+    public JLabel getLbl_supplierPhoneLada() {
+        return lbl_supplierPhoneLada;
+    }
+
+    public void setLbl_supplierPhoneLada(JLabel lbl_supplierPhoneLada) {
+        this.lbl_supplierPhoneLada = lbl_supplierPhoneLada;
+    }
+
+    public JLabel getLbl_supplierPhoneNumber() {
+        return lbl_supplierPhoneNumber;
+    }
+
+    public void setLbl_supplierPhoneNumber(JLabel lbl_supplierPhoneNumber) {
+        this.lbl_supplierPhoneNumber = lbl_supplierPhoneNumber;
+    }
+
+    public JLabel getLbl_tittle() {
+        return lbl_tittle;
+    }
+
+    public void setLbl_tittle(JLabel lbl_tittle) {
+        this.lbl_tittle = lbl_tittle;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Register;
     private javax.swing.JButton btn_cancel;
+    private javax.swing.JButton btn_register;
     private javax.swing.JTextField field_supplierName;
     private javax.swing.JTextField field_supplierPhoneLada;
     private javax.swing.JTextField field_supplierPhoneNumber;

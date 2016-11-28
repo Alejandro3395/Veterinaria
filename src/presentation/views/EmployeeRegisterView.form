@@ -32,11 +32,13 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lbl_employeeUserName" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbl_employeePassword" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="field_employeePassword" min="-2" pref="153" max="-2" attributes="0"/>
-                                  <Component id="field_employeeUserName" min="-2" pref="153" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="field_employeeUserName" pref="153" max="32767" attributes="0"/>
+                                  <Component id="field_employeeEmail" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="field_employeeUserPassword" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
@@ -92,6 +94,11 @@
                                   </Group>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="field_employeeRFC" min="-2" pref="123" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
               </Group>
@@ -137,7 +144,7 @@
               </Group>
               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
               <Component id="lbl_employeePhone" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace pref="17" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbl_employePhoneLada" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="field_employeePhoneLada" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -159,8 +166,13 @@
                           <Component id="lbl_employeeAddressStreet" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lbl_employeeAddressColony" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="field_employeeRFC" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lbl_userData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -170,10 +182,15 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="field_employeePassword" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lbl_employeePassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_employeeUserPassword" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="field_employeeEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btn_register" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btn_cancel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -222,11 +239,6 @@
     <Component class="javax.swing.JTextField" name="field_employeeName">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="field_employeeNameActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JPasswordField" name="field_employeePassword">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="field_employeePasswordActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="field_employeeUserName">
@@ -295,6 +307,28 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Correo Electronico:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="field_employeeEmail">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="field_employeeEmailActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="field_employeeUserPassword">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="RFC:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="field_employeeRFC">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="field_employeeRFCActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

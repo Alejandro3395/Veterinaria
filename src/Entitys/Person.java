@@ -27,7 +27,9 @@ import java.io.Serializable;
         this.phone = phone;
     }
     
-    
+    public Person(){
+        
+    }
     
     //gets y sets
 

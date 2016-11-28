@@ -7,18 +7,28 @@
     <property name="connection.url">jdbc:mysql://localhost/veterinaria</property>
     <property name="connection.username">root</property>
     <property name="connection.password"/>
+    
     <!-- Configuracion del pool interno -->
     <property name="connection.pool_size">1</property>
+    
     <!--Dialecto de hibernate-->
     <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+    
     <!--Propiedades importantes-->
     <property name="show_sql">true</property>
-    <property name="hbm2ddl.auto">create-drop</property>
-    <!--  Propiedad para eliminar y crear la base de datos-->
+   <!--
+    <property name="hbm2ddl.auto">create-drop</property>--><!--  Propiedad para eliminar y crear la base de datos-->
+    
     <!-- Archivos de mapeo -->
     <mapping resource="Data/Mapping/medicine.hbm.xml"/>
     <mapping resource="Data/Mapping/Product.hbm.xml"/>
     <mapping resource="Data/Mapping/Person.hbm.xml"/>
     <mapping resource="Data/Mapping/Doctor.hbm.xml"/>
+    <mapping resource="Data/Mapping/Employee.hbm.xml"/>
+    <mapping resource="Data/Mapping/Client.hbm.xml"/>
+    <mapping resource="Data/Mapping/Pet.hbm.xml"/>
+    <mapping resource="Data/Mapping/Supplier.hbm.xml"/>
+    
+   <!-- <mapping resource="Data/Mapping/Supplier.hbm.xml"/> -->
   </session-factory>
 </hibernate-configuration>

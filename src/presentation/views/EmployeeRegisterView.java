@@ -41,7 +41,6 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
         lbl_employeeUserName = new javax.swing.JLabel();
         lbl_employeePassword = new javax.swing.JLabel();
         field_employeeName = new javax.swing.JTextField();
-        field_employeePassword = new javax.swing.JPasswordField();
         field_employeeUserName = new javax.swing.JTextField();
         lbl_personalData = new javax.swing.JLabel();
         lbl_employePhoneLada = new javax.swing.JLabel();
@@ -59,6 +58,11 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         btn_register = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        field_employeeEmail = new javax.swing.JTextField();
+        field_employeeUserPassword = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        field_employeeRFC = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,12 +83,6 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
         field_employeeName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 field_employeeNameActionPerformed(evt);
-            }
-        });
-
-        field_employeePassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                field_employeePasswordActionPerformed(evt);
             }
         });
 
@@ -118,6 +116,22 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
 
         btn_cancel.setText("Cancelar");
 
+        jLabel1.setText("Correo Electronico:");
+
+        field_employeeEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                field_employeeEmailActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("RFC:");
+
+        field_employeeRFC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                field_employeeRFCActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,11 +144,13 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbl_employeeUserName)
-                                    .addComponent(lbl_employeePassword))
+                                    .addComponent(lbl_employeePassword)
+                                    .addComponent(jLabel1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(field_employeePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(field_employeeUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(field_employeeUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                                    .addComponent(field_employeeEmail)
+                                    .addComponent(field_employeeUserPassword)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(56, 56, 56)
                                 .addComponent(lbl_employeePhoneNumber)
@@ -175,7 +191,11 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
                                         .addGap(51, 51, 51)
                                         .addComponent(lbl_employeeAddressCross)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(field_employeeAddressCross, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(field_employeeAddressCross, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(field_employeeRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jSeparator1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -209,7 +229,7 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
                     .addComponent(lbl_employeeName))
                 .addGap(41, 41, 41)
                 .addComponent(lbl_employeePhone)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_employePhoneLada)
                     .addComponent(field_employeePhoneLada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -229,8 +249,12 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
                             .addComponent(field_employeeAddressCross, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_employeeAddressStreet)
                             .addComponent(lbl_employeeAddressColony))
-                        .addGap(28, 28, 28)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(field_employeeRFC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbl_userData)
                         .addGap(15, 15, 15)
@@ -238,9 +262,13 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
                     .addComponent(field_employeeUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(field_employeePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_employeePassword))
-                .addGap(44, 44, 44)
+                    .addComponent(lbl_employeePassword)
+                    .addComponent(field_employeeUserPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(field_employeeEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_register)
                     .addComponent(btn_cancel))
@@ -254,10 +282,6 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_field_employeeNameActionPerformed
 
-    private void field_employeePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_employeePasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_field_employeePasswordActionPerformed
-
     private void field_employeePhoneLadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_employeePhoneLadaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_field_employeePhoneLadaActionPerformed
@@ -265,6 +289,14 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
     private void field_employeeAddressPostalCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_employeeAddressPostalCodeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_field_employeeAddressPostalCodeActionPerformed
+
+    private void field_employeeEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_employeeEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_field_employeeEmailActionPerformed
+
+    private void field_employeeRFCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_employeeRFCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_field_employeeRFCActionPerformed
 
     /**
      * @param args the command line arguments
@@ -353,6 +385,38 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
         return field_employeeAddressStreet;
     }
 
+    public JTextField getField_employeeEmail() {
+        return field_employeeEmail;
+    }
+
+    public JTextField getField_employeeRFC() {
+        return field_employeeRFC;
+    }
+
+    public void setField_employeeRFC(JTextField field_employeeRFC) {
+        this.field_employeeRFC = field_employeeRFC;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public void setField_employeeEmail(JTextField field_employeeEmail) {
+        this.field_employeeEmail = field_employeeEmail;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
     public void setField_employeeAddressStreet(JTextField field_employeeAddressStreet) {
         this.field_employeeAddressStreet = field_employeeAddressStreet;
     }
@@ -365,12 +429,12 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
         this.field_employeeName = field_employeeName;
     }
 
-    public JPasswordField getField_employeePassword() {
-        return field_employeePassword;
+    public JTextField getField_employeeUserPassword() {
+        return field_employeeUserPassword;
     }
 
-    public void setField_employeePassword(JPasswordField field_employeePassword) {
-        this.field_employeePassword = field_employeePassword;
+    public void setField_employeeUserPassword(JPasswordField field_employeePassword) {
+        this.field_employeeUserPassword = field_employeePassword;
     }
 
     public JTextField getField_employeePhoneLada() {
@@ -524,11 +588,15 @@ public class EmployeeRegisterView extends javax.swing.JFrame {
     private javax.swing.JTextField field_employeeAddressCross;
     private javax.swing.JTextField field_employeeAddressPostalCode;
     private javax.swing.JTextField field_employeeAddressStreet;
+    private javax.swing.JTextField field_employeeEmail;
     private javax.swing.JTextField field_employeeName;
-    private javax.swing.JPasswordField field_employeePassword;
     private javax.swing.JTextField field_employeePhoneLada;
     private javax.swing.JTextField field_employeePhoneNumber;
+    private javax.swing.JTextField field_employeeRFC;
     private javax.swing.JTextField field_employeeUserName;
+    private javax.swing.JTextField field_employeeUserPassword;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbl_employePhoneLada;
     private javax.swing.JLabel lbl_employeeAddress;
