@@ -18,11 +18,9 @@ import presentation.views.EmployeeLoginView;
 public class EmployeeLoginViewHelper extends DataViewHelper {
     private EmployeeLoginView employeeLoginView;
     private static EmployeeLoginViewHelper employeeLoginViewHelper;
-    private MainMenuViewHelper mainMenuController ;
 
     public EmployeeLoginViewHelper(){
         setEmployeeLoginView(new EmployeeLoginView());
-        setMainMenuController(MainMenuViewHelper.getInstance());
         initializeView();
         
     }
@@ -40,14 +38,6 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
 
     public void setEmployeeLoginView(EmployeeLoginView employeeLoginView) {
         this.employeeLoginView = employeeLoginView;
-    }
-
-    public MainMenuViewHelper getMainMenuController() {
-        return mainMenuController;
-    }
-
-    public void setMainMenuController(MainMenuViewHelper mainMenuController) {
-        this.mainMenuController = mainMenuController;
     }
 
     @Override
@@ -100,7 +90,8 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
     }
     
      private void openIntroView(){
-        mainMenuController.loadView();
+        MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
+        mainMenuViewHelper.loadView();
     }
     
 }

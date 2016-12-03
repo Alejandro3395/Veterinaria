@@ -16,7 +16,6 @@ package Data.DAOs;
 import Entitys.Supplier;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SupplierDAO extends GeneralDAO<Supplier> {
@@ -73,12 +72,12 @@ public class SupplierDAO extends GeneralDAO<Supplier> {
      * @return 
      */
     @Override
-    public List<Supplier> getList() {
-        List<Supplier> ProviderList = null;
+    public ArrayList<Supplier> getList() {
+        ArrayList<Supplier> ProviderList = null;
         
         try{
             openSession();
-            ProviderList = session.createQuery("from Supplier").list();
+            ProviderList = (ArrayList) session.createQuery("from Supplier").list();
             
             
         }finally{

@@ -8,7 +8,6 @@ package Data.DAOs;
 import Entitys.Client;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -20,6 +19,7 @@ public class ClientDAO extends GeneralDAO<Client> {
 
     public ClientDAO() {
     }
+    
     
     public static ClientDAO GetInstance() {
         return clientDAO;
@@ -55,12 +55,12 @@ public class ClientDAO extends GeneralDAO<Client> {
     }
 
     @Override
-    public List<Client> getList() {
-        List<Client> clientList = null;
+    public ArrayList<Client> getList() {
+        ArrayList<Client> clientList = null;
         
         try{
             openSession();
-            clientList =  session.createQuery("from Client").list();
+            clientList = (ArrayList) session.createQuery("from Client").list();
             
             
         }finally{

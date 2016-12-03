@@ -9,7 +9,7 @@ import bussiness.EmployeeManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.DataViewHelper;
-import presentation.CommonBehaviorViewHelper;
+import presentation.ViewHelper;
 import presentation.views.EmployeeRegisterView;
 
 /**
@@ -202,5 +202,3 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
         getEmployeeRegisterView().getField_employeeEmail().setText("");
     }
 }
-    
-

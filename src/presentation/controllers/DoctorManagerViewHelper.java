@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.CommonBehaviorViewHelper;
+import presentation.ViewHelper;
 import presentation.views.DoctorManagerView;
 import presentation.controllers.DoctorRegisterViewHelper;
 
@@ -21,16 +21,12 @@ import presentation.controllers.DoctorRegisterViewHelper;
  *
  * @author Jorge
  */
-public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
+public class DoctorManagerViewHelper extends ViewHelper {
     private static DoctorManagerViewHelper doctorManagerViewHelper = null;
     private DoctorManagerView doctorManagerView;
-    private DoctorRegisterViewHelper doctorRegisterViewHelper;
-    private DoctorModificationViewHelper doctorModificationViewHelper;
     
     private DoctorManagerViewHelper(){
         setDoctorManagerView(new DoctorManagerView());
-        setDoctorRegisterViewHelper(DoctorRegisterViewHelper.getInstance() );
-        setDoctorModificationViewHelper( DoctorModificationViewHelper.getInstance());        
         initializeView();
     }
 
@@ -41,13 +37,6 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
         return doctorManagerViewHelper;
     }
      
-    public DoctorModificationViewHelper getDoctorModificationViewHelper() {
-        return doctorModificationViewHelper;
-    }
-
-    public void setDoctorModificationViewHelper(DoctorModificationViewHelper doctorModificationViewHelper) {
-        this.doctorModificationViewHelper = doctorModificationViewHelper;
-    }
     
     public DoctorManagerView getDoctorManagerView() {
         return doctorManagerView;
@@ -56,14 +45,6 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
     public void setDoctorManagerView(DoctorManagerView doctorManagerView) {
         this.doctorManagerView = doctorManagerView;
     }
-
-    public DoctorRegisterViewHelper getDoctorRegisterViewHelper() {
-        return doctorRegisterViewHelper;
-    }
-
-    public void setDoctorRegisterViewHelper(DoctorRegisterViewHelper doctorRegisterViewHelper) {
-        this.doctorRegisterViewHelper = doctorRegisterViewHelper;
-    } 
     
     private void setTableContent(ArrayList<Doctor> doctorList){    
         for(int index =0; index < doctorList.size(); index++ ){
@@ -112,7 +93,8 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getDoctorModificationViewHelper().loadView();
+            DoctorModificationViewHelper doctorModificationViewHelper = DoctorModificationViewHelper.getInstance();
+            doctorModificationViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -139,7 +121,7 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
         int id = Integer.valueOf( getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
 
         DoctorManager doctorManager = DoctorManager.GetInstance();
-        doctorManager.deleteDoctor(id);
+        doctorManager.remove(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Doctor");
         updateTable();
     }
@@ -158,7 +140,8 @@ public class DoctorManagerViewHelper extends CommonBehaviorViewHelper {
     }
     
     private void openRegisterView(){
-        getDoctorRegisterViewHelper().loadView();
+        DoctorRegisterViewHelper doctorRegisterViewHelper = DoctorRegisterViewHelper.getInstance();
+        doctorRegisterViewHelper.loadView();
     }
     
     private void insertDoctorToTable(Doctor doctor){

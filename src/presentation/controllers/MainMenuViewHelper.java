@@ -6,27 +6,21 @@
 package presentation.controllers;
 
 import javax.swing.WindowConstants;
-import presentation.CommonBehaviorViewHelper;
+import presentation.ViewHelper;
 import presentation.views.MainMenuView;
 
 /**
  *
  * @author Jorge
  */
-public class MainMenuViewHelper extends CommonBehaviorViewHelper {
+public class MainMenuViewHelper extends ViewHelper {
     private static MainMenuViewHelper mainMenuViewHelper = null;
     private MainMenuView mainView;
-    private RegisterSelectionViewHelper registerSelectionViewHelper;
-    private SalesViewHelper salesViewHelper;
-   
-    
-    
+
     
     public MainMenuViewHelper (){
         setMainView(new MainMenuView());
-        setRegisterSelectionController(RegisterSelectionViewHelper.getInstance());
-        setSalesViewHelper(SalesViewHelper.getInstance());
-        
+
         initializeView();
     }
 
@@ -36,27 +30,8 @@ public class MainMenuViewHelper extends CommonBehaviorViewHelper {
         }
         return mainMenuViewHelper;
     }
+    
 
-    public void setSalesViewHelper(SalesViewHelper salesViewHelper) {
-        this.salesViewHelper = salesViewHelper;
-    }
-    
-     
-     
-    private void openRegisterSelection(){
-        getRegisterSelectionController().loadView();
-    }
-    
-    public RegisterSelectionViewHelper getRegisterSelectionController() {
-        return registerSelectionViewHelper;
-    }
-
-    public void setRegisterSelectionController(RegisterSelectionViewHelper registerSelectionViewHelper) {
-        this.registerSelectionViewHelper = registerSelectionViewHelper;
-    }
-    
-    
-    
     public MainMenuView getMainView() {
         return mainView;
     }
@@ -85,7 +60,13 @@ public class MainMenuViewHelper extends CommonBehaviorViewHelper {
     }
     
     private void openSalesView(){
+        SalesViewHelper salesViewHelper = SalesViewHelper.getInstance();
         salesViewHelper.loadView();
+    }
+    
+    private void openRegisterSelection(){
+        RegisterSelectionViewHelper registerSelectionViewHelper = RegisterSelectionViewHelper.getInstance();
+        registerSelectionViewHelper.loadView();
     }
     
 }

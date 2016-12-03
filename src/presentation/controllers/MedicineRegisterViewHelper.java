@@ -24,21 +24,21 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
     private MedicineRegisterView medicineRegisterView;
     private MedicineManagerViewHelper medicineManagerViewHelper = null;
     
-    private String owner = null ;
+    private String supplier = null ;
     private static int registerMedicineMode = 0;
     private static int registerClientMode = 1;
     private int mode = 0;
     
-    public MedicineRegisterViewHelper(){
+    private MedicineRegisterViewHelper(){
         setMedicineRegisterView(new MedicineRegisterView());
         //setMedicineManagerViewHelper( medicineManager  );
         
         initializeView();
     }
 
-    public MedicineRegisterViewHelper( String owner ) {
+    public MedicineRegisterViewHelper( String supplier ) {
         setMedicineRegisterView( new MedicineRegisterView());
-        this.owner = owner;
+        this.supplier = supplier;
         initializeView();
     }
     
@@ -50,11 +50,11 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
     }
 
     public String getOwner() {
-        return owner;
+        return supplier;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setOwner(String supplier) {
+        this.supplier = supplier;
     }
 
     public int getMode() {
@@ -124,7 +124,7 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         boolean isValidField =!isEmptyFields(medicineData);
         
         if(mode != 0){
-            owner = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
+            supplier = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         }
         
         String message="";
@@ -132,7 +132,7 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         
         if(isValidField){
             MedicineManager medicineManager = MedicineManager.GetInstance();
-            message = medicineManager.registerMedicine(medicineData,owner);
+            message = medicineManager.registerMedicine(medicineData,supplier);
             if(message.equals(successStatus)){
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Medicine");
                 if(mode == registerClientMode ){

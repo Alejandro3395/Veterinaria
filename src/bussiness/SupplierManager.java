@@ -36,7 +36,7 @@ public class SupplierManager {
     
     
     
-    public SupplierManager(){
+    private SupplierManager(){
         this.supplierDAO = SupplierDAO.GetInstance();
     }
     
@@ -54,8 +54,9 @@ public class SupplierManager {
     private void addSupplier(Supplier supplier) {
         supplierDAO.add(supplier);
     }
-    
-    private void deleteSupplier(Supplier supplier){
+
+    public void deleteSupplier(int id){
+        Supplier supplier =  (Supplier)(supplierDAO.get(id));
         supplierDAO.delete(supplier);
     }
     
@@ -67,9 +68,6 @@ public class SupplierManager {
         return (Supplier) supplierDAO.get(id);
     }
      
-    public void eliminateSupplier(int id){
-       deleteSupplier((Supplier)(supplierDAO.get(id)));
-    }
     
     public Supplier getSupplierData(String supplierName){
         return supplierDAO.getSupplierByName(supplierName);

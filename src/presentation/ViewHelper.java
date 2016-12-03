@@ -21,7 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 
-public abstract class CommonBehaviorViewHelper {
+public abstract class ViewHelper {
     private Notifier notifier = new Notifier();
 
 

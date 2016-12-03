@@ -10,23 +10,19 @@ import bussiness.ClientManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.CommonBehaviorViewHelper;
+import presentation.ViewHelper;
 import presentation.views.ClientManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class ClientManagerViewHelper extends CommonBehaviorViewHelper {
+public class ClientManagerViewHelper extends ViewHelper {
     private static ClientManagerViewHelper clientManagerViewHelper = null;
     private ClientManagerView clientManagerView;
-    private ClientRegisterViewHelper clientRegisterViewHelper;
-    private ClientModificationViewHelper clientModificationHelper;
     
-    private ClientManagerViewHelper(){
+    public ClientManagerViewHelper(){
         setClientManagerView(new ClientManagerView());
-        setClientRegisterViewHelper( ClientRegisterViewHelper.getInstance());
-        setClientModificationHelper( ClientModificationViewHelper.getInstance());
         
         initializeView();
     }
@@ -38,14 +34,6 @@ public class ClientManagerViewHelper extends CommonBehaviorViewHelper {
         return clientManagerViewHelper;
     }
     
-    public ClientModificationViewHelper getClientModificationHelper() {
-        return clientModificationHelper;
-    }
-
-    public void setClientModificationHelper(ClientModificationViewHelper clientModificationHelper) {
-        this.clientModificationHelper = clientModificationHelper;
-    }
-    
     public ClientManagerView getClientManagerView() {
         return clientManagerView;
     }
@@ -53,15 +41,6 @@ public class ClientManagerViewHelper extends CommonBehaviorViewHelper {
     public void setClientManagerView(ClientManagerView clientManagerView) {
         this.clientManagerView = clientManagerView;
     }
-
-
-    public ClientRegisterViewHelper getClientRegisterViewHelper() {
-        return clientRegisterViewHelper;
-    }
-
-    public void setClientRegisterViewHelper(ClientRegisterViewHelper clientRegisterViewHelper) {
-        this.clientRegisterViewHelper = clientRegisterViewHelper;
-    } 
 
     @Override
     public void loadView() {
@@ -103,7 +82,8 @@ public class ClientManagerViewHelper extends CommonBehaviorViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getClientModificationHelper().loadView();
+            ClientModificationViewHelper clientModificationViewHelper = ClientModificationViewHelper.getInstance();
+            clientModificationViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -156,7 +136,8 @@ public class ClientManagerViewHelper extends CommonBehaviorViewHelper {
     }
     
     private void openRegisterView(){
-        getClientRegisterViewHelper().loadView();
+        ClientRegisterViewHelper clientRegisterViewHelper = ClientRegisterViewHelper.getInstance();
+        clientRegisterViewHelper.loadView();
     }
     
     private void addClientToTable(Client client){

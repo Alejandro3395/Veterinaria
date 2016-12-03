@@ -21,12 +21,10 @@ public class MedicineModificationViewHelper extends DataViewHelper {
     private static MedicineModificationViewHelper medicineModificationViewHelper;
     private MedicineRegisterView medicineRegisterView;
     private MedicineManagerViewHelper medicineManagerViewHelper;
-    private String owner = null;
+    private String supplier = null;
     
-    public MedicineModificationViewHelper(){
+    private MedicineModificationViewHelper(){
         setMedicineRegisterView( new MedicineRegisterView() );
-        //setMedicineManagerViewHelper( medicineManager);
-        
         initializeView();
     }
 
@@ -74,10 +72,10 @@ public class MedicineModificationViewHelper extends DataViewHelper {
     
     private void loadMedicineData(){
         int rowIndex = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
-        String medicineOwner = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
+        String medicineSupplier = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
         MedicineManager medicineManager = MedicineManager.GetInstance();
-        List<Medicine> medicineList =  medicineManager.getMedicineList(medicineOwner);
+        List<Medicine> medicineList =  medicineManager.getMedicinesBySupplierName(medicineSupplier);
         Medicine medicine = medicineList.get(rowIndex);
         
         setData(medicine);

@@ -19,7 +19,6 @@ import presentation.views.ClientRegisterView;
 public class ClientModificationViewHelper extends DataViewHelper {
     private static ClientModificationViewHelper clientModificationViewHelper = null;
     private ClientRegisterView clientRegisterView;
-    private ClientManagerViewHelper clientManagerViewHelper;
     
     public ClientModificationViewHelper(){
         setClientRegisterView( new ClientRegisterView() );
@@ -43,14 +42,6 @@ public class ClientModificationViewHelper extends DataViewHelper {
         this.clientRegisterView = clientRegisterView;
     }
     
-
-    public ClientManagerViewHelper getClientManagerViewHelper() {
-        return clientManagerViewHelper;
-    }
-
-    public void setClientManagerViewHelper(ClientManagerViewHelper clientManagerViewHelper) {
-        this.clientManagerViewHelper = clientManagerViewHelper;
-    }
 
     @Override
     public void loadView() {

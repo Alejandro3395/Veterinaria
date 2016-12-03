@@ -9,7 +9,7 @@ import bussiness.SupplierManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.DataViewHelper;
-import presentation.CommonBehaviorViewHelper;
+import presentation.ViewHelper;
 import presentation.views.SupplierRegisterView;
 
 /**
@@ -18,13 +18,12 @@ import presentation.views.SupplierRegisterView;
  */
 public class SupplierRegisterViewHelper extends DataViewHelper{
     private SupplierRegisterView supplierRegisterView;
-    private SupplierManagerViewHelper supplierManagerViewHelper;
     private static SupplierRegisterViewHelper supplierRegisterViewHelper;
     
     private static int supplierDataIndex = 0;
     private static int userSupplierDataIndex = 1;
     
-    public SupplierRegisterViewHelper(){
+    private SupplierRegisterViewHelper(){
         setSupplierRegisterView(new SupplierRegisterView());
         //setSupplierManagerViewHelper(  SupplierManagerViewHelper.getInstance() );
         
@@ -38,13 +37,6 @@ public class SupplierRegisterViewHelper extends DataViewHelper{
         return supplierRegisterViewHelper;
     }
 
-    public SupplierManagerViewHelper getSupplierManagerViewHelper() {
-        return supplierManagerViewHelper;
-    }
-
-    public void setSupplierManagerViewHelper(SupplierManagerViewHelper supplierManagerViewHelper) {
-        this.supplierManagerViewHelper = supplierManagerViewHelper;
-    }
 
     public SupplierRegisterView getSupplierRegisterView() {
         return supplierRegisterView;

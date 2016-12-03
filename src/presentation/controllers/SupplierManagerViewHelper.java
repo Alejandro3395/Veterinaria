@@ -10,23 +10,19 @@ import bussiness.SupplierManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.CommonBehaviorViewHelper;
+import presentation.ViewHelper;
 import presentation.views.SupplierManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class SupplierManagerViewHelper extends CommonBehaviorViewHelper {
+public class SupplierManagerViewHelper extends ViewHelper {
     private static SupplierManagerViewHelper supplierManagerViewHelper = null;
     private SupplierManagerView supplierManagerView;
-    private SupplierRegisterViewHelper supplierRegisterViewHelper;
-    private SupplierModificationViewHelper supplierModificationViewHelper;
-    
-    public SupplierManagerViewHelper(){
+
+    private SupplierManagerViewHelper(){
         setSupplierManagerView(new SupplierManagerView());
-        setSupplierRegisterViewHelper(SupplierRegisterViewHelper.getInstance());
-        setSupplierModificationViewHelper(SupplierModificationViewHelper.getInstance());
         
         initializeView();
     }
@@ -38,14 +34,6 @@ public class SupplierManagerViewHelper extends CommonBehaviorViewHelper {
         return supplierManagerViewHelper;
     }
 
-    public SupplierModificationViewHelper getSupplierModificationViewHelper() {
-        return supplierModificationViewHelper;
-    }
-
-    public void setSupplierModificationViewHelper(SupplierModificationViewHelper supplierModificationViewHelper) {
-        this.supplierModificationViewHelper = supplierModificationViewHelper;
-    }
-    
     public SupplierManagerView getSupplierManagerView() {
         return supplierManagerView;
     }
@@ -54,14 +42,6 @@ public class SupplierManagerViewHelper extends CommonBehaviorViewHelper {
         this.supplierManagerView = supplierManagerView;
     }
 
-
-    public SupplierRegisterViewHelper getSupplierRegisterViewHelper() {
-        return supplierRegisterViewHelper;
-    }
-
-    public void setSupplierRegisterViewHelper(SupplierRegisterViewHelper supplierRegisterViewHelper) {
-        this.supplierRegisterViewHelper = supplierRegisterViewHelper;
-    } 
 
     @Override
     public void loadView() {
@@ -85,7 +65,7 @@ public class SupplierManagerViewHelper extends CommonBehaviorViewHelper {
     protected void setEvents() {
         getSupplierManagerView().getBtn_addSupplier().addActionListener(actionEvent -> openRegisterView());
         getSupplierManagerView().getBtn_modifySupplier().addActionListener(actionEvent -> openModificationView());
-        getSupplierManagerView().getBtn_deleteSupplier().addActionListener(actionEvent -> openEliminationConfirmationView());
+        getSupplierManagerView().getBtn_deleteSupplier().addActionListener(actionEvent -> displayConfirmationMessage());
         getSupplierManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
     }
     
@@ -104,13 +84,14 @@ public class SupplierManagerViewHelper extends CommonBehaviorViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getSupplierModificationViewHelper().loadView();
+            SupplierModificationViewHelper supplierModificationViewHelper = SupplierModificationViewHelper.getInstance();
+            supplierModificationViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
     }
     
-    private void openEliminationConfirmationView(){
+    private void displayConfirmationMessage(){
         
         if(isRowSelected()){
             if(isDeletionConfirmed()){
@@ -131,7 +112,7 @@ public class SupplierManagerViewHelper extends CommonBehaviorViewHelper {
         int id = Integer.valueOf( getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
 
         SupplierManager supplierManager = SupplierManager.GetInstance();
-        supplierManager.eliminateSupplier(id);
+        supplierManager.deleteSupplier(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Supplier");
         updateTable();
     }
@@ -157,7 +138,8 @@ public class SupplierManagerViewHelper extends CommonBehaviorViewHelper {
     }
     
     private void openRegisterView(){
-        getSupplierRegisterViewHelper().loadView();
+        SupplierRegisterViewHelper supplierRegisterViewHelper = SupplierRegisterViewHelper.getInstance();
+        supplierRegisterViewHelper.loadView();
     }
     
     private void addSupplierToTable(Supplier supplier){

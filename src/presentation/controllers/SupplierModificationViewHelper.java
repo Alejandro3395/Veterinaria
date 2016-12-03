@@ -18,9 +18,8 @@ import presentation.views.SupplierRegisterView;
 public class SupplierModificationViewHelper extends DataViewHelper {
     private static SupplierModificationViewHelper supplierModificationViewHelper;
     private SupplierRegisterView supplierRegisterView;
-    private SupplierManagerViewHelper supplierManagerViewHelper;
     
-    public SupplierModificationViewHelper(){
+    private SupplierModificationViewHelper(){
         setSupplierRegisterView( new SupplierRegisterView() );
         
         initializeView();
@@ -39,14 +38,6 @@ public class SupplierModificationViewHelper extends DataViewHelper {
 
     public void setSupplierRegisterView(SupplierRegisterView supplierRegisterView) {
         this.supplierRegisterView = supplierRegisterView;
-    }
-
-    public SupplierManagerViewHelper getSupplierManagerHelper() {
-        return supplierManagerViewHelper;
-    }
-
-    public void setSupplierManagerViewHelper(SupplierManagerViewHelper supplierManagerViewHelper) {
-        this.supplierManagerViewHelper = supplierManagerViewHelper;
     }
 
     @Override

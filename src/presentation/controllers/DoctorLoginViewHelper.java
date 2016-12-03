@@ -18,11 +18,9 @@ import presentation.views.DoctorLoginView;
 public class DoctorLoginViewHelper extends DataViewHelper{
     private static DoctorLoginViewHelper doctorLoginViewHelper= null; 
     private DoctorLoginView doctorLoginView;
-    private MainMenuViewHelper mainMenuController ;
 
     public DoctorLoginViewHelper(){
         setDoctorLoginView(new DoctorLoginView());
-        setMainMenuController (MainMenuViewHelper.getInstance());
         initializeView();
     }
     
@@ -41,14 +39,6 @@ public class DoctorLoginViewHelper extends DataViewHelper{
         this.doctorLoginView = doctorLoginView;
     }
 
-    public MainMenuViewHelper getMainMenuController() {
-        return mainMenuController;
-    }
-
-    public void setMainMenuController(MainMenuViewHelper mainMenuController) {
-        this.mainMenuController = mainMenuController;
-    }
-    
     @Override
     protected void setEvents() {
          getDoctorLoginView().getLogin_Bttn().addActionListener(actionEvent -> validateDoctorUserAccess() );
@@ -96,6 +86,7 @@ public class DoctorLoginViewHelper extends DataViewHelper{
     }
     
     private void openIntroView(){
-        mainMenuController.loadView();
+        MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
+        mainMenuViewHelper.loadView();
     }
 }

@@ -8,37 +8,26 @@ package presentation.controllers;
 import Entitys.Medicine;
 import bussiness.MedicineManager;
 import bussiness.ReportManager;
-import bussiness.SessionManager;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.draw.VerticalPositionMark;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.FileOutputStream;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.ViewHelper;
+import presentation.CommonBehaviorViewHelper;
 import presentation.views.SalesView;
 
 /**
  *
  * @author mannu
  */
-public class SalesViewHelper extends ViewHelper{
+public class SalesViewHelper extends CommonBehaviorViewHelper{
     private SalesView saleView;
     private DefaultComboBoxModel comboBoxModel;
     private DefaultTableModel Tablemodel;
@@ -71,13 +60,11 @@ public class SalesViewHelper extends ViewHelper{
         getSaleView().getAceptSaleBttn().addActionListener(actionEvent -> BuildReport());
     }
 
-    //quitar de aqui
     public void setSaleView(SalesView sellView) {
         this.saleView = sellView;
     }
     
     public void SetTotalCost(){
-        totalCost=0;
         DecimalFormat numDecimales = new DecimalFormat("0.00");
         for(int i=0; i< Tablemodel.getRowCount();i++){
             totalCost = totalCost + (double) Tablemodel.getValueAt(i, 1);
@@ -99,15 +86,15 @@ public class SalesViewHelper extends ViewHelper{
     protected void initializeView() {
         configureView( getSaleView() );
         getSaleView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
-        loadProducts();
+        loadProductsToComboBox();
         setEvents();
     }
    
-    public void loadProducts(){
+    public void loadProductsToComboBox(){
         
         comboBoxModel.removeAllElements();
         MedicineManager medicineManager = MedicineManager.GetInstance();
-        List<Medicine> productsList =  medicineManager.getMedicines();
+        List<Medicine> productsList =  medicineManager.getMedicineList();
         
         for(Medicine medicine : productsList){
             
@@ -166,28 +153,57 @@ public class SalesViewHelper extends ViewHelper{
         return result;
     }
     
-    public List<String> getPurchases(){
-        int numMaxRows = 0;
-        String productAndPrice; 
-        List purchases = new ArrayList<>();
-        for(numMaxRows = 0; numMaxRows < Tablemodel.getRowCount(); numMaxRows++){ 
-                productAndPrice ="";
-                productAndPrice= productAndPrice.concat(String.valueOf(Tablemodel.getValueAt(numMaxRows, 0)));
-                productAndPrice= productAndPrice.concat(String.valueOf(Tablemodel.getValueAt(numMaxRows, 1))); 
-                purchases.add(productAndPrice);
-               // productAndPrice.split(" ");
-        }
-
-        
-        return purchases;
-    }
-    
+     
+     
+     
      //Metodo puesto aqui para prueba 
      
      private void BuildReport(){
-         getPurchases();
-         ReportHandler rh = ReportHandler.getInstance();
-         rh.BuildSaleReport(totalCost);
+         int numMaxRows = 0;
+         int numMaxColums = 0;
+          try{
+              
+            
+            PdfWriter.getInstance(reportManager.getDocument(), new FileOutputStream("tablas.pdf"));
+            reportManager.getDocument().open();
+             
+            // Este codigo genera una tabla de 3 columnas
+                            
+            // Se rellena la tabla
+            // addCell() agrega una celda a la tabla, el cambio de fila
+            // ocurre automaticamente al llenar la fila
+              System.out.println(Tablemodel.getRowCount());
+            for(numMaxRows = 0; numMaxRows < Tablemodel.getRowCount(); numMaxRows++){
+                
+                for(numMaxColums = 0;numMaxColums < Tablemodel.getColumnCount(); numMaxColums++){
+                    reportManager.getTable().addCell(String.valueOf( Tablemodel.getValueAt(numMaxRows, numMaxColums)));
+                    
+                }
+                
+            }
+
+             
+            // Si desea crear una celda de mas de una columna
+            // Cree un objecto Cell y cambie su propiedad span
+             
+            PdfPCell celdaFinal = new PdfPCell(new Paragraph("Total: " + String.valueOf(totalCost)));
+             
+            // Indicamos cuantas columnas ocupa la celda
+            celdaFinal.setColspan(2);
+            reportManager.getTable().addCell(celdaFinal);
+             
+            // Agregamos la tabla al documento            
+            reportManager.getDocument().add(reportManager.getTable());
+             
+            reportManager.getDocument().close();
+             
+        }catch(Exception e)
+        {
+            System.err.println("Ocurrio un error: " +e);
+            System.exit(-1);
+        }
+          
+         return;
      }
      
 }

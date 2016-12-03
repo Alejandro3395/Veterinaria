@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import javax.swing.WindowConstants;
-import presentation.CommonBehaviorViewHelper;
+import presentation.ViewHelper;
 import presentation.views.DoctorLoginView;
 import presentation.views.LoginMainView;
 
@@ -14,18 +14,13 @@ import presentation.views.LoginMainView;
  *
  * @author mannu
  */
-public class LoginMainViewHelper extends CommonBehaviorViewHelper{
+public class LoginMainViewHelper extends ViewHelper{
     private LoginMainView loginMainView;
     private static LoginMainViewHelper loginMainViewHelper;
-    private DoctorLoginViewHelper doctorLoginViewHelper;
-    private EmployeeLoginViewHelper employeeLoginViewHelper;
-    
+
     public LoginMainViewHelper(){
         setLoginView(new LoginMainView());
-        
-        setDoctorLoginViewHelper(DoctorLoginViewHelper.getInstance());
-        setEmployeeLoginViewHelper(EmployeeLoginViewHelper.getInstance());
-        
+       
         initializeView();
     }
 
@@ -35,15 +30,7 @@ public class LoginMainViewHelper extends CommonBehaviorViewHelper{
         }
         return loginMainViewHelper;
     }
-    
-    public DoctorLoginViewHelper getDoctorLoginViewHelper() {
-        return doctorLoginViewHelper;
-    }
 
-    public void setDoctorLoginViewHelper(DoctorLoginViewHelper doctorLoginViewHelper) {
-        this.doctorLoginViewHelper = doctorLoginViewHelper;
-    }
-      
     private void setLoginView(LoginMainView loginMainView) {
         this.loginMainView = loginMainView;
     }
@@ -56,14 +43,6 @@ public class LoginMainViewHelper extends CommonBehaviorViewHelper{
 
     public LoginMainView getLoginView() {
         return loginMainView;
-    }
-
-    public EmployeeLoginViewHelper getEmployeeLoginViewHelper() {
-        return employeeLoginViewHelper;
-    }
-
-    public void setEmployeeLoginViewHelper(EmployeeLoginViewHelper employeeLoginViewHelper) {
-        this.employeeLoginViewHelper = employeeLoginViewHelper;
     }
     
     @Override
@@ -79,10 +58,12 @@ public class LoginMainViewHelper extends CommonBehaviorViewHelper{
     }
 
     public void openDoctorLoginView(){
+        DoctorLoginViewHelper doctorLoginViewHelper = DoctorLoginViewHelper.getInstance();
         doctorLoginViewHelper.loadView();
     }
     
     public void openEmployeeLoginView(){
+        EmployeeLoginViewHelper employeeLoginViewHelper = EmployeeLoginViewHelper.getInstance();
         employeeLoginViewHelper.loadView();
     }
     

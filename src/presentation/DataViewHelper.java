@@ -23,32 +23,8 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import exceptions.InvalidFieldException;
 
-public abstract class DataViewHelper  {
+public abstract class DataViewHelper extends ViewHelper  {
     protected abstract ArrayList<String> obtainDataFromView();
-    public abstract void loadView();
-    
-    private Notifier notifier = new Notifier();
-
-    protected void configureView(JFrame window) {
-        window.setLocationRelativeTo(null);
-        window.setResizable(false);
-        window.pack();
-        window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        window.setLocationRelativeTo(null);
-    }
-
-    protected abstract void initializeView();
-
-    protected abstract void setEvents();
-
-    public Notifier getNotifier() {
-        return notifier;
-    }
-
-    public void setNotifier(Notifier notifier) {
-        this.notifier = notifier;
-    }
-    
     
     /**
      * This method checks if there is an empty field in the form.

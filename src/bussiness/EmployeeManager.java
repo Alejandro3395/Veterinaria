@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class EmployeeManager {
+public class EmployeeManager extends Recepcionist<Employee> {
     private static final EmployeeManager employeeManager = new EmployeeManager();
     private EmployeeDAO employeeDAO;
     
@@ -69,16 +69,12 @@ public class EmployeeManager {
      */
     private void setEmployeeUser(Employee employee, UserEmployee userEmployee){
         employee.setUser(userEmployee);
-        employeeManager.addEmployee(employee);
+        employeeManager.register(employee);
     }
     
-    private void addEmployee(Employee employee)  {
-        employeeDAO.add(employee);
-    }
+
     
-    private void updateEmployee(Employee employee){
-        employeeDAO.update(employee);
-    }
+
     
     private Employee createEmployee(ArrayList<String> data) throws InvalidFieldException {
         
@@ -120,12 +116,7 @@ public class EmployeeManager {
         return userEmployee;
         
     }
-    
-    public void deleteEmployee(int id){
-        Employee employee =  (Employee)(employeeDAO.get(id));
-        employeeDAO.delete(employee);
-    }
-    
+   
     public String registerEmployee(ArrayList<String> employeeData, ArrayList<String> userEmployeeData){
         String message ="";
         
@@ -145,11 +136,11 @@ public class EmployeeManager {
         String message = "";
  
         try{
-            Employee employee =  (getEmployee(id));
+            Employee employee =  getEmployee(id);
             Employee updatedEmployee = createEmployee(newEmployeeData);
             updatedEmployee.setId(employee.getId());
             updatedEmployee.setUser(employee.getUser());
-            updateEmployee(updatedEmployee);
+            edit(updatedEmployee);
                 message = "SUCCESS";
         }catch(InvalidFieldException exception){
             System.out.println(exception.getMessage());
@@ -157,5 +148,24 @@ public class EmployeeManager {
         }
         return message;
     }
+
+    @Override
+    public void edit(Employee employee) {
+       employeeDAO.update(employee);
+    }
+
+    @Override
+    public void remove(int id) {
+        Employee employee =  (Employee)(employeeDAO.get(id));
+        employeeDAO.delete(employee);
+        
+    }
+
+    @Override
+    public void register(Employee employee) {
+           employeeDAO.add(employee);
+    }
+
+ 
     
 }

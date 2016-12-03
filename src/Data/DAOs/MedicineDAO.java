@@ -74,12 +74,12 @@ public class MedicineDAO extends GeneralDAO<Medicine> {
      * @return 
      */
     @Override
-    public List<Medicine> getList() {
-        List<Medicine> medicineList = null;
+    public ArrayList<Medicine> getList() {
+        ArrayList<Medicine> medicineList = null;
         
         try{
             openSession();
-            medicineList =  session.createQuery("from Medicine").list();
+            medicineList = (ArrayList) session.createQuery("from Medicine").list();
             
             
         }finally{
@@ -94,13 +94,6 @@ public class MedicineDAO extends GeneralDAO<Medicine> {
          try{
          openSession();
          medicineDataList = session.createQuery(" FROM Medicine ").list();
-         /*Iterator<Employee> it =  employeeDataList.iterator();
-         while(it.hasNext()){
-             Employee var = it.next();
-             System.out.println("ID: "+ var.getId());
-             
-         } */     
-            
          transaction.commit();
          }catch (HibernateException e) {
          if (transaction!=null) transaction.rollback();

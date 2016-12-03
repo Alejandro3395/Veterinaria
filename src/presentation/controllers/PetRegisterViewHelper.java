@@ -15,7 +15,7 @@ import bussiness.PetManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.DataViewHelper;
-import presentation.CommonBehaviorViewHelper;
+import presentation.ViewHelper;
 import presentation.views.PetRegisterView;
 
 /**

@@ -14,19 +14,19 @@
 package presentation.controllers;
 
 import javax.swing.WindowConstants;
-import presentation.CommonBehaviorViewHelper;
+import presentation.ViewHelper;
 import presentation.views.MedicineRegisterView;
 import presentation.views.ProductSelectionView;
 
-public class ProductSelectionViewHelper extends CommonBehaviorViewHelper {
+public class ProductSelectionViewHelper extends ViewHelper {
     private static ProductSelectionViewHelper productSelectionViewHelper = null;
     private ProductSelectionView productSelectionView;
     private MedicineRegisterViewHelper medicineRegisterViewHelper;
     
     
-    public ProductSelectionViewHelper(){
+    private ProductSelectionViewHelper(){
         setProductSelectionView(new ProductSelectionView());
-        setMedicineRegisterViewHelper(new MedicineRegisterViewHelper());
+        setMedicineRegisterViewHelper( MedicineRegisterViewHelper.getInstance());
         
         initializeView();
     }

@@ -11,7 +11,6 @@ import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
 * class: AbstractDao (GeneralDAO.java)
@@ -35,7 +34,8 @@ public abstract class GeneralDAO<Entity> {
         transaction.rollback();
         throw new HibernateException("Ocurrio un error en la capa de acceso a datos", hibernateException);
     }
-    
+
+
     public abstract void add(Entity entity) throws SQLException;
 
     public abstract void delete(Entity entity);
@@ -44,7 +44,8 @@ public abstract class GeneralDAO<Entity> {
 
     public abstract Object get(long objectId);
 
-    public abstract List<?> getList();
+    public abstract ArrayList<?> getList();
+
 
     protected void saveEntity(Entity entity) {
         try {

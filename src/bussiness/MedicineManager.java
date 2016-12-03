@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MedicineManager {
     private static final MedicineManager medicineManager = new MedicineManager();
-    private MedicineDAO medicineDAO;
+    private MedicineDAO medicineDAO = new MedicineDAO();
     
     /**
      * Constants to use with the createMedicine method
@@ -30,13 +30,12 @@ public class MedicineManager {
     private static final int nameIndex = 0;
     private static final int quantityIndex = 1;
     private static final int sellPriceIndex = 2;
-    //private static final int supplierIndex = 3;
     private static final int administrationWayIndex = 3;
     private static final int expirationDateIndex = 4;
     private static final int doseIndex = 5;
     
     
-    public MedicineManager(){
+    private MedicineManager(){
         this.medicineDAO = MedicineDAO.GetInstance();
     }
     
@@ -79,10 +78,12 @@ public class MedicineManager {
         String message ="";
         try{
             Medicine medicine = new Medicine(createMedicine(medicineData));
+            
             SupplierManager supplierManager = SupplierManager.GetInstance();
             Supplier supplier = supplierManager.getSupplierData(medicineSupplier); //aqui se llama a lo de get por nombre
             supplier.addMedicines(medicine);
             supplierManager.updateSupplier(supplier);
+            
             message = "SUCCESS";
             
         }catch(InvalidFieldException exception ){
@@ -97,14 +98,16 @@ public class MedicineManager {
         String message = "";
         
         try{
-            List<Medicine> medicineList =  getMedicineList(medicineOwner);
+            List<Medicine> medicineList =  getMedicinesBySupplierName(medicineOwner);
             Medicine medicine = medicineList.get(index);
             Medicine updatedMedicine = createMedicine(newMedicineData);
             medicine.setId(updatedMedicine.getId());
+            
             SupplierManager supplierManager = SupplierManager.GetInstance();
             Supplier supplier = supplierManager.getSupplierData(medicineOwner); //aqui se llama a lo de get por nombre
             supplier.getMedicines().set(index,updatedMedicine);
             supplierManager.updateSupplier(supplier);
+            
             message = "SUCCESS";
         }catch(InvalidFieldException exception){
             System.out.println(exception.getMessage());
@@ -113,17 +116,18 @@ public class MedicineManager {
         return message;
     }
     
-    public List<Medicine> getMedicineList(String supplierName){
+    public List<Medicine> getMedicinesBySupplierName(String supplierName){
         
         SupplierManager supplierManager = SupplierManager.GetInstance();
-        
         Supplier supplierData = supplierManager.getSupplierData(supplierName);
+        
         List<Medicine> medicineList;
         medicineList = new ArrayList<Medicine>  (supplierData.getMedicines());
+        
         return medicineList; 
     }
     
-    public List<Medicine> getMedicineList(){
+    public List<Medicine> getMedicines(){
         List<Medicine> listMedicine = new ArrayList<Medicine>();
         listMedicine = medicineDAO.getMedicineDataList();
         

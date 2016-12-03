@@ -20,7 +20,7 @@ import Entitys.UserDoctor;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 
-public class DoctorManager {
+public class DoctorManager extends Recepcionist<Doctor>{
     private static final DoctorManager doctorManager = new DoctorManager();
     private DoctorDAO doctorDAO;
     
@@ -65,7 +65,7 @@ public class DoctorManager {
      */
     public void setDoctorUser(Doctor doctor, UserDoctor userDoctor){
         doctor.setUser(userDoctor);
-        doctorManager.addDoctor(doctor);
+        doctorManager.register(doctor);
     }
     
     public Doctor getDoctor(int id){
@@ -77,20 +77,7 @@ public class DoctorManager {
         doctorList = new ArrayList<Doctor> ((ArrayList<Doctor>) doctorDAO.getList());
         return doctorList; 
     }
-    
-    private void addDoctor(Doctor doctor) {
-        doctorDAO.add(doctor);
-    }
-    
-    private void updateDoctor(Doctor doctor){
-        doctorDAO.update(doctor);
-    }
-    
-    public void deleteDoctor(int id){
-       Doctor doctor =  (Doctor)(doctorDAO.get(id));
-        doctorDAO.delete(doctor);
-    }
-    
+
     /**
      * The method recieves the data array from the view and parse it 
      * so that the doctor entity can understand it, finally we create a 
@@ -171,7 +158,7 @@ public class DoctorManager {
             Doctor updatedDoctor = createDoctor(newDoctorData);
             updatedDoctor.setId(doctor.getId());
             updatedDoctor.setUser(doctor.getUser());
-            updateDoctor(updatedDoctor);
+            edit(updatedDoctor);
                 message = "SUCCESS";
             
         }catch(InvalidFieldException exception){
@@ -180,9 +167,20 @@ public class DoctorManager {
         }
         return message;
     }
-    
-    
-    
-    
 
+    @Override
+    public void register(Doctor doctor) {
+        doctorDAO.add(doctor);
+    }
+
+    @Override
+    public void edit(Doctor doctor) {
+        doctorDAO.update(doctor);
+    }
+
+    @Override
+    public void remove(int id) {
+        Doctor doctor =  (Doctor)(doctorDAO.get(id));
+        doctorDAO.delete(doctor);
+    }
 }

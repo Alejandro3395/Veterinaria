@@ -6,23 +6,21 @@
 package presentation.controllers;
 
 import javax.swing.WindowConstants;
-import presentation.CommonBehaviorViewHelper;
+import presentation.ViewHelper;
 import presentation.views.IntroView;
 
 /**
  *
  * @author Jorge
  */
-public class IntroViewHelper extends CommonBehaviorViewHelper {
+public class IntroViewHelper extends ViewHelper {
     private static IntroViewHelper introViewHelper ; 
     private IntroView introView;
-    private LoginMainViewHelper loginMainViewHelper;
 
     
 
-    public IntroViewHelper() {
+    private IntroViewHelper() {
         setIntroView(new IntroView());
-        setLoginMainViewHelper(LoginMainViewHelper.getInstance());
 
         initializeView();
     }
@@ -34,13 +32,6 @@ public class IntroViewHelper extends CommonBehaviorViewHelper {
         return introViewHelper;
     }
 
-    public LoginMainViewHelper getLoginMainViewHelper() {
-        return loginMainViewHelper;
-    }
-
-    public void setLoginMainViewHelper(LoginMainViewHelper loginMainViewHelper) {
-        this.loginMainViewHelper = loginMainViewHelper;
-    }
     
     public IntroView getIntroView() {
         return introView;
@@ -64,16 +55,12 @@ public class IntroViewHelper extends CommonBehaviorViewHelper {
 
     @Override
     protected void setEvents() {
-        getIntroView().getBtn_start().addActionListener(actionEvent -> openMenu());
+        getIntroView().getBtn_start().addActionListener(actionEvent -> openLoginMainView());
     }
     
-    
-    private void openMenu(){
+    private void openLoginMainView(){
+        LoginMainViewHelper loginMainViewHelper = LoginMainViewHelper.getInstance();
         loginMainViewHelper.loadView();
     }
-    
-    
-    
-    
-    
+  
 }

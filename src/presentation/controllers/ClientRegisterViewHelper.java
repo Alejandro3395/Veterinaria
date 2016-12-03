@@ -18,7 +18,6 @@ import presentation.views.ClientRegisterView;
 public class ClientRegisterViewHelper extends DataViewHelper{
     private static ClientRegisterViewHelper clientRegisterViewHelper;
     private ClientRegisterView clientRegisterView;
-    private ClientManagerViewHelper clientManagerViewHelper;
     private PetRegisterViewHelper petRegisterViewHelper;
     
     public ClientRegisterViewHelper(){
@@ -49,14 +48,6 @@ public class ClientRegisterViewHelper extends DataViewHelper{
 
     public void setClientRegisterView(ClientRegisterView clientRegisterView) {
         this.clientRegisterView = clientRegisterView;
-    }
-
-    public ClientManagerViewHelper getClientManagerHelper() {
-        return clientManagerViewHelper;
-    }
-
-    public void setClientManagerHelper(ClientManagerViewHelper clientManagerViewHelper) {
-        this.clientManagerViewHelper = clientManagerViewHelper;
     }
     
     @Override
