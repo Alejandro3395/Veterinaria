@@ -13,25 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.TransitionalViewHelper;
+import presentation.ViewHelper;
 import presentation.views.PetManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class PetManagerViewHelper extends TransitionalViewHelper {
+public class PetManagerViewHelper extends ViewHelper {
     private static PetManagerViewHelper petManagerViewHelper = null;
     private PetManagerView petManagerView;
-    private PetRegisterViewHelper petRegisterViewHelper;
-    private PetModificationViewHelper petModificationViewHelper;
+    
     private int comoboSize;
     
     public PetManagerViewHelper(){
         setPetManagerView(new PetManagerView());
-        setPetRegisterViewHelper(PetRegisterViewHelper.getInstance());
-        setPetModificationViewHelper(PetModificationViewHelper.getInstance());
-        
+
         initializeView();
     }
     
@@ -40,14 +37,6 @@ public class PetManagerViewHelper extends TransitionalViewHelper {
          petManagerViewHelper = new PetManagerViewHelper();
         }
         return petManagerViewHelper;
-    }
-
-    public PetModificationViewHelper getPetModificationViewHelper() {
-        return petModificationViewHelper;
-    }
-
-    public void setPetModificationViewHelper(PetModificationViewHelper petModificationViewHelper) {
-        this.petModificationViewHelper = petModificationViewHelper;
     }
     
     public PetManagerView getPetManagerView() {
@@ -58,26 +47,17 @@ public class PetManagerViewHelper extends TransitionalViewHelper {
         this.petManagerView = petManagerView;
     }
 
-
-    public PetRegisterViewHelper getPetRegisterViewHelper() {
-        return petRegisterViewHelper;
-    }
-
-    public void setPetRegisterViewHelper(PetRegisterViewHelper petRegisterViewHelper) {
-        this.petRegisterViewHelper = petRegisterViewHelper;
-    } 
-
     @Override
-    public void openWindow() {
+    public void loadView() {
         getPetManagerView().setVisible(true);
         loadClientRegisterToCombo();
         loadPetRegisterToTable();
-
+        
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getPetManagerView() );
+        configureView( getPetManagerView() );
         getPetManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -164,7 +144,9 @@ public class PetManagerViewHelper extends TransitionalViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getPetModificationViewHelper().openWindow();
+            getPetManagerView().dispose();
+            PetModificationViewHelper petModificationViewHelper = PetModificationViewHelper.getInstance();
+            petModificationViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -183,6 +165,7 @@ public class PetManagerViewHelper extends TransitionalViewHelper {
     
     private void closeWindow(){
         getPetManagerView().dispose();
+        RegisterSelectionViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
@@ -222,8 +205,10 @@ public class PetManagerViewHelper extends TransitionalViewHelper {
     
     private void openRegisterView(){ 
         if(!isEmptyCombo()){
-            PetRegisterViewHelper.getInstance().setMode(1);
-            PetRegisterViewHelper.getInstance().openWindow();
+            getPetManagerView().dispose();
+            PetRegisterViewHelper petRegisterViewHelper = PetRegisterViewHelper.getInstance();
+            //petRegisterViewHelper.getInstance().setMode(1);
+            petRegisterViewHelper.getInstance().loadView();
         }else{
             getNotifier().showWarningMessage( "No es posible añadir mascota debido a que no hay clientes registrados" );
         }

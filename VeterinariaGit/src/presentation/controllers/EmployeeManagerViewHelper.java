@@ -10,25 +10,20 @@ import bussiness.EmployeeManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.TransitionalViewHelper;
+import presentation.ViewHelper;
 import presentation.views.EmployeeManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class EmployeeManagerViewHelper extends TransitionalViewHelper {
+public class EmployeeManagerViewHelper extends ViewHelper {
     private static EmployeeManagerViewHelper employeeManagerViewHelper = null;
     private EmployeeManagerView employeeManagerView;
-    private EmployeeRegisterViewHelper employeeRegisterViewHelper;
-    private EmployeeModificationViewHelper employeeModificationViewHelper;
     
-    public EmployeeManagerViewHelper(){
+    private EmployeeManagerViewHelper(){
         setEmployeeManagerView(new EmployeeManagerView());
-        setEmployeeRegisterViewHelper( EmployeeRegisterViewHelper.getInstance());
-        
-        setEmployeeModificationViewHelper(EmployeeModificationViewHelper.getInstance());
-        
+
         initializeView();
     }
 
@@ -47,33 +42,17 @@ public class EmployeeManagerViewHelper extends TransitionalViewHelper {
         this.employeeManagerView = employeeManagerView;
     }
 
-    public EmployeeRegisterViewHelper getEmployeeRegisterViewHelper() {
-        return employeeRegisterViewHelper;
-    }
-
-    public void setEmployeeRegisterViewHelper(EmployeeRegisterViewHelper employeeRegisterViewHelper) {
-        this.employeeRegisterViewHelper = employeeRegisterViewHelper;
-    }
-
-    public EmployeeModificationViewHelper getEmployeeModificationViewHelper() {
-        return employeeModificationViewHelper;
-    }
-
-    public void setEmployeeModificationViewHelper(EmployeeModificationViewHelper employeeModificationViewHelper) {
-        this.employeeModificationViewHelper = employeeModificationViewHelper;
-    }
-
     
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         loadEmployeeRegisterToTable();
         getEmployeeManagerView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getEmployeeManagerView() );
+        configureView( getEmployeeManagerView() );
         getEmployeeManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -99,13 +78,15 @@ public class EmployeeManagerViewHelper extends TransitionalViewHelper {
         
         EmployeeManager employeeManager = EmployeeManager.GetInstance();
         
-        ArrayList<Employee> employeeList = employeeManager.getEmployeeList() ;
+        ArrayList<Employee> employeeList = employeeManager.getEmployees() ;
         setTableContent(employeeList);
     }
     
     private void openModificationView(){
         if(isRowSelected()){
-            getEmployeeModificationViewHelper().openWindow();
+            employeeManagerView.dispose();
+            EmployeeModificationViewHelper employeeModificationViewHelper = EmployeeModificationViewHelper.getInstance();
+            employeeModificationViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -124,6 +105,7 @@ public class EmployeeManagerViewHelper extends TransitionalViewHelper {
     
     private void closeWindow(){
         getEmployeeManagerView().dispose();
+        RegisterSelectionViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
@@ -132,7 +114,7 @@ public class EmployeeManagerViewHelper extends TransitionalViewHelper {
         int id = Integer.valueOf( getEmployeeManagerView().getTable_employeeTable().getValueAt(row, 0).toString() );
 
         EmployeeManager employeeManager = EmployeeManager.GetInstance();
-        employeeManager.eliminateEmployee(id);
+        employeeManager.deleteEmployee(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Employee");
         updateTable();
     }
@@ -158,7 +140,9 @@ public class EmployeeManagerViewHelper extends TransitionalViewHelper {
     }
     
     private void openRegisterView(){
-        employeeRegisterViewHelper.openWindow();
+        employeeManagerView.dispose();
+        EmployeeRegisterViewHelper employeeRegisterViewHelper = EmployeeRegisterViewHelper.getInstance();
+        employeeRegisterViewHelper.loadView();
     }
     
     private void addEmployeeToTable(Employee employee){
@@ -179,7 +163,6 @@ public class EmployeeManagerViewHelper extends TransitionalViewHelper {
     }
     
     private boolean isDeletionConfirmed() {
-        System.out.println("llegue");
         String messageConfirm = "¿Estas seguro que deseas eliminarlo?";
         int optionSelected = getNotifier().showConfirmDialog( messageConfirm );
         return optionSelected == getNotifier().getYES_OPTION();

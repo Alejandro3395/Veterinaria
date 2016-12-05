@@ -6,25 +6,25 @@
 package presentation.controllers;
 
 import bussiness.SupplierManager;
+import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.OperationalViewHelper;
-import presentation.TransitionalViewHelper;
+import presentation.DataViewHelper;
+import presentation.ViewHelper;
 import presentation.views.SupplierRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class SupplierRegisterViewHelper extends OperationalViewHelper{
+public class SupplierRegisterViewHelper extends DataViewHelper{
     private SupplierRegisterView supplierRegisterView;
-    private SupplierManagerViewHelper supplierManagerViewHelper;
     private static SupplierRegisterViewHelper supplierRegisterViewHelper;
     
     private static int supplierDataIndex = 0;
     private static int userSupplierDataIndex = 1;
     
-    public SupplierRegisterViewHelper(){
+    private SupplierRegisterViewHelper(){
         setSupplierRegisterView(new SupplierRegisterView());
         //setSupplierManagerViewHelper(  SupplierManagerViewHelper.getInstance() );
         
@@ -38,18 +38,6 @@ public class SupplierRegisterViewHelper extends OperationalViewHelper{
         return supplierRegisterViewHelper;
     }
 
-    public SupplierManagerViewHelper getSupplierManagerViewHelper() {
-        return supplierManagerViewHelper;
-    }
-
-    public void setSupplierManagerViewHelper(SupplierManagerViewHelper supplierManagerViewHelper) {
-        this.supplierManagerViewHelper = supplierManagerViewHelper;
-    }
-
-    public SupplierRegisterView getSupplierRegisterView() {
-        return supplierRegisterView;
-    }
-
     public void setSupplierRegisterView(SupplierRegisterView supplierRegisterView) {
         this.supplierRegisterView = supplierRegisterView;
     }
@@ -59,14 +47,14 @@ public class SupplierRegisterViewHelper extends OperationalViewHelper{
     }
     
     @Override
-    public void openWindow() {
-        getSupplierRegisterView().setVisible(true);
+    public void loadView() {
+        supplierRegisterView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getSupplierRegisterView() );
-        getSupplierRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( supplierRegisterView );
+        supplierRegisterView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
     
@@ -75,8 +63,8 @@ public class SupplierRegisterViewHelper extends OperationalViewHelper{
      */
     @Override
     protected void setEvents() {
-        getSupplierRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
-        getSupplierRegisterView().getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
+        supplierRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        supplierRegisterView.getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
         
     }
     
@@ -85,7 +73,9 @@ public class SupplierRegisterViewHelper extends OperationalViewHelper{
     }
     
     private void closeWindow(){
-        getSupplierRegisterView().dispose();
+        supplierRegisterView.dispose();
+        clearFields();
+        SupplierManagerViewHelper.getInstance().loadView();
     }
     
     /**
@@ -93,24 +83,24 @@ public class SupplierRegisterViewHelper extends OperationalViewHelper{
      */
     private void proceedWithRegistration(){
         
-        ArrayList<String> supplierData = new ArrayList<String>(obtainData());
+        ArrayList<String> supplierData = new ArrayList<String>(obtainDataFromView());
         
         boolean isValidField =!isEmptyFields(supplierData);
         
         String message="";
-        String successStatus="SUCCESS";
         
         if(isValidField){
-            SupplierManager supplierManager = SupplierManager.GetInstance();
-            message = supplierManager.registerSupplier(supplierData);
-            if(message.equals(successStatus)){
+            try{
+                SupplierManager supplierManager = SupplierManager.GetInstance();
+                supplierManager.registerSupplier(supplierData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el proveedor");
                 updateManagerViewTable();
-                resetFields();
-                closeWindow();
-            }else{
+                clearFields();
+            }catch(InvalidFieldException exception){
+                message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
             }
+            
         }else{
             message = "Rellene todos los campos";
             getNotifier().showWarningMessage( message );
@@ -123,27 +113,29 @@ public class SupplierRegisterViewHelper extends OperationalViewHelper{
      * @return 
      */
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
-        String companyName = getSupplierRegisterView().getField_supplierName().getText();
+        String companyName = supplierRegisterView.getField_supplierName().getText();
         data.add(companyName);
         
-        String supplierLada = getSupplierRegisterView().getField_supplierPhoneLada().getText();
+        String supplierLada = supplierRegisterView.getField_supplierPhoneLada().getText();
         data.add(supplierLada);
         
-        String supplierPhone = getSupplierRegisterView().getField_supplierPhoneNumber().getText();
+        String supplierPhone = supplierRegisterView.getField_supplierPhoneNumber().getText();
         data.add(supplierPhone);
         
         return data;
     }
 
-    private void resetFields(){
-        getSupplierRegisterView().getField_supplierName().setText("");
+
+    @Override
+    protected void clearFields() {
+        supplierRegisterView.getField_supplierName().setText("");
         
-        getSupplierRegisterView().getField_supplierPhoneLada().setText("");
+        supplierRegisterView.getField_supplierPhoneLada().setText("");
        
-        getSupplierRegisterView().getField_supplierPhoneNumber().setText("");
+        supplierRegisterView.getField_supplierPhoneNumber().setText("");
         
     }
 }

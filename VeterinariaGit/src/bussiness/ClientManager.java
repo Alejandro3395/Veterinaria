@@ -10,19 +10,19 @@ import java.util.ArrayList;
 /**
 * class: ClientManager (ClientManager.java)
 * @author: Manuel Bojorquez
-* 
+*
 * date: October 27, 2016
-* 
+*
 * This class represent the manager for the client entitys.
 * The objective of the class is to recieve the data that the view
 * collects and pass it to the entity class to insert it to the database.
-* 
+*
 */
 
 public class ClientManager {
     private static final ClientManager clientManager = new ClientManager();
     private ClientDAO clientDAO;
-    
+
     /**
      * Constants to use with the createClient method
      */
@@ -34,14 +34,14 @@ public class ClientManager {
     private static final int phoneLadaIndex = 5;
     private static final int phoneNumberIndex = 6;
     private static final int emailIndex = 7;
-    
 
-    
+
+
     public ClientManager(){
         this.clientDAO = ClientDAO.GetInstance();
     }
-    
-    
+
+
     /**
      * This method returns an instance of the class that the other classes can
      * use.
@@ -50,40 +50,40 @@ public class ClientManager {
     public static ClientManager GetInstance(){
         return clientManager;
     }
-    
-    
+
+
     public void addClient(Client client)  {
         clientDAO.add(client);
     }
-    
+
     public void deleteClient(int id){
         Client client =  (Client)(clientDAO.get(id));
         clientDAO.delete(client);
     }
-    
+
     public void updateClient(Client client){
         clientDAO.update(client);
     }
-    
+
     public Client getClient(int id){
         return (Client) clientDAO.get(id);
     }
-    
+
     public Client getClientData(String clientName){
         return clientDAO.getClientByName(clientName);
     }
-     
-    
+
+
     /**
-     * The method recieves the data array from the view and parse it 
-     * so that the client entity can understand it, finally we create a 
+     * The method recieves the data array from the view and parse it
+     * so that the client entity can understand it, finally we create a
      * new entity, the method assumes that the data is passed in the correct order.
-     * 
+     *
      * @param data
      * @return data
-     * @throws InvalidFieldException 
+     * @throws InvalidFieldException
      */
-    
+
     public Client createClient(ArrayList<String> data) throws InvalidFieldException {
 
         String clientName = data.get(nameIndex);
@@ -94,66 +94,49 @@ public class ClientManager {
         String clientPhoneLada = data.get(phoneLadaIndex);
         String clientPhoneNumber = data.get(phoneNumberIndex);
         String clientEmail = data.get(emailIndex);
-        
 
 
-        
-        
+
+
+
         Client clientData;
-        
+
         Address clientAddress = new Address(
                                             clientPostalCode,
                                             clientAddressStreet ,
                                             clientAddressColony ,
                                             clientAddressCross);
-        
+
         Phone clientPhone = new Phone(clientPhoneLada,clientPhoneNumber);
-        
+
          clientData = new Client(clientName,clientAddress,clientPhone, clientEmail);
 
         return clientData;
     }
-    
+
     /**
-     * The method recieves the data from the view and uses it to create the new 
+     * The method recieves the data from the view and uses it to create the new
      * entitys, an exception is thrown if there's an invalid data.
-     * 
+     *
      * @param clientData
-     * @param userClientData 
+     * @param userClientData
      */
-    public String registerClient(ArrayList<String> clientData){
-        String message ="";
-        try{
+    public void registerClient(ArrayList<String> clientData) throws InvalidFieldException{
             Client client = new Client(createClient(clientData));
             clientManager.addClient(client);
-            message = "SUCCESS";
-        }catch(InvalidFieldException exception ){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
     }
-    
-    public String modifyClient(ArrayList<String> newClientData , int id){
-        String message = "";
- 
-        try{
-            Client client =  (getClient(id));
-            Client updatedClient = createClient(newClientData);
-            updatedClient.setId(client.getId());
-            updateClient(updatedClient);
-            message = "SUCCESS";
-        }catch(InvalidFieldException exception){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
+
+    public void modifyClient(ArrayList<String> newClientData , int id) throws InvalidFieldException{
+      Client client =  (getClient(id));
+      Client updatedClient = createClient(newClientData);
+      updatedClient.setId(client.getId());
+      updateClient(updatedClient);
     }
-    
+
     public ArrayList<Client> getClientList(){
         ArrayList<Client> clientList;
         clientList = new ArrayList<Client> ( (ArrayList<Client>) clientDAO.getList() );
-        return clientList; 
+        return clientList;
     }
-    
+
 }

@@ -7,26 +7,25 @@ package presentation.controllers;
 
 import Entitys.Medicine;
 import bussiness.MedicineManager;
+import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.WindowConstants;
-import presentation.OperationalViewHelper;
+import presentation.DataViewHelper;
 import presentation.views.MedicineRegisterView;
 
 /**
  *
  * @author mannu
  */
-public class MedicineModificationViewHelper extends OperationalViewHelper {
+public class MedicineModificationViewHelper extends DataViewHelper {
     private static MedicineModificationViewHelper medicineModificationViewHelper;
     private MedicineRegisterView medicineRegisterView;
     private MedicineManagerViewHelper medicineManagerViewHelper;
-    private String owner = null;
+    private String supplier = null;
     
-    public MedicineModificationViewHelper(){
+    private MedicineModificationViewHelper(){
         setMedicineRegisterView( new MedicineRegisterView() );
-        //setMedicineManagerViewHelper( medicineManager);
-        
         initializeView();
     }
 
@@ -35,10 +34,6 @@ public class MedicineModificationViewHelper extends OperationalViewHelper {
          medicineModificationViewHelper = new MedicineModificationViewHelper();
         }
         return medicineModificationViewHelper;
-    }
-
-    public MedicineRegisterView getMedicineRegisterView() {
-        return medicineRegisterView;
     }
 
     public void setMedicineRegisterView(MedicineRegisterView medicineRegisterView) {
@@ -54,55 +49,56 @@ public class MedicineModificationViewHelper extends OperationalViewHelper {
     }
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         loadMedicineData();
-        getMedicineRegisterView().setVisible(true);
+        medicineRegisterView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getMedicineRegisterView() );
-        getMedicineRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( medicineRegisterView );
+        medicineRegisterView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
     @Override
     protected void setEvents() {
-        getMedicineRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithModification());
-        getMedicineRegisterView().getBtn_cancel().addActionListener(actionEvent -> cancelModification());
+        medicineRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithModification());
+        medicineRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelModification());
     }
     
     private void loadMedicineData(){
         int rowIndex = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
-        String medicineOwner = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
+        String medicineSupplier = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
         MedicineManager medicineManager = MedicineManager.GetInstance();
-        List<Medicine> medicineList =  medicineManager.getMedicineList(medicineOwner);
+        List<Medicine> medicineList =  medicineManager.getMedicinesBySupplierName(medicineSupplier);
         Medicine medicine = medicineList.get(rowIndex);
         
         setData(medicine);
     }
     
     private void proceedWithModification(){
-        ArrayList<String> data = new ArrayList<String>(obtainData());
+        ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
         int rowIndex = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
         String medicineOwner = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
-        String successStatus = "SUCCESS";
         
         if( isValidField ){
-            MedicineManager medicineManager = MedicineManager.GetInstance();
-            message = medicineManager.modifyMedicine(data,medicineOwner,rowIndex);
-            if(message.equals(successStatus)){
+            try{
+                MedicineManager medicineManager = MedicineManager.GetInstance();
+                medicineManager.modifyMedicine(data,medicineOwner,rowIndex);
                 getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Medicine");
                 updateManagerViewTable();
                 closeWindow();
-            }else{
+            }catch(InvalidFieldException exception){
+                message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
-            } 
+            }
+            
         }else{
             message = "Rellene todos los campos";
             getNotifier().showWarningMessage( message );
@@ -119,7 +115,9 @@ public class MedicineModificationViewHelper extends OperationalViewHelper {
     }
     
     private void closeWindow(){
-        getMedicineRegisterView().dispose();
+        medicineRegisterView.dispose();
+        clearFields();
+        MedicineManagerViewHelper.getInstance().loadView();
     }
 
     /**
@@ -128,30 +126,30 @@ public class MedicineModificationViewHelper extends OperationalViewHelper {
      * @return 
      */
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
        ArrayList<String> data = new ArrayList<String>();
         
-        String medicineName = getMedicineRegisterView().getField_productName().getText();
+        String medicineName = medicineRegisterView.getField_productName().getText();
         data.add(medicineName);        
         
-        String medicineQuantity = getMedicineRegisterView().getField_productQuantity().getText();
+        String medicineQuantity = medicineRegisterView.getField_productQuantity().getText();
         data.add(medicineQuantity);
         
-        String medicinePrice = getMedicineRegisterView().getField_productSellPrize().getText();
+        String medicinePrice = medicineRegisterView.getField_productSellPrize().getText();
         data.add(medicinePrice);
         
-        String medicineSupplier = getMedicineRegisterView().getCombo_productSupplier().getSelectedItem().toString();
+        String medicineSupplier = medicineRegisterView.getCombo_productSupplier().getSelectedItem().toString();
         data.add(medicineSupplier);
         
-        String medicineAdministrationWay = getMedicineRegisterView().getCombo_productAdministrationWay().getSelectedItem().toString();
+        String medicineAdministrationWay = medicineRegisterView.getCombo_productAdministrationWay().getSelectedItem().toString();
         data.add(medicineAdministrationWay);
         
         //obtener la fecha
         String medicineExpirationDate = "";
         
-        String expirationDay = getMedicineRegisterView().getSpinner_productExpirationDay().getValue().toString();
-        String expirationMonth = getMedicineRegisterView().getSpinner_productExpirationMonth().getValue().toString();
-        String expirationYear = getMedicineRegisterView().getSpinner_productExpirationYear().getValue().toString();
+        String expirationDay = medicineRegisterView.getSpinner_productExpirationDay().getValue().toString();
+        String expirationMonth = medicineRegisterView.getSpinner_productExpirationMonth().getValue().toString();
+        String expirationYear = medicineRegisterView.getSpinner_productExpirationYear().getValue().toString();
         
         medicineExpirationDate = expirationDay + "-" + expirationMonth + "-" + expirationYear;
         
@@ -160,10 +158,10 @@ public class MedicineModificationViewHelper extends OperationalViewHelper {
         //obtener la dosis
         String medicineDose= "";
         
-        String doseQuantity = getMedicineRegisterView().getSpinner_productDoseQuantity().getValue().toString();
-        String doseType = getMedicineRegisterView().getCombo_productDoseQuantityType().getSelectedItem().toString();
-        String dosePeriod = getMedicineRegisterView().getSpinner_productDosePeriod().getValue().toString();
-        String dosePeriodType = getMedicineRegisterView().getCombo_dosePeriodType().getSelectedItem().toString();
+        String doseQuantity = medicineRegisterView.getSpinner_productDoseQuantity().getValue().toString();
+        String doseType = medicineRegisterView.getCombo_productDoseQuantityType().getSelectedItem().toString();
+        String dosePeriod = medicineRegisterView.getSpinner_productDosePeriod().getValue().toString();
+        String dosePeriodType = medicineRegisterView.getCombo_dosePeriodType().getSelectedItem().toString();
         
         medicineDose = doseQuantity+ " " + doseType + " cada " + dosePeriod + " " + dosePeriodType;
         
@@ -175,26 +173,26 @@ public class MedicineModificationViewHelper extends OperationalViewHelper {
     private void setData(Medicine medicine){
         //setear datos de los campso
         
-        getMedicineRegisterView().getField_productName().setText(medicine.getName().toString());
+        medicineRegisterView.getField_productName().setText(medicine.getName().toString());
                 
         String medicineQuantity = Integer.toString(medicine.getAmount());
-        getMedicineRegisterView().getField_productQuantity().setText( medicineQuantity);
+        medicineRegisterView.getField_productQuantity().setText( medicineQuantity);
         
         String medicinePrice = Double.toString(medicine.getCost());
-        getMedicineRegisterView().getField_productSellPrize().setText(medicinePrice);
+        medicineRegisterView.getField_productSellPrize().setText(medicinePrice);
         
         String medicineAdministrationWay = medicine.getAdministration().toString();
         
-        int comboElements = getMedicineRegisterView().getCombo_productAdministrationWay().getItemCount();
+        int comboElements = medicineRegisterView.getCombo_productAdministrationWay().getItemCount();
         int administrationIndex = 0;
         
         for(int i =0; i < comboElements;i++ ){
-            if(medicineAdministrationWay.equals(getMedicineRegisterView().getCombo_productAdministrationWay().getSelectedItem().toString())){
+            if(medicineAdministrationWay.equals(medicineRegisterView.getCombo_productAdministrationWay().getSelectedItem().toString())){
                 administrationIndex = i;
             }
         }
         
-        getMedicineRegisterView().getCombo_productAdministrationWay().setSelectedIndex(administrationIndex);
+        medicineRegisterView.getCombo_productAdministrationWay().setSelectedIndex(administrationIndex);
         
         
         //obtener la fecha
@@ -207,9 +205,9 @@ public class MedicineModificationViewHelper extends OperationalViewHelper {
         int expirationYear = Integer.valueOf( medicineExpiration[2]);
         
         
-        getMedicineRegisterView().getSpinner_productExpirationDay().setValue(expirationDay);
-        getMedicineRegisterView().getSpinner_productExpirationMonth().setValue(expirationMonth);
-        getMedicineRegisterView().getSpinner_productExpirationYear().setValue(expirationYear);
+        medicineRegisterView.getSpinner_productExpirationDay().setValue(expirationDay);
+        medicineRegisterView.getSpinner_productExpirationMonth().setValue(expirationMonth);
+        medicineRegisterView.getSpinner_productExpirationYear().setValue(expirationYear);
         
         
         //obtener la dosis
@@ -220,33 +218,48 @@ public class MedicineModificationViewHelper extends OperationalViewHelper {
         String dosePeriod = medicineDose[2];
         String dosePeriodType = medicineDose[3];        
         
-        getMedicineRegisterView().getSpinner_productDoseQuantity().setValue(Integer.valueOf(doseQuantity));
+        medicineRegisterView.getSpinner_productDoseQuantity().setValue(Integer.valueOf(doseQuantity));
         
-        comboElements = getMedicineRegisterView().getCombo_productDoseQuantityType().getItemCount();
+        comboElements = medicineRegisterView.getCombo_productDoseQuantityType().getItemCount();
         int doseTypeIndex = 0;
         
         for(int i =0; i < comboElements;i++ ){
-            if(doseType.equals(getMedicineRegisterView().getCombo_productDoseQuantityType().getSelectedItem().toString())){
+            if(doseType.equals(medicineRegisterView.getCombo_productDoseQuantityType().getSelectedItem().toString())){
                 doseTypeIndex = i;
             }
         }
         
-        getMedicineRegisterView().getCombo_productDoseQuantityType().setSelectedIndex(doseTypeIndex);
+        medicineRegisterView.getCombo_productDoseQuantityType().setSelectedIndex(doseTypeIndex);
         
-        getMedicineRegisterView().getSpinner_productDosePeriod().setValue(Integer.valueOf(dosePeriod));
+        medicineRegisterView.getSpinner_productDosePeriod().setValue(Integer.valueOf(dosePeriod));
         
-        comboElements = getMedicineRegisterView().getCombo_dosePeriodType().getItemCount();
+        comboElements = medicineRegisterView.getCombo_dosePeriodType().getItemCount();
         int dosePeriodTypeIndex = 0;
         
         for(int i =0; i < comboElements;i++ ){
-            if(dosePeriodType.equals(getMedicineRegisterView().getCombo_dosePeriodType().getSelectedItem().toString())){
+            if(dosePeriodType.equals(medicineRegisterView.getCombo_dosePeriodType().getSelectedItem().toString())){
                 dosePeriodTypeIndex = i;
             }
         }
-        getMedicineRegisterView().getCombo_dosePeriodType().setSelectedIndex(dosePeriodTypeIndex);
+        medicineRegisterView.getCombo_dosePeriodType().setSelectedIndex(dosePeriodTypeIndex);
     }
     
     private void resetFields(){
         loadMedicineData();
     } 
+
+    @Override
+    protected void clearFields() {
+        medicineRegisterView.getField_productName().setText("");
+        medicineRegisterView.getField_productQuantity().setText( "");
+        medicineRegisterView.getField_productSellPrize().setText("");
+        medicineRegisterView.getCombo_productAdministrationWay().setSelectedIndex(0);
+        medicineRegisterView.getSpinner_productExpirationDay().setValue(0);
+        medicineRegisterView.getSpinner_productExpirationMonth().setValue(0);
+        medicineRegisterView.getSpinner_productExpirationYear().setValue(0);
+        medicineRegisterView.getSpinner_productDoseQuantity().setValue(0);
+        medicineRegisterView.getCombo_productDoseQuantityType().setSelectedIndex(0);
+        medicineRegisterView.getSpinner_productDosePeriod().setValue(0);
+        medicineRegisterView.getCombo_dosePeriodType().setSelectedIndex(0);
+    }
 }

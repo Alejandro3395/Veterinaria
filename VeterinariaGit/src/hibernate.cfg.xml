@@ -16,8 +16,8 @@
     
     <!--Propiedades importantes-->
     <property name="show_sql">true</property>
-   <!--
-    <property name="hbm2ddl.auto">create-drop</property>--><!--  Propiedad para eliminar y crear la base de datos-->
+   
+    <property name="hbm2ddl.auto">create-drop</property><!--  Propiedad para eliminar y crear la base de datos-->
     
     <!-- Archivos de mapeo -->
     <mapping resource="Data/Mapping/medicine.hbm.xml"/>

@@ -14,19 +14,19 @@
 package presentation.controllers;
 
 import javax.swing.WindowConstants;
-import presentation.TransitionalViewHelper;
+import presentation.ViewHelper;
 import presentation.views.MedicineRegisterView;
 import presentation.views.ProductSelectionView;
 
-public class ProductSelectionViewHelper extends TransitionalViewHelper {
+public class ProductSelectionViewHelper extends ViewHelper {
     private static ProductSelectionViewHelper productSelectionViewHelper = null;
     private ProductSelectionView productSelectionView;
     private MedicineRegisterViewHelper medicineRegisterViewHelper;
     
     
-    public ProductSelectionViewHelper(){
+    private ProductSelectionViewHelper(){
         setProductSelectionView(new ProductSelectionView());
-        setMedicineRegisterViewHelper(new MedicineRegisterViewHelper());
+        setMedicineRegisterViewHelper( MedicineRegisterViewHelper.getInstance());
         
         initializeView();
     }
@@ -57,13 +57,13 @@ public class ProductSelectionViewHelper extends TransitionalViewHelper {
     }
     
     @Override
-    public void openWindow() {
+    public void loadView() {
         getProductSelectionView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getProductSelectionView() );
+        configureView( getProductSelectionView() );
         getProductSelectionView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
@@ -84,11 +84,11 @@ public class ProductSelectionViewHelper extends TransitionalViewHelper {
         switch(value){
             
             case 1:
-                getMedicineRegisterViewHelper().openWindow();
+                getMedicineRegisterViewHelper().loadView();
             break;
             
             case 2:
-                //getVaccineRegisterController().openWindow();
+                //getVaccineRegisterController().loadView();
             break;
             
         }

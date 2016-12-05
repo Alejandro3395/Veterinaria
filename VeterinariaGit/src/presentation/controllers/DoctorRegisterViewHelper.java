@@ -15,22 +15,22 @@ package presentation.controllers;
 import Entitys.Doctor;
 import Entitys.UserDoctor;
 import bussiness.DoctorManager;
+import exceptions.InvalidFieldException;
 import presentation.controllers.*;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.OperationalViewHelper;
+import presentation.DataViewHelper;
 import presentation.views.DoctorRegisterView;
 
 
-public class DoctorRegisterViewHelper extends OperationalViewHelper {
+public class DoctorRegisterViewHelper extends DataViewHelper {
     private DoctorRegisterView doctorRegisterView;
-    private DoctorManagerViewHelper doctorManagerViewHelper;
     private static DoctorRegisterViewHelper doctorRegisterViewHelper = null;
     
     private static int doctorDataIndex = 0;
     private static int userDoctorDataIndex = 1;
     
-    public DoctorRegisterViewHelper(){
+    private DoctorRegisterViewHelper(){
         setDoctorRegisterView(new DoctorRegisterView());
         
         initializeView();
@@ -43,36 +43,8 @@ public class DoctorRegisterViewHelper extends OperationalViewHelper {
         return doctorRegisterViewHelper;
     }
 
-    public DoctorManagerViewHelper getDoctorManagerViewHelper() {
-        return doctorManagerViewHelper;
-    }
-
-    public void setDoctorManagerViewHelper(DoctorManagerViewHelper doctorManagerViewHelper) {
-        this.doctorManagerViewHelper = doctorManagerViewHelper;
-    }
-
-    public DoctorRegisterView getDoctorRegisterView() {
-        return doctorRegisterView;
-    }
-
     public void setDoctorRegisterView(DoctorRegisterView doctorRegisterView) {
         this.doctorRegisterView = doctorRegisterView;
-    }
-    
-    private void updateManagerViewTable(){
-        DoctorManagerViewHelper.getInstance().updateTable();
-    }
-    
-    @Override
-    public void openWindow() {
-        getDoctorRegisterView().setVisible(true);
-    }
-
-    @Override
-    protected void initializeView() {
-        configureWindow( getDoctorRegisterView() );
-        getDoctorRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
-        setEvents();
     }
     
     /**
@@ -80,9 +52,24 @@ public class DoctorRegisterViewHelper extends OperationalViewHelper {
      */
     @Override
     protected void setEvents() {
-        getDoctorRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
-        getDoctorRegisterView().getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
-        
+        doctorRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        doctorRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelRegistration());     
+    }
+    
+    private void updateManagerViewTable(){
+        DoctorManagerViewHelper.getInstance().updateTable();
+    }
+    
+    @Override
+    public void loadView() {
+        doctorRegisterView.setVisible(true);
+    }
+    
+    @Override
+    protected void initializeView() {
+        configureView( doctorRegisterView );
+        doctorRegisterView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        setEvents();
     }
     
     private void cancelRegistration(){
@@ -90,7 +77,10 @@ public class DoctorRegisterViewHelper extends OperationalViewHelper {
     }
     
     private void closeWindow(){
-        getDoctorRegisterView().dispose();
+        doctorRegisterView.dispose();
+        clearFields();
+        DoctorManagerViewHelper doctorManagerViewHelper = DoctorManagerViewHelper.getInstance();
+        doctorManagerViewHelper.loadView();
     }
     
     /**
@@ -98,7 +88,7 @@ public class DoctorRegisterViewHelper extends OperationalViewHelper {
      */
     private void proceedWithRegistration(){
         
-        ArrayList<String> data = new ArrayList<String>(obtainData());
+        ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
 
         ArrayList<ArrayList> parsedData = new ArrayList<ArrayList>(parseData(data));
 
@@ -108,17 +98,17 @@ public class DoctorRegisterViewHelper extends OperationalViewHelper {
         boolean isValidField =!isEmptyFields(data);
         
         String message="";
-        String successStatus="SUCCESS";
         
         if(isValidField){
-            DoctorManager doctorManager = DoctorManager.GetInstance();
-            message = doctorManager.registerDoctor(doctorData,userDoctorData);
-            if(message.equals(successStatus)){
+            try{
+                DoctorManager doctorManager = DoctorManager.GetInstance();
+                doctorManager.registerDoctor(doctorData,userDoctorData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Doctor");
                 updateManagerViewTable();
-                resetFields();
+                clearFields();
                 closeWindow();
-            }else{
+            }catch(InvalidFieldException exception){
+                message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
             }
         }else{
@@ -144,73 +134,73 @@ public class DoctorRegisterViewHelper extends OperationalViewHelper {
      * @return 
      */
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
-        String doctorName = getDoctorRegisterView().getField_doctorName().getText();
+        String doctorName = doctorRegisterView.getField_doctorName().getText();
         data.add(doctorName);
         
-        String doctorPostalCode = getDoctorRegisterView().getField_doctorAddressPostalCode().getText();
+        String doctorPostalCode = doctorRegisterView.getField_doctorAddressPostalCode().getText();
         data.add(doctorPostalCode);
         
-        String doctorAddressStreet = getDoctorRegisterView().getField_doctorAddressStreet().getText();
+        String doctorAddressStreet = doctorRegisterView.getField_doctorAddressStreet().getText();
         data.add(doctorAddressStreet);
         
-        String doctorAddressColony = getDoctorRegisterView().getField_doctorAddressColony().getText();
+        String doctorAddressColony = doctorRegisterView.getField_doctorAddressColony().getText();
         data.add(doctorAddressColony);
         
-        String doctorAddressCross = getDoctorRegisterView().getField_doctorAddressCross().getText();
+        String doctorAddressCross = doctorRegisterView.getField_doctorAddressCross().getText();
         data.add(doctorAddressCross);
         
-        String doctorPhoneLada = getDoctorRegisterView().getField_doctorPhoneLada().getText(); 
+        String doctorPhoneLada = doctorRegisterView.getField_doctorPhoneLada().getText(); 
         data.add(doctorPhoneLada);
         
-        String doctorPhoneNumber = getDoctorRegisterView().getField_doctorPhoneNumber().getText();
+        String doctorPhoneNumber = doctorRegisterView.getField_doctorPhoneNumber().getText();
         data.add(doctorPhoneNumber);
         
-        String doctorRFC = getDoctorRegisterView().getField_doctorRFC().getText();
+        String doctorRFC = doctorRegisterView.getField_doctorRFC().getText();
         data.add(doctorRFC);
         
-        String doctorProfessionalCode = getDoctorRegisterView().getField_doctorProfessionalCode().getText();
+        String doctorProfessionalCode = doctorRegisterView.getField_doctorProfessionalCode().getText();
         data.add(doctorProfessionalCode);
         
-        String doctorUserName = getDoctorRegisterView().getField_doctorUserName().getText();
+        String doctorUserName = doctorRegisterView.getField_doctorUserName().getText();
         data.add(doctorUserName);
         
-        String doctorUserPassword = getDoctorRegisterView().getField_doctorUserPassword().getText();
+        String doctorUserPassword = doctorRegisterView.getField_doctorUserPassword().getText();
         data.add(doctorUserPassword);
         
-        String doctorUserEmail = getDoctorRegisterView().getField_doctorEmail().getText();
+        String doctorUserEmail = doctorRegisterView.getField_doctorEmail().getText();
         data.add(doctorUserEmail);
         
         return data;
     }
     
-    private void resetFields(){
-        getDoctorRegisterView().getField_doctorName().setText("");
+    @Override
+    protected void clearFields() {
+        doctorRegisterView.getField_doctorName().setText("");
         
-        getDoctorRegisterView().getField_doctorAddressPostalCode().setText("");
+        doctorRegisterView.getField_doctorAddressPostalCode().setText("");
         
-        getDoctorRegisterView().getField_doctorAddressStreet().setText("");
+        doctorRegisterView.getField_doctorAddressStreet().setText("");
         
-        getDoctorRegisterView().getField_doctorAddressColony().setText("");
+        doctorRegisterView.getField_doctorAddressColony().setText("");
         
-        getDoctorRegisterView().getField_doctorAddressCross().setText("");
+        doctorRegisterView.getField_doctorAddressCross().setText("");
         
-        getDoctorRegisterView().getField_doctorPhoneLada().setText(""); 
+        doctorRegisterView.getField_doctorPhoneLada().setText(""); 
         
-        getDoctorRegisterView().getField_doctorPhoneNumber().setText("");
+        doctorRegisterView.getField_doctorPhoneNumber().setText("");
         
-        getDoctorRegisterView().getField_doctorRFC().setText("");
+        doctorRegisterView.getField_doctorRFC().setText("");
         
-        getDoctorRegisterView().getField_doctorProfessionalCode().setText("");
+        doctorRegisterView.getField_doctorProfessionalCode().setText("");
         
-        getDoctorRegisterView().getField_doctorUserName().setText("");
+        doctorRegisterView.getField_doctorUserName().setText("");
         
-        getDoctorRegisterView().getField_doctorUserPassword().setText("");
+        doctorRegisterView.getField_doctorUserPassword().setText("");
         
-        getDoctorRegisterView().getField_doctorEmail().setText("");
-        
+        doctorRegisterView.getField_doctorEmail().setText("");
     }
 
     

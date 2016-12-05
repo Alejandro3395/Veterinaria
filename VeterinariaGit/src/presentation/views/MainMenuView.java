@@ -32,7 +32,7 @@ public class MainMenuView extends javax.swing.JFrame {
         btn_sales = new javax.swing.JButton();
         btn_register = new javax.swing.JButton();
         btn_consult = new javax.swing.JButton();
-        btn_inventory = new javax.swing.JButton();
+        btn_exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,7 +52,12 @@ public class MainMenuView extends javax.swing.JFrame {
 
         btn_consult.setText("Consulta");
 
-        btn_inventory.setText("Iventario");
+        btn_exit.setText("Salir");
+        btn_exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_exitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,7 +72,7 @@ public class MainMenuView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(158, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_inventory)
+                    .addComponent(btn_exit)
                     .addComponent(btn_consult))
                 .addGap(159, 159, 159))
         );
@@ -81,7 +86,7 @@ public class MainMenuView extends javax.swing.JFrame {
                     .addComponent(btn_sales)
                     .addComponent(btn_register))
                 .addGap(49, 49, 49)
-                .addComponent(btn_inventory)
+                .addComponent(btn_exit)
                 .addGap(47, 47, 47))
         );
 
@@ -95,6 +100,10 @@ public class MainMenuView extends javax.swing.JFrame {
     private void btn_salesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_salesActionPerformed
+
+    private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_exitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,14 +151,17 @@ public class MainMenuView extends javax.swing.JFrame {
         this.btn_consult = btn_consult;
     }
 
-    public JButton getBtn_inventory() {
-        return btn_inventory;
+    public JButton getBtn_exit() {
+        return btn_exit;
     }
 
-    public void setBtn_inventory(JButton btn_inventory) {
-        this.btn_inventory = btn_inventory;
+    public void setBtn_exit(JButton btn_exit) {
+        this.btn_exit = btn_exit;
     }
-
+    
+    
+    
+    
     public JButton getBtn_register() {
         return btn_register;
     }
@@ -170,7 +182,7 @@ public class MainMenuView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_consult;
-    private javax.swing.JButton btn_inventory;
+    private javax.swing.JButton btn_exit;
     private javax.swing.JButton btn_register;
     private javax.swing.JButton btn_sales;
     // End of variables declaration//GEN-END:variables

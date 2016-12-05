@@ -10,23 +10,19 @@ import bussiness.SupplierManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.TransitionalViewHelper;
+import presentation.ViewHelper;
 import presentation.views.SupplierManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class SupplierManagerViewHelper extends TransitionalViewHelper {
+public class SupplierManagerViewHelper extends ViewHelper {
     private static SupplierManagerViewHelper supplierManagerViewHelper = null;
     private SupplierManagerView supplierManagerView;
-    private SupplierRegisterViewHelper supplierRegisterViewHelper;
-    private SupplierModificationViewHelper supplierModificationViewHelper;
-    
-    public SupplierManagerViewHelper(){
+
+    private SupplierManagerViewHelper(){
         setSupplierManagerView(new SupplierManagerView());
-        setSupplierRegisterViewHelper(SupplierRegisterViewHelper.getInstance());
-        setSupplierModificationViewHelper(SupplierModificationViewHelper.getInstance());
         
         initializeView();
     }
@@ -38,14 +34,6 @@ public class SupplierManagerViewHelper extends TransitionalViewHelper {
         return supplierManagerViewHelper;
     }
 
-    public SupplierModificationViewHelper getSupplierModificationViewHelper() {
-        return supplierModificationViewHelper;
-    }
-
-    public void setSupplierModificationViewHelper(SupplierModificationViewHelper supplierModificationViewHelper) {
-        this.supplierModificationViewHelper = supplierModificationViewHelper;
-    }
-    
     public SupplierManagerView getSupplierManagerView() {
         return supplierManagerView;
     }
@@ -55,16 +43,8 @@ public class SupplierManagerViewHelper extends TransitionalViewHelper {
     }
 
 
-    public SupplierRegisterViewHelper getSupplierRegisterViewHelper() {
-        return supplierRegisterViewHelper;
-    }
-
-    public void setSupplierRegisterViewHelper(SupplierRegisterViewHelper supplierRegisterViewHelper) {
-        this.supplierRegisterViewHelper = supplierRegisterViewHelper;
-    } 
-
     @Override
-    public void openWindow() {
+    public void loadView() {
         getSupplierManagerView().setVisible(true);
         loadSupplierRegisterToTable();
 
@@ -72,7 +52,7 @@ public class SupplierManagerViewHelper extends TransitionalViewHelper {
 
     @Override
     protected void initializeView() {
-        configureWindow( getSupplierManagerView() );
+        configureView( getSupplierManagerView() );
         getSupplierManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -85,7 +65,7 @@ public class SupplierManagerViewHelper extends TransitionalViewHelper {
     protected void setEvents() {
         getSupplierManagerView().getBtn_addSupplier().addActionListener(actionEvent -> openRegisterView());
         getSupplierManagerView().getBtn_modifySupplier().addActionListener(actionEvent -> openModificationView());
-        getSupplierManagerView().getBtn_deleteSupplier().addActionListener(actionEvent -> openEliminationConfirmationView());
+        getSupplierManagerView().getBtn_deleteSupplier().addActionListener(actionEvent -> displayConfirmationMessage());
         getSupplierManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
     }
     
@@ -104,13 +84,15 @@ public class SupplierManagerViewHelper extends TransitionalViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getSupplierModificationViewHelper().openWindow();
+            getSupplierManagerView().dispose();
+            SupplierModificationViewHelper supplierModificationViewHelper = SupplierModificationViewHelper.getInstance();
+            supplierModificationViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
     }
     
-    private void openEliminationConfirmationView(){
+    private void displayConfirmationMessage(){
         
         if(isRowSelected()){
             if(isDeletionConfirmed()){
@@ -123,6 +105,7 @@ public class SupplierManagerViewHelper extends TransitionalViewHelper {
     
     private void closeWindow(){
         getSupplierManagerView().dispose();
+        RegisterSelectionViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
@@ -131,7 +114,7 @@ public class SupplierManagerViewHelper extends TransitionalViewHelper {
         int id = Integer.valueOf( getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
 
         SupplierManager supplierManager = SupplierManager.GetInstance();
-        supplierManager.eliminateSupplier(id);
+        supplierManager.deleteSupplier(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Supplier");
         updateTable();
     }
@@ -157,7 +140,9 @@ public class SupplierManagerViewHelper extends TransitionalViewHelper {
     }
     
     private void openRegisterView(){
-        getSupplierRegisterViewHelper().openWindow();
+        getSupplierManagerView().dispose();
+        SupplierRegisterViewHelper supplierRegisterViewHelper = SupplierRegisterViewHelper.getInstance();
+        supplierRegisterViewHelper.loadView();
     }
     
     private void addSupplierToTable(Supplier supplier){

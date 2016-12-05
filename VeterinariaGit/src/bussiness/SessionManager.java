@@ -24,10 +24,8 @@ public class SessionManager {
     private EmployeeDAO employeeDAO;
     private static int nameIndex = 0;
     private static int passwordIndex = 1;
-    
-    
-    
-    SessionManager(){
+     
+    private SessionManager(){
         this.doctorDAO = DoctorDAO.GetInstance();
         this.employeeDAO =  EmployeeDAO.GetInstance();
     }
@@ -35,9 +33,7 @@ public class SessionManager {
     public static SessionManager GetInstance(){
         return sessionManager;
     }
-    
-    
-    
+      
     public Boolean doctorUserAuthentification(ArrayList<String> dataUserDoctor){
          List<Doctor> doctorData;
          Boolean isValid = false;

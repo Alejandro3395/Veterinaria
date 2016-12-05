@@ -13,24 +13,21 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.TransitionalViewHelper;
+import presentation.ViewHelper;
 import presentation.views.DoctorManagerView;
 import presentation.controllers.DoctorRegisterViewHelper;
+import presentation.views.DoctorRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class DoctorManagerViewHelper extends TransitionalViewHelper {
+public class DoctorManagerViewHelper extends ViewHelper {
     private static DoctorManagerViewHelper doctorManagerViewHelper = null;
     private DoctorManagerView doctorManagerView;
-    private DoctorRegisterViewHelper doctorRegisterViewHelper;
-    private DoctorModificationViewHelper doctorModificationViewHelper;
     
-    public DoctorManagerViewHelper(){
+    private DoctorManagerViewHelper(){
         setDoctorManagerView(new DoctorManagerView());
-        setDoctorRegisterViewHelper(DoctorRegisterViewHelper.getInstance() );
-        setDoctorModificationViewHelper( DoctorModificationViewHelper.getInstance());        
         initializeView();
     }
 
@@ -40,42 +37,40 @@ public class DoctorManagerViewHelper extends TransitionalViewHelper {
         }
         return doctorManagerViewHelper;
     }
-    
-    
-    public DoctorModificationViewHelper getDoctorModificationViewHelper() {
-        return doctorModificationViewHelper;
-    }
 
-    public void setDoctorModificationViewHelper(DoctorModificationViewHelper doctorModificationViewHelper) {
-        this.doctorModificationViewHelper = doctorModificationViewHelper;
-    }
-    
     public DoctorManagerView getDoctorManagerView() {
         return doctorManagerView;
     }
-
+    
+    
     public void setDoctorManagerView(DoctorManagerView doctorManagerView) {
         this.doctorManagerView = doctorManagerView;
     }
-
-
-    public DoctorRegisterViewHelper getDoctorRegisterViewHelper() {
-        return doctorRegisterViewHelper;
+    
+    private void setTableContent(ArrayList<Doctor> doctorList){    
+        for(int index =0; index < doctorList.size(); index++ ){
+            Doctor doctorData = doctorList.get(index) ;
+            insertDoctorToTable(doctorData);
+        }
     }
-
-    public void setDoctorRegisterViewHelper(DoctorRegisterViewHelper doctorRegisterViewHelper) {
-        this.doctorRegisterViewHelper = doctorRegisterViewHelper;
-    } 
-
+    
     @Override
-    public void openWindow() {
+    protected void setEvents() {
+        getDoctorManagerView().getBtn_addDoctor().addActionListener(actionEvent -> openRegisterView());
+        getDoctorManagerView().getBtn_modifyDoctor().addActionListener(actionEvent -> openModificationView());
+        getDoctorManagerView().getBtn_deleteDoctor().addActionListener(actionEvent -> displayConfirmationMessage());
+        getDoctorManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
+    }
+    
+    @Override
+    public void loadView() {
         loadDoctorRegisterToTable();
         getDoctorManagerView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getDoctorManagerView() );
+        configureView( getDoctorManagerView());
         getDoctorManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -83,16 +78,8 @@ public class DoctorManagerViewHelper extends TransitionalViewHelper {
     
     /**
      * This method set the listeners into the view buttons.
-     */
-    @Override
-    protected void setEvents() {
-        getDoctorManagerView().getBtn_addDoctor().addActionListener(actionEvent -> openRegisterView());
-        getDoctorManagerView().getBtn_modifyDoctor().addActionListener(actionEvent -> openModificationView());
-        getDoctorManagerView().getBtn_deleteDoctor().addActionListener(actionEvent -> openEliminationConfirmationView());
-        getDoctorManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
-    }
-    
-    public void loadDoctorRegisterToTable(){
+     */ 
+    private void loadDoctorRegisterToTable(){
         
         DefaultTableModel model = (DefaultTableModel) getDoctorManagerView().getTable_doctorTable().getModel();
         
@@ -101,19 +88,21 @@ public class DoctorManagerViewHelper extends TransitionalViewHelper {
         
         DoctorManager doctorManager = DoctorManager.GetInstance();
         
-        ArrayList<Doctor> doctorList = doctorManager.getDoctorList() ;
+        ArrayList<Doctor> doctorList = doctorManager.getDoctors() ;
         setTableContent(doctorList);
     }
     
     private void openModificationView(){
         if(isRowSelected()){
-            getDoctorModificationViewHelper().openWindow();
+            doctorManagerView.dispose();
+            DoctorModificationViewHelper doctorModificationViewHelper = DoctorModificationViewHelper.getInstance();
+            doctorModificationViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
     }
     
-    private void openEliminationConfirmationView(){
+    private void displayConfirmationMessage(){
         
         if(isRowSelected()){
             if(isDeletionConfirmed()){
@@ -126,6 +115,8 @@ public class DoctorManagerViewHelper extends TransitionalViewHelper {
     
     private void closeWindow(){
         getDoctorManagerView().dispose();
+        RegisterSelectionViewHelper registerSelectionViewHelper = RegisterSelectionViewHelper.getInstance();
+        registerSelectionViewHelper.loadView();
     }
     
     private void proceedWithElimination(){
@@ -134,7 +125,7 @@ public class DoctorManagerViewHelper extends TransitionalViewHelper {
         int id = Integer.valueOf( getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
 
         DoctorManager doctorManager = DoctorManager.GetInstance();
-        doctorManager.eliminateDoctor(id);
+        doctorManager.deleteDoctor(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Doctor");
         updateTable();
     }
@@ -152,18 +143,13 @@ public class DoctorManagerViewHelper extends TransitionalViewHelper {
         return result;
     }
     
-    private void setTableContent(ArrayList<Doctor> doctorList){    
-        for(int index =0; index < doctorList.size(); index++ ){
-            Doctor doctorData = doctorList.get(index) ;
-            addDoctorToTable(doctorData);
-        }
-    }
-    
     private void openRegisterView(){
-        getDoctorRegisterViewHelper().openWindow();
+        doctorManagerView.dispose();
+        DoctorRegisterViewHelper doctorRegisterViewHelper = DoctorRegisterViewHelper.getInstance();
+        doctorRegisterViewHelper.loadView();
     }
     
-    private void addDoctorToTable(Doctor doctor){
+    private void insertDoctorToTable(Doctor doctor){
         
         DefaultTableModel model = (DefaultTableModel) getDoctorManagerView().getTable_doctorTable().getModel();
         
@@ -190,4 +176,4 @@ public class DoctorManagerViewHelper extends TransitionalViewHelper {
     public void updateTable(){
         loadDoctorRegisterToTable();
     }
-}
+} 

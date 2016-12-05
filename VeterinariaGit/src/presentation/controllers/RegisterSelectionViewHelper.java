@@ -15,34 +15,21 @@ package presentation.controllers;
 
 import javax.swing.ButtonGroup;
 import javax.swing.WindowConstants;
-import presentation.TransitionalViewHelper;
+import presentation.ViewHelper;
 import presentation.views.RegisterSelectionView;
 
 /**
  *
  * @author Jorge
  */
-public class RegisterSelectionViewHelper extends TransitionalViewHelper {
+public class RegisterSelectionViewHelper extends ViewHelper {
     private static RegisterSelectionViewHelper registerSelectionViewHelper = null;
     private RegisterSelectionView registerSelectionView;
-    private EmployeeManagerViewHelper employeeManagerViewHelper;
-    private SupplierManagerViewHelper supplierManagerViewHelper;
-    //private ProductSelectionController productRegisterController;
-    private MedicineManagerViewHelper medicineManagerViewHelper;
-    private ClientManagerViewHelper clientManagerViewHelper;
-    private PetManagerViewHelper petManagerViewHelper;
-    private DoctorManagerViewHelper doctorManagerViewHelper;
+
     
-    public RegisterSelectionViewHelper(){
+    RegisterSelectionViewHelper(){
         setRegisterSelectionView(new RegisterSelectionView());
-        setEmployeeManagerViewHelper(EmployeeManagerViewHelper.getInstance());
-        setDoctorManagerViewHelper( DoctorManagerViewHelper.getInstance());
-        setSupplierManagerViewHelper(SupplierManagerViewHelper.getInstance());
-        //setProductRegisterController(ProductSelectionController.getInstance());
-        setMedicineManagerViewHelper(MedicineManagerViewHelper.getInstance() );
-        
-        setClientManagerViewHelper(ClientManagerViewHelper.getInstance());
-        setPetManagerViewHelper(PetManagerViewHelper.getInstance());
+
         initializeView();
     }
 
@@ -53,78 +40,19 @@ public class RegisterSelectionViewHelper extends TransitionalViewHelper {
         return registerSelectionViewHelper;
     }
 
-    public MedicineManagerViewHelper getMedicineManagerViewHelper() {
-        return medicineManagerViewHelper;
-    }
-
-    public void setMedicineManagerViewHelper(MedicineManagerViewHelper medicineManagerViewHelper) {
-        this.medicineManagerViewHelper = medicineManagerViewHelper;
-    }
-    
-    
-    
-    public DoctorManagerViewHelper getDoctorManagerViewHelper() {
-        return doctorManagerViewHelper;
-    }
-
-    public void setDoctorManagerViewHelper(DoctorManagerViewHelper doctorManagerViewHelper) {
-        this.doctorManagerViewHelper = doctorManagerViewHelper;
-    }
-
-    public EmployeeManagerViewHelper getEmployeeManagerViewHelper() {
-        return employeeManagerViewHelper;
-    }
-
-    public void setEmployeeManagerViewHelper(EmployeeManagerViewHelper employeeManagerViewHelper) {
-        this.employeeManagerViewHelper = employeeManagerViewHelper;
-    }
-
-    public ClientManagerViewHelper getClientManagerViewHelper() {
-        return clientManagerViewHelper;
-    }
-
-    public void setClientManagerViewHelper(ClientManagerViewHelper clientManagerViewHelper) {
-        this.clientManagerViewHelper = clientManagerViewHelper;
-    }
-
-    public PetManagerViewHelper getPetManagerHelper() {
-        return petManagerViewHelper;
-    }
-
-    public void setPetManagerViewHelper(PetManagerViewHelper petManagerViewHelper) {
-        this.petManagerViewHelper = petManagerViewHelper;
-    }
-
-    public SupplierManagerViewHelper getSupplierManagerViewHelper() {
-        return supplierManagerViewHelper;
-    }
-
-        public void setSupplierManagerViewHelper(SupplierManagerViewHelper supplierManagerViewHelper) {
-        this.supplierManagerViewHelper = supplierManagerViewHelper;
-    }
- 
-
-
-   
-
-    public RegisterSelectionView getRegisterSelectionView() {
-        return registerSelectionView;
-    }
-
     public void setRegisterSelectionView(RegisterSelectionView registerSelectionView) {
         this.registerSelectionView = registerSelectionView;
     }
     
-    
     @Override
-    public void openWindow() {
-        getRegisterSelectionView().setVisible(true);
+    public void loadView() {
+        registerSelectionView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getRegisterSelectionView() );
-        getRegisterSelectionView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( registerSelectionView );
+        registerSelectionView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
@@ -133,42 +61,56 @@ public class RegisterSelectionViewHelper extends TransitionalViewHelper {
      */
     @Override
     protected void setEvents() {
-        getRegisterSelectionView().getBtn_accept().addActionListener(actionEvent -> getSelectedOption());
+        registerSelectionView.getBtn_employee().addActionListener(actionEvent -> openEmployeeManagerView());
+        registerSelectionView.getBtn_doctor().addActionListener(actionEvent -> openDoctorManagerView());
+        registerSelectionView.getBtn_client().addActionListener(actionEvent -> openClientManagerView());
+        registerSelectionView.getBtn_pet().addActionListener(actionEvent -> openPetManagerView());
+        registerSelectionView.getBtn_supplier().addActionListener(actionEvent -> openSupplierManagerView());
+        registerSelectionView.getBtn_product().addActionListener(actionEvent -> openMedicineManagerView());
+        registerSelectionView.getBtn_back().addActionListener(actionEvent -> closeView());
     }
      
-    /**
-     *  This method redirects the user to the selected view.
-     */
-    private void getSelectedOption(){
-        
-        int value = registerSelectionView.getRadioGroupValue();
-        switch(value){
-            
-            case 1:
-                employeeManagerViewHelper.openWindow();
-            break;
-            
-            case 2:
-                getDoctorManagerViewHelper().openWindow();
-            break;
-            
-            case 3:
-                getSupplierManagerViewHelper().openWindow();
-            break;
-            
-            case 4:
-                getMedicineManagerViewHelper().openWindow();
-            break;
-            
-            case 5:
-                getClientManagerViewHelper().openWindow();
-            break;
-            
-            case 6:
-                getPetManagerHelper().openWindow();
-            break;
-        }
-        
+    
+    private void openEmployeeManagerView(){
+        registerSelectionView.dispose();
+        EmployeeManagerViewHelper employeeManagerViewHelper = EmployeeManagerViewHelper.getInstance();
+        employeeManagerViewHelper.loadView();
     }
+    
+    private void openDoctorManagerView(){
+        registerSelectionView.dispose();
+        DoctorManagerViewHelper doctorManagerViewHelper = DoctorManagerViewHelper.getInstance();
+        doctorManagerViewHelper.loadView();
+    }
+    
+    private void openSupplierManagerView(){
+       registerSelectionView.dispose();
+       SupplierManagerViewHelper supplierManagerViewHelper = SupplierManagerViewHelper.getInstance();
+       supplierManagerViewHelper.loadView();
+    }
+    
+    private void openMedicineManagerView(){
+       registerSelectionView.dispose();
+       MedicineManagerViewHelper medicineManagerViewHelper = MedicineManagerViewHelper.getInstance();
+       medicineManagerViewHelper.loadView();
+    }
+    
+    private void openClientManagerView(){
+        registerSelectionView.dispose();
+        ClientManagerViewHelper clientManagerViewHelper = ClientManagerViewHelper.getInstance();
+        clientManagerViewHelper.loadView();
+    }
+    
+    private void openPetManagerView(){
+        registerSelectionView.dispose();
+        PetManagerViewHelper petManagerViewHelper = PetManagerViewHelper.getInstance();
+        petManagerViewHelper.loadView();
+    }
+    
+   private void closeView(){
+       registerSelectionView.dispose();
+       MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
+       mainMenuViewHelper.loadView();
+   }
     
 }

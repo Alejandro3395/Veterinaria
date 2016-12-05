@@ -7,25 +7,23 @@ package presentation.controllers;
 
 import Entitys.Employee;
 import bussiness.EmployeeManager;
+import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.OperationalViewHelper;
+import presentation.DataViewHelper;
 import presentation.views.EmployeeRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class EmployeeModificationViewHelper extends OperationalViewHelper {
+public class EmployeeModificationViewHelper extends DataViewHelper {
     
     private static EmployeeModificationViewHelper employeeModificationViewHelper = null;
     private EmployeeRegisterView employeeRegisterView;
-    private EmployeeManagerViewHelper employeeManagerViewHelper;
     
     public EmployeeModificationViewHelper(){
         setEmployeeRegisterView( new EmployeeRegisterView() );
-        //setEmployeeManagerViewHelper( EmployeeManagerViewHelper.getInstance());
-        
         initializeView();
     }
     
@@ -36,40 +34,27 @@ public class EmployeeModificationViewHelper extends OperationalViewHelper {
         return employeeModificationViewHelper;
     }
 
-    public EmployeeRegisterView getEmployeeRegisterView() {
-        return employeeRegisterView;
-    }
-
     public void setEmployeeRegisterView(EmployeeRegisterView employeeRegisterView) {
         this.employeeRegisterView = employeeRegisterView;
     }
-    
-    
-    public EmployeeManagerViewHelper getEmployeeManagerViewHelper() {
-        return employeeManagerViewHelper;
-    }
-
-    public void setEmployeeManagerViewHelper(EmployeeManagerViewHelper employeeManagerViewHelper) {
-        this.employeeManagerViewHelper = employeeManagerViewHelper;
-    }
 
     @Override
-    public void openWindow() {
+    public void loadView() {
         loadEmployeeData();
-        getEmployeeRegisterView().setVisible(true);
+        employeeRegisterView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getEmployeeRegisterView() );
-        getEmployeeRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( employeeRegisterView );
+        employeeRegisterView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
     @Override
     protected void setEvents() {
-        getEmployeeRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithModification());
-        getEmployeeRegisterView().getBtn_cancel().addActionListener(actionEvent -> cancelModification());
+        employeeRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithModification());
+        employeeRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelModification());
     }
     
     private void loadEmployeeData(){
@@ -83,7 +68,7 @@ public class EmployeeModificationViewHelper extends OperationalViewHelper {
     }
     
     private void proceedWithModification(){
-        ArrayList<String> data = new ArrayList<String>(obtainData());
+        ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
         int row = EmployeeManagerViewHelper.getInstance().getEmployeeManagerView().getTable_employeeTable().getSelectedRow();
         
@@ -91,18 +76,19 @@ public class EmployeeModificationViewHelper extends OperationalViewHelper {
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
-        String successStatus = "SUCCESS";
         
         if( isValidField ){
-            EmployeeManager employeeManager = EmployeeManager.GetInstance();
-            message = employeeManager.modifyEmployee(data,id);
-            if(message.equals(successStatus)){
+            
+            try{
+                EmployeeManager employeeManager = EmployeeManager.GetInstance();
+                employeeManager.modifyEmployee(data,id);
                 getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Employee");
                 updateManagerViewTable();
                 closeWindow();
-            }else{
+            }catch(InvalidFieldException exception){
+                message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
-            } 
+            }
         }else{
             message = "Rellene todos los campos";
             getNotifier().showWarningMessage( message );
@@ -119,7 +105,10 @@ public class EmployeeModificationViewHelper extends OperationalViewHelper {
     }
     
     private void closeWindow(){
-        getEmployeeRegisterView().dispose();
+        employeeRegisterView.dispose();
+        clearFields();
+        EmployeeManagerViewHelper employeeManagerViewHelper = EmployeeManagerViewHelper.getInstance();
+        employeeManagerViewHelper.loadView();
     }
 
     /**
@@ -128,31 +117,31 @@ public class EmployeeModificationViewHelper extends OperationalViewHelper {
      * @return 
      */
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
-        String employeeName = getEmployeeRegisterView().getField_employeeName().getText();
+        String employeeName = employeeRegisterView.getField_employeeName().getText();
         data.add(employeeName);
         
-        String employeePostalCode = getEmployeeRegisterView().getField_employeeAddressPostalCode().getText();
+        String employeePostalCode = employeeRegisterView.getField_employeeAddressPostalCode().getText();
         data.add(employeePostalCode);
         
-        String employeeAddressStreet = getEmployeeRegisterView().getField_employeeAddressStreet().getText();
+        String employeeAddressStreet = employeeRegisterView.getField_employeeAddressStreet().getText();
         data.add(employeeAddressStreet);
         
-        String employeeAddressColony = getEmployeeRegisterView().getField_employeeAddressColony().getText();
+        String employeeAddressColony = employeeRegisterView.getField_employeeAddressColony().getText();
         data.add(employeeAddressColony);
         
-        String employeeAddressCross = getEmployeeRegisterView().getField_employeeAddressCross().getText();
+        String employeeAddressCross = employeeRegisterView.getField_employeeAddressCross().getText();
         data.add(employeeAddressCross);
         
-        String employeePhoneLada = getEmployeeRegisterView().getField_employeePhoneLada().getText(); 
+        String employeePhoneLada = employeeRegisterView.getField_employeePhoneLada().getText(); 
         data.add(employeePhoneLada);
         
-        String employeePhoneNumber = getEmployeeRegisterView().getField_employeePhoneNumber().getText();
+        String employeePhoneNumber = employeeRegisterView.getField_employeePhoneNumber().getText();
         data.add(employeePhoneNumber);
         
-        String employeeRFC = getEmployeeRegisterView().getField_employeeRFC().getText();
+        String employeeRFC = employeeRegisterView.getField_employeeRFC().getText();
         data.add(employeeRFC);
     
           
@@ -163,45 +152,70 @@ public class EmployeeModificationViewHelper extends OperationalViewHelper {
         //setear datos de los campso
         
         String employeeName = employee.getName().toString();
-        getEmployeeRegisterView().getField_employeeName().setText(employeeName);
+        employeeRegisterView.getField_employeeName().setText(employeeName);
         
         String employeePostalCode = Integer.toString(employee.getAddress().getZipCode());
-        getEmployeeRegisterView().getField_employeeAddressPostalCode().setText(employeePostalCode);
+        employeeRegisterView.getField_employeeAddressPostalCode().setText(employeePostalCode);
         
         String employeeStreet = employee.getAddress().getStreet().toString();
-        getEmployeeRegisterView().getField_employeeAddressStreet().setText(employeeStreet);
+        employeeRegisterView.getField_employeeAddressStreet().setText(employeeStreet);
         
         String employeeColony = employee.getAddress().getColony().toString();
-        getEmployeeRegisterView().getField_employeeAddressColony().setText(employeeColony);
+        employeeRegisterView.getField_employeeAddressColony().setText(employeeColony);
         
         String employeeCross = employee.getAddress().getCrossovers().toString();
-        getEmployeeRegisterView().getField_employeeAddressCross().setText(employeeCross);
+        employeeRegisterView.getField_employeeAddressCross().setText(employeeCross);
         
         String employeePhoneLada = employee.getPhone().getLada().toString();
-        getEmployeeRegisterView().getField_employeePhoneLada().setText(employeePhoneLada);
+        employeeRegisterView.getField_employeePhoneLada().setText(employeePhoneLada);
         
         String employeePhoneNumber = employee.getPhone().getNumber().toString();
-        getEmployeeRegisterView().getField_employeePhoneNumber().setText(employeePhoneNumber);
+        employeeRegisterView.getField_employeePhoneNumber().setText(employeePhoneNumber);
         
         String employeeRFC = employee.getRFC().toString();
-        getEmployeeRegisterView().getField_employeeRFC().setText(employeeRFC);
+        employeeRegisterView.getField_employeeRFC().setText(employeeRFC);
         
         
         String employeeUserName = employee.getUser().getUserName().toString();
-        getEmployeeRegisterView().getField_employeeUserName().setText(employeeUserName);
-        getEmployeeRegisterView().getField_employeeUserName().setEditable(false);
+        employeeRegisterView.getField_employeeUserName().setText(employeeUserName);
+        employeeRegisterView.getField_employeeUserName().setEditable(false);
         
         String employeeUserPassword = employee.getUser().getUserPassword().toString();
-        getEmployeeRegisterView().getField_employeeUserPassword().setText(employeeUserPassword);
-        getEmployeeRegisterView().getField_employeeUserPassword().setEditable(false);
+        employeeRegisterView.getField_employeeUserPassword().setText(employeeUserPassword);
+        employeeRegisterView.getField_employeeUserPassword().setEditable(false);
         
         String employeeUserEmail = employee.getUser().getUserEmail().toString();
-        getEmployeeRegisterView().getField_employeeEmail().setText(employeeUserEmail);
-        getEmployeeRegisterView().getField_employeeEmail().setEditable(false);  
+        employeeRegisterView.getField_employeeEmail().setText(employeeUserEmail);
+        employeeRegisterView.getField_employeeEmail().setEditable(false);  
         
     }
     
     private void resetFields(){
         loadEmployeeData();
+    }
+
+    @Override
+    protected void clearFields() {
+        employeeRegisterView.getField_employeeName().setText("");
+        
+        employeeRegisterView.getField_employeeAddressPostalCode().setText("");
+        
+        employeeRegisterView.getField_employeeAddressStreet().setText("");
+        
+        employeeRegisterView.getField_employeeAddressColony().setText("");
+        
+        employeeRegisterView.getField_employeeAddressCross().setText("");
+        
+        employeeRegisterView.getField_employeePhoneLada().setText(""); 
+        
+        employeeRegisterView.getField_employeePhoneNumber().setText("");
+        
+        employeeRegisterView.getField_employeeRFC().setText("");
+
+        employeeRegisterView.getField_employeeUserName().setText("");
+        
+        employeeRegisterView.getField_employeeUserPassword().setText("");
+        
+        employeeRegisterView.getField_employeeEmail().setText("");
     }
 }

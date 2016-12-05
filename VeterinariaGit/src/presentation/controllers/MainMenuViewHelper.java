@@ -6,27 +6,23 @@
 package presentation.controllers;
 
 import javax.swing.WindowConstants;
-import presentation.TransitionalViewHelper;
+import presentation.ViewHelper;
+import presentation.views.LoginMainView;
 import presentation.views.MainMenuView;
+import presentation.views.SalesView;
 
 /**
  *
  * @author Jorge
  */
-public class MainMenuViewHelper extends TransitionalViewHelper {
+public class MainMenuViewHelper extends ViewHelper {
     private static MainMenuViewHelper mainMenuViewHelper = null;
     private MainMenuView mainView;
-    private RegisterSelectionViewHelper registerSelectionViewHelper;
-    private SalesViewHelper salesViewHelper;
-   
+
     
-    
-    
-    public MainMenuViewHelper (){
+    private MainMenuViewHelper (){
         setMainView(new MainMenuView());
-        setRegisterSelectionController(RegisterSelectionViewHelper.getInstance());
-        setSalesViewHelper(SalesViewHelper.getInstance());
-        
+
         initializeView();
     }
 
@@ -37,55 +33,45 @@ public class MainMenuViewHelper extends TransitionalViewHelper {
         return mainMenuViewHelper;
     }
 
-    public void setSalesViewHelper(SalesViewHelper salesViewHelper) {
-        this.salesViewHelper = salesViewHelper;
-    }
-    
-     
-     
-    private void openRegisterSelection(){
-        getRegisterSelectionController().openWindow();
-    }
-    
-    public RegisterSelectionViewHelper getRegisterSelectionController() {
-        return registerSelectionViewHelper;
-    }
-
-    public void setRegisterSelectionController(RegisterSelectionViewHelper registerSelectionViewHelper) {
-        this.registerSelectionViewHelper = registerSelectionViewHelper;
-    }
-    
-    
-    
-    public MainMenuView getMainView() {
-        return mainView;
-    }
-
     public void setMainView(MainMenuView mainView) {
         this.mainView = mainView;
     }
 
     @Override
-    public void openWindow() {
-        getMainView().setVisible(true);
+    public void loadView() {
+        mainView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getMainView());
-        getMainView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( mainView);
+        mainView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
     @Override
     protected void setEvents() {
-        getMainView().getBtn_register().addActionListener(actionEvent -> openRegisterSelection());
-        getMainView().getBtn_sales().addActionListener(actionEvent -> openSalesView());
-       
+        mainView.getBtn_register().addActionListener(actionEvent -> openRegisterSelection());
+        mainView.getBtn_sales().addActionListener(actionEvent -> openSalesView());
+        mainView.getBtn_exit().addActionListener(actionEvent -> closeView());
     }
     
     private void openSalesView(){
-        salesViewHelper.openWindow();
+        mainView.dispose();
+        SalesViewHelper salesViewHelper = SalesViewHelper.getInstance();
+        salesViewHelper.loadView();
     }
+    
+    private void openRegisterSelection(){
+        mainView.dispose();
+        RegisterSelectionViewHelper registerSelectionViewHelper = RegisterSelectionViewHelper.getInstance();
+        registerSelectionViewHelper.loadView();
+    }
+    
+    private void closeView(){
+        mainView.dispose();
+        LoginMainViewHelper.getInstance().loadView();
+    }
+    
     
 }

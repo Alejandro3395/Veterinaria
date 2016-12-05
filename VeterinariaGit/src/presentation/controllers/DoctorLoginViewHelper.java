@@ -8,21 +8,19 @@ package presentation.controllers;
 import bussiness.SessionManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.OperationalViewHelper;
+import presentation.DataViewHelper;
 import presentation.views.DoctorLoginView;
 
 /**
  *
  * @author mannu
  */
-public class DoctorLoginViewHelper extends OperationalViewHelper{
+public class DoctorLoginViewHelper extends DataViewHelper{
     private static DoctorLoginViewHelper doctorLoginViewHelper= null; 
     private DoctorLoginView doctorLoginView;
-    private MainMenuViewHelper mainMenuController ;
 
     public DoctorLoginViewHelper(){
         setDoctorLoginView(new DoctorLoginView());
-        setMainMenuController (MainMenuViewHelper.getInstance());
         initializeView();
     }
     
@@ -33,47 +31,29 @@ public class DoctorLoginViewHelper extends OperationalViewHelper{
         return doctorLoginViewHelper;
     }
     
-    
-    public DoctorLoginView getDoctorLoginView() {
-        return doctorLoginView;
-    }
-
     public void setDoctorLoginView(DoctorLoginView doctorLoginView) {
         this.doctorLoginView = doctorLoginView;
     }
 
-    public MainMenuViewHelper getMainMenuController() {
-        return mainMenuController;
+    @Override
+    protected void setEvents() {
+         doctorLoginView.getLogin_Bttn().addActionListener(actionEvent -> validateDoctorUserAccess() );
     }
-
-    public void setMainMenuController(MainMenuViewHelper mainMenuController) {
-        this.mainMenuController = mainMenuController;
-    }
-
-  
-    
-    
     
     @Override
-    public void openWindow() {
-        getDoctorLoginView().setVisible(true);
+    public void loadView() {
+        doctorLoginView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getDoctorLoginView() );
-        getDoctorLoginView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( doctorLoginView );
+        doctorLoginView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
-    @Override
-    protected void setEvents() {
-         getDoctorLoginView().getLogin_Bttn().addActionListener(actionEvent -> sendDataLoginDoctor() );
-    }
-
-    /*Crear un session manager que verifique las credenciales y haga el cambio de  ventana */
-    public void sendDataLoginDoctor(){
-        ArrayList<String> data = new ArrayList<String>(obtainData());
+    public void validateDoctorUserAccess(){
+        ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         boolean isValidField =!isEmptyFields(data);
         boolean isValidUser = false;
         
@@ -84,27 +64,34 @@ public class DoctorLoginViewHelper extends OperationalViewHelper{
         }
         
         if(isValidUser){
-            openIntroView();
+            openMainMenuView();
         }
     }
     
     @Override
-    protected ArrayList<String> obtainData() {
+    protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
-        String doctorUser = getDoctorLoginView().getField_UserDoctor().getText();
+        String doctorUser = doctorLoginView.getField_UserDoctor().getText();
         data.add(doctorUser);
         
-        String doctorPassword = new String (getDoctorLoginView().getDoctorPassword().getPassword());
+        String doctorPassword = new String (doctorLoginView.getDoctorPassword().getPassword());
         data.add(doctorPassword);
         
         return data;
     }
     
-    private void openIntroView(){
-        mainMenuController.openWindow();
+    private void openMainMenuView(){
+        doctorLoginView.dispose();
+        clearFields();
+        MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
+        mainMenuViewHelper.loadView();
     }
-    
-    
-    
+
+    @Override
+    protected void clearFields() {
+        String emptyString = "";
+        doctorLoginView.getField_UserDoctor().setText(emptyString);
+        doctorLoginView.getDoctorPassword().setText(emptyString);
+    }
 }

@@ -10,23 +10,19 @@ import bussiness.ClientManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.TransitionalViewHelper;
+import presentation.ViewHelper;
 import presentation.views.ClientManagerView;
 
 /**
  *
  * @author Jorge
  */
-public class ClientManagerViewHelper extends TransitionalViewHelper {
+public class ClientManagerViewHelper extends ViewHelper {
     private static ClientManagerViewHelper clientManagerViewHelper = null;
     private ClientManagerView clientManagerView;
-    private ClientRegisterViewHelper clientRegisterViewHelper;
-    private ClientModificationViewHelper clientModificationHelper;
     
     public ClientManagerViewHelper(){
         setClientManagerView(new ClientManagerView());
-        setClientRegisterViewHelper( ClientRegisterViewHelper.getInstance());
-        setClientModificationHelper( ClientModificationViewHelper.getInstance());
         
         initializeView();
     }
@@ -38,14 +34,6 @@ public class ClientManagerViewHelper extends TransitionalViewHelper {
         return clientManagerViewHelper;
     }
     
-    public ClientModificationViewHelper getClientModificationHelper() {
-        return clientModificationHelper;
-    }
-
-    public void setClientModificationHelper(ClientModificationViewHelper clientModificationHelper) {
-        this.clientModificationHelper = clientModificationHelper;
-    }
-    
     public ClientManagerView getClientManagerView() {
         return clientManagerView;
     }
@@ -54,24 +42,15 @@ public class ClientManagerViewHelper extends TransitionalViewHelper {
         this.clientManagerView = clientManagerView;
     }
 
-
-    public ClientRegisterViewHelper getClientRegisterViewHelper() {
-        return clientRegisterViewHelper;
-    }
-
-    public void setClientRegisterViewHelper(ClientRegisterViewHelper clientRegisterViewHelper) {
-        this.clientRegisterViewHelper = clientRegisterViewHelper;
-    } 
-
     @Override
-    public void openWindow() {
+    public void loadView() {
         loadClientRegisterToTable();
         getClientManagerView().setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureWindow( getClientManagerView() );
+        configureView( getClientManagerView() );
         getClientManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -103,7 +82,9 @@ public class ClientManagerViewHelper extends TransitionalViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getClientModificationHelper().openWindow();
+            clientManagerView.dispose();
+            ClientModificationViewHelper clientModificationViewHelper = ClientModificationViewHelper.getInstance();
+            clientModificationViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -122,6 +103,7 @@ public class ClientManagerViewHelper extends TransitionalViewHelper {
     
     private void closeWindow(){
         getClientManagerView().dispose();
+        RegisterSelectionViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
@@ -156,7 +138,9 @@ public class ClientManagerViewHelper extends TransitionalViewHelper {
     }
     
     private void openRegisterView(){
-        getClientRegisterViewHelper().openWindow();
+        clientManagerView.dispose();
+        ClientRegisterViewHelper clientRegisterViewHelper = ClientRegisterViewHelper.getInstance();
+        clientRegisterViewHelper.loadView();
     }
     
     private void addClientToTable(Client client){

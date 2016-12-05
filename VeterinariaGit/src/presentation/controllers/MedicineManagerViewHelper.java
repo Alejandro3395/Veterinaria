@@ -5,7 +5,6 @@
  */
 package presentation.controllers;
 
-import Data.DAOs.MedicineDAO;
 import Entitys.Medicine;
 import Entitys.Supplier;
 import bussiness.MedicineManager;
@@ -14,26 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.TransitionalViewHelper;
+import presentation.ViewHelper;
 import presentation.views.MedicineManagerView;
 
 /**
  *
  * @author mannu
  */
-public class MedicineManagerViewHelper extends TransitionalViewHelper {
+public class MedicineManagerViewHelper extends ViewHelper {
     private static MedicineManagerViewHelper medicineManagerViewHelper = null;
     private MedicineManagerView medicineManagerView;
-    private MedicineRegisterViewHelper medicineRegisterViewHelper;
-    private MedicineModificationViewHelper medicineModificationViewHelper;
-    private MedicineDAO medicineDAO = new MedicineDAO();
+    
     private int comoboSize;
     
-    public MedicineManagerViewHelper(){
+    private MedicineManagerViewHelper(){
         setMedicineManagerView(new MedicineManagerView());
-        setMedicineRegisterViewHelper(MedicineRegisterViewHelper.getInstance());
-        setMedicineModificationViewHelper(MedicineModificationViewHelper.getInstance());
-        
+
         initializeView();
     }
     
@@ -42,14 +37,6 @@ public class MedicineManagerViewHelper extends TransitionalViewHelper {
          medicineManagerViewHelper = new MedicineManagerViewHelper();
         }
         return medicineManagerViewHelper;
-    }
-
-    public MedicineModificationViewHelper getMedicineModificationViewHelper() {
-        return medicineModificationViewHelper;
-    }
-
-    public void setMedicineModificationViewHelper(MedicineModificationViewHelper medicineModificationViewHelper) {
-        this.medicineModificationViewHelper = medicineModificationViewHelper;
     }
     
     public MedicineManagerView getMedicineManagerView() {
@@ -60,17 +47,8 @@ public class MedicineManagerViewHelper extends TransitionalViewHelper {
         this.medicineManagerView = medicineManagerView;
     }
 
-
-    public MedicineRegisterViewHelper getMedicineRegisterViewHelper() {
-        return medicineRegisterViewHelper;
-    }
-
-    public void setMedicineRegisterViewHelper(MedicineRegisterViewHelper medicineRegisterViewHelper) {
-        this.medicineRegisterViewHelper = medicineRegisterViewHelper;
-    } 
-
     @Override
-    public void openWindow() {
+    public void loadView() {
         getMedicineManagerView().setVisible(true);
         loadSupplierRegisterToCombo();
         loadMedicineRegisterToTable();
@@ -79,7 +57,7 @@ public class MedicineManagerViewHelper extends TransitionalViewHelper {
 
     @Override
     protected void initializeView() {
-        configureWindow( getMedicineManagerView() );
+        configureView( getMedicineManagerView() );
         getMedicineManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -92,7 +70,7 @@ public class MedicineManagerViewHelper extends TransitionalViewHelper {
     protected void setEvents() {
         getMedicineManagerView().getBtn_addMedicine().addActionListener(actionEvent -> openRegisterView());
         getMedicineManagerView().getBtn_modifyMedicine().addActionListener(actionEvent -> openModificationView());
-        getMedicineManagerView().getBtn_deleteMedicine().addActionListener(actionEvent -> openEliminationConfirmationView());
+        getMedicineManagerView().getBtn_deleteMedicine().addActionListener(actionEvent -> displayConfirmationMessage());
         getMedicineManagerView().getCombo_medicineSupplier().addActionListener( actionEvent -> loadMedicineRegisterToTable() );
         getMedicineManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
     }
@@ -106,9 +84,9 @@ public class MedicineManagerViewHelper extends TransitionalViewHelper {
         if(!isEmptyList()){
             if(!hasDataChanged()){
                 MedicineManager medicineManager = MedicineManager.GetInstance();
-                String ownerName = getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
+                String supplierName = getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
             
-                List<Medicine> medicineList = medicineManager.getMedicineList(ownerName) ;
+                List<Medicine> medicineList = medicineManager.getMedicinesBySupplierName(supplierName) ;
                 setTableContent(medicineList); 
             }
         } 
@@ -163,13 +141,15 @@ public class MedicineManagerViewHelper extends TransitionalViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
-            getMedicineModificationViewHelper().openWindow();
+            getMedicineManagerView().dispose();
+            MedicineModificationViewHelper medicineModificationViewHelper = MedicineModificationViewHelper.getInstance();
+            medicineModificationViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
     }
     
-    private void openEliminationConfirmationView(){
+    private void displayConfirmationMessage(){
         
         if(isRowSelected()){
             if(isDeletionConfirmed()){
@@ -182,6 +162,7 @@ public class MedicineManagerViewHelper extends TransitionalViewHelper {
     
     private void closeWindow(){
         getMedicineManagerView().dispose();
+        RegisterSelectionViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
@@ -221,8 +202,10 @@ public class MedicineManagerViewHelper extends TransitionalViewHelper {
     
     private void openRegisterView(){ 
         if(!isEmptyCombo()){
-            MedicineRegisterViewHelper.getInstance().setMode(1);
-            MedicineRegisterViewHelper.getInstance().openWindow();
+            getMedicineManagerView().dispose();
+            MedicineRegisterViewHelper medicineRegisterViewHelper = MedicineRegisterViewHelper.getInstance();
+            //medicineRegisterViewHelper.getInstance().setMode(1);
+            medicineRegisterViewHelper.getInstance().loadView();
         }else{
             getNotifier().showWarningMessage( "No es posible añadir mascota debido a que no hay clientes registrados" );
         }
