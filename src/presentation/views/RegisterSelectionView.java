@@ -21,7 +21,6 @@ public class RegisterSelectionView extends javax.swing.JFrame {
      */
     public RegisterSelectionView() {
         initComponents();
-        radioGroup_value();
     }
 
     /**
@@ -34,151 +33,139 @@ public class RegisterSelectionView extends javax.swing.JFrame {
     private void initComponents() {
 
         radioGroup_value = new javax.swing.ButtonGroup();
-        radio_valueEmployee = new javax.swing.JRadioButton();
-        radio_valueDoctor = new javax.swing.JRadioButton();
-        radio_valueSupplier = new javax.swing.JRadioButton();
-        radio_valueProduct = new javax.swing.JRadioButton();
         lbl_tittle = new javax.swing.JLabel();
-        btn_accept = new javax.swing.JButton();
-        btn_cancel = new javax.swing.JButton();
-        radio_valueCustomer = new javax.swing.JRadioButton();
-        radio_valuePet = new javax.swing.JRadioButton();
+        btn_back = new javax.swing.JButton();
+        btn_client = new javax.swing.JButton();
+        btn_doctor = new javax.swing.JButton();
+        btn_pet = new javax.swing.JButton();
+        btn_employee = new javax.swing.JButton();
+        btn_product = new javax.swing.JButton();
+        btn_supplier = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        radio_valueEmployee.setText("Empleado");
-        radio_valueEmployee.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radio_valueEmployeeActionPerformed(evt);
-            }
-        });
-
-        radio_valueDoctor.setText("Doctor");
-        radio_valueDoctor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radio_valueDoctorActionPerformed(evt);
-            }
-        });
-
-        radio_valueSupplier.setText("Proveedor");
-
-        radio_valueProduct.setText("Producto");
-
         lbl_tittle.setText("Registro");
 
-        btn_accept.setText("Aceptar");
+        btn_back.setText("Regresar");
 
-        btn_cancel.setText("Cancelar");
-
-        radio_valueCustomer.setText("Cliente");
-        radio_valueCustomer.addActionListener(new java.awt.event.ActionListener() {
+        btn_client.setText("Cliente");
+        btn_client.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radio_valueCustomerActionPerformed(evt);
+                btn_clientActionPerformed(evt);
             }
         });
 
-        radio_valuePet.setText("Mascota");
+        btn_doctor.setText("Doctor");
+        btn_doctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_doctorActionPerformed(evt);
+            }
+        });
+
+        btn_pet.setText("Mascota");
+        btn_pet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_petActionPerformed(evt);
+            }
+        });
+
+        btn_employee.setText("Empleado");
+        btn_employee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_employeeActionPerformed(evt);
+            }
+        });
+
+        btn_product.setText("Producto");
+        btn_product.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_productActionPerformed(evt);
+            }
+        });
+
+        btn_supplier.setText("Proveedor");
+        btn_supplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_supplierActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lbl_tittle)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_cancel)
-                        .addGap(71, 71, 71)
-                        .addComponent(btn_accept)
-                        .addGap(87, 87, 87))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(142, 142, 142)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(radio_valuePet)
-                    .addComponent(radio_valueCustomer)
-                    .addComponent(radio_valueEmployee)
-                    .addComponent(radio_valueProduct)
-                    .addComponent(radio_valueDoctor)
-                    .addComponent(radio_valueSupplier))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_employee, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_client, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(169, 169, 169)
+                                .addComponent(lbl_tittle))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btn_back)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btn_doctor, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_pet, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_product, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lbl_tittle)
-                .addGap(16, 16, 16)
-                .addComponent(radio_valueEmployee)
                 .addGap(18, 18, 18)
-                .addComponent(radio_valueDoctor)
-                .addGap(18, 18, 18)
-                .addComponent(radio_valueSupplier)
-                .addGap(18, 18, 18)
-                .addComponent(radio_valueProduct)
-                .addGap(18, 18, 18)
-                .addComponent(radio_valueCustomer)
-                .addGap(18, 18, 18)
-                .addComponent(radio_valuePet)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_accept)
-                    .addComponent(btn_cancel))
+                    .addComponent(btn_client, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_employee, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_doctor, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_pet, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_product, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(btn_back)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void radio_valueDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_valueDoctorActionPerformed
+    private void btn_clientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clientActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_radio_valueDoctorActionPerformed
+    }//GEN-LAST:event_btn_clientActionPerformed
 
-    private void radio_valueEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_valueEmployeeActionPerformed
+    private void btn_doctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_doctorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_radio_valueEmployeeActionPerformed
+    }//GEN-LAST:event_btn_doctorActionPerformed
 
-    private void radio_valueCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_valueCustomerActionPerformed
+    private void btn_petActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_petActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_radio_valueCustomerActionPerformed
+    }//GEN-LAST:event_btn_petActionPerformed
+
+    private void btn_employeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_employeeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_employeeActionPerformed
+
+    private void btn_productActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_productActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_productActionPerformed
+
+    private void btn_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supplierActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_supplierActionPerformed
+
     
-    private void radioGroup_value(){
-        ButtonGroup bg1 = radioGroup_value;
-        bg1.add(radio_valueDoctor);
-        bg1.add(radio_valueEmployee);
-        bg1.add(radio_valueSupplier);
-        bg1.add(radio_valueProduct);
-        bg1.add(radio_valueCustomer);
-        bg1.add(radio_valuePet);
-    }
-    
-    public int getRadioGroupValue(){
-        
-        if(radio_valueEmployee.isSelected()){
-            return 1;
-        }
-        if(radio_valueDoctor.isSelected()){
-            return 2;
-            
-        }
-        if(radio_valueSupplier.isSelected()){
-            return 3;
-            
-        }
-        if(radio_valueProduct.isSelected()){
-            return 4;
-        }
-        
-        if(radio_valueCustomer.isSelected()){
-            return 5;
-        }
-        if(radio_valuePet.isSelected()){
-            return 6;
-        }
-        
-        return 0;
-    }
     /**
      * @param args the command line arguments
      */
@@ -217,20 +204,12 @@ public class RegisterSelectionView extends javax.swing.JFrame {
        
     }
 
-    public JButton getBtn_accept() {
-        return btn_accept;
+    public JButton getBtn_back() {
+        return btn_back;
     }
 
-    public void setBtn_accept(JButton btn_accept) {
-        this.btn_accept = btn_accept;
-    }
-
-    public JButton getBtn_cancel() {
-        return btn_cancel;
-    }
-
-    public void setBtn_cancel(JButton btn_cancel) {
-        this.btn_cancel = btn_cancel;
+    public void setBtn_back(JButton btn_back) {
+        this.btn_back = btn_back;
     }
 
     public JLabel getLbl_tittle() {
@@ -241,6 +220,54 @@ public class RegisterSelectionView extends javax.swing.JFrame {
         this.lbl_tittle = lbl_tittle;
     }
 
+    public JButton getBtn_client() {
+        return btn_client;
+    }
+
+    public void setBtn_client(JButton btn_client) {
+        this.btn_client = btn_client;
+    }
+
+    public JButton getBtn_doctor() {
+        return btn_doctor;
+    }
+
+    public void setBtn_doctor(JButton btn_doctor) {
+        this.btn_doctor = btn_doctor;
+    }
+
+    public JButton getBtn_employee() {
+        return btn_employee;
+    }
+
+    public void setBtn_employee(JButton btn_employee) {
+        this.btn_employee = btn_employee;
+    }
+
+    public JButton getBtn_pet() {
+        return btn_pet;
+    }
+
+    public void setBtn_pet(JButton btn_pet) {
+        this.btn_pet = btn_pet;
+    }
+
+    public JButton getBtn_product() {
+        return btn_product;
+    }
+
+    public void setBtn_product(JButton btn_product) {
+        this.btn_product = btn_product;
+    }
+
+    public JButton getBtn_supplier() {
+        return btn_supplier;
+    }
+
+    public void setBtn_supplier(JButton btn_supplier) {
+        this.btn_supplier = btn_supplier;
+    }
+
     public ButtonGroup getRadioGroup_value() {
         return radioGroup_value;
     }
@@ -248,67 +275,19 @@ public class RegisterSelectionView extends javax.swing.JFrame {
     public void setRadioGroup_value(ButtonGroup radioGroup_value) {
         this.radioGroup_value = radioGroup_value;
     }
-
-    public JRadioButton getRadio_valueDoctor() {
-        return radio_valueDoctor;
-    }
-
-    public void setRadio_valueDoctor(JRadioButton radio_valueDoctor) {
-        this.radio_valueDoctor = radio_valueDoctor;
-    }
-
-    public JRadioButton getRadio_valueEmployee() {
-        return radio_valueEmployee;
-    }
-
-    public void setRadio_valueEmployee(JRadioButton radio_valueEmployee) {
-        this.radio_valueEmployee = radio_valueEmployee;
-    }
-
-    public JRadioButton getRadio_valueProduct() {
-        return radio_valueProduct;
-    }
-
-    public void setRadio_valueProduct(JRadioButton radio_valueProduct) {
-        this.radio_valueProduct = radio_valueProduct;
-    }
-
-    public JRadioButton getRadio_valueSupplier() {
-        return radio_valueSupplier;
-    }
-
-    public void setRadio_valueSupplier(JRadioButton radio_valueSupplier) {
-        this.radio_valueSupplier = radio_valueSupplier;
-    }
-
-    public JRadioButton getRadio_valueCustomer() {
-        return radio_valueCustomer;
-    }
-
-    public void setRadio_valueCustomer(JRadioButton radio_valueCustomer) {
-        this.radio_valueCustomer = radio_valueCustomer;
-    }
-
-    public JRadioButton getRadio_valuePet() {
-        return radio_valuePet;
-    }
-
-    public void setRadio_valuePet(JRadioButton radio_valuePet) {
-        this.radio_valuePet = radio_valuePet;
-    }
+    
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_accept;
-    private javax.swing.JButton btn_cancel;
+    private javax.swing.JButton btn_back;
+    private javax.swing.JButton btn_client;
+    private javax.swing.JButton btn_doctor;
+    private javax.swing.JButton btn_employee;
+    private javax.swing.JButton btn_pet;
+    private javax.swing.JButton btn_product;
+    private javax.swing.JButton btn_supplier;
     private javax.swing.JLabel lbl_tittle;
     private javax.swing.ButtonGroup radioGroup_value;
-    private javax.swing.JRadioButton radio_valueCustomer;
-    private javax.swing.JRadioButton radio_valueDoctor;
-    private javax.swing.JRadioButton radio_valueEmployee;
-    private javax.swing.JRadioButton radio_valuePet;
-    private javax.swing.JRadioButton radio_valueProduct;
-    private javax.swing.JRadioButton radio_valueSupplier;
     // End of variables declaration//GEN-END:variables
 }

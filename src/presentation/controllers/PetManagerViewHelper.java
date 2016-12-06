@@ -144,6 +144,7 @@ public class PetManagerViewHelper extends ViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
+            getPetManagerView().dispose();
             PetModificationViewHelper petModificationViewHelper = PetModificationViewHelper.getInstance();
             petModificationViewHelper.loadView();
         }else{
@@ -203,8 +204,9 @@ public class PetManagerViewHelper extends ViewHelper {
     
     private void openRegisterView(){ 
         if(!isEmptyCombo()){
+            getPetManagerView().dispose();
             PetRegisterViewHelper petRegisterViewHelper = PetRegisterViewHelper.getInstance();
-            petRegisterViewHelper.getInstance().setMode(1);
+            //petRegisterViewHelper.getInstance().setMode(1);
             petRegisterViewHelper.getInstance().loadView();
         }else{
             getNotifier().showWarningMessage( "No es posible añadir mascota debido a que no hay clientes registrados" );

@@ -15,9 +15,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class EmployeeManager extends Recepcionist<Employee> {
-    private static final EmployeeManager employeeManager = new EmployeeManager();
+public class EmployeeHandler extends Receptionist<Employee> {
+    private static final EmployeeHandler employeeManager = new EmployeeHandler();
     private EmployeeDAO employeeDAO;
+    
     
     /**
      * Constants to use with the createDoctor method
@@ -38,7 +39,7 @@ public class EmployeeManager extends Recepcionist<Employee> {
     private static final int userPasswordIndex = 1;
     private static final int userEmailIndex = 2;
     
-    private EmployeeManager(){
+    private EmployeeHandler(){
         this.employeeDAO = EmployeeDAO.GetInstance();
     }
     
@@ -47,7 +48,7 @@ public class EmployeeManager extends Recepcionist<Employee> {
      * use.
      * @return 
      */
-    public static EmployeeManager GetInstance(){
+    public static EmployeeHandler GetInstance(){
         return employeeManager;
     }
     
@@ -71,11 +72,7 @@ public class EmployeeManager extends Recepcionist<Employee> {
         employee.setUser(userEmployee);
         employeeManager.register(employee);
     }
-    
 
-    
-
-    
     private Employee createEmployee(ArrayList<String> data) throws InvalidFieldException {
         
         //  public Employee(String name, Address address, Phone phone, String RFC) {
@@ -117,36 +114,18 @@ public class EmployeeManager extends Recepcionist<Employee> {
         
     }
    
-    public String registerEmployee(ArrayList<String> employeeData, ArrayList<String> userEmployeeData){
-        String message ="";
-        
-        try{
-            Employee employee = new Employee(createEmployee(employeeData));
-            UserEmployee user = new UserEmployee(createUserEmployee(userEmployeeData));
-            setEmployeeUser(employee,user);
-            message = "SUCCESS";
-        }catch(InvalidFieldException exception ){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
+    public void registerEmployee(ArrayList<String> employeeData, ArrayList<String> userEmployeeData) throws InvalidFieldException{
+      Employee employee = new Employee(createEmployee(employeeData));
+      UserEmployee user = new UserEmployee(createUserEmployee(userEmployeeData));
+      setEmployeeUser(employee,user);
     }
-    
-    public String modifyEmployee(ArrayList<String> newEmployeeData , int id){
-        String message = "";
- 
-        try{
-            Employee employee =  getEmployee(id);
-            Employee updatedEmployee = createEmployee(newEmployeeData);
-            updatedEmployee.setId(employee.getId());
-            updatedEmployee.setUser(employee.getUser());
-            edit(updatedEmployee);
-                message = "SUCCESS";
-        }catch(InvalidFieldException exception){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
+
+    public void modifyEmployee(ArrayList<String> newEmployeeData , int id) throws InvalidFieldException{
+      Employee employee =  (getEmployee(id));
+      Employee updatedEmployee = createEmployee(newEmployeeData);
+      updatedEmployee.setId(employee.getId());
+      updatedEmployee.setUser(employee.getUser());
+      edit(updatedEmployee);
     }
 
     @Override

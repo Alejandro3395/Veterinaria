@@ -30,10 +30,6 @@ public class DoctorLoginViewHelper extends DataViewHelper{
         }
         return doctorLoginViewHelper;
     }
-    
-    public DoctorLoginView getDoctorLoginView() {
-        return doctorLoginView;
-    }
 
     public void setDoctorLoginView(DoctorLoginView doctorLoginView) {
         this.doctorLoginView = doctorLoginView;
@@ -41,18 +37,18 @@ public class DoctorLoginViewHelper extends DataViewHelper{
 
     @Override
     protected void setEvents() {
-         getDoctorLoginView().getLogin_Bttn().addActionListener(actionEvent -> validateDoctorUserAccess() );
+         doctorLoginView.getLogin_Bttn().addActionListener(actionEvent -> validateDoctorUserAccess() );
     }
     
     @Override
     public void loadView() {
-        getDoctorLoginView().setVisible(true);
+        doctorLoginView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureView( getDoctorLoginView() );
-        getDoctorLoginView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( doctorLoginView );
+        doctorLoginView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
@@ -61,32 +57,48 @@ public class DoctorLoginViewHelper extends DataViewHelper{
         boolean isValidField =!isEmptyFields(data);
         boolean isValidUser = false;
         
-        
+        String message = "";
         if(isValidField){
             SessionManager sessionManager = SessionManager.GetInstance();
             isValidUser = sessionManager.doctorUserAuthentification(data);
+            if(isValidUser){
+                openMainMenuView();
+            }else{
+                message = "Usuario inexistente";
+                getNotifier().showWarningMessage( message );
+            }
+        }else{
+            message = "Datos invalidos";
+            getNotifier().showWarningMessage( message );
         }
         
-        if(isValidUser){
-            openIntroView();
-        }
+        
     }
     
     @Override
     protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
-        String doctorUser = getDoctorLoginView().getField_UserDoctor().getText();
+        String doctorUser = doctorLoginView.getField_UserDoctor().getText();
         data.add(doctorUser);
         
-        String doctorPassword = new String (getDoctorLoginView().getDoctorPassword().getPassword());
+        String doctorPassword = new String (doctorLoginView.getDoctorPassword().getPassword());
         data.add(doctorPassword);
         
         return data;
     }
     
-    private void openIntroView(){
+   private void openMainMenuView(){
+        doctorLoginView.dispose();
+        clearFields();
         MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
         mainMenuViewHelper.loadView();
+    }
+
+    @Override
+    protected void clearFields() {
+        String emptyString = "";
+        doctorLoginView.getField_UserDoctor().setText(emptyString);
+        doctorLoginView.getDoctorPassword().setText(emptyString);
     }
 }

@@ -139,8 +139,9 @@ public class MedicineManagerViewHelper extends ViewHelper {
         
     }
     
-    private void openModificationView(){
+   private void openModificationView(){
         if(isRowSelected()){
+            getMedicineManagerView().dispose();
             MedicineModificationViewHelper medicineModificationViewHelper = MedicineModificationViewHelper.getInstance();
             medicineModificationViewHelper.loadView();
         }else{
@@ -198,10 +199,11 @@ public class MedicineManagerViewHelper extends ViewHelper {
         }
     }
     
-    private void openRegisterView(){ 
+     private void openRegisterView(){ 
         if(!isEmptyCombo()){
+            getMedicineManagerView().dispose();
             MedicineRegisterViewHelper medicineRegisterViewHelper = MedicineRegisterViewHelper.getInstance();
-            medicineRegisterViewHelper.getInstance().setMode(1);
+            //medicineRegisterViewHelper.getInstance().setMode(1);
             medicineRegisterViewHelper.getInstance().loadView();
         }else{
             getNotifier().showWarningMessage( "No es posible añadir mascota debido a que no hay clientes registrados" );

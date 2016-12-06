@@ -32,9 +32,6 @@ public class MainMenuViewHelper extends ViewHelper {
     }
     
 
-    public MainMenuView getMainView() {
-        return mainView;
-    }
 
     public void setMainView(MainMenuView mainView) {
         this.mainView = mainView;
@@ -42,31 +39,39 @@ public class MainMenuViewHelper extends ViewHelper {
 
     @Override
     public void loadView() {
-        getMainView().setVisible(true);
+        mainView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureView( getMainView());
-        getMainView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( mainView);
+        mainView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
     @Override
     protected void setEvents() {
-        getMainView().getBtn_register().addActionListener(actionEvent -> openRegisterSelection());
-        getMainView().getBtn_sales().addActionListener(actionEvent -> openSalesView());
+        mainView.getBtn_register().addActionListener(actionEvent -> openRegisterSelection());
+        mainView.getBtn_sales().addActionListener(actionEvent -> openSalesView());
+        mainView.getBtn_exit().addActionListener(actionEvent -> closeView());
        
     }
     
-    private void openSalesView(){
+     private void openSalesView(){
+        mainView.dispose();
         SalesViewHelper salesViewHelper = SalesViewHelper.getInstance();
         salesViewHelper.loadView();
     }
     
     private void openRegisterSelection(){
+        mainView.dispose();
         RegisterSelectionViewHelper registerSelectionViewHelper = RegisterSelectionViewHelper.getInstance();
         registerSelectionViewHelper.loadView();
+    }
+    
+    private void closeView(){
+        mainView.dispose();
+        LoginMainViewHelper.getInstance().loadView();
     }
     
 }

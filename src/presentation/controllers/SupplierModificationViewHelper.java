@@ -7,6 +7,7 @@ package presentation.controllers;
 
 import Entitys.Supplier;
 import bussiness.SupplierManager;
+import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.DataViewHelper;
@@ -31,10 +32,6 @@ public class SupplierModificationViewHelper extends DataViewHelper {
         }
         return supplierModificationViewHelper;
     }
-    
-    public SupplierRegisterView getSupplierRegisterView() {
-        return supplierRegisterView;
-    }
 
     public void setSupplierRegisterView(SupplierRegisterView supplierRegisterView) {
         this.supplierRegisterView = supplierRegisterView;
@@ -43,20 +40,20 @@ public class SupplierModificationViewHelper extends DataViewHelper {
     @Override
     public void loadView() {
         loadSupplierData();
-        getSupplierRegisterView().setVisible(true);
+        supplierRegisterView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureView( getSupplierRegisterView() );
-        getSupplierRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( supplierRegisterView );
+        supplierRegisterView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
     @Override
     protected void setEvents() {
-        getSupplierRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithModification());
-        getSupplierRegisterView().getBtn_cancel().addActionListener(actionEvent -> cancelModification());
+        supplierRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithModification());
+        supplierRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelModification());
     }
     
     private void loadSupplierData(){
@@ -78,18 +75,19 @@ public class SupplierModificationViewHelper extends DataViewHelper {
         
         boolean isValidField =!isEmptyFields(data);
         String message = "";
-        String successStatus = "SUCCESS";
         
         if( isValidField ){
-            SupplierManager supplierManager = SupplierManager.GetInstance();
-            message = supplierManager.modifySupplier(data,id);
-            if(message.equals(successStatus)){
+            try{
+                SupplierManager supplierManager = SupplierManager.GetInstance();
+                supplierManager.modifySupplier(data,id);
                 getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Supplier");
                 updateManagerViewTable();
                 closeWindow();
-            }else{
+            }catch(InvalidFieldException exception){
+                message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
-            } 
+            }
+            
         }else{
             message = "Rellene todos los campos";
             getNotifier().showWarningMessage( message );
@@ -106,7 +104,9 @@ public class SupplierModificationViewHelper extends DataViewHelper {
     }
     
     private void closeWindow(){
-        getSupplierRegisterView().dispose();
+        supplierRegisterView.dispose();
+        clearFields();
+        SupplierManagerViewHelper.getInstance().loadView();
     }
 
     /**
@@ -118,13 +118,13 @@ public class SupplierModificationViewHelper extends DataViewHelper {
     protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
-        String companyName = getSupplierRegisterView().getField_supplierName().getText();
+        String companyName = supplierRegisterView.getField_supplierName().getText();
         data.add(companyName);
         
-        String supplierLada = getSupplierRegisterView().getField_supplierPhoneLada().getText();
+        String supplierLada = supplierRegisterView.getField_supplierPhoneLada().getText();
         data.add(supplierLada);
         
-        String supplierPhone = getSupplierRegisterView().getField_supplierPhoneNumber().getText();
+        String supplierPhone = supplierRegisterView.getField_supplierPhoneNumber().getText();
         data.add(supplierPhone);
         
         return data;
@@ -134,18 +134,28 @@ public class SupplierModificationViewHelper extends DataViewHelper {
         //setear datos de los campso
         
         String supplierName = supplier.getCompanyName().toString();
-        getSupplierRegisterView().getField_supplierName().setText(supplierName);
+        supplierRegisterView.getField_supplierName().setText(supplierName);
         
         String supplierPhoneLada = supplier.getPhone().getLada().toString();
-        getSupplierRegisterView().getField_supplierPhoneLada().setText(supplierPhoneLada);
+        supplierRegisterView.getField_supplierPhoneLada().setText(supplierPhoneLada);
         
         String supplierPhoneNumber = supplier.getPhone().getNumber().toString();
-        getSupplierRegisterView().getField_supplierPhoneNumber().setText(supplierPhoneNumber);
+        supplierRegisterView.getField_supplierPhoneNumber().setText(supplierPhoneNumber);
         
     }
     
     private void resetFields(){
         loadSupplierData();
+    }
+    
+    @Override
+    protected void clearFields() {
+        supplierRegisterView.getField_supplierName().setText("");
+        
+        supplierRegisterView.getField_supplierPhoneLada().setText("");
+       
+        supplierRegisterView.getField_supplierPhoneNumber().setText("");
+        
     }
     
 }

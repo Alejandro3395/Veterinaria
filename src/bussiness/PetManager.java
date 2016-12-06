@@ -88,28 +88,18 @@ public class PetManager {
         return petData;
     }
 
-    public String registerPet(ArrayList<String> petData,String petOwner){
-        String message ="";
-        try{
+    public void registerPet(ArrayList<String> petData,String petOwner) throws InvalidFieldException{
+
             Pet pet = new Pet(createPet(petData));
             ClientManager clientManager = ClientManager.GetInstance();
             Client client = clientManager.getClientData(petOwner); //aqui se llama a lo de get por nombre
             client.addPets(pet);
             clientManager.updateClient(client);
-            message = "SUCCESS";
-            
-        }catch(InvalidFieldException exception ){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
     }
-    
-    
-    public String modifyPet(ArrayList<String> newPetData , String petOwner,int index){
-        String message = "";
-        
-        try{
+
+
+    public void modifyPet(ArrayList<String> newPetData , String petOwner,int index) throws InvalidFieldException{
+
             List<Pet> petList =  getPetList(petOwner);
             Pet pet = petList.get(index);
             Pet updatedPet = createPet(newPetData);
@@ -118,12 +108,6 @@ public class PetManager {
             Client client = clientManager.getClientData(petOwner); //aqui se llama a lo de get por nombre
             client.getPets().set(index,updatedPet);
             clientManager.updateClient(client);
-            message = "SUCCESS";
-        }catch(InvalidFieldException exception){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
     }
     
     

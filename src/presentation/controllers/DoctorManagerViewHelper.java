@@ -8,7 +8,7 @@ package presentation.controllers;
 import Entitys.Address;
 import Entitys.Doctor;
 import Entitys.Phone;
-import bussiness.DoctorManager;
+import bussiness.DoctorHandler;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
@@ -85,7 +85,7 @@ public class DoctorManagerViewHelper extends ViewHelper {
         int rowCount = model.getRowCount();
         if(rowCount !=0){model.setRowCount(0);}
         
-        DoctorManager doctorManager = DoctorManager.GetInstance();
+        DoctorHandler doctorManager = DoctorHandler.GetInstance();
         
         ArrayList<Doctor> doctorList = doctorManager.getDoctors() ;
         setTableContent(doctorList);
@@ -93,6 +93,7 @@ public class DoctorManagerViewHelper extends ViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
+            doctorManagerView.dispose();
             DoctorModificationViewHelper doctorModificationViewHelper = DoctorModificationViewHelper.getInstance();
             doctorModificationViewHelper.loadView();
         }else{
@@ -120,7 +121,7 @@ public class DoctorManagerViewHelper extends ViewHelper {
         
         int id = Integer.valueOf( getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
 
-        DoctorManager doctorManager = DoctorManager.GetInstance();
+        DoctorHandler doctorManager = DoctorHandler.GetInstance();
         doctorManager.remove(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Doctor");
         updateTable();
@@ -140,6 +141,7 @@ public class DoctorManagerViewHelper extends ViewHelper {
     }
     
     private void openRegisterView(){
+        doctorManagerView.dispose();
         DoctorRegisterViewHelper doctorRegisterViewHelper = DoctorRegisterViewHelper.getInstance();
         doctorRegisterViewHelper.loadView();
     }

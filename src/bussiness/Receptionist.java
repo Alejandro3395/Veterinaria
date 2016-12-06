@@ -9,8 +9,21 @@ package bussiness;
  *
  * @author mannu
  */
-public abstract class Recepcionist<Entity> {
+public abstract class Receptionist<Entity> {
+    public static String nameReceptionist;
 
+    
+    
+    public String getNameReceptionist() {
+        return nameReceptionist;
+    }
+
+    public void setNameReceptionist(String nameReceptionist) {
+        this.nameReceptionist = nameReceptionist;
+    }
+    
+    
+    
     
     //-------------------
     // Registers new object into database
@@ -24,4 +37,6 @@ public abstract class Recepcionist<Entity> {
     //--------------------
     // remove object from database
     public abstract void remove(int id);
+    
+    
 }

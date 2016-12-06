@@ -19,11 +19,11 @@ import Entitys.Phone;
 import Entitys.UserDoctor;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
+import presentation.controllers.ClientManagerViewHelper;
 
-public class DoctorManager extends Recepcionist<Doctor>{
-    private static final DoctorManager doctorManager = new DoctorManager();
+public class DoctorHandler extends Receptionist<Doctor>{
+    private static final DoctorHandler doctorManager = new DoctorHandler();
     private DoctorDAO doctorDAO;
-    
     /**
      * Constants to use with the createDoctor method
      */
@@ -44,7 +44,7 @@ public class DoctorManager extends Recepcionist<Doctor>{
     private static final int userPasswordIndex = 1;
     private static final int userEmailIndex = 2;
     
-    private DoctorManager(){
+    private DoctorHandler(){
         this.doctorDAO = DoctorDAO.GetInstance();
     }
     
@@ -53,7 +53,7 @@ public class DoctorManager extends Recepcionist<Doctor>{
      * use.
      * @return 
      */
-    public static DoctorManager GetInstance(){
+    public static DoctorHandler GetInstance(){
         return doctorManager;
     }
     
@@ -136,36 +136,18 @@ public class DoctorManager extends Recepcionist<Doctor>{
      * @param doctorData
      * @param userDoctorData 
      */
-    public String registerDoctor(ArrayList<String> doctorData, ArrayList<String> userDoctorData){
-        String message ="";
-        try{
-            Doctor doctor = new Doctor(createDoctor(doctorData));
-            UserDoctor user = new UserDoctor(createUserDoctor(userDoctorData));
-            setDoctorUser(doctor,user);
-            message = "SUCCESS";
-        }catch(InvalidFieldException exception ){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
+   public void registerDoctor(ArrayList<String> doctorData, ArrayList<String> userDoctorData) throws InvalidFieldException{
+      Doctor doctor = new Doctor(createDoctor(doctorData));
+      UserDoctor user = new UserDoctor(createUserDoctor(userDoctorData));
+      setDoctorUser(doctor,user);
     }
-    
-    public String modifyDoctor(ArrayList<String> newDoctorData , int id){
-        String message = "";
- 
-        try{
+
+    public void modifyDoctor(ArrayList<String> newDoctorData , int id) throws InvalidFieldException{
             Doctor doctor =  (getDoctor(id));
             Doctor updatedDoctor = createDoctor(newDoctorData);
             updatedDoctor.setId(doctor.getId());
             updatedDoctor.setUser(doctor.getUser());
             edit(updatedDoctor);
-                message = "SUCCESS";
-            
-        }catch(InvalidFieldException exception){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
     }
 
     @Override

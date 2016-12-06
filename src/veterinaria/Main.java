@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import org.jvnet.substance.SubstanceLookAndFeel;
-import presentation.controllers.IntroViewHelper;
+import presentation.controllers.InitialViewHelper;
 import presentation.controllers.LoginMainViewHelper;
 import presentation.views.LoginMainView;
 
@@ -49,7 +49,7 @@ public class Main implements Runnable{
     }
 
     public static void createIntroView() throws InvalidFieldException {
-       IntroViewHelper.getInstance().loadView();
+       InitialViewHelper.getInstance().loadView();
         
     }
 

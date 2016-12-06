@@ -84,6 +84,7 @@ public class SupplierManagerViewHelper extends ViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
+            getSupplierManagerView().dispose();
             SupplierModificationViewHelper supplierModificationViewHelper = SupplierModificationViewHelper.getInstance();
             supplierModificationViewHelper.loadView();
         }else{
@@ -104,6 +105,7 @@ public class SupplierManagerViewHelper extends ViewHelper {
     
     private void closeWindow(){
         getSupplierManagerView().dispose();
+        RegisterSelectionViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
@@ -138,6 +140,7 @@ public class SupplierManagerViewHelper extends ViewHelper {
     }
     
     private void openRegisterView(){
+        getSupplierManagerView().dispose();
         SupplierRegisterViewHelper supplierRegisterViewHelper = SupplierRegisterViewHelper.getInstance();
         supplierRegisterViewHelper.loadView();
     }

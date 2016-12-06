@@ -74,46 +74,27 @@ public class MedicineManager {
         return medicineData;
     }
 
-    public String registerMedicine(ArrayList<String> medicineData,String medicineSupplier){
-        String message ="";
-        try{
+     public void registerMedicine(ArrayList<String> medicineData,String medicineSupplier) throws InvalidFieldException{
             Medicine medicine = new Medicine(createMedicine(medicineData));
-            
+
             SupplierManager supplierManager = SupplierManager.GetInstance();
             Supplier supplier = supplierManager.getSupplierData(medicineSupplier); //aqui se llama a lo de get por nombre
             supplier.addMedicines(medicine);
             supplierManager.updateSupplier(supplier);
-            
-            message = "SUCCESS";
-            
-        }catch(InvalidFieldException exception ){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
     }
-    
-    
-    public String modifyMedicine(ArrayList<String> newMedicineData , String medicineOwner,int index){
-        String message = "";
-        
-        try{
+
+
+    public void modifyMedicine(ArrayList<String> newMedicineData , String medicineOwner,int index) throws InvalidFieldException{
+
             List<Medicine> medicineList =  getMedicinesBySupplierName(medicineOwner);
             Medicine medicine = medicineList.get(index);
             Medicine updatedMedicine = createMedicine(newMedicineData);
             medicine.setId(updatedMedicine.getId());
-            
+
             SupplierManager supplierManager = SupplierManager.GetInstance();
             Supplier supplier = supplierManager.getSupplierData(medicineOwner); //aqui se llama a lo de get por nombre
             supplier.getMedicines().set(index,updatedMedicine);
             supplierManager.updateSupplier(supplier);
-            
-            message = "SUCCESS";
-        }catch(InvalidFieldException exception){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
     }
     
     public List<Medicine> getMedicinesBySupplierName(String supplierName){

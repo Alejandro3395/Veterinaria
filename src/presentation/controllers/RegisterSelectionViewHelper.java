@@ -40,10 +40,6 @@ public class RegisterSelectionViewHelper extends ViewHelper {
         return registerSelectionViewHelper;
     }
 
-    public RegisterSelectionView getRegisterSelectionView() {
-        return registerSelectionView;
-    }
-
     public void setRegisterSelectionView(RegisterSelectionView registerSelectionView) {
         this.registerSelectionView = registerSelectionView;
     }
@@ -51,13 +47,13 @@ public class RegisterSelectionViewHelper extends ViewHelper {
     
     @Override
     public void loadView() {
-        getRegisterSelectionView().setVisible(true);
+        registerSelectionView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureView( getRegisterSelectionView() );
-        getRegisterSelectionView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( registerSelectionView );
+        registerSelectionView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
@@ -66,48 +62,55 @@ public class RegisterSelectionViewHelper extends ViewHelper {
      */
     @Override
     protected void setEvents() {
-        getRegisterSelectionView().getBtn_accept().addActionListener(actionEvent -> openSelectedView());
+        registerSelectionView.getBtn_employee().addActionListener(actionEvent -> openEmployeeManagerView());
+        registerSelectionView.getBtn_doctor().addActionListener(actionEvent -> openDoctorManagerView());
+        registerSelectionView.getBtn_client().addActionListener(actionEvent -> openClientManagerView());
+        registerSelectionView.getBtn_pet().addActionListener(actionEvent -> openPetManagerView());
+        registerSelectionView.getBtn_supplier().addActionListener(actionEvent -> openSupplierManagerView());
+        registerSelectionView.getBtn_product().addActionListener(actionEvent -> openMedicineManagerView());
+        registerSelectionView.getBtn_back().addActionListener(actionEvent -> closeView());
     }
      
-    /**
-     *  This method redirects the user to the selected view.
-     */
-    private void openSelectedView(){
-        
-        int value = registerSelectionView.getRadioGroupValue();
-        switch(value){
-            
-            case 1:
-                EmployeeManagerViewHelper employeeManagerViewHelper = EmployeeManagerViewHelper.getInstance();
-                employeeManagerViewHelper.loadView();
-            break;
-            
-            case 2:
-                DoctorManagerViewHelper doctorManagerViewHelper = DoctorManagerViewHelper.getInstance();
-                doctorManagerViewHelper.loadView();
-            break;
-            
-            case 3:
-                SupplierManagerViewHelper supplierManagerViewHelper = SupplierManagerViewHelper.getInstance();
-                supplierManagerViewHelper.loadView();
-            break;
-            
-            case 4:
-                MedicineManagerViewHelper medicineManagerViewHelper = MedicineManagerViewHelper.getInstance();
-                medicineManagerViewHelper.loadView();
-            break;
-            
-            case 5:
-                ClientManagerViewHelper clientManagerViewHelper = ClientManagerViewHelper.getInstance();
-                clientManagerViewHelper.loadView();
-            break;
-            
-            case 6:
-                PetManagerViewHelper petManagerViewHelper = PetManagerViewHelper.getInstance();
-                petManagerViewHelper.loadView();
-            break;
-        }
-        
+     private void openEmployeeManagerView(){
+        registerSelectionView.dispose();
+        EmployeeManagerViewHelper employeeManagerViewHelper = EmployeeManagerViewHelper.getInstance();
+        employeeManagerViewHelper.loadView();
     }
+    
+    private void openDoctorManagerView(){
+        registerSelectionView.dispose();
+        DoctorManagerViewHelper doctorManagerViewHelper = DoctorManagerViewHelper.getInstance();
+        doctorManagerViewHelper.loadView();
+    }
+    
+    private void openSupplierManagerView(){
+       registerSelectionView.dispose();
+       SupplierManagerViewHelper supplierManagerViewHelper = SupplierManagerViewHelper.getInstance();
+       supplierManagerViewHelper.loadView();
+    }
+    
+    private void openMedicineManagerView(){
+       registerSelectionView.dispose();
+       MedicineManagerViewHelper medicineManagerViewHelper = MedicineManagerViewHelper.getInstance();
+       medicineManagerViewHelper.loadView();
+    }
+    
+    private void openClientManagerView(){
+        registerSelectionView.dispose();
+        ClientManagerViewHelper clientManagerViewHelper = ClientManagerViewHelper.getInstance();
+        clientManagerViewHelper.loadView();
+    }
+    
+    private void openPetManagerView(){
+        registerSelectionView.dispose();
+        PetManagerViewHelper petManagerViewHelper = PetManagerViewHelper.getInstance();
+        petManagerViewHelper.loadView();
+    }
+    
+   private void closeView(){
+       registerSelectionView.dispose();
+       MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
+       mainMenuViewHelper.loadView();
+   }
     
 }

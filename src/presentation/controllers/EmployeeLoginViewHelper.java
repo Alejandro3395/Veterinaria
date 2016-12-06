@@ -31,30 +31,26 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
         }
         return employeeLoginViewHelper;
     }
-
-    public EmployeeLoginView getEmployeeLoginView() {
-        return employeeLoginView;
-    }
-
+     
     public void setEmployeeLoginView(EmployeeLoginView employeeLoginView) {
         this.employeeLoginView = employeeLoginView;
     }
 
     @Override
     public void loadView() {
-        getEmployeeLoginView().setVisible(true);
+        employeeLoginView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureView( getEmployeeLoginView() );
-        getEmployeeLoginView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( employeeLoginView );
+        employeeLoginView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
     @Override
     protected void setEvents() {
-        getEmployeeLoginView().getLogin_Bttn().addActionListener( actionEvent -> validateEmployeeUserAccess() );
+        employeeLoginView.getLogin_Bttn().addActionListener( actionEvent -> validateEmployeeUserAccess() );
     }
    
     /*Posiblemente habra que separar este metodo en 2*/
@@ -64,14 +60,21 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
         boolean isValidUser = false;
         SessionManager sessionManager = SessionManager.GetInstance();
         
-        
+        String message = "";
         if(isValidField){  
             isValidUser = sessionManager.employeeUserAuthentification(data);
+            if(isValidUser){
+                openMainMenuView();
+            }else{
+                message = "Usuario inexistente";
+                getNotifier().showWarningMessage( message );
+            }
+        }else{
+            message = "Datos invalidos";
+            getNotifier().showWarningMessage( message );
         }
         
-        if(isValidUser){
-            openIntroView();
-        }
+        
         
     }
         
@@ -80,18 +83,28 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
     protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
-        String employeeUser = getEmployeeLoginView().getField_UserEmployee().getText();
+        String employeeUser = employeeLoginView.getField_UserEmployee().getText();
         data.add(employeeUser);
         
-        String employeePassword = new String (getEmployeeLoginView().getField_PassEmployee().getPassword());
+        String employeePassword = new String (employeeLoginView.getField_PassEmployee().getPassword());
         data.add(employeePassword);
         
         return data;
     }
     
-     private void openIntroView(){
+     private void openMainMenuView(){
+        employeeLoginView.dispose();
+        clearFields();
         MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
         mainMenuViewHelper.loadView();
+    }
+
+     
+    @Override
+    protected void clearFields() {
+        String emptyString = "";
+        employeeLoginView.getField_UserEmployee().setText(emptyString);
+        employeeLoginView.getField_PassEmployee().setText(emptyString);
     }
     
 }

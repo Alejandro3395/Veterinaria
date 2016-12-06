@@ -82,6 +82,7 @@ public class ClientManagerViewHelper extends ViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
+            clientManagerView.dispose();
             ClientModificationViewHelper clientModificationViewHelper = ClientModificationViewHelper.getInstance();
             clientModificationViewHelper.loadView();
         }else{
@@ -136,6 +137,7 @@ public class ClientManagerViewHelper extends ViewHelper {
     }
     
     private void openRegisterView(){
+        clientManagerView.dispose();
         ClientRegisterViewHelper clientRegisterViewHelper = ClientRegisterViewHelper.getInstance();
         clientRegisterViewHelper.loadView();
     }

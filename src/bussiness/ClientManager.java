@@ -121,33 +121,16 @@ public class ClientManager {
      * @param clientData
      * @param userClientData 
      */
-    public String registerClient(ArrayList<String> clientData){
-        String message ="";
-        try{
+    public void registerClient(ArrayList<String> clientData) throws InvalidFieldException{
             Client client = new Client(createClient(clientData));
             clientManager.addClient(client);
-            message = "SUCCESS";
-        }catch(InvalidFieldException exception ){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
     }
-    
-    public String modifyClient(ArrayList<String> newClientData , int id){
-        String message = "";
- 
-        try{
-            Client client =  (getClient(id));
-            Client updatedClient = createClient(newClientData);
-            updatedClient.setId(client.getId());
-            updateClient(updatedClient);
-            message = "SUCCESS";
-        }catch(InvalidFieldException exception){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
+
+    public void modifyClient(ArrayList<String> newClientData , int id) throws InvalidFieldException{
+      Client client =  (getClient(id));
+      Client updatedClient = createClient(newClientData);
+      updatedClient.setId(client.getId());
+      updateClient(updatedClient);
     }
     
     public ArrayList<Client> getClientList(){

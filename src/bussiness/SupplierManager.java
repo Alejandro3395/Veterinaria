@@ -105,33 +105,19 @@ public class SupplierManager {
      * @param supplierData
      * @param userSupplierData 
      */
-    public String registerSupplier(ArrayList<String> supplierData){
-        String message ="";
-        try{
+    public void registerSupplier(ArrayList<String> supplierData) throws InvalidFieldException{
+
             Supplier supplier = new Supplier(createSupplier(supplierData));
             supplierManager.addSupplier(supplier);
-            message = "SUCCESS";
-        }catch(InvalidFieldException exception ){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
     }
-    
-    public String modifySupplier(ArrayList<String> newSupplierData , int id){
-        String message = "";
- 
-        try{
-            Supplier supplier =  (getSupplier(id));   
+
+    public void modifySupplier(ArrayList<String> newSupplierData , int id) throws InvalidFieldException{
+
+            Supplier supplier =  (getSupplier(id));
             Supplier updatedSupplier = createSupplier(newSupplierData);
             updatedSupplier.setId_Supplier(supplier.getId_Supplier());
             updateSupplier(updatedSupplier);
-            message = "SUCCESS";
-        }catch(InvalidFieldException exception){
-            System.out.println(exception.getMessage());
-            message = exception.getMessage();
-        }
-        return message;
+
     }
     
     public ArrayList<Supplier> getSupplierList(){

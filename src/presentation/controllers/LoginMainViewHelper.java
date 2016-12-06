@@ -37,32 +37,31 @@ public class LoginMainViewHelper extends ViewHelper{
     
     @Override
     protected void setEvents() {
-        getLoginView().getDoctorLoginBttn().addActionListener(actionEvent -> openDoctorLoginView());
-        getLoginView().getEmployeeLoginBttn().addActionListener( actionEvent -> openEmployeeLoginView());
+        loginMainView.getDoctorLoginBttn().addActionListener(actionEvent -> openDoctorLoginView());
+        loginMainView.getEmployeeLoginBttn().addActionListener( actionEvent -> openEmployeeLoginView());
     }
 
-    public LoginMainView getLoginView() {
-        return loginMainView;
-    }
     
     @Override
     public void loadView() {
-        getLoginView().setVisible(true);
+        loginMainView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureView( getLoginView() );
-        getLoginView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( loginMainView );
+        loginMainView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
     public void openDoctorLoginView(){
+        loginMainView.dispose();
         DoctorLoginViewHelper doctorLoginViewHelper = DoctorLoginViewHelper.getInstance();
         doctorLoginViewHelper.loadView();
     }
     
     public void openEmployeeLoginView(){
+        loginMainView.dispose();
         EmployeeLoginViewHelper employeeLoginViewHelper = EmployeeLoginViewHelper.getInstance();
         employeeLoginViewHelper.loadView();
     }

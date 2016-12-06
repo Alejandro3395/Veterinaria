@@ -105,17 +105,14 @@ public class ReportHandler {
         String[] productData;
         int productName = 0;
         int productPrice = 1;
-         
          for(String product : purchases){
-             productData = product.split("  ");
-                
-                
+             productData = product.split("  ");              
                     table.addCell(productData[productName]);
                     table.addCell(productData[productPrice]);
-                    System.out.println(productData[productPrice]);
+                   
             }
            
-            documento.add(table);
+
             PdfPCell celdaFinal = new PdfPCell(new Paragraph("Total: " + String.valueOf(totalCost)));
             celdaFinal.setBorderWidthRight(0);
             celdaFinal.setBorderWidthLeft(0);

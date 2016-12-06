@@ -5,7 +5,8 @@
  */
 package presentation.controllers;
 
-import bussiness.EmployeeManager;
+import bussiness.EmployeeHandler;
+import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.DataViewHelper;
@@ -25,8 +26,6 @@ import presentation.views.EmployeeRegisterView;
 */
 public class EmployeeRegisterViewHelper  extends DataViewHelper{
     private static EmployeeRegisterViewHelper employeeRegisterViewHelper = null;
-
-    private EmployeeManagerViewHelper employeeManagerViewHelper;
     private static int employeeDataIndex = 0;
     private static int userEmployeeDataIndex = 1;
     private EmployeeRegisterView employeeRegisterView;
@@ -44,18 +43,6 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
         }
         return employeeRegisterViewHelper;
     }
-    
-    public EmployeeManagerViewHelper getEmployeeManagerViewHelper() {
-        return employeeManagerViewHelper;
-    }
-
-    public void setEmployeeManagerViewHelper(EmployeeManagerViewHelper employeeManagerViewHelper) {
-        this.employeeManagerViewHelper = employeeManagerViewHelper;
-    }
-
-    public EmployeeRegisterView getEmployeeRegisterView() {
-        return employeeRegisterView;
-    }
 
     public void setEmployeeRegisterView(EmployeeRegisterView employeeRegisterView) {
         this.employeeRegisterView = employeeRegisterView;
@@ -63,13 +50,13 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
  
     @Override
     public void loadView() {
-        getEmployeeRegisterView().setVisible(true);
+        employeeRegisterView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureView( getEmployeeRegisterView() );
-        getEmployeeRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( employeeRegisterView );
+        employeeRegisterView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
@@ -79,7 +66,7 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
      */
     @Override
     protected void setEvents() {
-        getEmployeeRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        employeeRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
     }
     
     private void proceedWithRegistration(){
@@ -93,17 +80,18 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
         boolean isValidField =!isEmptyFields(data);
         
         String message="";
-        String successStatus="SUCCESS";
         
         if(isValidField){
-            EmployeeManager employeeManager = EmployeeManager.GetInstance();
-            message = employeeManager.registerEmployee(employeeData,userEmployeeData);
-            if(message.equals(successStatus)){
+            
+            try{
+               EmployeeHandler employeeHandler = EmployeeHandler.GetInstance();
+               employeeHandler.registerEmployee(employeeData,userEmployeeData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Empleado");
                 updateManagerViewTable();
-                resetFields();
+                clearFields();
                 closeWindow();
-            }else{
+            }catch(InvalidFieldException exception){
+                message = exception.getMessage() ;
                 getNotifier().showWarningMessage( message );
             }
         }else{
@@ -132,73 +120,77 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
     protected ArrayList<String> obtainDataFromView() {
         ArrayList<String> data = new ArrayList<String>();
         
-        String employeeName = getEmployeeRegisterView().getField_employeeName().getText();
+        String employeeName = employeeRegisterView.getField_employeeName().getText();
         data.add(employeeName);
         
-        String employeePostalCode = getEmployeeRegisterView().getField_employeeAddressPostalCode().getText();
+        String employeePostalCode = employeeRegisterView.getField_employeeAddressPostalCode().getText();
         data.add(employeePostalCode);
         
-        String employeeAddressStreet = getEmployeeRegisterView().getField_employeeAddressStreet().getText();
+        String employeeAddressStreet = employeeRegisterView.getField_employeeAddressStreet().getText();
         data.add(employeeAddressStreet);
         
-        String employeeAddressColony = getEmployeeRegisterView().getField_employeeAddressColony().getText();
+        String employeeAddressColony = employeeRegisterView.getField_employeeAddressColony().getText();
         data.add(employeeAddressColony);
         
-        String employeeAddressCross = getEmployeeRegisterView().getField_employeeAddressCross().getText();
+        String employeeAddressCross = employeeRegisterView.getField_employeeAddressCross().getText();
         data.add(employeeAddressCross);
         
-        String employeePhoneLada = getEmployeeRegisterView().getField_employeePhoneLada().getText(); 
+        String employeePhoneLada = employeeRegisterView.getField_employeePhoneLada().getText(); 
         data.add(employeePhoneLada);
         
-        String employeePhoneNumber = getEmployeeRegisterView().getField_employeePhoneNumber().getText();
+        String employeePhoneNumber = employeeRegisterView.getField_employeePhoneNumber().getText();
         data.add(employeePhoneNumber);
         
-        String employeeRFC = getEmployeeRegisterView().getField_employeeRFC().getText();
+        String employeeRFC = employeeRegisterView.getField_employeeRFC().getText();
         data.add(employeeRFC);
         
         /* Se obtienen los datos del usuario tipo cliente*/
         
-        String employeeUserName = getEmployeeRegisterView().getField_employeeUserName().getText();
+        String employeeUserName = employeeRegisterView.getField_employeeUserName().getText();
         data.add(employeeUserName);
         
-        String employeeUserPassword = getEmployeeRegisterView().getField_employeeUserPassword().getText();
+        String employeeUserPassword = employeeRegisterView.getField_employeeUserPassword().getText();
         data.add(employeeUserPassword);
         
-        String employeeUserEmail = getEmployeeRegisterView().getField_employeeEmail().getText();
+        String employeeUserEmail = employeeRegisterView.getField_employeeEmail().getText();
         data.add(employeeUserEmail);
         
         return data;
     }
 
     private void closeWindow() {
-        getEmployeeRegisterView().dispose();
+        employeeRegisterView.dispose();
+        clearFields();
+        EmployeeManagerViewHelper.getInstance().loadView();
+        
     }
 
     private void updateManagerViewTable() {
         EmployeeManagerViewHelper.getInstance().updateTable();
     }
     
-    private void resetFields(){
-        getEmployeeRegisterView().getField_employeeName().setText("");
+   @Override
+    protected void clearFields() {
+        employeeRegisterView.getField_employeeName().setText("");
         
-        getEmployeeRegisterView().getField_employeeAddressPostalCode().setText("");
+        employeeRegisterView.getField_employeeAddressPostalCode().setText("");
         
-        getEmployeeRegisterView().getField_employeeAddressStreet().setText("");
+        employeeRegisterView.getField_employeeAddressStreet().setText("");
         
-        getEmployeeRegisterView().getField_employeeAddressColony().setText("");
+        employeeRegisterView.getField_employeeAddressColony().setText("");
         
-        getEmployeeRegisterView().getField_employeeAddressCross().setText("");
+        employeeRegisterView.getField_employeeAddressCross().setText("");
         
-        getEmployeeRegisterView().getField_employeePhoneLada().setText(""); 
+        employeeRegisterView.getField_employeePhoneLada().setText(""); 
         
-        getEmployeeRegisterView().getField_employeePhoneNumber().setText("");
+        employeeRegisterView.getField_employeePhoneNumber().setText("");
         
-        getEmployeeRegisterView().getField_employeeRFC().setText("");
+        employeeRegisterView.getField_employeeRFC().setText("");
 
-        getEmployeeRegisterView().getField_employeeUserName().setText("");
+        employeeRegisterView.getField_employeeUserName().setText("");
         
-        getEmployeeRegisterView().getField_employeeUserPassword().setText("");
+        employeeRegisterView.getField_employeeUserPassword().setText("");
         
-        getEmployeeRegisterView().getField_employeeEmail().setText("");
+        employeeRegisterView.getField_employeeEmail().setText("");
     }
 }

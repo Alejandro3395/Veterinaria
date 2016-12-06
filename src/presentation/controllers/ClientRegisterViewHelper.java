@@ -6,6 +6,7 @@
 package presentation.controllers;
 
 import bussiness.ClientManager;
+import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.DataViewHelper;
@@ -18,14 +19,13 @@ import presentation.views.ClientRegisterView;
 public class ClientRegisterViewHelper extends DataViewHelper{
     private static ClientRegisterViewHelper clientRegisterViewHelper;
     private ClientRegisterView clientRegisterView;
-    private PetRegisterViewHelper petRegisterViewHelper;
     
     public ClientRegisterViewHelper(){
         setClientRegisterView(new ClientRegisterView());
-        //setClientManagerHelper( clientManager  );
-        
         initializeView();
     }
+    
+    
     
     public static ClientRegisterViewHelper getInstance(){
         if( clientRegisterViewHelper== null) {
@@ -33,39 +33,27 @@ public class ClientRegisterViewHelper extends DataViewHelper{
         }
         return clientRegisterViewHelper;
     }
-
-    public PetRegisterViewHelper getPetRegisterViewHelper() {
-        return petRegisterViewHelper;
-    }
-
-    public void setPetRegisterViewHelper(PetRegisterViewHelper petRegisterViewHelper) {
-        this.petRegisterViewHelper = petRegisterViewHelper;
-    }
     
-    public ClientRegisterView getClientRegisterView() {
-        return clientRegisterView;
-    }
-
     public void setClientRegisterView(ClientRegisterView clientRegisterView) {
         this.clientRegisterView = clientRegisterView;
     }
     
     @Override
     public void loadView() {
-        getClientRegisterView().setVisible(true);
+        clientRegisterView.setVisible(true);
     }
 
     @Override
     protected void initializeView() {
-        configureView( getClientRegisterView() );
-        getClientRegisterView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        configureView( clientRegisterView );
+        clientRegisterView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
     }
 
     @Override
     protected void setEvents() {
-        getClientRegisterView().getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
-        getClientRegisterView().getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
+        clientRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        clientRegisterView.getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
     }
     
     private void proceedWithRegistration(){
@@ -75,20 +63,17 @@ public class ClientRegisterViewHelper extends DataViewHelper{
         boolean isValidField =!isEmptyFields(clientData);
         
         String message="";
-        String successStatus="SUCCESS";
         
         if(isValidField){
-            ClientManager clientManager = ClientManager.GetInstance();
-            message = clientManager.registerClient(clientData);
-            if(message.equals(successStatus)){
+            try{
+                ClientManager clientManager = ClientManager.GetInstance();
+                clientManager.registerClient(clientData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Client");
                 updateManagerViewTable();
-                    PetRegisterViewHelper.getInstance().setOwner(clientData.get(0).toString());
-                    PetRegisterViewHelper.getInstance().setMode(0);
-                    PetRegisterViewHelper.getInstance().loadView();
-                resetFields();
+                clearFields();
                 closeWindow();
-            }else{
+            }catch(InvalidFieldException exception){
+                message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
             }
         }else{
@@ -102,7 +87,10 @@ public class ClientRegisterViewHelper extends DataViewHelper{
     }
     
     private void closeWindow(){
-        getClientRegisterView().dispose();
+        clientRegisterView.dispose();
+        clearFields();
+        ClientManagerViewHelper.getInstance().loadView();
+        
     }
     
     private void updateManagerViewTable(){
@@ -114,48 +102,49 @@ public class ClientRegisterViewHelper extends DataViewHelper{
         
         ArrayList<String> data = new ArrayList<String>();
         
-        String clientName = getClientRegisterView().getField_clientName().getText();
+        String clientName = clientRegisterView.getField_clientName().getText();
         data.add(clientName);
         
-        String clientPostalCode = getClientRegisterView().getField_clientAddressPostalCode().getText() ;
+        String clientPostalCode = clientRegisterView.getField_clientAddressPostalCode().getText() ;
         data.add(clientPostalCode);
         
-        String clientAddressStreet = getClientRegisterView().getField_clientAddressStreet().getText();
+        String clientAddressStreet = clientRegisterView.getField_clientAddressStreet().getText();
         data.add(clientAddressStreet);
         
-        String clientAddressColony = getClientRegisterView().getField_clientAddressColony().getText() ;
+        String clientAddressColony = clientRegisterView.getField_clientAddressColony().getText() ;
         data.add(clientAddressColony);
         
-        String clientAddressCross = getClientRegisterView().getField_clientAddressCrossing().getText() ;
+        String clientAddressCross = clientRegisterView.getField_clientAddressCrossing().getText() ;
         data.add(clientAddressCross);
         
-        String clientPhoneLada = getClientRegisterView().getField_clientPhoneLada().getText();
+        String clientPhoneLada = clientRegisterView.getField_clientPhoneLada().getText();
         data.add(clientPhoneLada);
         
-        String clientPhoneNumber = getClientRegisterView().getField_clientPhoneNumber().getText() ;
+        String clientPhoneNumber = clientRegisterView.getField_clientPhoneNumber().getText() ;
         data.add(clientPhoneNumber);
         
-        String clientEmail = getClientRegisterView().getField_clientEmail().getText() ;
+        String clientEmail = clientRegisterView.getField_clientEmail().getText() ;
         data.add(clientEmail);
         
         return data;
     }
     
-     private void resetFields(){
-        getClientRegisterView().getField_clientName().setText("");
+     @Override
+    protected void clearFields() {
+        clientRegisterView.getField_clientName().setText("");
         
-        getClientRegisterView().getField_clientAddressPostalCode().setText("") ;
+        clientRegisterView.getField_clientAddressPostalCode().setText("") ;
         
-        getClientRegisterView().getField_clientAddressStreet().setText("");
+        clientRegisterView.getField_clientAddressStreet().setText("");
                 
-        getClientRegisterView().getField_clientAddressColony().setText("");
+        clientRegisterView.getField_clientAddressColony().setText("");
         
-        getClientRegisterView().getField_clientAddressCrossing().setText("");
+        clientRegisterView.getField_clientAddressCrossing().setText("");
         
-        getClientRegisterView().getField_clientPhoneLada().setText("");
+        clientRegisterView.getField_clientPhoneLada().setText("");
         
-        getClientRegisterView().getField_clientPhoneNumber().setText("");
+        clientRegisterView.getField_clientPhoneNumber().setText("");
         
-        getClientRegisterView().getField_clientEmail().setText("");
+        clientRegisterView.getField_clientEmail().setText("");
     }
 }
