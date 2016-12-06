@@ -35,15 +35,29 @@ public class WarehouseManager {
         boolean isInExistence= false;
         medicines = medicineDAO.getMedicineDataList();
         for(Medicine medicine : medicines){
-            if(medicineName.equals(medicine.getName())){
+
+            if(medicineName.contains(medicine.getName())){
                 if(medicine.getAmount() > 0){
+                    
                     isInExistence = true;
+                    break;
                 }
             }
         }
         return isInExistence;
     }
     
+   public void decreaseProductAmount(String medicineName){
+       Medicine medicine = medicineDAO.getMedicineByName(medicineName);
+       medicine.setAmount(medicine.getAmount() - 1);
+       medicineDAO.update(medicine);
+       
+   }
    
+   public void increaseProductAmount(String medicineName){
+       Medicine medicine = medicineDAO.getMedicineByName(medicineName);
+       medicine.setAmount(medicine.getAmount() + 1);
+       medicineDAO.update(medicine);
+   }
     
 }

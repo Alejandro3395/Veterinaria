@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package presentation.controllers;
+package bussiness;
 
-import bussiness.ReportManager;
-import bussiness.SessionManager;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -23,6 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import presentation.controllers.SalesViewHelper;
 
 /**
  *
@@ -33,7 +33,6 @@ public class ReportHandler {
    private DateFormat hourdateFormat;
     
    private ReportHandler(){
-
        hourdateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
    }
    

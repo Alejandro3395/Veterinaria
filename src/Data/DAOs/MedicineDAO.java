@@ -104,5 +104,17 @@ public class MedicineDAO extends GeneralDAO<Medicine> {
           return medicineDataList;
     }
     
+    public Medicine getMedicineByName(String medicineName){
+        Medicine medicine = null;
+        
+        try{
+            openSession();
+            medicine= (Medicine) session.createQuery("from Medicine as m WHERE m.name = :name " ).setParameter("name", medicineName).uniqueResult();
+        }finally{
+            session.close();
+        }
+        return medicine;
+    }
+    
     
 }

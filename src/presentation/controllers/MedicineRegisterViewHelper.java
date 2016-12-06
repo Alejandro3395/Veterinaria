@@ -33,11 +33,6 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         initializeView();
     }
 
-    public MedicineRegisterViewHelper( String supplier ) {
-        setMedicineRegisterView( new MedicineRegisterView());
-        this.supplier = supplier;
-        initializeView();
-    }
     
     public static MedicineRegisterViewHelper getInstance(){
         if( medicineRegisterViewHelper== null) {
@@ -94,9 +89,9 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         
         boolean isValidField =!isEmptyFields(medicineData);
         
-        if(mode != 0){
+        
             supplier = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
-        }
+        
         
         String message="";
         

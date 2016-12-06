@@ -42,12 +42,18 @@ public class SalesManager {
     }
     
     
-    public void AddProductToPurchase(String nameMedicine){
-        boolean isInExistence = warehouseManager.isProductInExistence(nameMedicine);
+    public boolean addProductToPurchase(String nameMedicine){
+        boolean isInExistence =false ;
+        isInExistence = warehouseManager.isProductInExistence(nameMedicine);
         if(isInExistence){
-            
+            warehouseManager.decreaseProductAmount(nameMedicine);
+            return isInExistence;
         }
-        
+        return isInExistence;
+    }
+    
+    public void removeProductToPurchase(String nameMedicine){
+        warehouseManager.increaseProductAmount(nameMedicine);
     }
     
     

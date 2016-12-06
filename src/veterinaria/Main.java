@@ -43,8 +43,8 @@ public class Main implements Runnable{
         myThread.start();
  
         
-        JFrame.setDefaultLookAndFeelDecorated(true); //que nos permite dejar a Substance la decoracion ( por asi decirlo) 
-        SubstanceLookAndFeel.setSkin("org.jvnet.substance.theme.SubstanceLightAquaTheme"); // Setencia que aplica el skin Creme de Substance
+        //JFrame.setDefaultLookAndFeelDecorated(true); //que nos permite dejar a Substance la decoracion ( por asi decirlo) 
+       // SubstanceLookAndFeel.setSkin("org.jvnet.substance.theme.nimbus.NimbusLookAndFeels"); // Setencia que aplica el skin Creme de Substance
         createIntroView();
     }
 

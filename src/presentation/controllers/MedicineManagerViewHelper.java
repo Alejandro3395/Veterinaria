@@ -24,7 +24,7 @@ public class MedicineManagerViewHelper extends ViewHelper {
     private static MedicineManagerViewHelper medicineManagerViewHelper = null;
     private MedicineManagerView medicineManagerView;
     
-    private int comoboSize;
+    private int comboSize;
     
     private MedicineManagerViewHelper(){
         setMedicineManagerView(new MedicineManagerView());
@@ -103,21 +103,12 @@ public class MedicineManagerViewHelper extends ViewHelper {
         return result;
     }
     
-    private boolean isEmptyCombo(){
-        boolean result = false;
-        
-        //String comboItem = getMedicineManagerView().getCombo_petOwner().getSelectedItem().toString();
-        int comboSize = getMedicineManagerView().getCombo_medicineSupplier().getItemCount();
-        if(comboSize<1){
-            result = true;
-        }
-        return result;
-    }
+    
     
     private boolean hasDataChanged(){
         boolean result = false;
         
-        if(comoboSize != getMedicineManagerView().getCombo_medicineSupplier().getItemCount()){
+        if(comboSize != getMedicineManagerView().getCombo_medicineSupplier().getItemCount()){
             result = true;
         }
         return result;
@@ -129,12 +120,17 @@ public class MedicineManagerViewHelper extends ViewHelper {
         ArrayList<Supplier> supplierList = supplierManager.getSupplierList();
         getMedicineManagerView().getCombo_medicineSupplier().removeAllItems();
         
-        comoboSize = supplierList.size();
-        
-        for(int index = 0; index < supplierList.size(); index++ ){
-            Supplier supplier = supplierList.get(index);
-            getMedicineManagerView().getCombo_medicineSupplier().addItem(supplier.getCompanyName().toString());
+        comboSize = supplierList.size();
+        if(comboSize == 0){
+            getNotifier().showWarningMessage("No existen provedores registrados");
+        }else{
+            for(int index = 0; index < supplierList.size(); index++ ){
+                Supplier supplier = supplierList.get(index);
+                getMedicineManagerView().getCombo_medicineSupplier().addItem(supplier.getCompanyName().toString());
+            }   
         }
+        
+        
         
         
     }
@@ -161,7 +157,9 @@ public class MedicineManagerViewHelper extends ViewHelper {
     }
     
     private void closeWindow(){
-        getMedicineManagerView().dispose();
+       getMedicineManagerView().dispose(); 
+        RegisterSelectionViewHelper registerSelectionViewHelper = RegisterSelectionViewHelper.getInstance();
+        registerSelectionViewHelper.loadView();
     }
     
     private void proceedWithElimination(){
@@ -200,14 +198,12 @@ public class MedicineManagerViewHelper extends ViewHelper {
     }
     
      private void openRegisterView(){ 
-        if(!isEmptyCombo()){
+        
             getMedicineManagerView().dispose();
             MedicineRegisterViewHelper medicineRegisterViewHelper = MedicineRegisterViewHelper.getInstance();
             //medicineRegisterViewHelper.getInstance().setMode(1);
             medicineRegisterViewHelper.getInstance().loadView();
-        }else{
-            getNotifier().showWarningMessage( "No es posible añadir mascota debido a que no hay clientes registrados" );
-        }
+        
     }
     
     private void addMedicineToTable(Medicine medicine, int index){
