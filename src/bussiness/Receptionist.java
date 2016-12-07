@@ -10,17 +10,10 @@ package bussiness;
  * @author mannu
  */
 public abstract class Receptionist<Entity> {
-    public static String nameReceptionist;
+    public static String name;
 
     
     
-    public String getNameReceptionist() {
-        return nameReceptionist;
-    }
-
-    public void setNameReceptionist(String nameReceptionist) {
-        this.nameReceptionist = nameReceptionist;
-    }
     
     
     

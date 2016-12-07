@@ -176,7 +176,7 @@ public class PetManagerViewHelper extends ViewHelper {
         Client client = clientManager.getClientData(petOwner);
         client.getPets().remove(rowIndex);
         
-        clientManager.updateClient(client);
+        clientManager.edit(client);
         
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Pet");
         updateTable();

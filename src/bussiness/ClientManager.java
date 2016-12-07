@@ -19,7 +19,7 @@ import java.util.ArrayList;
 * 
 */
 
-public class ClientManager {
+public class ClientManager extends Receptionist<Client>{
     private static final ClientManager clientManager = new ClientManager();
     private ClientDAO clientDAO;
     
@@ -52,16 +52,19 @@ public class ClientManager {
     }
     
     
-    public void addClient(Client client)  {
+    @Override
+    public void register(Client client)  {
         clientDAO.add(client);
     }
     
-    public void deleteClient(int id){
+    @Override
+    public void remove(int id){
         Client client =  (Client)(clientDAO.get(id));
         clientDAO.delete(client);
     }
     
-    public void updateClient(Client client){
+    @Override
+    public void edit(Client client){
         clientDAO.update(client);
     }
     
@@ -123,14 +126,14 @@ public class ClientManager {
      */
     public void registerClient(ArrayList<String> clientData) throws InvalidFieldException{
             Client client = new Client(createClient(clientData));
-            clientManager.addClient(client);
+            clientManager.register(client);
     }
 
     public void modifyClient(ArrayList<String> newClientData , int id) throws InvalidFieldException{
       Client client =  (getClient(id));
       Client updatedClient = createClient(newClientData);
       updatedClient.setId(client.getId());
-      updateClient(updatedClient);
+      edit(updatedClient);
     }
     
     public ArrayList<Client> getClientList(){

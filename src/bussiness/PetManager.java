@@ -94,7 +94,7 @@ public class PetManager {
             ClientManager clientManager = ClientManager.GetInstance();
             Client client = clientManager.getClientData(petOwner); //aqui se llama a lo de get por nombre
             client.addPets(pet);
-            clientManager.updateClient(client);
+            clientManager.edit(client);
     }
 
 
@@ -107,7 +107,7 @@ public class PetManager {
             ClientManager clientManager = ClientManager.GetInstance();
             Client client = clientManager.getClientData(petOwner); //aqui se llama a lo de get por nombre
             client.getPets().set(index,updatedPet);
-            clientManager.updateClient(client);
+            clientManager.edit(client);
     }
     
     

@@ -11,7 +11,6 @@ import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.DataViewHelper;
-import presentation.views.DoctorModificationView;
 import presentation.views.DoctorRegisterView;
 
 /**

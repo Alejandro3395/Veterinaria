@@ -80,7 +80,7 @@ public class MedicineManager {
             SupplierManager supplierManager = SupplierManager.GetInstance();
             Supplier supplier = supplierManager.getSupplierData(medicineSupplier); //aqui se llama a lo de get por nombre
             supplier.addMedicines(medicine);
-            supplierManager.updateSupplier(supplier);
+            supplierManager.edit(supplier);
     }
 
 
@@ -94,7 +94,7 @@ public class MedicineManager {
             SupplierManager supplierManager = SupplierManager.GetInstance();
             Supplier supplier = supplierManager.getSupplierData(medicineOwner); //aqui se llama a lo de get por nombre
             supplier.getMedicines().set(index,updatedMedicine);
-            supplierManager.updateSupplier(supplier);
+            supplierManager.edit(supplier);
     }
     
     public List<Medicine> getMedicinesBySupplierName(String supplierName){

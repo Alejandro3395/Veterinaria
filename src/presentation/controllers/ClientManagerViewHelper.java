@@ -111,7 +111,7 @@ public class ClientManagerViewHelper extends ViewHelper {
         int id = Integer.valueOf( getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
 
         ClientManager clientManager = ClientManager.GetInstance();
-        clientManager.deleteClient(id);
+        clientManager.remove(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Client");
         updateTable();
     }

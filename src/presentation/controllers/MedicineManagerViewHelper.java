@@ -171,7 +171,7 @@ public class MedicineManagerViewHelper extends ViewHelper {
         Supplier supplier = supplierManager.getSupplierData(medicineSupplier);
         supplier.getMedicines().remove(rowIndex);
         
-        supplierManager.updateSupplier(supplier);
+        supplierManager.edit(supplier);
         
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Medicine");
         updateTable();

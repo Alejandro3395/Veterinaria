@@ -12,11 +12,14 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.BaseFont;
 import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -59,9 +62,8 @@ public class ReportHandler {
             PdfPTable table = new PdfPTable(2); 
             table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
             table.getDefaultCell().setPaddingLeft(60);
-            BuildHeader(documento);
-            
-             
+            BuildHeaderSaleReport(documento);
+  
             documento.add(new Chunk("\n"));
             documento.add(new Chunk("\n"));
             documento.add(new Chunk("\n"));
@@ -71,11 +73,9 @@ public class ReportHandler {
     
             imagen.setAbsolutePosition(110f, 150f);
            
-            
-
-            BuildBody(table,totalCost,documento);
+             BuildBodySaleReport(table,totalCost,documento);
               
-            BuildFooter(documento);
+            BuildFooterSaleReport(documento);
             documento.add(imagen);
             documento.close();
              
@@ -84,22 +84,55 @@ public class ReportHandler {
             System.err.println("Ocurrio un error: " +e);
             System.exit(-1);
         }
-          
-         return;
     }
     
-    private void BuildHeader( Document documento) throws DocumentException{
+    public void BuildVeterinaryPrescription(){
+        try{
+            Document veterinaryPrescription = new Document(PageSize.A3.rotate());
+            //Tal vez agregar la fecha al nombre de la receta
+             FileOutputStream fileOutputStream = new FileOutputStream("prescription.pdf");
+             PdfWriter.getInstance(veterinaryPrescription,fileOutputStream).setInitialLeading(20);
+             Image imagen = Image.getInstance("logo.jpeg"); 
+             veterinaryPrescription.open();
+             
+             BaseFont baseFont = BaseFont.createFont("Cookie.ttf",
+                     BaseFont.WINANSI, BaseFont.EMBEDDED);
+             Font font = new Font(baseFont);
+             font.setStyle(Font.BOLDITALIC);
+             font.setSize(35);
+             Paragraph p1 = new Paragraph("Dr."+" Nombre completo del doctor",font);
+             p1.setAlignment(Element.ALIGN_CENTER);
+             veterinaryPrescription.add(p1);
+            // veterinaryPrescription.add(new Chunk("\n"));
+         
+             Font font2 = new Font();
+             font2.setSize(20);
+             
+             Paragraph p2 = new Paragraph("CEDULA PROFESIONAL" + " 12345679012",font2);
+             
+             p2.setAlignment(Element.ALIGN_CENTER);
+             
+             veterinaryPrescription.add(p2);
+             
+             veterinaryPrescription.close();
+        }catch(Exception e){
+            
+        }
+    }
+    
+    
+    private void BuildHeaderSaleReport( Document documento) throws DocumentException{
      
         Date date = new Date();
         Chunk glue = new Chunk(new VerticalPositionMark());
             Paragraph p = new Paragraph(hourdateFormat.format(date));
             p.add(new Chunk(glue));
-            p.add("Le atendio: "+ SessionManager.getCurrentEmployeeName());
+            p.add("Le atendio: "+ Receptionist.name);
             documento.add(p);
             
     }
     
-    private void BuildBody(PdfPTable table, double totalCost, Document documento) throws DocumentException{
+    private void BuildBodySaleReport(PdfPTable table, double totalCost, Document documento) throws DocumentException{
         List<String> purchases = SalesViewHelper.getInstance().getPurchases();
         String[] productData;
         int productName = 0;
@@ -126,7 +159,7 @@ public class ReportHandler {
 
     }
     
-    private void BuildFooter(Document documento) throws DocumentException{
+    private void BuildFooterSaleReport(Document documento) throws DocumentException{
             
             documento.add(new Chunk("\n"));
             documento.add(new Chunk("\n"));

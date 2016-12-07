@@ -5,6 +5,8 @@
  */
 package presentation.controllers;
 
+import bussiness.Receptionist;
+import bussiness.SessionManager;
 import javax.swing.WindowConstants;
 import presentation.ViewHelper;
 import presentation.views.MainMenuView;
@@ -53,7 +55,7 @@ public class MainMenuViewHelper extends ViewHelper {
     protected void setEvents() {
         mainView.getBtn_register().addActionListener(actionEvent -> openRegisterSelection());
         mainView.getBtn_sales().addActionListener(actionEvent -> openSalesView());
-        mainView.getBtn_exit().addActionListener(actionEvent -> closeView());
+        mainView.getBtn_exit().addActionListener(actionEvent -> LogOut());
        
     }
     
@@ -69,8 +71,10 @@ public class MainMenuViewHelper extends ViewHelper {
         registerSelectionViewHelper.loadView();
     }
     
-    private void closeView(){
+    private void LogOut(){
         mainView.dispose();
+        System.out.println(Receptionist.name);
+
         LoginMainViewHelper.getInstance().loadView();
     }
     
