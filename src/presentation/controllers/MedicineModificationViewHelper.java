@@ -8,8 +8,13 @@ package presentation.controllers;
 import Entitys.Medicine;
 import bussiness.MedicineManager;
 import exceptions.InvalidFieldException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.WindowConstants;
 import presentation.DataViewHelper;
 import presentation.views.MedicineRegisterView;
@@ -72,7 +77,9 @@ public class MedicineModificationViewHelper extends DataViewHelper {
     private void proceedWithModification(){
         ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
-        int rowIndex = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
+        int row = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
+        int id = Integer.valueOf( MedicineManagerViewHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getValueAt(row, 0).toString() );
+        
         String medicineOwner = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
         boolean isValidField =!isEmptyFields(data);
@@ -81,8 +88,8 @@ public class MedicineModificationViewHelper extends DataViewHelper {
         if( isValidField ){
             try{
                 MedicineManager medicineManager = MedicineManager.GetInstance();
-                medicineManager.modifyMedicine(data,medicineOwner,rowIndex);
-                getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Medicine");
+                medicineManager.modifyMedicine(data,medicineOwner,id);
+                getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el medicamento");
                 updateManagerViewTable();
                 closeWindow();
             }catch(InvalidFieldException exception){
@@ -130,20 +137,18 @@ public class MedicineModificationViewHelper extends DataViewHelper {
         String medicinePrice = medicineRegisterView.getField_productSellPrize().getText();
         data.add(medicinePrice);
         
-        String medicineSupplier = medicineRegisterView.getCombo_productSupplier().getSelectedItem().toString();
-        data.add(medicineSupplier);
         
         String medicineAdministrationWay = medicineRegisterView.getCombo_productAdministrationWay().getSelectedItem().toString();
         data.add(medicineAdministrationWay);
         
         //obtener la fecha
         String medicineExpirationDate = "";
+ 
+        String expirationDay = Integer.toString(medicineRegisterView.getDateChooser().getCalendar().get(java.util.Calendar.DATE));
+        String expirationMonth = Integer.toString( (medicineRegisterView.getDateChooser().getCalendar().get(java.util.Calendar.MONTH)) + 1);
+        String expirationYear = Integer.toString(medicineRegisterView.getDateChooser().getCalendar().get(java.util.Calendar.YEAR));
         
-        String expirationDay = medicineRegisterView.getSpinner_productExpirationDay().getValue().toString();
-        String expirationMonth = medicineRegisterView.getSpinner_productExpirationMonth().getValue().toString();
-        String expirationYear = medicineRegisterView.getSpinner_productExpirationYear().getValue().toString();
-        
-        medicineExpirationDate = expirationDay + "-" + expirationMonth + "-" + expirationYear;
+        medicineExpirationDate = expirationYear + "-" + expirationMonth + "-" +  expirationDay;
         
         data.add(medicineExpirationDate);
         
@@ -179,7 +184,7 @@ public class MedicineModificationViewHelper extends DataViewHelper {
         int administrationIndex = 0;
         
         for(int i =0; i < comboElements;i++ ){
-            if(medicineAdministrationWay.equals(medicineRegisterView.getCombo_productAdministrationWay().getSelectedItem().toString())){
+            if(medicineAdministrationWay.equals(medicineRegisterView.getCombo_productAdministrationWay().getItemAt(i).toString())){
                 administrationIndex = i;
             }
         }
@@ -188,27 +193,17 @@ public class MedicineModificationViewHelper extends DataViewHelper {
         
         
         //obtener la fecha
-        String medicineExpirationDate = medicine.getExpiration_date();
-        
-        String medicineExpiration[] = medicineExpirationDate.split("-");
-        
-        int expirationDay =  Integer.valueOf(medicineExpiration[0]);
-        int expirationMonth = Integer.valueOf(medicineExpiration[1]);
-        int expirationYear = Integer.valueOf( medicineExpiration[2]);
-        
-        
-        medicineRegisterView.getSpinner_productExpirationDay().setValue(expirationDay);
-        medicineRegisterView.getSpinner_productExpirationMonth().setValue(expirationMonth);
-        medicineRegisterView.getSpinner_productExpirationYear().setValue(expirationYear);
+        Date medicineExpirationDate = medicine.getExpiration_date();
+        medicineRegisterView.getDateChooser().setDate(medicineExpirationDate);
         
         
         //obtener la dosis
         String medicineDose[] = medicine.getDose().split(" ");
-        System.out.println("dose: "+medicineDose);
+        //System.out.println("dose: "+medicineDose);
         String doseQuantity = medicineDose[0];
         String doseType = medicineDose[1];
-        String dosePeriod = medicineDose[2];
-        String dosePeriodType = medicineDose[3];        
+        String dosePeriod = medicineDose[3];
+        String dosePeriodType = medicineDose[4];        
         
         medicineRegisterView.getSpinner_productDoseQuantity().setValue(Integer.valueOf(doseQuantity));
         
@@ -216,7 +211,7 @@ public class MedicineModificationViewHelper extends DataViewHelper {
         int doseTypeIndex = 0;
         
         for(int i =0; i < comboElements;i++ ){
-            if(doseType.equals(medicineRegisterView.getCombo_productDoseQuantityType().getSelectedItem().toString())){
+            if(doseType.equals(medicineRegisterView.getCombo_productDoseQuantityType().getItemAt(i).toString())){
                 doseTypeIndex = i;
             }
         }
@@ -229,7 +224,7 @@ public class MedicineModificationViewHelper extends DataViewHelper {
         int dosePeriodTypeIndex = 0;
         
         for(int i =0; i < comboElements;i++ ){
-            if(dosePeriodType.equals(medicineRegisterView.getCombo_dosePeriodType().getSelectedItem().toString())){
+            if(dosePeriodType.equals(medicineRegisterView.getCombo_dosePeriodType().getItemAt(i).toString())){
                 dosePeriodTypeIndex = i;
             }
         }
@@ -246,9 +241,7 @@ public class MedicineModificationViewHelper extends DataViewHelper {
         medicineRegisterView.getField_productQuantity().setText( "");
         medicineRegisterView.getField_productSellPrize().setText("");
         medicineRegisterView.getCombo_productAdministrationWay().setSelectedIndex(0);
-        medicineRegisterView.getSpinner_productExpirationDay().setValue(0);
-        medicineRegisterView.getSpinner_productExpirationMonth().setValue(0);
-        medicineRegisterView.getSpinner_productExpirationYear().setValue(0);
+        medicineRegisterView.getDateChooser().setCalendar(null);
         medicineRegisterView.getSpinner_productDoseQuantity().setValue(0);
         medicineRegisterView.getCombo_productDoseQuantityType().setSelectedIndex(0);
         medicineRegisterView.getSpinner_productDosePeriod().setValue(0);

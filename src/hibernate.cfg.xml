@@ -28,6 +28,7 @@
     <mapping resource="Data/Mapping/Client.hbm.xml"/>
     <mapping resource="Data/Mapping/Pet.hbm.xml"/>
     <mapping resource="Data/Mapping/Supplier.hbm.xml"/>
+    <mapping resource="Data/Mapping/Appointment.hbm.xml"/>
     
    <!-- <mapping resource="Data/Mapping/Supplier.hbm.xml"/> -->
   </session-factory>

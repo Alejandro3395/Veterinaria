@@ -17,8 +17,14 @@ import Entitys.Medicine;
 import Entitys.Supplier;
 import exceptions.InvalidFieldException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MedicineManager {
     private static final MedicineManager medicineManager = new MedicineManager();
@@ -64,7 +70,12 @@ public class MedicineManager {
         double medicineSelPrice = Double.parseDouble(data.get(sellPriceIndex).toString());
         
         String medicineAdministrationWay = data.get(administrationWayIndex).toString();
-        String medicineExpirationDate = data.get(expirationDateIndex).toString();
+        
+        String expirationDate = data.get(expirationDateIndex).toString();
+        Date medicineExpirationDate = getMedicineExpirationDate(expirationDate);
+        
+        //revisando las fechas
+        
         String medicineDose = data.get(doseIndex).toString();
                 
         Medicine medicineData;
@@ -95,6 +106,20 @@ public class MedicineManager {
             Supplier supplier = supplierManager.getSupplierData(medicineOwner); //aqui se llama a lo de get por nombre
             supplier.getMedicines().set(index,updatedMedicine);
             supplierManager.edit(supplier);
+    }
+    
+    private Date getMedicineExpirationDate(String date) throws InvalidFieldException{
+        
+        Date expirationDate = null;
+        
+        try {
+            expirationDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException ex) {
+            throw new InvalidFieldException("Datos erroneos en la Fecha");
+        }
+        
+        
+        return expirationDate;
     }
     
     public List<Medicine> getMedicinesBySupplierName(String supplierName){

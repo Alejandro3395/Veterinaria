@@ -17,7 +17,7 @@ public class Pet implements Serializable{
     private long id;
     private int age;
     private String name;
-    private String breed;
+    private String type;
     
     
     //Constructor
@@ -25,9 +25,9 @@ public class Pet implements Serializable{
         
     }
     
-    public Pet( String name, String breed,int age) {
+    public Pet( String name, String type,int age) {
         this.name = name;
-        this.breed = breed;
+        this.type = type;
         this.age = age;
         
         
@@ -35,7 +35,7 @@ public class Pet implements Serializable{
 
     public Pet(Pet pet){
        this.name = pet.getName().toString();
-       this.breed = pet.getBreed().toString();
+       this.type = pet.getType().toString();
        this.age = pet.getAge();
     }
     
@@ -57,14 +57,16 @@ public class Pet implements Serializable{
         this.name = name;
     }
 
-    public String getBreed() {
-        return breed;
+    public String getType() {
+        return type;
     }
 
-    public void setBreed(String breed) {
-        this.breed = breed;
+    public void setType(String type) {
+        this.type = type;
     }
-
+    
+    
+    
     public long getId() {
         return id;
     }

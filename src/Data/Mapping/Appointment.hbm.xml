@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="Entitys.Appointment" table="Appointment">
+  
+        <id name="id" >
+            <generator class="identity"/>
+        </id>
+        
+        <property name= "clientName" type="string" column="client_name" />  
+        
+        <property name= "petName" type="string" column="pet_name" />  
+        <property name= "date" type="date" column="date" />
+        <property name= "hour" type="string" column="hour"/>
+        <property name= "status" type="string" column="status"/>
+        
+        <list name="medicines" cascade="all-delete-orphan" fetch="join" optimistic-lock="false"> 
+            <key column="id_appointment" /> 
+            <index column="ORDEN" /> 
+            <one-to-many class="Entitys.Medicine" /> 
+        </list>
+        
+        <component name="doctor" class="Entitys.Doctor"> <!-- class attribute optional -->
+            <property name="name" type="string" column="name"/>
+            <property name="RFC" type="string"/>
+        </component>
+      
+      
+  </class>
+</hibernate-mapping>

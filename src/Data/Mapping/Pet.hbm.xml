@@ -9,7 +9,7 @@
         </id> 
       
         <property name="name"  type="string" column="name" />
-        <property name="breed" type="string" column="breed" />
+        <property name="type" type="string" column="type" />
         <property name="age" type="integer" column="age"/>    
     </class>
 </hibernate-mapping>

@@ -103,6 +103,7 @@ public class ClientManagerViewHelper extends ViewHelper {
     
     private void closeWindow(){
         getClientManagerView().dispose();
+        RegisterSelectionViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
@@ -111,7 +112,7 @@ public class ClientManagerViewHelper extends ViewHelper {
         int id = Integer.valueOf( getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
 
         ClientManager clientManager = ClientManager.GetInstance();
-        clientManager.remove(id);
+        clientManager.deleteClient(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Client");
         updateTable();
     }

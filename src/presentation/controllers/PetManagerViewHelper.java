@@ -24,7 +24,7 @@ public class PetManagerViewHelper extends ViewHelper {
     private static PetManagerViewHelper petManagerViewHelper = null;
     private PetManagerView petManagerView;
     
-    private int comoboSize;
+    private int comboSize;
     
     public PetManagerViewHelper(){
         setPetManagerView(new PetManagerView());
@@ -96,16 +96,6 @@ public class PetManagerViewHelper extends ViewHelper {
         
     }
     
-    private boolean isEmptyCombo(){
-        boolean result = false;
-        
-        //String comboItem = getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
-        int comboSize = getPetManagerView().getCombo_petOwner().getItemCount();
-        if(comboSize<1){
-            result = true;
-        }
-        return result;
-    }
     
     private boolean isEmptyList(){
         boolean result = false;
@@ -120,7 +110,7 @@ public class PetManagerViewHelper extends ViewHelper {
     private boolean hasDataChanged(){
         boolean result = false;
         
-        if(comoboSize != getPetManagerView().getCombo_petOwner().getItemCount()){
+        if(comboSize != getPetManagerView().getCombo_petOwner().getItemCount()){
             result = true;
         }
         return result;
@@ -132,12 +122,18 @@ public class PetManagerViewHelper extends ViewHelper {
         ArrayList<Client> clientList = clientManager.getClientList();
         getPetManagerView().getCombo_petOwner().removeAllItems();
         
-        comoboSize = clientList.size();
+        comboSize = clientList.size();
         
-        for(int index = 0; index < clientList.size(); index++ ){
+        if(comboSize == 0){
+          getNotifier().showWarningMessage("No existen Clientes registrados");
+        }else{
+          for(int index = 0; index < clientList.size(); index++ ){
             Client client = clientList.get(index);
             getPetManagerView().getCombo_petOwner().addItem(client.getName().toString());
+          }  
         }
+        
+        
         
         
     }
@@ -165,6 +161,7 @@ public class PetManagerViewHelper extends ViewHelper {
     
     private void closeWindow(){
         getPetManagerView().dispose();
+        RegisterSelectionViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
@@ -176,7 +173,7 @@ public class PetManagerViewHelper extends ViewHelper {
         Client client = clientManager.getClientData(petOwner);
         client.getPets().remove(rowIndex);
         
-        clientManager.edit(client);
+        clientManager.updateClient(client);
         
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Pet");
         updateTable();
@@ -203,14 +200,10 @@ public class PetManagerViewHelper extends ViewHelper {
     }
     
     private void openRegisterView(){ 
-        if(!isEmptyCombo()){
             getPetManagerView().dispose();
             PetRegisterViewHelper petRegisterViewHelper = PetRegisterViewHelper.getInstance();
             //petRegisterViewHelper.getInstance().setMode(1);
             petRegisterViewHelper.getInstance().loadView();
-        }else{
-            getNotifier().showWarningMessage( "No es posible añadir mascota debido a que no hay clientes registrados" );
-        }
         
     }
     
@@ -221,9 +214,9 @@ public class PetManagerViewHelper extends ViewHelper {
         long id = index + 1;
         String name = pet.getName();
         int petAge = pet.getAge();
-        String petBreed = pet.getBreed();
-            
-        Object[] row = new Object[]{id,name,petAge,petBreed };
+        String petType = pet.getType();
+        
+        Object[] row = new Object[]{id,name,petAge,petType };
         model.addRow(row); 
     }
     

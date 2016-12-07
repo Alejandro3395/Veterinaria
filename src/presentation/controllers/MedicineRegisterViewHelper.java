@@ -15,7 +15,13 @@ package presentation.controllers;
 import Entitys.Medicine;
 import bussiness.MedicineManager;
 import exceptions.InvalidFieldException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.WindowConstants;
 import presentation.DataViewHelper;
 import presentation.views.MedicineRegisterView;
@@ -33,6 +39,11 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         initializeView();
     }
 
+    public MedicineRegisterViewHelper( String supplier ) {
+        setMedicineRegisterView( new MedicineRegisterView());
+        this.supplier = supplier;
+        initializeView();
+    }
     
     public static MedicineRegisterViewHelper getInstance(){
         if( medicineRegisterViewHelper== null) {
@@ -89,7 +100,6 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         
         boolean isValidField =!isEmptyFields(medicineData);
         
-        
             supplier = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
         
@@ -138,14 +148,16 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         data.add(medicineAdministrationWay);
         
         //obtener la fecha
-        String medicineExpirationDate = "";
         
-        String expirationDay = medicineRegisterView.getSpinner_productExpirationDay().getValue().toString();
-        String expirationMonth = medicineRegisterView.getSpinner_productExpirationMonth().getValue().toString();
-        String expirationYear = medicineRegisterView.getSpinner_productExpirationYear().getValue().toString();
+        String medicineExpirationDate ="";
         
-        medicineExpirationDate = expirationDay + "-" + expirationMonth + "-" + expirationYear;
+        Calendar calendar = Calendar.getInstance();
+        String expirationDay = Integer.toString(medicineRegisterView.getDateChooser().getCalendar().get(calendar.DATE));
+        String expirationMonth = Integer.toString( (medicineRegisterView.getDateChooser().getCalendar().get(calendar.MONTH)) + 1 );
+        String expirationYear = Integer.toString(medicineRegisterView.getDateChooser().getCalendar().get(calendar.YEAR));
         
+
+        medicineExpirationDate = expirationYear  + "-" + expirationMonth + "-" +  expirationDay; 
         data.add(medicineExpirationDate);
         
         //obtener la dosis
@@ -170,9 +182,7 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         medicineRegisterView.getField_productQuantity().setText( "");
         medicineRegisterView.getField_productSellPrize().setText("");
         medicineRegisterView.getCombo_productAdministrationWay().setSelectedIndex(0);
-        medicineRegisterView.getSpinner_productExpirationDay().setValue(0);
-        medicineRegisterView.getSpinner_productExpirationMonth().setValue(0);
-        medicineRegisterView.getSpinner_productExpirationYear().setValue(0);
+        medicineRegisterView.getDateChooser().setCalendar(null);
         medicineRegisterView.getSpinner_productDoseQuantity().setValue(0);
         medicineRegisterView.getCombo_productDoseQuantityType().setSelectedIndex(0);
         medicineRegisterView.getSpinner_productDosePeriod().setValue(0);

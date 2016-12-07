@@ -10,6 +10,7 @@ import Entitys.Supplier;
 import bussiness.MedicineManager;
 import bussiness.SupplierManager;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -103,8 +104,6 @@ public class MedicineManagerViewHelper extends ViewHelper {
         return result;
     }
     
-    
-    
     private boolean hasDataChanged(){
         boolean result = false;
         
@@ -121,18 +120,16 @@ public class MedicineManagerViewHelper extends ViewHelper {
         getMedicineManagerView().getCombo_medicineSupplier().removeAllItems();
         
         comboSize = supplierList.size();
+        
         if(comboSize == 0){
-            getNotifier().showWarningMessage("No existen provedores registrados");
+            getNotifier().showWarningMessage("No existen proveedores registrados");
+            closeWindow();
         }else{
-            for(int index = 0; index < supplierList.size(); index++ ){
-                Supplier supplier = supplierList.get(index);
-                getMedicineManagerView().getCombo_medicineSupplier().addItem(supplier.getCompanyName().toString());
-            }   
-        }
-        
-        
-        
-        
+          for(int index = 0; index < supplierList.size(); index++ ){
+            Supplier supplier = supplierList.get(index);
+            getMedicineManagerView().getCombo_medicineSupplier().addItem(supplier.getCompanyName().toString());
+          }  
+        }  
     }
     
    private void openModificationView(){
@@ -157,9 +154,10 @@ public class MedicineManagerViewHelper extends ViewHelper {
     }
     
     private void closeWindow(){
-       getMedicineManagerView().dispose(); 
+        getMedicineManagerView().dispose();
         RegisterSelectionViewHelper registerSelectionViewHelper = RegisterSelectionViewHelper.getInstance();
         registerSelectionViewHelper.loadView();
+        
     }
     
     private void proceedWithElimination(){
@@ -217,9 +215,12 @@ public class MedicineManagerViewHelper extends ViewHelper {
         
         int medicineQuantity = medicine.getAmount();
         
-        String medicineExpirationDate = medicine.getExpiration_date();
+        Date medicineExpirationDate = medicine.getExpiration_date();
+        
+        String expirationDate = medicineExpirationDate.toString();
+        
             
-        Object[] row = new Object[]{id,medicineName,medicinePrice,medicineQuantity,medicineExpirationDate };
+        Object[] row = new Object[]{id,medicineName,medicinePrice,medicineQuantity,expirationDate };
         model.addRow(row); 
     }
     

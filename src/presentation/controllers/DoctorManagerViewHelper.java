@@ -114,6 +114,7 @@ public class DoctorManagerViewHelper extends ViewHelper {
     
     private void closeWindow(){
         getDoctorManagerView().dispose();
+        RegisterSelectionViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){

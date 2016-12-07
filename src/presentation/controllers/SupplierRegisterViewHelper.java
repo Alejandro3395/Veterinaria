@@ -93,7 +93,7 @@ public class SupplierRegisterViewHelper extends DataViewHelper{
                 supplierManager.registerSupplier(supplierData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el proveedor");
                 updateManagerViewTable();
-                clearFields();
+                closeWindow();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );

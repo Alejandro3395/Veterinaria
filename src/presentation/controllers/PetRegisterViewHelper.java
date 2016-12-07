@@ -137,8 +137,8 @@ public class PetRegisterViewHelper extends DataViewHelper {
         String petAge = petRegisterView.getSpiner_petAge().getValue().toString();
         data.add(petAge);
         
-        String petBreed = petRegisterView.getCombo_petBreed().getSelectedItem().toString();
-        data.add(petBreed);
+        String petType = petRegisterView.getCombo_petType().getSelectedItem().toString();
+        data.add(petType);
           
         return data;
     }
@@ -149,6 +149,6 @@ public class PetRegisterViewHelper extends DataViewHelper {
         
         petRegisterView.getSpiner_petAge().setValue(0);
         
-        petRegisterView.getCombo_petBreed().setSelectedIndex(0);
+        petRegisterView.getCombo_petType().setSelectedIndex(0);
     }
 }

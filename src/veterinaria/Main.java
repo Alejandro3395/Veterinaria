@@ -42,14 +42,25 @@ public class Main implements Runnable{
         
         myThread = new Thread(new Main());
         myThread.start();
- 
         
-        //JFrame.setDefaultLookAndFeelDecorated(true); //que nos permite dejar a Substance la decoracion ( por asi decirlo) 
-       // SubstanceLookAndFeel.setSkin("org.jvnet.substance.theme.nimbus.NimbusLookAndFeels"); // Setencia que aplica el skin Creme de Substance
-        createIntroView();
+        /*
+        EmployeeDAO employeeDAO= new EmployeeDAO();
+        Address address = new Address(97320, "64", "Francisco I Madero", "31 y 33");
+        Phone phone= new Phone( "969", "1234567890");
+        UserEmployee user= new UserEmployee("Kinster", "Bojorquez3395","mannuel_3395@hotmail.com");
+        
+        Employee employee = new Employee("Manuel Alejandro" ,address, phone, "123456789012",user );
+        employeeDAO.add(employee);
+        */
+        
+        JFrame.setDefaultLookAndFeelDecorated(true); //que nos permite dejar a Substance la decoracion ( por asi decirlo) 
+        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.MistAquaSkin"); // Setencia que aplica el skin Creme de Substance
+       // SubstanceLookAndFeel.setCurrentWatermark( new SubstanceImageWatermark("c:\\logo.jpg"));
+        //SubstanceLookAndFeel.setImageWatermarkOpacity(new Float(0.5));
+        createInitialView();
     }
 
-    public static void createIntroView() throws InvalidFieldException {
+    public static void createInitialView() {
        InitialViewHelper.getInstance().loadView();
         
     }

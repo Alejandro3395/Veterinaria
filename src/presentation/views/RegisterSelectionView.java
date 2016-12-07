@@ -44,46 +44,67 @@ public class RegisterSelectionView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lbl_tittle.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
         lbl_tittle.setText("Registro");
 
-        btn_back.setText("Regresar");
+        btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Seguir.png"))); // NOI18N
 
+        btn_client.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Client.png"))); // NOI18N
         btn_client.setText("Cliente");
+        btn_client.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_client.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_client.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_clientActionPerformed(evt);
             }
         });
 
+        btn_doctor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Doctor 2.png"))); // NOI18N
         btn_doctor.setText("Doctor");
+        btn_doctor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_doctor.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        btn_doctor.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_doctor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_doctorActionPerformed(evt);
             }
         });
 
+        btn_pet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Pet.png"))); // NOI18N
         btn_pet.setText("Mascota");
+        btn_pet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_pet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_pet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_petActionPerformed(evt);
             }
         });
 
+        btn_employee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Receptionist.png"))); // NOI18N
         btn_employee.setText("Empleado");
+        btn_employee.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_employee.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_employee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_employeeActionPerformed(evt);
             }
         });
 
+        btn_product.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/dog-food.png"))); // NOI18N
         btn_product.setText("Producto");
+        btn_product.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_product.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        btn_product.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_product.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_productActionPerformed(evt);
             }
         });
 
+        btn_supplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Supplier.png"))); // NOI18N
         btn_supplier.setText("Proveedor");
+        btn_supplier.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_supplier.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_supplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_supplierActionPerformed(evt);
@@ -95,47 +116,49 @@ public class RegisterSelectionView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_employee, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                .addComponent(btn_employee, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
                                 .addComponent(btn_client, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btn_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(169, 169, 169)
-                                .addComponent(lbl_tittle))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_back)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btn_doctor, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(btn_pet, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btn_pet, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_product, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btn_product, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(lbl_tittle))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(btn_back)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addComponent(lbl_tittle)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_client, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_employee, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_client, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_employee, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_doctor, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_pet, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_doctor, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_product, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btn_back)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
