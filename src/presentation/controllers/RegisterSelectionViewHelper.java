@@ -109,7 +109,7 @@ public class RegisterSelectionViewHelper extends ViewHelper {
     
    private void closeView(){
        registerSelectionView.dispose();
-       MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
+       EmployeeMainMenuViewHelper mainMenuViewHelper = EmployeeMainMenuViewHelper.getInstance();
        mainMenuViewHelper.loadView();
    }
     

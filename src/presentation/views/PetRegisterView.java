@@ -57,6 +57,8 @@ public class PetRegisterView extends javax.swing.JFrame {
 
         lbl_petAge.setText("Edad:");
 
+        spiner_petAge.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
         btn_register.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Check.png"))); // NOI18N
         btn_register.setToolTipText("");
 

@@ -47,14 +47,14 @@ public class WarehouseManager {
         return isInExistence;
     }
     
-   public void decreaseProductAmount(String medicineName){
+   public void WithdrawFromWarehouse(String medicineName){
        Medicine medicine = medicineDAO.getMedicineByName(medicineName);
        medicine.setAmount(medicine.getAmount() - 1);
        medicineDAO.update(medicine);
        
    }
    
-   public void increaseProductAmount(String medicineName){
+   public void AddToWarehouse(String medicineName){
        Medicine medicine = medicineDAO.getMedicineByName(medicineName);
        medicine.setAmount(medicine.getAmount() + 1);
        medicineDAO.update(medicine);

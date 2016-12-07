@@ -110,7 +110,7 @@ public class AppointmentManagerViewHelper extends ViewHelper {
     
     private void closeWindow(){
         getAppointmentManagerView().dispose();
-        MainMenuViewHelper.getInstance().loadView();
+        EmployeeMainMenuViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){

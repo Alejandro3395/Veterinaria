@@ -42,19 +42,29 @@ public class SalesManager {
     }
     
     
+    
     public boolean addProductToPurchase(String nameMedicine){
         boolean isInExistence =false ;
         isInExistence = warehouseManager.isProductInExistence(nameMedicine);
         if(isInExistence){
-            warehouseManager.decreaseProductAmount(nameMedicine);
+            warehouseManager.WithdrawFromWarehouse(nameMedicine);
             return isInExistence;
         }
         return isInExistence;
     }
     
-    public void removeProductToPurchase(String nameMedicine){
-        warehouseManager.increaseProductAmount(nameMedicine);
+    public void removeProductToPurchase(String medicineName){
+        warehouseManager.AddToWarehouse(medicineName);
     }
     
+    public void CancelSale(List<String> purchases){
+        int indexMedicineName = 0;
+        String[] productData ;
+        for(String product: purchases){
+            productData = product.split("  ");
+            removeProductToPurchase(productData[indexMedicineName]);
+        }
+        
+    }
     
 }

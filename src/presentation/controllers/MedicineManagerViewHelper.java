@@ -7,8 +7,8 @@ package presentation.controllers;
 
 import Entitys.Medicine;
 import Entitys.Supplier;
-import bussiness.MedicineManager;
-import bussiness.SupplierManager;
+import bussiness.MedicineHandler;
+import bussiness.SupplierHandler;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,7 +84,7 @@ public class MedicineManagerViewHelper extends ViewHelper {
         
         if(!isEmptyList()){
             if(!hasDataChanged()){
-                MedicineManager medicineManager = MedicineManager.GetInstance();
+                MedicineHandler medicineManager = MedicineHandler.GetInstance();
                 String supplierName = getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
             
                 List<Medicine> medicineList = medicineManager.getMedicinesBySupplierName(supplierName) ;
@@ -115,7 +115,7 @@ public class MedicineManagerViewHelper extends ViewHelper {
     
     private void loadSupplierRegisterToCombo(){
         
-        SupplierManager supplierManager = SupplierManager.GetInstance();
+        SupplierHandler supplierManager = SupplierHandler.GetInstance();
         ArrayList<Supplier> supplierList = supplierManager.getSupplierList();
         getMedicineManagerView().getCombo_medicineSupplier().removeAllItems();
         
@@ -165,7 +165,7 @@ public class MedicineManagerViewHelper extends ViewHelper {
         int rowIndex = getMedicineManagerView().getTable_medicineTable().getSelectedRow();
         String medicineSupplier = getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
-        SupplierManager supplierManager = SupplierManager.GetInstance();
+        SupplierHandler supplierManager = SupplierHandler.GetInstance();
         Supplier supplier = supplierManager.getSupplierData(medicineSupplier);
         supplier.getMedicines().remove(rowIndex);
         

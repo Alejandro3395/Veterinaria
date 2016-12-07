@@ -8,7 +8,7 @@ import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 
 /**
-* class: ClientManager (ClientManager.java)
+* class: ClientHandler (ClientHandler.java)
 * @author: Manuel Bojorquez
 * 
 * date: October 27, 2016
@@ -19,8 +19,8 @@ import java.util.ArrayList;
 * 
 */
 
-public class ClientManager {
-    private static final ClientManager clientManager = new ClientManager();
+public class ClientHandler extends  Receptionist<Client> {
+    private static final ClientHandler clientHandler = new ClientHandler();
     private ClientDAO clientDAO;
     
     /**
@@ -37,7 +37,7 @@ public class ClientManager {
     
 
     
-    public ClientManager(){
+    public ClientHandler(){
         this.clientDAO = ClientDAO.GetInstance();
     }
     
@@ -45,25 +45,14 @@ public class ClientManager {
     /**
      * This method returns an instance of the class that the other classes can
      * use.
-     * @return clientManager
+     * @return clientHandler
      */
-    public static ClientManager GetInstance(){
-        return clientManager;
+    public static ClientHandler GetInstance(){
+        return clientHandler;
     }
     
     
-    public void addClient(Client client)  {
-        clientDAO.add(client);
-    }
     
-    public void deleteClient(int id){
-        Client client =  (Client)(clientDAO.get(id));
-        clientDAO.delete(client);
-    }
-    
-    public void updateClient(Client client){
-        clientDAO.update(client);
-    }
     
     public Client getClient(int id){
         return (Client) clientDAO.get(id);
@@ -95,10 +84,6 @@ public class ClientManager {
         String clientPhoneNumber = data.get(phoneNumberIndex);
         String clientEmail = data.get(emailIndex);
         
-
-
-        
-        
         Client clientData;
         
         Address clientAddress = new Address(
@@ -123,20 +108,36 @@ public class ClientManager {
      */
     public void registerClient(ArrayList<String> clientData) throws InvalidFieldException{
             Client client = new Client(createClient(clientData));
-            clientManager.addClient(client);
+            register(client);
     }
 
     public void modifyClient(ArrayList<String> newClientData , int id) throws InvalidFieldException{
       Client client =  (getClient(id));
       Client updatedClient = createClient(newClientData);
       updatedClient.setId(client.getId());
-      updateClient(updatedClient);
+      edit(updatedClient);
     }
     
     public ArrayList<Client> getClientList(){
         ArrayList<Client> clientList;
         clientList = new ArrayList<Client> ( (ArrayList<Client>) clientDAO.getList() );
         return clientList; 
+    }
+
+    @Override
+    public void register(Client client) {
+        clientDAO.add(client);
+    }
+
+    @Override
+    public void edit(Client client) {
+        clientDAO.update(client);
+    }
+
+    @Override
+    public void remove(int id) {
+        Client client =  (Client)(clientDAO.get(id));
+        clientDAO.delete(client);
     }
     
 }

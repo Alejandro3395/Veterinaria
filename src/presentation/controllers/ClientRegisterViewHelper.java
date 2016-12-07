@@ -5,7 +5,7 @@
  */
 package presentation.controllers;
 
-import bussiness.ClientManager;
+import bussiness.ClientHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
@@ -66,7 +66,7 @@ public class ClientRegisterViewHelper extends DataViewHelper{
         
         if(isValidField){
             try{
-                ClientManager clientManager = ClientManager.GetInstance();
+                ClientHandler clientManager = ClientHandler.GetInstance();
                 clientManager.registerClient(clientData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Client");
                 updateManagerViewTable();

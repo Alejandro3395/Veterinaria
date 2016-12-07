@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import Entitys.Medicine;
-import bussiness.MedicineManager;
+import bussiness.MedicineHandler;
 import bussiness.ReportHandler;
 import bussiness.SalesManager;
 import java.text.DecimalFormat;
@@ -43,7 +43,7 @@ public class SalesViewHelper extends ViewHelper{
         if( salesViewHelper== null) {
          salesViewHelper =  new SalesViewHelper();
         }
-        salesViewHelper.loadProducts();
+        
         return salesViewHelper;
     }
     
@@ -56,9 +56,10 @@ public class SalesViewHelper extends ViewHelper{
     }
 
     private void closeWindow(){
+        SalesManager.getInstance().CancelSale(getPurchases());
         saleView.dispose();
         clearTable();
-        MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
+        EmployeeMainMenuViewHelper mainMenuViewHelper = EmployeeMainMenuViewHelper.getInstance();
         mainMenuViewHelper.loadView();
     }
     
@@ -66,10 +67,9 @@ public class SalesViewHelper extends ViewHelper{
     public void setSaleView(SalesView sellView) {
         this.saleView = sellView;
     }
+
     
     public void SetTotalCost(){
-        
-
         DecimalFormat numDecimales = new DecimalFormat("0.00");
         SalesManager salesManager = SalesManager.getInstance();
         totalCost = salesManager.calculateAmountToPay(getPurchases());
@@ -83,6 +83,7 @@ public class SalesViewHelper extends ViewHelper{
     
     @Override
     public void loadView() {
+        loadProducts();
         saleView.setVisible(true);
     }
 
@@ -96,7 +97,7 @@ public class SalesViewHelper extends ViewHelper{
     public void loadProducts(){
         
         comboBoxModel.removeAllElements();
-        MedicineManager medicineManager = MedicineManager.GetInstance();
+        MedicineHandler medicineManager = MedicineHandler.GetInstance();
         List<Medicine> productsList =  medicineManager.getMedicines();
         
         for(Medicine medicine : productsList){
@@ -104,9 +105,7 @@ public class SalesViewHelper extends ViewHelper{
             String item = medicine.getName() +"  $"+medicine.getCost();
             comboBoxModel.addElement(item);
         }
-        
-        
-        //Ponerlo quizas en un metodo aparte
+
         saleView.getProduct_list().setModel(comboBoxModel);
     }
     

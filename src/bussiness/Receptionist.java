@@ -12,12 +12,6 @@ package bussiness;
 public abstract class Receptionist<Entity> {
     public static String name;
 
-    
-    
-    
-    
-    
-    
     //-------------------
     // Registers new object into database
     public abstract void register(Entity entity);

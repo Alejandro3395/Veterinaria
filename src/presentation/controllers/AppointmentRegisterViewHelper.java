@@ -8,8 +8,8 @@ package presentation.controllers;
 import Entitys.Client;
 import Entitys.Pet;
 import bussiness.AppointmentManager;
-import bussiness.ClientManager;
-import bussiness.PetManager;
+import bussiness.ClientHandler;
+import bussiness.PetHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -134,7 +134,7 @@ public class AppointmentRegisterViewHelper extends DataViewHelper{
         
         if(!isEmptyList()){
             if(!hasDataChanged()){
-                PetManager petManager = PetManager.GetInstance();
+                PetHandler petManager = PetHandler.GetInstance();
                 String owner = appointmentRegisterView.getCombo_client().getSelectedItem().toString();                             
                 List<Pet> petList = petManager.getPetList(owner);
                 
@@ -155,7 +155,7 @@ public class AppointmentRegisterViewHelper extends DataViewHelper{
     }
     
     private void loadClientRegisterToCombo(){
-        ClientManager clientManager = ClientManager.GetInstance();
+        ClientHandler clientManager = ClientHandler.GetInstance();
         ArrayList<Client> clientList = clientManager.getClientList();
         appointmentRegisterView.getCombo_client().removeAllItems();
         

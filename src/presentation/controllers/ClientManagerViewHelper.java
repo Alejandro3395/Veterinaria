@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import Entitys.Client;
-import bussiness.ClientManager;
+import bussiness.ClientHandler;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -74,7 +74,7 @@ public class ClientManagerViewHelper extends ViewHelper {
         int rowCount = model.getRowCount();
         if(rowCount !=0){model.setRowCount(0);}
         
-        ClientManager clientManager = ClientManager.GetInstance();
+        ClientHandler clientManager = ClientHandler.GetInstance();
         
         ArrayList<Client> clientList = clientManager.getClientList() ;
         setTableContent(clientList);
@@ -111,8 +111,8 @@ public class ClientManagerViewHelper extends ViewHelper {
         
         int id = Integer.valueOf( getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
 
-        ClientManager clientManager = ClientManager.GetInstance();
-        clientManager.deleteClient(id);
+        ClientHandler clientManager = ClientHandler.GetInstance();
+        clientManager.remove(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Client");
         updateTable();
     }

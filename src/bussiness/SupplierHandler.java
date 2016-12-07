@@ -1,5 +1,5 @@
 /**
-* class: supplierManager (SupplierManager.java)
+* class: supplierHandler (SupplierManager.java)
 * @author: Diego Nicoli
 * 
 * date: October 27, 2016
@@ -22,8 +22,8 @@ import exceptions.InvalidFieldException;
  *
  * @author diego
  */
-public class SupplierManager extends Receptionist<Supplier> {
-    private static final SupplierManager supplierManager = new SupplierManager();
+public class SupplierHandler extends Receptionist<Supplier> {
+    private static final SupplierHandler supplierHandler = new SupplierHandler();
     private SupplierDAO supplierDAO;
     
     /**
@@ -36,7 +36,7 @@ public class SupplierManager extends Receptionist<Supplier> {
     
     
     
-    private SupplierManager(){
+    private SupplierHandler(){
         this.supplierDAO = SupplierDAO.GetInstance();
     }
     
@@ -46,8 +46,8 @@ public class SupplierManager extends Receptionist<Supplier> {
      * @return 
      */
     
-    public static SupplierManager GetInstance(){
-        return supplierManager;
+    public static SupplierHandler GetInstance(){
+        return supplierHandler;
     }
     
     
@@ -111,7 +111,7 @@ public class SupplierManager extends Receptionist<Supplier> {
     public void registerSupplier(ArrayList<String> supplierData) throws InvalidFieldException{
 
             Supplier supplier = new Supplier(createSupplier(supplierData));
-            supplierManager.register(supplier);
+            supplierHandler.register(supplier);
     }
 
     public void modifySupplier(ArrayList<String> newSupplierData , int id) throws InvalidFieldException{

@@ -9,6 +9,7 @@ import Entitys.Address;
 import Entitys.Doctor;
 import Entitys.Phone;
 import bussiness.DoctorHandler;
+import bussiness.SessionManager;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
@@ -46,10 +47,15 @@ public class DoctorManagerViewHelper extends ViewHelper {
         this.doctorManagerView = doctorManagerView;
     }
     
-    private void setTableContent(ArrayList<Doctor> doctorList){    
+    private void setTableContent(ArrayList<Doctor> doctorList){
+        Doctor actualDoctor = SessionManager.getCurrentDoctor();
         for(int index =0; index < doctorList.size(); index++ ){
             Doctor doctorData = doctorList.get(index) ;
-            insertDoctorToTable(doctorData);
+            
+            if(!(doctorData.getName().equals(actualDoctor.getName()))){
+              insertDoctorToTable(doctorData);  
+            }
+            
         }
     }
     

@@ -37,7 +37,9 @@ public class DoctorLoginViewHelper extends DataViewHelper{
 
     @Override
     protected void setEvents() {
-         doctorLoginView.getLogin_Bttn().addActionListener(actionEvent -> validateDoctorUserAccess() );
+        doctorLoginView.getLogin_Bttn().addActionListener(actionEvent -> validateDoctorUserAccess() );
+        doctorLoginView.getBtn_Cancel().addActionListener(actionEvent -> closeWindow() );
+
     }
     
     @Override
@@ -50,6 +52,12 @@ public class DoctorLoginViewHelper extends DataViewHelper{
         configureView( doctorLoginView );
         doctorLoginView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         setEvents();
+    }
+    
+    private void closeWindow(){
+        doctorLoginView.dispose();
+        clearFields();
+        LoginMainViewHelper.getInstance().loadView();
     }
 
     public void validateDoctorUserAccess(){
@@ -91,7 +99,7 @@ public class DoctorLoginViewHelper extends DataViewHelper{
    private void openMainMenuView(){
         doctorLoginView.dispose();
         clearFields();
-        MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
+        EmployeeMainMenuViewHelper mainMenuViewHelper = EmployeeMainMenuViewHelper.getInstance();
         mainMenuViewHelper.loadView();
     }
 
