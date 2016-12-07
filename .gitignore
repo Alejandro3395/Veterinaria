@@ -1,10 +1,10 @@
 nbproject/private/
 build/
 dist/
-*.xml
 *.properties
 !/src/Data/Mapping/Address.hbm.xml
 !/src/Data/Mapping/Doctor.hbm.xml
 !/src/Data/Mapping/Person.hbm.xml
 !/src/Data/Mapping/Phone.hbm.xml
+!/src/Data/Mapping/Appointment.hbm.xml
 /nbproject/
