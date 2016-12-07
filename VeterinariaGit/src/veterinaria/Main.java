@@ -5,32 +5,11 @@
  */
 package veterinaria;
 
-import Data.DAOs.AppointmentDAO;
-import Data.DAOs.ClientDAO;
-import Data.DAOs.EmployeeDAO;
-import Data.DAOs.SupplierDAO;
 import Data.SessionGenerator;
-import Entitys.Address;
-import Entitys.Appointment;
-import Entitys.Client;
-import Entitys.Employee;
-import Entitys.Medicine;
-import Entitys.Pet;
-import Entitys.Phone;
-import Entitys.Supplier;
-import Entitys.UserEmployee;
-import exceptions.InvalidFieldException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.swing.JFrame;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import presentation.controllers.InitialViewHelper;
-import presentation.controllers.LoginMainViewHelper;
-import presentation.views.LoginMainView;
+
 
 /**
  *
@@ -43,7 +22,7 @@ public class Main implements Runnable{
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)  throws InvalidFieldException   {
+    public static void main(String[] args)  {
         
         //myThread = new Thread(new Main());
         //myThread.start();
@@ -83,11 +62,13 @@ public class Main implements Runnable{
         
         
         JFrame.setDefaultLookAndFeelDecorated(true); //que nos permite dejar a Substance la decoracion ( por asi decirlo) 
-        SubstanceLookAndFeel.setSkin("org.jvnet.substance.theme.SubstanceLightAquaTheme"); // Setencia que aplica el skin Creme de Substance
+        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.MistAquaSkin"); // Setencia que aplica el skin Creme de Substance
+       // SubstanceLookAndFeel.setCurrentWatermark( new SubstanceImageWatermark("c:\\logo.jpg"));
+        //SubstanceLookAndFeel.setImageWatermarkOpacity(new Float(0.5));
         createInitialView();
     }
 
-    public static void createInitialView() throws InvalidFieldException {
+    public static void createInitialView() {
        InitialViewHelper.getInstance().loadView();
         
     }

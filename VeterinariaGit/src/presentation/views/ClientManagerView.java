@@ -39,17 +39,34 @@ public class ClientManagerView extends javax.swing.JFrame {
         table_clientTable = new javax.swing.JTable();
         btn_back = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(isActive());
 
-        btn_modifyClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/modify.png"))); // NOI18N
-        btn_modifyClient.setText("Modificar Cliente");
+        btn_modifyClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Modify.png"))); // NOI18N
+        btn_modifyClient.setText("Modificar ");
+        btn_modifyClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modifyClientActionPerformed(evt);
+            }
+        });
 
-        btn_addClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/add.png"))); // NOI18N
-        btn_addClient.setText("Añadir Cliente");
+        btn_addClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Add .png"))); // NOI18N
+        btn_addClient.setText("Registrar ");
+        btn_addClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addClientActionPerformed(evt);
+            }
+        });
 
-        btn_deleteClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/delete.png"))); // NOI18N
-        btn_deleteClient.setText("Eliminar Cliente");
+        btn_deleteClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Delete .png"))); // NOI18N
+        btn_deleteClient.setText("Eliminar ");
+        btn_deleteClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteClientActionPerformed(evt);
+            }
+        });
 
         table_clientTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,35 +93,39 @@ public class ClientManagerView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(table_clientTable);
 
-        btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/back-arrow.png"))); // NOI18N
+        btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/back.png"))); // NOI18N
         btn_back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_backActionPerformed(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Registros de Empleado");
+        jLabel2.setFont(new java.awt.Font("Lucida Fax", 0, 24)); // NOI18N
+        jLabel2.setText("Registro de Clientes");
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Client.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(257, 257, 257)
+                .addGap(197, 197, 197)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(30, 30, 30))
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_deleteClient)
-                        .addGap(96, 96, 96)
-                        .addComponent(btn_addClient)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_addClient)
+                        .addGap(165, 165, 165)
                         .addComponent(btn_modifyClient)))
                 .addGap(48, 48, 48))
         );
@@ -113,18 +134,21 @@ public class ClientManagerView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btn_back, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_modifyClient)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_modifyClient)
+                            .addComponent(btn_addClient))
                         .addGap(17, 17, 17))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_deleteClient)
-                        .addComponent(btn_addClient)))
+                    .addComponent(btn_deleteClient))
                 .addGap(30, 30, 30))
         );
 
@@ -134,6 +158,18 @@ public class ClientManagerView extends javax.swing.JFrame {
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_backActionPerformed
+
+    private void btn_addClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addClientActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_addClientActionPerformed
+
+    private void btn_deleteClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteClientActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_deleteClientActionPerformed
+
+    private void btn_modifyClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifyClientActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_modifyClientActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,7 +183,7 @@ public class ClientManagerView extends javax.swing.JFrame {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                   javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
                     break;
                 }
             }
@@ -241,6 +277,7 @@ public class ClientManagerView extends javax.swing.JFrame {
     private javax.swing.JButton btn_deleteClient;
     private javax.swing.JButton btn_modifyClient;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table_clientTable;
     // End of variables declaration//GEN-END:variables
