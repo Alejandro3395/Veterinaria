@@ -7,8 +7,8 @@ package presentation.controllers;
 
 import Entitys.Client;
 import Entitys.Pet;
-import bussiness.ClientManager;
-import bussiness.PetManager;
+import bussiness.ClientHandler;
+import bussiness.PetHandler;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.WindowConstants;
@@ -86,7 +86,7 @@ public class PetManagerViewHelper extends ViewHelper {
                 
                 
                 
-                PetManager petManager = PetManager.GetInstance();
+                PetHandler petManager = PetHandler.GetInstance();
                 String ownerName = getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
             
                 List<Pet> petList = petManager.getPetList(ownerName) ;
@@ -118,7 +118,7 @@ public class PetManagerViewHelper extends ViewHelper {
     
     private void loadClientRegisterToCombo(){
         
-        ClientManager clientManager = ClientManager.GetInstance();
+        ClientHandler clientManager = ClientHandler.GetInstance();
         ArrayList<Client> clientList = clientManager.getClientList();
         getPetManagerView().getCombo_petOwner().removeAllItems();
         
@@ -169,11 +169,11 @@ public class PetManagerViewHelper extends ViewHelper {
         int rowIndex = getPetManagerView().getTable_petTable().getSelectedRow();
         String petOwner = getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
         
-        ClientManager clientManager = ClientManager.GetInstance();
+        ClientHandler clientManager = ClientHandler.GetInstance();
         Client client = clientManager.getClientData(petOwner);
         client.getPets().remove(rowIndex);
         
-        clientManager.updateClient(client);
+        clientManager.edit(client);
         
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Pet");
         updateTable();

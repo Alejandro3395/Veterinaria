@@ -22,7 +22,7 @@ import java.util.List;
 
 
 
-public class PetManager {
+public class PetHandler {
     
      
     /**
@@ -34,12 +34,16 @@ public class PetManager {
     static final int  ageIndex = 1;
     static final int  ownerIndex = 3;
     
-    private static final PetManager petManager = new PetManager();
+    private static final PetHandler petHandler = new PetHandler();
     
-    public PetManager(){
+    public PetHandler(){
        
     }
     
+     /**
+     * This method returns an instance of the class that the other classes can
+     * use.
+     * @return     
      /**
      * This method returns an instance of the class that the other classes can
      * use.
@@ -47,24 +51,10 @@ public class PetManager {
      */
     
     
-    public static PetManager GetInstance(){
-        return petManager;
+    public static PetHandler GetInstance(){
+        return petHandler;
     }
-    
-    
-    
-    
-     /**
-     * The method recieves the data array from the view and parse it 
-     * so that the Pet entity can understand it, finally we create a 
-     * new entity.
-     * 
-     * @paramdata
-     * @return data
-     * @throws InvalidFieldException 
-     */
-    
-
+  
          
         /**
      * The method recieves the data array from the view and parse it 
@@ -91,10 +81,10 @@ public class PetManager {
     public void registerPet(ArrayList<String> petData,String petOwner) throws InvalidFieldException{
 
             Pet pet = new Pet(createPet(petData));
-            ClientManager clientManager = ClientManager.GetInstance();
+            ClientHandler clientManager = ClientHandler.GetInstance();
             Client client = clientManager.getClientData(petOwner); //aqui se llama a lo de get por nombre
             client.addPets(pet);
-            clientManager.updateClient(client);
+            clientManager.edit(client);
     }
 
 
@@ -104,15 +94,15 @@ public class PetManager {
             Pet pet = petList.get(index);
             Pet updatedPet = createPet(newPetData);
             pet.setId(updatedPet.getId());
-            ClientManager clientManager = ClientManager.GetInstance();
+            ClientHandler clientManager = ClientHandler.GetInstance();
             Client client = clientManager.getClientData(petOwner); //aqui se llama a lo de get por nombre
             client.getPets().set(index,updatedPet);
-            clientManager.updateClient(client);
+            clientManager.edit(client);
     }
     
     
     public List<Pet> getPetList(String ownerName){
-        ClientManager clientManager = ClientManager.GetInstance();
+        ClientHandler clientManager = ClientHandler.GetInstance();
         
         Client ownerData = clientManager.getClientData(ownerName);
         List<Pet> petList;

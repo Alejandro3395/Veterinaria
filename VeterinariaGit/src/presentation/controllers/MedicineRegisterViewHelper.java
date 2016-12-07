@@ -13,7 +13,7 @@
 package presentation.controllers;
 
 import Entitys.Medicine;
-import bussiness.MedicineManager;
+import bussiness.MedicineHandler;
 import exceptions.InvalidFieldException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -107,7 +107,7 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         
         if(isValidField){
             try{
-                MedicineManager medicineManager = MedicineManager.GetInstance();
+                MedicineHandler medicineManager = MedicineHandler.GetInstance();
                 medicineManager.registerMedicine(medicineData,supplier);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Medicine");
                 updateManagerViewTable();

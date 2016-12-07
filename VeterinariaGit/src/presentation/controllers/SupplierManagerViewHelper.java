@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import Entitys.Supplier;
-import bussiness.SupplierManager;
+import bussiness.SupplierHandler;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -76,7 +76,7 @@ public class SupplierManagerViewHelper extends ViewHelper {
         int rowCount = model.getRowCount();
         if(rowCount !=0){model.setRowCount(0);}
         
-        SupplierManager supplierManager = SupplierManager.GetInstance();
+        SupplierHandler supplierManager = SupplierHandler.GetInstance();
         
         ArrayList<Supplier> supplierList = supplierManager.getSupplierList() ;
         setTableContent(supplierList);
@@ -113,8 +113,8 @@ public class SupplierManagerViewHelper extends ViewHelper {
         
         int id = Integer.valueOf( getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
 
-        SupplierManager supplierManager = SupplierManager.GetInstance();
-        supplierManager.deleteSupplier(id);
+        SupplierHandler supplierManager = SupplierHandler.GetInstance();
+        supplierManager.remove(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Supplier");
         updateTable();
     }

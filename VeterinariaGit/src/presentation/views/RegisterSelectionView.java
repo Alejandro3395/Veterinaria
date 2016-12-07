@@ -47,7 +47,7 @@ public class RegisterSelectionView extends javax.swing.JFrame {
         lbl_tittle.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
         lbl_tittle.setText("Registro");
 
-        btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Seguir.png"))); // NOI18N
+        btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/back.png"))); // NOI18N
 
         btn_client.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Client.png"))); // NOI18N
         btn_client.setText("Cliente");
@@ -90,8 +90,8 @@ public class RegisterSelectionView extends javax.swing.JFrame {
             }
         });
 
-        btn_product.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/dog-food.png"))); // NOI18N
-        btn_product.setText("Producto");
+        btn_product.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/medicina.png"))); // NOI18N
+        btn_product.setText("Medicamento");
         btn_product.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_product.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btn_product.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -152,7 +152,7 @@ public class RegisterSelectionView extends javax.swing.JFrame {
                         .addComponent(btn_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btn_employee, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_pet, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_doctor, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_product, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))

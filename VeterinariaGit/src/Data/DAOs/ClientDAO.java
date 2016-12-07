@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class ClientDAO extends GeneralDAO<Client> {
 
-    private static final ClientDAO clientDAO = new ClientDAO();
+     private static final ClientDAO clientDAO = new ClientDAO();
 
     public ClientDAO() {
     }

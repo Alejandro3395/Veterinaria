@@ -54,6 +54,7 @@ public class AppointmentManagerViewHelper extends ViewHelper {
         getAppointmentManagerView().getBtn_addAppointment().addActionListener(actionEvent -> openRegisterView());
         getAppointmentManagerView().getBtn_modifyAppointment().addActionListener(actionEvent -> openModificationView());
         getAppointmentManagerView().getBtn_deleteAppointment().addActionListener(actionEvent -> displayConfirmationMessage());
+        getAppointmentManagerView().getBtn_startAppointment().addActionListener(actionEvent -> startAppointment());
         getAppointmentManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
     }
     
@@ -110,7 +111,7 @@ public class AppointmentManagerViewHelper extends ViewHelper {
     
     private void closeWindow(){
         getAppointmentManagerView().dispose();
-        MainMenuViewHelper.getInstance().loadView();
+        EmployeeMainMenuViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
@@ -141,6 +142,22 @@ public class AppointmentManagerViewHelper extends ViewHelper {
         appointmentManagerView.dispose();
         AppointmentRegisterViewHelper appointmentRegisterViewHelper = AppointmentRegisterViewHelper.getInstance();
         appointmentRegisterViewHelper.loadView();
+    }
+    
+    private void startAppointment(){
+        if(isRowSelected()){
+            appointmentManagerView.dispose();
+            int row = getAppointmentManagerView().getTable_appointmentTable().getSelectedRow();
+        
+            int id = Integer.valueOf( getAppointmentManagerView().getTable_appointmentTable().getValueAt(row, 0).toString() );
+
+            AppointmentManager.GetInstance().startAppointment(id);
+            AppointmentViewHelper appointmentHelper = AppointmentViewHelper.getInstance();
+            appointmentHelper.loadView();
+        }else{
+            getNotifier().showWarningMessage( "Porfavor elije un registro" );
+        }
+        
     }
     
     private void insertAppoitmentToTable(Appointment appointment){

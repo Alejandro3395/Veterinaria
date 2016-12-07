@@ -1,5 +1,5 @@
 /**
-* class: supplierManager (SupplierManager.java)
+* class: supplierHandler (SupplierManager.java)
 * @author: Diego Nicoli
 * 
 * date: October 27, 2016
@@ -22,8 +22,8 @@ import exceptions.InvalidFieldException;
  *
  * @author diego
  */
-public class SupplierManager {
-    private static final SupplierManager supplierManager = new SupplierManager();
+public class SupplierHandler extends Receptionist<Supplier> {
+    private static final SupplierHandler supplierHandler = new SupplierHandler();
     private SupplierDAO supplierDAO;
     
     /**
@@ -36,7 +36,7 @@ public class SupplierManager {
     
     
     
-    private SupplierManager(){
+    private SupplierHandler(){
         this.supplierDAO = SupplierDAO.GetInstance();
     }
     
@@ -46,21 +46,24 @@ public class SupplierManager {
      * @return 
      */
     
-    public static SupplierManager GetInstance(){
-        return supplierManager;
+    public static SupplierHandler GetInstance(){
+        return supplierHandler;
     }
     
     
-    private void addSupplier(Supplier supplier) {
+    @Override
+    public void register(Supplier supplier) {
         supplierDAO.add(supplier);
     }
 
-    public void deleteSupplier(int id){
+    @Override
+    public void remove(int id){
         Supplier supplier =  (Supplier)(supplierDAO.get(id));
         supplierDAO.delete(supplier);
     }
     
-    public void updateSupplier(Supplier supplier){
+    @Override
+    public void edit(Supplier supplier){
         supplierDAO.update(supplier);
     }
     
@@ -108,7 +111,7 @@ public class SupplierManager {
     public void registerSupplier(ArrayList<String> supplierData) throws InvalidFieldException{
 
             Supplier supplier = new Supplier(createSupplier(supplierData));
-            supplierManager.addSupplier(supplier);
+            supplierHandler.register(supplier);
     }
 
     public void modifySupplier(ArrayList<String> newSupplierData , int id) throws InvalidFieldException{
@@ -116,7 +119,7 @@ public class SupplierManager {
             Supplier supplier =  (getSupplier(id));
             Supplier updatedSupplier = createSupplier(newSupplierData);
             updatedSupplier.setId_Supplier(supplier.getId_Supplier());
-            updateSupplier(updatedSupplier);
+            edit(updatedSupplier);
 
     }
     

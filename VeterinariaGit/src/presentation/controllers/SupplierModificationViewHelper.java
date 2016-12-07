@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import Entitys.Supplier;
-import bussiness.SupplierManager;
+import bussiness.SupplierHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
@@ -60,7 +60,7 @@ public class SupplierModificationViewHelper extends DataViewHelper {
         int row = SupplierManagerViewHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getSelectedRow();
         int id = Integer.valueOf( SupplierManagerViewHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
         
-        SupplierManager supplierManager = SupplierManager.GetInstance();
+        SupplierHandler supplierManager = SupplierHandler.GetInstance();
         Supplier supplier =  supplierManager.getSupplier(id) ;
         
         setData(supplier);
@@ -78,7 +78,7 @@ public class SupplierModificationViewHelper extends DataViewHelper {
         
         if( isValidField ){
             try{
-                SupplierManager supplierManager = SupplierManager.GetInstance();
+                SupplierHandler supplierManager = SupplierHandler.GetInstance();
                 supplierManager.modifySupplier(data,id);
                 getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Supplier");
                 updateManagerViewTable();

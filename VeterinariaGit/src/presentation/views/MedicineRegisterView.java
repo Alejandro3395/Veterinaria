@@ -47,13 +47,13 @@ public class MedicineRegisterView extends javax.swing.JFrame {
         lbl_productExpirationDate = new javax.swing.JLabel();
         lbl_productDose = new javax.swing.JLabel();
         spinner_productDoseQuantity = new javax.swing.JSpinner();
-        combo_productDoseQuantityType = new javax.swing.JComboBox<String>();
+        combo_productDoseQuantityType = new javax.swing.JComboBox<>();
         spinner_productDosePeriod = new javax.swing.JSpinner();
-        combo_dosePeriodType = new javax.swing.JComboBox<String>();
+        combo_dosePeriodType = new javax.swing.JComboBox<>();
         lbl_productDoseQuantity = new javax.swing.JLabel();
         lbl_productDosePeriod = new javax.swing.JLabel();
         lbl_productAdmnistrationWay = new javax.swing.JLabel();
-        combo_productAdministrationWay = new javax.swing.JComboBox<String>();
+        combo_productAdministrationWay = new javax.swing.JComboBox<>();
         dateChooser = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
 
@@ -87,14 +87,18 @@ public class MedicineRegisterView extends javax.swing.JFrame {
 
         lbl_productDose.setText("Dosis:");
 
-        combo_productDoseQuantityType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pastillas", "Gotas" }));
+        spinner_productDoseQuantity.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+
+        combo_productDoseQuantityType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pastillas", "Gotas" }));
         combo_productDoseQuantityType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 combo_productDoseQuantityTypeActionPerformed(evt);
             }
         });
 
-        combo_dosePeriodType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Minutos", "Horas", "Dias" }));
+        spinner_productDosePeriod.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+
+        combo_dosePeriodType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minutos", "Horas", "Dias" }));
 
         lbl_productDoseQuantity.setText("Cantidad:");
 
@@ -102,7 +106,7 @@ public class MedicineRegisterView extends javax.swing.JFrame {
 
         lbl_productAdmnistrationWay.setText("Administracion:");
 
-        combo_productAdministrationWay.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        combo_productAdministrationWay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         dateChooser.setDateFormatString("yyyy-MM-dd");
 
@@ -118,20 +122,18 @@ public class MedicineRegisterView extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(lbl_productDoseQuantity)
-                            .addGap(18, 18, 18)
-                            .addComponent(spinner_productDoseQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(spinner_productDoseQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(combo_productDoseQuantityType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(lbl_productDosePeriod)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(spinner_productDosePeriod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btn_cancel)
-                                    .addGap(48, 48, 48)))
+                                    .addComponent(lbl_productDosePeriod)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(spinner_productDosePeriod, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btn_cancel))
+                            .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(btn_register)
                                 .addComponent(combo_dosePeriodType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))

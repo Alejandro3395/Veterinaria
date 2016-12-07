@@ -88,6 +88,14 @@ public class AppointmentManager extends Receptionist<Appointment> {
         return appointment;
     }
     
+    public void startAppointment(int id){
+        
+        Appointment appointment = getAppointment(id);
+        appointment.setStatus("STARTED");
+        edit(appointment);
+        
+    }
+    
     private Date getDate(String date) throws InvalidFieldException{
         
         Date appointmentDate = null;

@@ -7,6 +7,7 @@ package presentation.controllers;
 
 import Entitys.Employee;
 import bussiness.EmployeeHandler;
+import bussiness.Receptionist;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -133,9 +134,17 @@ public class EmployeeManagerViewHelper extends ViewHelper {
     }
     
     private void setTableContent(ArrayList<Employee> employeeList){    
+        
+       String actualEmployee =  Receptionist.name;
+        
         for(int index =0; index < employeeList.size(); index++ ){
             Employee employeeData = employeeList.get(index) ;
-            addEmployeeToTable(employeeData);
+            
+            if( !(employeeData.getName().equals(actualEmployee)) ){
+                addEmployeeToTable(employeeData);
+            }
+            
+            
         }
     }
     

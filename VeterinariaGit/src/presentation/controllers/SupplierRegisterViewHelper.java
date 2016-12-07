@@ -5,7 +5,7 @@
  */
 package presentation.controllers;
 
-import bussiness.SupplierManager;
+import bussiness.SupplierHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
@@ -89,7 +89,7 @@ public class SupplierRegisterViewHelper extends DataViewHelper{
         
         if(isValidField){
             try{
-                SupplierManager supplierManager = SupplierManager.GetInstance();
+                SupplierHandler supplierManager = SupplierHandler.GetInstance();
                 supplierManager.registerSupplier(supplierData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el proveedor");
                 updateManagerViewTable();

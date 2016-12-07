@@ -11,7 +11,7 @@
 */
 package presentation.controllers;
 
-import bussiness.PetManager;
+import bussiness.PetHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
@@ -105,7 +105,7 @@ public class PetRegisterViewHelper extends DataViewHelper {
         
         if(isValidField){
             try{
-               PetManager petManager = PetManager.GetInstance();
+               PetHandler petManager = PetHandler.GetInstance();
                petManager.registerPet(petData,owner); 
                getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Pet");
                updateManagerViewTable();                

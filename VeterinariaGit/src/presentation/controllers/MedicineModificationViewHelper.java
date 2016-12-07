@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import Entitys.Medicine;
-import bussiness.MedicineManager;
+import bussiness.MedicineHandler;
 import exceptions.InvalidFieldException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,7 +67,7 @@ public class MedicineModificationViewHelper extends DataViewHelper {
         int rowIndex = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
         String medicineSupplier = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
-        MedicineManager medicineManager = MedicineManager.GetInstance();
+        MedicineHandler medicineManager = MedicineHandler.GetInstance();
         List<Medicine> medicineList =  medicineManager.getMedicinesBySupplierName(medicineSupplier);
         Medicine medicine = medicineList.get(rowIndex);
         
@@ -87,7 +87,7 @@ public class MedicineModificationViewHelper extends DataViewHelper {
         
         if( isValidField ){
             try{
-                MedicineManager medicineManager = MedicineManager.GetInstance();
+                MedicineHandler medicineManager = MedicineHandler.GetInstance();
                 medicineManager.modifyMedicine(data,medicineOwner,id);
                 getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el medicamento");
                 updateManagerViewTable();

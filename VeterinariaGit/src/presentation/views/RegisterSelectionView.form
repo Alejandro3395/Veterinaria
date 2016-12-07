@@ -75,7 +75,7 @@
                   <Component id="btn_employee" min="-2" pref="94" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btn_pet" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
                   <Component id="btn_doctor" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
                   <Component id="btn_product" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
     <Component class="javax.swing.JButton" name="btn_back">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Assets/Module1/icons-large/Seguir.png"/>
+          <Image iconType="3" name="/Assets/Module1/icons-large/back.png"/>
         </Property>
       </Properties>
     </Component>
@@ -159,9 +159,9 @@
     <Component class="javax.swing.JButton" name="btn_product">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Assets/Module1/icons-large/dog-food.png"/>
+          <Image iconType="3" name="/Assets/Module1/icons-large/medicina.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Producto"/>
+        <Property name="text" type="java.lang.String" value="Medicamento"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
         <Property name="verticalAlignment" type="int" value="1"/>
         <Property name="verticalTextPosition" type="int" value="3"/>

@@ -6,8 +6,8 @@
 package presentation.controllers;
 
 import Entitys.Pet;
-import bussiness.ClientManager;
-import bussiness.PetManager;
+import bussiness.ClientHandler;
+import bussiness.PetHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +65,7 @@ public class PetModificationViewHelper extends DataViewHelper {
         
         String petOwner = PetManagerViewHelper.getInstance().getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
         
-        PetManager petManager = PetManager.GetInstance();
+        PetHandler petManager = PetHandler.GetInstance();
         List<Pet> petList =  petManager.getPetList(petOwner);
         Pet pet = petList.get(id);
         
@@ -85,7 +85,7 @@ public class PetModificationViewHelper extends DataViewHelper {
         
         if( isValidField ){
             try{
-               PetManager petManager = PetManager.GetInstance();
+               PetHandler petManager = PetHandler.GetInstance();
                petManager.modifyPet(data,petOwner,id);
                getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Pet");
                updateManagerViewTable();

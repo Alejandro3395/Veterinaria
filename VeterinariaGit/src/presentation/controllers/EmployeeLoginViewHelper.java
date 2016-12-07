@@ -51,8 +51,15 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
     @Override
     protected void setEvents() {
         employeeLoginView.getLogin_Bttn().addActionListener( actionEvent -> validateEmployeeUserAccess() );
+        employeeLoginView.getBtn_Cancel().addActionListener(actionEvent -> closeWindow() );
     }
    
+     private void closeWindow(){
+        employeeLoginView.dispose();
+        clearFields();
+        LoginMainViewHelper.getInstance().loadView();
+    }
+     
     /*Posiblemente habra que separar este metodo en 2*/
     public void validateEmployeeUserAccess(){
         ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
@@ -95,7 +102,7 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
      private void openMainMenuView(){
         employeeLoginView.dispose();
         clearFields();
-        MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
+        EmployeeMainMenuViewHelper mainMenuViewHelper = EmployeeMainMenuViewHelper.getInstance();
         mainMenuViewHelper.loadView();
     }
 

@@ -20,8 +20,7 @@ import java.util.List;
  */
 public class SessionManager {
     private static final SessionManager sessionManager = new SessionManager();
-    private static  String currentEmployeeName;
-    private static  String currentDoctorName;
+    private static  Doctor currentDoctor;
     private DoctorDAO doctorDAO;
     private EmployeeDAO employeeDAO;
     private static int nameIndex = 0;
@@ -32,26 +31,17 @@ public class SessionManager {
         this.employeeDAO =  EmployeeDAO.GetInstance();
     }
 
-    public static String getCurrentEmployeeName() {
-        return currentEmployeeName;
+
+
+    public static Doctor getCurrentDoctor() {
+        return currentDoctor;
     }
 
-    public static void setCurrentEmployeeName(String currentEmployeeName) {
-        SessionManager.currentEmployeeName = currentEmployeeName;
+    public static void setCurrentDoctor(Doctor currentDoctor) {
+        SessionManager.currentDoctor = currentDoctor;
     }
 
-    public static String getCurrentDoctorName() {
-        return currentDoctorName;
-    }
 
-    public static void setCurrentDoctorName(String currentDoctorName) {
-        SessionManager.currentDoctorName = currentDoctorName;
-    }
-
-    
-    
-    
-    
     public static SessionManager GetInstance(){
         return sessionManager;
     }
@@ -61,14 +51,13 @@ public class SessionManager {
          Boolean isValid = false;
          UserDoctor userDoctor;
          doctorData = doctorDAO.getDoctorList();
-         
-         
          for(Doctor doctor : doctorData){
              userDoctor = doctor.getUser();
              if( dataUserDoctor.get(nameIndex).equals( userDoctor.getUserName() ) &&
                  dataUserDoctor.get(passwordIndex).equals( userDoctor.getUserPassword()) ){
                  isValid= true;
-                 setCurrentDoctorName(doctor.getName());
+                 setCurrentDoctor(doctor);
+                 
              }   
          }
          
@@ -86,7 +75,7 @@ public class SessionManager {
              if( dataUserEmployee.get(nameIndex).equals( userEmployee.getUserName() ) &&
                  dataUserEmployee.get(passwordIndex).equals( userEmployee.getUserPassword()) ){
                  isValid= true;
-                  setCurrentEmployeeName(employee.getName());
+                  Receptionist.name=employee.getName();
              }   
          }
          return isValid;

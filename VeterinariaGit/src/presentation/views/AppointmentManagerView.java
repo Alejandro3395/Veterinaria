@@ -39,7 +39,7 @@ public class AppointmentManagerView extends javax.swing.JFrame {
         table_appointmentTable = new javax.swing.JTable();
         btn_back = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btn_startAppointment = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,10 +92,10 @@ public class AppointmentManagerView extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Lucida Fax", 0, 24)); // NOI18N
         jLabel2.setText("Consultas");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/consulta 1.png"))); // NOI18N
-        jButton1.setText("Iniciar Cita");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_startAppointment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/consulta 1.png"))); // NOI18N
+        btn_startAppointment.setText("Iniciar Cita");
+        btn_startAppointment.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_startAppointment.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,7 +118,7 @@ public class AppointmentManagerView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_modifyAppointment)))
                 .addGap(32, 32, 32)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_startAppointment, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -140,7 +140,7 @@ public class AppointmentManagerView extends javax.swing.JFrame {
                         .addGap(62, 62, 62))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(99, 99, 99)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_startAppointment, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -226,11 +226,11 @@ public class AppointmentManagerView extends javax.swing.JFrame {
     }
 
     public JButton getjButton1() {
-        return jButton1;
+        return btn_startAppointment;
     }
 
     public void setjButton1(JButton jButton1) {
-        this.jButton1 = jButton1;
+        this.btn_startAppointment = jButton1;
     }
 
     public JLabel getjLabel2() {
@@ -257,6 +257,14 @@ public class AppointmentManagerView extends javax.swing.JFrame {
         this.table_appointmentTable = table_appointmentTable;
     }
 
+    public JButton getBtn_startAppointment() {
+        return btn_startAppointment;
+    }
+
+    public void setBtn_startAppointment(JButton btn_startAppointment) {
+        this.btn_startAppointment = btn_startAppointment;
+    }
+
 
     
 
@@ -265,7 +273,7 @@ public class AppointmentManagerView extends javax.swing.JFrame {
     private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_deleteAppointment;
     private javax.swing.JButton btn_modifyAppointment;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_startAppointment;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table_appointmentTable;

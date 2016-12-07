@@ -38,12 +38,13 @@ public class DoctorLoginView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         doctorPassword = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
+        btn_Cancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("User:");
+        jLabel1.setText("Usuario:");
 
-        jLabel2.setText("Password:");
+        jLabel2.setText("Contraseña:");
 
         Field_UserDoctor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,7 +53,7 @@ public class DoctorLoginView extends javax.swing.JFrame {
         });
 
         login_Bttn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Login.png"))); // NOI18N
-        login_Bttn.setText("Enter");
+        login_Bttn.setText("Entrar");
         login_Bttn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 login_BttnActionPerformed(evt);
@@ -60,7 +61,7 @@ public class DoctorLoginView extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Lucida Fax", 3, 24)); // NOI18N
-        jLabel3.setText("Doctor Login");
+        jLabel3.setText("Login Doctor");
 
         doctorPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,6 +70,9 @@ public class DoctorLoginView extends javax.swing.JFrame {
         });
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/doctor.png"))); // NOI18N
+
+        btn_Cancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Cancel.png"))); // NOI18N
+        btn_Cancel.setText("Cancelar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,21 +85,24 @@ public class DoctorLoginView extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Field_UserDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(10, 10, 10))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(login_Bttn)
+                                .addComponent(login_Bttn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                                .addComponent(btn_Cancel))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(Field_UserDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(10, 10, 10))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(doctorPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,9 +119,11 @@ public class DoctorLoginView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(doctorPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(33, 33, 33)
-                .addComponent(login_Bttn)
-                .addGap(27, 27, 27))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(login_Bttn)
+                    .addComponent(btn_Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -183,6 +192,14 @@ public class DoctorLoginView extends javax.swing.JFrame {
         this.doctorPassword = doctorPassword;
     }
 
+    public JButton getBtn_Cancel() {
+        return btn_Cancel;
+    }
+
+    public void setBtn_Cancel(JButton btn_Cancel) {
+        this.btn_Cancel = btn_Cancel;
+    }
+
  
 
     public JButton getLogin_Bttn() {
@@ -197,6 +214,7 @@ public class DoctorLoginView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Field_UserDoctor;
+    private javax.swing.JButton btn_Cancel;
     private javax.swing.JPasswordField doctorPassword;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

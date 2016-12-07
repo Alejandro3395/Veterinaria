@@ -6,8 +6,8 @@
 package presentation.controllers;
 
 import Entitys.Medicine;
-import bussiness.MedicineManager;
-import bussiness.ReportManager;
+import bussiness.MedicineHandler;
+import bussiness.ReportHandler;
 import bussiness.SalesManager;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -26,14 +26,16 @@ public class SalesViewHelper extends ViewHelper{
     private SalesView saleView;
     private DefaultComboBoxModel comboBoxModel;
     private DefaultTableModel Tablemodel;
-    private  static SalesViewHelper salesViewHelper;
-    private ReportManager reportManager = new ReportManager();
+    private static SalesViewHelper salesViewHelper;
     private double totalCost;
+    private SalesManager salesManager;
+    
     
     private SalesViewHelper(){
-        setSaleView(new SalesView());
+        setSaleView(new SalesView());  
         comboBoxModel= (DefaultComboBoxModel) saleView.getProduct_list().getModel();
         Tablemodel = (DefaultTableModel) saleView.getProductTable().getModel();
+        salesManager = SalesManager.getInstance();
         initializeView();
     }
 
@@ -41,6 +43,7 @@ public class SalesViewHelper extends ViewHelper{
         if( salesViewHelper== null) {
          salesViewHelper =  new SalesViewHelper();
         }
+        
         return salesViewHelper;
     }
     
@@ -53,9 +56,10 @@ public class SalesViewHelper extends ViewHelper{
     }
 
     private void closeWindow(){
+        SalesManager.getInstance().CancelSale(getPurchases());
         saleView.dispose();
         clearTable();
-        MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
+        EmployeeMainMenuViewHelper mainMenuViewHelper = EmployeeMainMenuViewHelper.getInstance();
         mainMenuViewHelper.loadView();
     }
     
@@ -63,14 +67,10 @@ public class SalesViewHelper extends ViewHelper{
     public void setSaleView(SalesView sellView) {
         this.saleView = sellView;
     }
+
     
     public void SetTotalCost(){
-        
-
         DecimalFormat numDecimales = new DecimalFormat("0.00");
-        /*for(int i=0; i< Tablemodel.getRowCount();i++){
-            totalCost = totalCost + (double) Tablemodel.getValueAt(i, 1);
-        }*/
         SalesManager salesManager = SalesManager.getInstance();
         totalCost = salesManager.calculateAmountToPay(getPurchases());
         saleView.getTotalSale_Field().setText(numDecimales.format(totalCost));
@@ -83,6 +83,7 @@ public class SalesViewHelper extends ViewHelper{
     
     @Override
     public void loadView() {
+        loadProducts();
         saleView.setVisible(true);
     }
 
@@ -90,14 +91,13 @@ public class SalesViewHelper extends ViewHelper{
     protected void initializeView() {
         configureView( saleView );
         saleView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
-        loadProducts();
         setEvents();
     }
    
     public void loadProducts(){
         
         comboBoxModel.removeAllElements();
-        MedicineManager medicineManager = MedicineManager.GetInstance();
+        MedicineHandler medicineManager = MedicineHandler.GetInstance();
         List<Medicine> productsList =  medicineManager.getMedicines();
         
         for(Medicine medicine : productsList){
@@ -105,9 +105,7 @@ public class SalesViewHelper extends ViewHelper{
             String item = medicine.getName() +"  $"+medicine.getCost();
             comboBoxModel.addElement(item);
         }
-        
-        
-        //Ponerlo quizas en un metodo aparte
+
         saleView.getProduct_list().setModel(comboBoxModel);
     }
     
@@ -116,9 +114,12 @@ public class SalesViewHelper extends ViewHelper{
        String[] medicineDataRow = medicineSelected.split("\\$");
        String medicineName= medicineDataRow[0];
        double medicinePrice = Double.valueOf(medicineDataRow[1]);
+       
+       if(salesManager.addProductToPurchase(medicineName)){
        Object[] rowMedicine = new Object[]{medicineName,medicinePrice};
        Tablemodel.addRow(rowMedicine);
        SetTotalCost();
+       }
        
     }
     
@@ -127,13 +128,14 @@ public class SalesViewHelper extends ViewHelper{
         if(isRowSelected()){
             int indexRowSelected = saleView.getProductTable().getSelectedRow();
             if(isDeletionConfirmed()){
+                salesManager.removeProductToPurchase((String) Tablemodel.getValueAt(indexRowSelected, 0));
                 
                 Tablemodel.removeRow(indexRowSelected);
             }
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
-        System.out.println(Tablemodel.getRowCount());
+        
         SetTotalCost();
     }
         
@@ -165,8 +167,6 @@ public class SalesViewHelper extends ViewHelper{
                 productAndPrice= productAndPrice.concat(String.valueOf(Tablemodel.getValueAt(numMaxRows, 0)));
                 productAndPrice= productAndPrice.concat(String.valueOf(Tablemodel.getValueAt(numMaxRows, 1))); 
                 purchases.add(productAndPrice);
-               // productAndPrice.split(" ");
-               System.out.println(productAndPrice);
         }
 
         
@@ -178,6 +178,7 @@ public class SalesViewHelper extends ViewHelper{
      private void BuildReport(){
          getPurchases();
          ReportHandler rh = ReportHandler.getInstance();
+        
          rh.BuildSaleReport(SalesManager.getInstance().calculateAmountToPay(getPurchases()));
          
          closeWindow();

@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import Entitys.Client;
-import bussiness.ClientManager;
+import bussiness.ClientHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
@@ -62,7 +62,7 @@ public class ClientModificationViewHelper extends DataViewHelper {
         int row = ClientManagerViewHelper.getInstance().getClientManagerView().getTable_clientTable().getSelectedRow();
         int id = Integer.valueOf( ClientManagerViewHelper.getInstance().getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
         
-        ClientManager clientManager = ClientManager.GetInstance();
+        ClientHandler clientManager = ClientHandler.GetInstance();
         Client client =  clientManager.getClient(id) ;
         
         setData(client);
@@ -80,7 +80,7 @@ public class ClientModificationViewHelper extends DataViewHelper {
         
         if( isValidField ){
             try{
-                ClientManager clientManager = ClientManager.GetInstance();
+                ClientHandler clientManager = ClientHandler.GetInstance();
                 clientManager.modifyClient(data,id);
                 getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Client");
                 updateManagerViewTable();
