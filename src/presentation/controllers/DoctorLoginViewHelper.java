@@ -99,8 +99,8 @@ public class DoctorLoginViewHelper extends DataViewHelper{
    private void openMainMenuView(){
         doctorLoginView.dispose();
         clearFields();
-        EmployeeMainMenuViewHelper mainMenuViewHelper = EmployeeMainMenuViewHelper.getInstance();
-        mainMenuViewHelper.loadView();
+        DoctorMainMenuViewHelper doctorMainMenuViewHelper = DoctorMainMenuViewHelper.getInstance();
+        doctorMainMenuViewHelper.loadView();
     }
 
     @Override

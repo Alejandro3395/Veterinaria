@@ -176,10 +176,9 @@ public class SalesViewHelper extends ViewHelper{
      //Metodo puesto aqui para prueba 
      // Checar nombres
      private void BuildReport(){
-         getPurchases();
          ReportHandler rh = ReportHandler.getInstance();
         
-         rh.BuildSaleReport(SalesManager.getInstance().calculateAmountToPay(getPurchases()));
+         rh.BuildSaleReport(totalCost);
          
          closeWindow();
      }

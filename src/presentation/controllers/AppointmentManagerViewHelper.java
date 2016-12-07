@@ -21,6 +21,7 @@ public class AppointmentManagerViewHelper extends ViewHelper {
     private static AppointmentManagerViewHelper appointmentManagerViewHelper = null;
     private AppointmentManagerView appointmentManagerView;
     
+    
     private AppointmentManagerViewHelper(){
         setAppointmentManagerView(new AppointmentManagerView());
         initializeView();
@@ -54,6 +55,7 @@ public class AppointmentManagerViewHelper extends ViewHelper {
         getAppointmentManagerView().getBtn_addAppointment().addActionListener(actionEvent -> openRegisterView());
         getAppointmentManagerView().getBtn_modifyAppointment().addActionListener(actionEvent -> openModificationView());
         getAppointmentManagerView().getBtn_deleteAppointment().addActionListener(actionEvent -> displayConfirmationMessage());
+        getAppointmentManagerView().getBtn_startAppointment().addActionListener(actionEvent -> startAppointment());
         getAppointmentManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
     }
     
@@ -89,9 +91,13 @@ public class AppointmentManagerViewHelper extends ViewHelper {
     
     private void openModificationView(){
         if(isRowSelected()){
-            appointmentManagerView.dispose();
-            AppointmentModificationViewHelper appointmentModificationViewHelper = AppointmentModificationViewHelper.getInstance();
-            appointmentModificationViewHelper.loadView();
+            if(isAppointmentAvailable()){
+                appointmentManagerView.dispose();
+                AppointmentModificationViewHelper appointmentModificationViewHelper = AppointmentModificationViewHelper.getInstance();
+                appointmentModificationViewHelper.loadView();
+            }else{
+                getNotifier().showWarningMessage( "La cita que elegiste no esta disponible" );
+            }
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -110,18 +116,23 @@ public class AppointmentManagerViewHelper extends ViewHelper {
     
     private void closeWindow(){
         getAppointmentManagerView().dispose();
-        EmployeeMainMenuViewHelper.getInstance().loadView();
+        DoctorMainMenuViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
-        int row = getAppointmentManagerView().getTable_appointmentTable().getSelectedRow();
+        if(isAppointmentAvailable()){
+            int row = getAppointmentManagerView().getTable_appointmentTable().getSelectedRow();
         
-        int id = Integer.valueOf( getAppointmentManagerView().getTable_appointmentTable().getValueAt(row, 0).toString() );
+            int id = Integer.valueOf( getAppointmentManagerView().getTable_appointmentTable().getValueAt(row, 0).toString() );
 
-        AppointmentManager appointmentManager = AppointmentManager.GetInstance();
-        appointmentManager.remove(id);
-        getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar la cita");
-        updateTable();
+            AppointmentManager appointmentManager = AppointmentManager.GetInstance();
+            appointmentManager.cancelAppointment(id);
+            getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar la cita");
+            updateTable();
+        }else{
+            getNotifier().showWarningMessage( "La cita que elegiste no esta disponible" );        
+        }
+        
     }
     
     private boolean isRowSelected(){
@@ -137,10 +148,47 @@ public class AppointmentManagerViewHelper extends ViewHelper {
         return result;
     }
     
+    private boolean isAppointmentAvailable(){
+        boolean result = true;
+        String FINISHEDSTATUS = "TERMINADA";
+        String CANCELEDSTATUS = "CANCELADA";
+        
+        int row = getAppointmentManagerView().getTable_appointmentTable().getSelectedRow();
+        String status = String.valueOf(getAppointmentManagerView().getTable_appointmentTable().getValueAt(row, 5).toString() );
+        
+        if((status.equals(FINISHEDSTATUS)) || (status.equals(CANCELEDSTATUS))){
+            result = false;
+        }
+        
+        return result;
+        
+    }
+    
     private void openRegisterView(){
         appointmentManagerView.dispose();
         AppointmentRegisterViewHelper appointmentRegisterViewHelper = AppointmentRegisterViewHelper.getInstance();
         appointmentRegisterViewHelper.loadView();
+    }
+    
+    private void startAppointment(){
+        if(isRowSelected()){
+            
+            if(isAppointmentAvailable()){
+                appointmentManagerView.dispose();
+                int row = getAppointmentManagerView().getTable_appointmentTable().getSelectedRow();
+                int id = Integer.valueOf( getAppointmentManagerView().getTable_appointmentTable().getValueAt(row, 0).toString() );
+                
+                AppointmentManager.GetInstance().startAppointment(id);
+                AppointmentViewHelper appointmentHelper = AppointmentViewHelper.getInstance();
+                appointmentHelper.loadView();
+            }else{
+                getNotifier().showWarningMessage( "La cita que elegiste no esta disponible" );
+            }
+            
+        }else{
+            getNotifier().showWarningMessage( "Porfavor elije un registro" );
+        }
+        
     }
     
     private void insertAppoitmentToTable(Appointment appointment){

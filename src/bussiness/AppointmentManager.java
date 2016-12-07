@@ -24,6 +24,8 @@ public class AppointmentManager extends Receptionist<Appointment> {
     private static final AppointmentManager appointmentManager = new AppointmentManager();
     private AppointmentDAO appointmentDAO;
     
+    private Appointment actualAppointment = null;
+    
     private static final int clientIndex = 0;
     private static final int petIndex = 1;
     private static final int dateIndex = 2;
@@ -62,6 +64,10 @@ public class AppointmentManager extends Receptionist<Appointment> {
         Appointment appointment =  (Appointment)(appointmentDAO.get(id));
         appointmentDAO.delete(appointment);
     }
+
+    public Appointment getActualAppointment() {
+        return actualAppointment;
+    }
     
     public void registerAppointment(ArrayList<String> appointmentData) throws InvalidFieldException{
         Appointment appointment = new Appointment(createAppointment(appointmentData));
@@ -84,8 +90,34 @@ public class AppointmentManager extends Receptionist<Appointment> {
         
         Date appointmentDate = getDate(date);
         
-        Appointment appointment = new Appointment(appointmentClient,appointmentPet,appointmentDate,appointmentHour,"PENDIENT");
+        Appointment appointment = new Appointment(appointmentClient,appointmentPet,appointmentDate,appointmentHour,"PENDIENTE");
         return appointment;
+    }
+    
+    public void startAppointment(int id){
+        
+        Appointment appointment = getAppointment(id);
+        appointment.setStatus("INICIADA");
+        edit(appointment);
+        
+        actualAppointment = appointment;
+    }
+    
+    public void finishAppointment(){
+        actualAppointment.setStatus("TERMINADA");
+        edit(actualAppointment);
+    }
+    
+    public void cancelAppointment(){
+        actualAppointment.setStatus("CANCELADA");
+        edit(actualAppointment);
+    }
+    
+    public void cancelAppointment(int id){
+        
+        Appointment appointment = getAppointment(id);
+        appointment.setStatus("CANCELADA");
+        edit(appointment);
     }
     
     private Date getDate(String date) throws InvalidFieldException{

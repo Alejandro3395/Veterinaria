@@ -98,13 +98,15 @@ public class MedicineHandler {
     public void modifyMedicine(ArrayList<String> newMedicineData , String medicineOwner,int index) throws InvalidFieldException{
 
             List<Medicine> medicineList =  getMedicinesBySupplierName(medicineOwner);
-            Medicine medicine = medicineList.get(index);
+            
+            Medicine medicine = medicineList.get(index-1);
+            
             Medicine updatedMedicine = createMedicine(newMedicineData);
             medicine.setId(updatedMedicine.getId());
 
             SupplierHandler supplierManager = SupplierHandler.GetInstance();
             Supplier supplier = supplierManager.getSupplierData(medicineOwner); //aqui se llama a lo de get por nombre
-            supplier.getMedicines().set(index,updatedMedicine);
+            supplier.getMedicines().set(index-1,updatedMedicine);
             supplierManager.edit(supplier);
     }
     
@@ -131,6 +133,10 @@ public class MedicineHandler {
         medicineList = new ArrayList<Medicine>  (supplierData.getMedicines());
         
         return medicineList; 
+    }
+    
+    public Medicine getMedicineByName(String medicineName){
+        return medicineDAO.getMedicineByName(medicineName);
     }
     
     public List<Medicine> getMedicines(){

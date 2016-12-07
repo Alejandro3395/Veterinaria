@@ -91,12 +91,12 @@ public class PetHandler {
     public void modifyPet(ArrayList<String> newPetData , String petOwner,int index) throws InvalidFieldException{
 
             List<Pet> petList =  getPetList(petOwner);
-            Pet pet = petList.get(index);
+            Pet pet = petList.get(index-1);
             Pet updatedPet = createPet(newPetData);
             pet.setId(updatedPet.getId());
             ClientHandler clientManager = ClientHandler.GetInstance();
             Client client = clientManager.getClientData(petOwner); //aqui se llama a lo de get por nombre
-            client.getPets().set(index,updatedPet);
+            client.getPets().set(index-1,updatedPet);
             clientManager.edit(client);
     }
     

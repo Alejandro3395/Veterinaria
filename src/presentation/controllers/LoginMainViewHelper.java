@@ -39,6 +39,8 @@ public class LoginMainViewHelper extends ViewHelper{
     protected void setEvents() {
         loginMainView.getDoctorLoginBttn().addActionListener(actionEvent -> openDoctorLoginView());
         loginMainView.getEmployeeLoginBttn().addActionListener( actionEvent -> openEmployeeLoginView());
+        loginMainView.getBtn_exit().addActionListener( actionEvent -> exit());
+
     }
 
     
@@ -66,4 +68,7 @@ public class LoginMainViewHelper extends ViewHelper{
         employeeLoginViewHelper.loadView();
     }
     
+    private void exit(){
+        System.exit(0);
+    }
 }

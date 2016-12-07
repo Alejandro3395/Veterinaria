@@ -67,7 +67,7 @@ public class PetModificationViewHelper extends DataViewHelper {
         
         PetHandler petManager = PetHandler.GetInstance();
         List<Pet> petList =  petManager.getPetList(petOwner);
-        Pet pet = petList.get(id);
+        Pet pet = petList.get(id-1);
         
         setData(pet);
     }

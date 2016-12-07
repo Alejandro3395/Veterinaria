@@ -6,6 +6,8 @@
 package bussiness;
 
 
+import Entitys.Doctor;
+import Entitys.Medicine;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -21,6 +23,7 @@ import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.BaseFont;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -86,21 +89,53 @@ public class ReportHandler {
         }
     }
     
-    public void BuildVeterinaryPrescription(){
+    public void BuildVeterinaryPrescription(String clientName,
+                                            String petName,
+                                            List<Medicine> medicines,
+                                            String comments,
+                                            Double totalCost){
         try{
             Document veterinaryPrescription = new Document(PageSize.A3.rotate());
             //Tal vez agregar la fecha al nombre de la receta
-             FileOutputStream fileOutputStream = new FileOutputStream("prescription.pdf");
-             PdfWriter.getInstance(veterinaryPrescription,fileOutputStream).setInitialLeading(20);
-             Image imagen = Image.getInstance("logo.jpeg"); 
-             veterinaryPrescription.open();
+            FileOutputStream fileOutputStream = new FileOutputStream("prescription.pdf");
+            PdfWriter.getInstance(veterinaryPrescription,fileOutputStream).setInitialLeading(20);
+            veterinaryPrescription.open();
              
-             BaseFont baseFont = BaseFont.createFont("Cookie.ttf",
-                     BaseFont.WINANSI, BaseFont.EMBEDDED);
+             //Encabezado
+            BuildHeaderPrescription(veterinaryPrescription, clientName, petName);
+            
+            //Cuerpo
+            veterinaryPrescription.add(new Chunk("\n"));
+            veterinaryPrescription.add(new Chunk("\n"));
+            veterinaryPrescription.add(new Chunk("\n"));
+            
+            PdfPTable table = new PdfPTable(3); 
+            table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+            table.getDefaultCell().setPaddingLeft(60);
+            
+            BuildBodyPrescription(medicines , veterinaryPrescription,totalCost ,table );
+            
+            BuildFooterPrescription(veterinaryPrescription, comments);
+            
+             
+            veterinaryPrescription.close();
+        }catch(Exception e){
+            System.err.println("Ocurrio un error: " +e);
+            System.exit(-1);
+        }
+    }
+    
+    private void BuildHeaderPrescription(Document veterinaryPrescription, 
+                                         String clientName, 
+                                         String petName) throws DocumentException, IOException{
+         BaseFont baseFont = BaseFont.createFont("Cookie.ttf",
+                                                     BaseFont.WINANSI , 
+                                                     BaseFont.EMBEDDED);
              Font font = new Font(baseFont);
              font.setStyle(Font.BOLDITALIC);
              font.setSize(35);
-             Paragraph p1 = new Paragraph("Dr."+" Nombre completo del doctor",font);
+             Doctor doctor = SessionManager.getCurrentDoctor();
+             Paragraph p1 = new Paragraph("Dr. "+doctor.getName(),font);
              p1.setAlignment(Element.ALIGN_CENTER);
              veterinaryPrescription.add(p1);
             // veterinaryPrescription.add(new Chunk("\n"));
@@ -108,16 +143,49 @@ public class ReportHandler {
              Font font2 = new Font();
              font2.setSize(20);
              
-             Paragraph p2 = new Paragraph("CEDULA PROFESIONAL" + " 12345679012",font2);
+             Paragraph p2 = new Paragraph("CEDULA PROFESIONAL  " + doctor.getIdentityCard() ,font2);
              
              p2.setAlignment(Element.ALIGN_CENTER);
              
              veterinaryPrescription.add(p2);
+             veterinaryPrescription.add(new Chunk("\n"));
+            Paragraph p3 = new Paragraph("Nombre del cliente: "+ clientName,font2);
+            veterinaryPrescription.add(p3);
+            Paragraph p4 = new Paragraph("Nombre de la mascota: "+ petName,font2);
+            veterinaryPrescription.add(p4);
+    }
+    
+    private void BuildBodyPrescription(List<Medicine> medicines, 
+                                       Document veterinaryPrescription,
+                                       Double totalCost,
+                                       PdfPTable table ) throws DocumentException{
+
+         for(Medicine medicine : medicines){
              
-             veterinaryPrescription.close();
-        }catch(Exception e){
-            
-        }
+                    table.addCell(medicine.getName());
+                    table.addCell(medicine.getDose());
+                    table.addCell(medicine.getAdministration());
+                   
+            }
+           
+
+            PdfPCell celdaFinal = new PdfPCell(new Paragraph("Total: " + totalCost)) ;
+            celdaFinal.setBorderWidthRight(0);
+            celdaFinal.setBorderWidthLeft(0);
+            celdaFinal.setBorderColorTop(BaseColor.DARK_GRAY);
+            celdaFinal.setBorderColorBottom(BaseColor.DARK_GRAY);
+            celdaFinal.setPaddingLeft(50);
+            // Indicamos cuantas columnas ocupa la celda
+            celdaFinal.setColspan(3);
+            celdaFinal.setPaddingLeft(235);
+            table.addCell(celdaFinal);
+            veterinaryPrescription.add(table);
+    }
+    
+    private void BuildFooterPrescription(Document veterinaryPrescription,
+                                         String comments ) throws DocumentException{
+        Paragraph p = new Paragraph(comments);
+        veterinaryPrescription.add(p);
     }
     
     
@@ -132,7 +200,12 @@ public class ReportHandler {
             
     }
     
-    private void BuildBodySaleReport(PdfPTable table, double totalCost, Document documento) throws DocumentException{
+    
+    
+    private void BuildBodySaleReport(PdfPTable table, 
+                                     double totalCost, 
+                                     Document documento) throws DocumentException{
+        
         List<String> purchases = SalesViewHelper.getInstance().getPurchases();
         String[] productData;
         int productName = 0;

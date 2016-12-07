@@ -48,14 +48,9 @@ public class DoctorManagerViewHelper extends ViewHelper {
     }
     
     private void setTableContent(ArrayList<Doctor> doctorList){
-        Doctor actualDoctor = SessionManager.getCurrentDoctor();
         for(int index =0; index < doctorList.size(); index++ ){
             Doctor doctorData = doctorList.get(index) ;
-            
-            if(!(doctorData.getName().equals(actualDoctor.getName()))){
-              insertDoctorToTable(doctorData);  
-            }
-            
+            insertDoctorToTable(doctorData);  
         }
     }
     

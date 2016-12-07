@@ -100,7 +100,7 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         
         boolean isValidField =!isEmptyFields(medicineData);
         
-            supplier = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
+        supplier = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
         
         String message="";
