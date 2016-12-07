@@ -30,7 +30,7 @@ public class DoctorLoginViewHelper extends DataViewHelper{
         }
         return doctorLoginViewHelper;
     }
-    
+
     public void setDoctorLoginView(DoctorLoginView doctorLoginView) {
         this.doctorLoginView = doctorLoginView;
     }
@@ -57,15 +57,22 @@ public class DoctorLoginViewHelper extends DataViewHelper{
         boolean isValidField =!isEmptyFields(data);
         boolean isValidUser = false;
         
-        
+        String message = "";
         if(isValidField){
             SessionManager sessionManager = SessionManager.GetInstance();
             isValidUser = sessionManager.doctorUserAuthentification(data);
+            if(isValidUser){
+                openMainMenuView();
+            }else{
+                message = "Usuario inexistente";
+                getNotifier().showWarningMessage( message );
+            }
+        }else{
+            message = "Datos invalidos";
+            getNotifier().showWarningMessage( message );
         }
         
-        if(isValidUser){
-            openMainMenuView();
-        }
+        
     }
     
     @Override
@@ -81,7 +88,7 @@ public class DoctorLoginViewHelper extends DataViewHelper{
         return data;
     }
     
-    private void openMainMenuView(){
+   private void openMainMenuView(){
         doctorLoginView.dispose();
         clearFields();
         MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();

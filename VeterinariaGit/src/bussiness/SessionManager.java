@@ -20,6 +20,8 @@ import java.util.List;
  */
 public class SessionManager {
     private static final SessionManager sessionManager = new SessionManager();
+    private static  String currentEmployeeName;
+    private static  String currentDoctorName;
     private DoctorDAO doctorDAO;
     private EmployeeDAO employeeDAO;
     private static int nameIndex = 0;
@@ -29,6 +31,26 @@ public class SessionManager {
         this.doctorDAO = DoctorDAO.GetInstance();
         this.employeeDAO =  EmployeeDAO.GetInstance();
     }
+
+    public static String getCurrentEmployeeName() {
+        return currentEmployeeName;
+    }
+
+    public static void setCurrentEmployeeName(String currentEmployeeName) {
+        SessionManager.currentEmployeeName = currentEmployeeName;
+    }
+
+    public static String getCurrentDoctorName() {
+        return currentDoctorName;
+    }
+
+    public static void setCurrentDoctorName(String currentDoctorName) {
+        SessionManager.currentDoctorName = currentDoctorName;
+    }
+
+    
+    
+    
     
     public static SessionManager GetInstance(){
         return sessionManager;
@@ -46,6 +68,7 @@ public class SessionManager {
              if( dataUserDoctor.get(nameIndex).equals( userDoctor.getUserName() ) &&
                  dataUserDoctor.get(passwordIndex).equals( userDoctor.getUserPassword()) ){
                  isValid= true;
+                 setCurrentDoctorName(doctor.getName());
              }   
          }
          
@@ -63,6 +86,7 @@ public class SessionManager {
              if( dataUserEmployee.get(nameIndex).equals( userEmployee.getUserName() ) &&
                  dataUserEmployee.get(passwordIndex).equals( userEmployee.getUserPassword()) ){
                  isValid= true;
+                  setCurrentEmployeeName(employee.getName());
              }   
          }
          return isValid;

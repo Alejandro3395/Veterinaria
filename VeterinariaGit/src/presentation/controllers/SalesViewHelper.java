@@ -8,16 +8,11 @@ package presentation.controllers;
 import Entitys.Medicine;
 import bussiness.MedicineManager;
 import bussiness.ReportManager;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.io.FileOutputStream;
+import bussiness.SalesManager;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import presentation.ViewHelper;
@@ -33,7 +28,7 @@ public class SalesViewHelper extends ViewHelper{
     private DefaultTableModel Tablemodel;
     private  static SalesViewHelper salesViewHelper;
     private ReportManager reportManager = new ReportManager();
-    private double totalCost=0;
+    private double totalCost;
     
     private SalesViewHelper(){
         setSaleView(new SalesView());
@@ -41,7 +36,6 @@ public class SalesViewHelper extends ViewHelper{
         Tablemodel = (DefaultTableModel) saleView.getProductTable().getModel();
         initializeView();
     }
-    
 
     public static SalesViewHelper getInstance(){
         if( salesViewHelper== null) {
@@ -50,24 +44,35 @@ public class SalesViewHelper extends ViewHelper{
         return salesViewHelper;
     }
     
-    
     @Override
     protected void setEvents() {
         saleView.getAddProductBttn().addActionListener(actionEvent -> InsertProductToTable());
         saleView.getDeleteProductBttn().addActionListener(actionEvent -> RemoveProductFromTable());
         saleView.getAceptSaleBttn().addActionListener(actionEvent -> BuildReport());
-        saleView.getCancelSaleBttn().addActionListener(actionEvent -> closeView());
+        saleView.getCancelSaleBttn().addActionListener(actionEvent -> closeWindow());
     }
 
+    private void closeWindow(){
+        saleView.dispose();
+        clearTable();
+        MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
+        mainMenuViewHelper.loadView();
+    }
+    
+    //quitar de aqui
     public void setSaleView(SalesView sellView) {
         this.saleView = sellView;
     }
     
     public void SetTotalCost(){
+        
+
         DecimalFormat numDecimales = new DecimalFormat("0.00");
-        for(int i=0; i< Tablemodel.getRowCount();i++){
+        /*for(int i=0; i< Tablemodel.getRowCount();i++){
             totalCost = totalCost + (double) Tablemodel.getValueAt(i, 1);
-        }
+        }*/
+        SalesManager salesManager = SalesManager.getInstance();
+        totalCost = salesManager.calculateAmountToPay(getPurchases());
         saleView.getTotalSale_Field().setText(numDecimales.format(totalCost));
     }
     
@@ -78,7 +83,6 @@ public class SalesViewHelper extends ViewHelper{
     
     @Override
     public void loadView() {
-        setSaleView(new SalesView());
         saleView.setVisible(true);
     }
 
@@ -86,11 +90,11 @@ public class SalesViewHelper extends ViewHelper{
     protected void initializeView() {
         configureView( saleView );
         saleView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
-        loadProductsToComboBox();
+        loadProducts();
         setEvents();
     }
    
-    public void loadProductsToComboBox(){
+    public void loadProducts(){
         
         comboBoxModel.removeAllElements();
         MedicineManager medicineManager = MedicineManager.GetInstance();
@@ -112,7 +116,6 @@ public class SalesViewHelper extends ViewHelper{
        String[] medicineDataRow = medicineSelected.split("\\$");
        String medicineName= medicineDataRow[0];
        double medicinePrice = Double.valueOf(medicineDataRow[1]);
-       System.out.println(medicinePrice);
        Object[] rowMedicine = new Object[]{medicineName,medicinePrice};
        Tablemodel.addRow(rowMedicine);
        SetTotalCost();
@@ -153,62 +156,35 @@ public class SalesViewHelper extends ViewHelper{
         return result;
     }
     
-     
-     
-     
-     //Metodo puesto aqui para prueba 
-     
-     private void BuildReport(){
-         int numMaxRows = 0;
-         int numMaxColums = 0;
-          try{
-              
-            
-            PdfWriter.getInstance(reportManager.getDocument(), new FileOutputStream("tablas.pdf"));
-            reportManager.getDocument().open();
-             
-            // Este codigo genera una tabla de 3 columnas
-                            
-            // Se rellena la tabla
-            // addCell() agrega una celda a la tabla, el cambio de fila
-            // ocurre automaticamente al llenar la fila
-              System.out.println(Tablemodel.getRowCount());
-            for(numMaxRows = 0; numMaxRows < Tablemodel.getRowCount(); numMaxRows++){
-                
-                for(numMaxColums = 0;numMaxColums < Tablemodel.getColumnCount(); numMaxColums++){
-                    reportManager.getTable().addCell(String.valueOf( Tablemodel.getValueAt(numMaxRows, numMaxColums)));
-                    
-                }
-                
-            }
-
-             
-            // Si desea crear una celda de mas de una columna
-            // Cree un objecto Cell y cambie su propiedad span
-             
-            PdfPCell celdaFinal = new PdfPCell(new Paragraph("Total: " + String.valueOf(totalCost)));
-             
-            // Indicamos cuantas columnas ocupa la celda
-            celdaFinal.setColspan(2);
-            reportManager.getTable().addCell(celdaFinal);
-             
-            // Agregamos la tabla al documento            
-            reportManager.getDocument().add(reportManager.getTable());
-             
-            reportManager.getDocument().close();
-             
-        }catch(Exception e)
-        {
-            System.err.println("Ocurrio un error: " +e);
-            System.exit(-1);
+    public List<String> getPurchases(){
+        int numMaxRows = 0;
+        String productAndPrice; 
+        List purchases = new ArrayList<>();
+        for(numMaxRows = 0; numMaxRows < Tablemodel.getRowCount(); numMaxRows++){ 
+                productAndPrice ="";
+                productAndPrice= productAndPrice.concat(String.valueOf(Tablemodel.getValueAt(numMaxRows, 0)));
+                productAndPrice= productAndPrice.concat(String.valueOf(Tablemodel.getValueAt(numMaxRows, 1))); 
+                purchases.add(productAndPrice);
+               // productAndPrice.split(" ");
+               System.out.println(productAndPrice);
         }
-          
-         return;
+
+        
+        return purchases;
+    }
+    
+     //Metodo puesto aqui para prueba 
+     // Checar nombres
+     private void BuildReport(){
+         getPurchases();
+         ReportHandler rh = ReportHandler.getInstance();
+         rh.BuildSaleReport(SalesManager.getInstance().calculateAmountToPay(getPurchases()));
+         
+         closeWindow();
      }
      
-     private void closeView(){
-        saleView.dispose();
-        MainMenuViewHelper mainMenuViewHelper = MainMenuViewHelper.getInstance();
-        mainMenuViewHelper.loadView();
+     private void clearTable(){
+         Tablemodel.setRowCount(0);
      }
+     
 }

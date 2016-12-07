@@ -53,11 +53,6 @@ public class MainMenuView extends javax.swing.JFrame {
         btn_consult.setText("Consulta");
 
         btn_exit.setText("Salir");
-        btn_exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_exitActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,10 +65,12 @@ public class MainMenuView extends javax.swing.JFrame {
                 .addComponent(btn_sales)
                 .addGap(38, 38, 38))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(158, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_exit)
-                    .addComponent(btn_consult))
+                .addContainerGap(160, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_consult)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(btn_exit)))
                 .addGap(159, 159, 159))
         );
         layout.setVerticalGroup(
@@ -85,9 +82,9 @@ public class MainMenuView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_sales)
                     .addComponent(btn_register))
-                .addGap(49, 49, 49)
+                .addGap(43, 43, 43)
                 .addComponent(btn_exit)
-                .addGap(47, 47, 47))
+                .addGap(53, 53, 53))
         );
 
         pack();
@@ -100,10 +97,6 @@ public class MainMenuView extends javax.swing.JFrame {
     private void btn_salesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_salesActionPerformed
-
-    private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_exitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,10 +151,9 @@ public class MainMenuView extends javax.swing.JFrame {
     public void setBtn_exit(JButton btn_exit) {
         this.btn_exit = btn_exit;
     }
-    
-    
-    
-    
+
+
+
     public JButton getBtn_register() {
         return btn_register;
     }

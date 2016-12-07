@@ -14,7 +14,7 @@ package presentation.controllers;
 
 import Entitys.Doctor;
 import Entitys.UserDoctor;
-import bussiness.DoctorManager;
+import bussiness.DoctorHandler;
 import exceptions.InvalidFieldException;
 import presentation.controllers.*;
 import java.util.ArrayList;
@@ -101,8 +101,8 @@ public class DoctorRegisterViewHelper extends DataViewHelper {
         
         if(isValidField){
             try{
-                DoctorManager doctorManager = DoctorManager.GetInstance();
-                doctorManager.registerDoctor(doctorData,userDoctorData);
+                DoctorHandler doctorHandler = DoctorHandler.GetInstance();
+                doctorHandler.registerDoctor(doctorData,userDoctorData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Doctor");
                 updateManagerViewTable();
                 clearFields();

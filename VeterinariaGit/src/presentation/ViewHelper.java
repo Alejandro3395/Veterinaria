@@ -47,7 +47,5 @@ public abstract class ViewHelper {
         this.notifier = notifier;
     }
     
-    
-    
 
 }

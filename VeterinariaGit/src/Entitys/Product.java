@@ -6,6 +6,7 @@
 package Entitys;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -16,21 +17,26 @@ public abstract class Product implements Serializable {
     private String name;
     private int amount;
     private double cost;
-    private String expiration_date;
+    private Date expiration_date;
 
     public Product() {
     }
 
-    
-    public Product(String name ,
-                   int amount, 
-                   double cost, 
-                   String expiration_date) {
+    public Product(String name, int amount, double cost, Date expiration_date) {
         this.name = name;
         this.amount = amount;
         this.cost = cost;
         this.expiration_date = expiration_date;
     }
+
+    public Date getExpiration_date() {
+        return expiration_date;
+    }
+
+    public void setExpiration_date(Date expiration_date) {
+        this.expiration_date = expiration_date;
+    }
+    
 
     public String getName() {
         return name;
@@ -64,12 +70,6 @@ public abstract class Product implements Serializable {
         this.id = id;
     }
 
-    public String getExpiration_date() {
-        return expiration_date;
-    }
 
-    public void setExpiration_date(String expiration_date) {
-        this.expiration_date = expiration_date;
-    }
   
 }

@@ -26,30 +26,28 @@ import presentation.views.PetRegisterView;
 public class PetRegisterViewHelper extends DataViewHelper {
     private static PetRegisterViewHelper petRegisterViewHelper;
     private PetRegisterView petRegisterView;
-    private PetManagerViewHelper petManagerViewHelper = null;
     
+    private String owner = null ;
+    private static int registerPetMode = 0;
+    private static int registerClientMode = 1;
+    private int mode = 0;
     
     public PetRegisterViewHelper(){
         setPetRegisterView(new PetRegisterView());
         initializeView();
     }
 
+    public PetRegisterViewHelper( String owner ) {
+        setPetRegisterView( new PetRegisterView());
+        this.owner = owner;
+        initializeView();
+    }
     
     public static PetRegisterViewHelper getInstance(){
         if( petRegisterViewHelper== null) {
          petRegisterViewHelper = new PetRegisterViewHelper();
         }
         return petRegisterViewHelper;
-    }
-    
-    
-
-    public PetManagerViewHelper getPetManagerViewHelper() {
-        return petManagerViewHelper;
-    }
-
-    public void setPetManagerViewHelper(PetManagerViewHelper petManagerViewHelper) {
-        this.petManagerViewHelper = petManagerViewHelper;
     }
 
     public void setPetRegisterView(PetRegisterView petRegisterView) {
@@ -111,7 +109,7 @@ public class PetRegisterViewHelper extends DataViewHelper {
                petManager.registerPet(petData,owner); 
                getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Pet");
                updateManagerViewTable();                
-               clearFields();
+               closeWindow();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
@@ -139,18 +137,18 @@ public class PetRegisterViewHelper extends DataViewHelper {
         String petAge = petRegisterView.getSpiner_petAge().getValue().toString();
         data.add(petAge);
         
-        String petBreed = petRegisterView.getCombo_petBreed().getSelectedItem().toString();
-        data.add(petBreed);
+        String petType = petRegisterView.getCombo_petType().getSelectedItem().toString();
+        data.add(petType);
           
         return data;
     }
-
+    
     @Override
     protected void clearFields() {
         petRegisterView.getField_petName().setText("");
         
         petRegisterView.getSpiner_petAge().setValue(0);
         
-        petRegisterView.getCombo_petBreed().setSelectedIndex(0);
+        petRegisterView.getCombo_petType().setSelectedIndex(0);
     }
 }

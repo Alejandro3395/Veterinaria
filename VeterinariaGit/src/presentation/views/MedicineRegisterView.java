@@ -5,6 +5,7 @@
  */
 package presentation.views;
 
+import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -23,7 +24,6 @@ public class MedicineRegisterView extends javax.swing.JFrame {
     public MedicineRegisterView() {
         initComponents();
         loadComboAdministrationWay();
-        loadComboSupplier();
     }
 
     /**
@@ -39,22 +39,12 @@ public class MedicineRegisterView extends javax.swing.JFrame {
         lbl_productName = new javax.swing.JLabel();
         lbl_productQuantity = new javax.swing.JLabel();
         lbl_productSellPrize = new javax.swing.JLabel();
-        lbl_productSupplier = new javax.swing.JLabel();
         field_productName = new javax.swing.JTextField();
         field_productQuantity = new javax.swing.JTextField();
         field_productSellPrize = new javax.swing.JTextField();
-        lbl_productCode = new javax.swing.JLabel();
         btn_register = new javax.swing.JButton();
-        field_productCode = new javax.swing.JTextField();
         btn_cancel = new javax.swing.JButton();
-        combo_productSupplier = new javax.swing.JComboBox<>();
         lbl_productExpirationDate = new javax.swing.JLabel();
-        spinner_productExpirationDay = new javax.swing.JSpinner();
-        spinner_productExpirationMonth = new javax.swing.JSpinner();
-        spinner_productExpirationYear = new javax.swing.JSpinner();
-        lbl_productExpirationDay = new javax.swing.JLabel();
-        lbl_productExpirationMonth = new javax.swing.JLabel();
-        lbl_productExpirationYear = new javax.swing.JLabel();
         lbl_productDose = new javax.swing.JLabel();
         spinner_productDoseQuantity = new javax.swing.JSpinner();
         combo_productDoseQuantityType = new javax.swing.JComboBox<>();
@@ -64,6 +54,7 @@ public class MedicineRegisterView extends javax.swing.JFrame {
         lbl_productDosePeriod = new javax.swing.JLabel();
         lbl_productAdmnistrationWay = new javax.swing.JLabel();
         combo_productAdministrationWay = new javax.swing.JComboBox<>();
+        dateChooser = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,15 +66,11 @@ public class MedicineRegisterView extends javax.swing.JFrame {
 
         lbl_productSellPrize.setText("Precio de Venta:");
 
-        lbl_productSupplier.setText("Proveedor:");
-
         field_productQuantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 field_productQuantityActionPerformed(evt);
             }
         });
-
-        lbl_productCode.setText("Clave:");
 
         btn_register.setText("Registrar");
         btn_register.addActionListener(new java.awt.event.ActionListener() {
@@ -94,31 +81,18 @@ public class MedicineRegisterView extends javax.swing.JFrame {
 
         btn_cancel.setText("Cancelar");
 
-        combo_productSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        combo_productSupplier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combo_productSupplierActionPerformed(evt);
-            }
-        });
-
         lbl_productExpirationDate.setText("Fecha Caducidad:");
-
-        lbl_productExpirationDay.setText("Dia");
-
-        lbl_productExpirationMonth.setText("Mes");
-
-        lbl_productExpirationYear.setText("Año");
 
         lbl_productDose.setText("Dosis:");
 
-        combo_productDoseQuantityType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        combo_productDoseQuantityType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pastillas", "Gotas" }));
         combo_productDoseQuantityType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 combo_productDoseQuantityTypeActionPerformed(evt);
             }
         });
 
-        combo_dosePeriodType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        combo_dosePeriodType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minutos", "Horas", "Dias" }));
 
         lbl_productDoseQuantity.setText("Cantidad:");
 
@@ -128,124 +102,100 @@ public class MedicineRegisterView extends javax.swing.JFrame {
 
         combo_productAdministrationWay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        dateChooser.setDateFormatString("yyyy-MM-dd");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(btn_cancel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_register)
-                .addGap(89, 89, 89))
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_productSellPrize)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lbl_productName)
-                                .addComponent(lbl_productQuantity)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(lbl_productName))
+                            .addComponent(lbl_productQuantity))
                         .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lbl_productCode)
-                                    .addComponent(field_productSellPrize, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(field_productCode, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(206, 206, 206))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(field_productQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(field_productName, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(field_productQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_tittle, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lbl_productExpirationDay)
-                                        .addGap(30, 30, 30)
-                                        .addComponent(spinner_productExpirationDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lbl_productExpirationMonth))
-                                    .addComponent(field_productName, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lbl_productExpirationDate)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lbl_productAdmnistrationWay)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(combo_productAdministrationWay, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(24, 24, 24))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(field_productSellPrize, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbl_productDose)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(351, 351, 351)
+                                    .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lbl_productDoseQuantity)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(spinner_productDoseQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(combo_productDoseQuantityType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(36, 36, 36)
+                                        .addComponent(lbl_productDosePeriod))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(33, 33, 33)
+                                        .addComponent(btn_cancel)))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btn_register)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(0, 31, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbl_tittle, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(lbl_productExpirationYear)
-                                                    .addComponent(lbl_productAdmnistrationWay)
-                                                    .addComponent(lbl_productSupplier, javax.swing.GroupLayout.Alignment.LEADING))
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGap(30, 30, 30)
-                                                        .addComponent(spinner_productExpirationYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGap(8, 8, 8)
-                                                        .addComponent(combo_productSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(combo_productAdministrationWay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(58, 58, 58))))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(spinner_productExpirationMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_productDose)
-                            .addComponent(lbl_productExpirationDate))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(lbl_productDoseQuantity)
-                .addGap(18, 18, 18)
-                .addComponent(spinner_productDoseQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(combo_productDoseQuantityType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(lbl_productDosePeriod)
-                .addGap(18, 18, 18)
-                .addComponent(spinner_productDosePeriod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(combo_dosePeriodType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(spinner_productDosePeriod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(combo_dosePeriodType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 44, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lbl_tittle)
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_productName)
-                    .addComponent(field_productName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_productSupplier)
-                    .addComponent(combo_productSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_productQuantity)
-                    .addComponent(field_productQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(1, 1, 1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_productAdmnistrationWay)
-                    .addComponent(combo_productAdministrationWay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_productSellPrize)
-                    .addComponent(field_productSellPrize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addComponent(lbl_productExpirationDate)
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_productExpirationDay)
-                    .addComponent(spinner_productExpirationDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_productExpirationMonth)
-                    .addComponent(spinner_productExpirationMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_productExpirationYear)
-                    .addComponent(spinner_productExpirationYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbl_tittle)
+                                .addGap(124, 124, 124))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbl_productName)
+                                    .addComponent(field_productName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_productAdmnistrationWay)
+                                    .addComponent(combo_productAdministrationWay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(46, 46, 46)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_productExpirationDate)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(field_productQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbl_productQuantity)))
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_productSellPrize)
+                            .addComponent(field_productSellPrize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(187, 187, 187)
+                        .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_productDose)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -257,13 +207,9 @@ public class MedicineRegisterView extends javax.swing.JFrame {
                     .addComponent(lbl_productDosePeriod))
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(field_productCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_productCode))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_register)
                     .addComponent(btn_cancel))
-                .addContainerGap())
+                .addGap(53, 53, 53))
         );
 
         pack();
@@ -272,10 +218,6 @@ public class MedicineRegisterView extends javax.swing.JFrame {
     private void btn_registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_registerActionPerformed
-
-    private void combo_productSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_productSupplierActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_combo_productSupplierActionPerformed
 
     private void combo_productDoseQuantityTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_productDoseQuantityTypeActionPerformed
         // TODO add your handling code here:
@@ -335,13 +277,6 @@ public class MedicineRegisterView extends javax.swing.JFrame {
         this.getCombo_productAdministrationWay().addItem("Intravenosa");
     }
     
-    public void loadComboSupplier(){
-        this.getCombo_productSupplier().removeAllItems();
-        this.getCombo_productSupplier().addItem("Proveedor 1");
-        this.getCombo_productSupplier().addItem("Proveedor 2");
-        this.getCombo_productSupplier().addItem("Proveedor 3");
-    }
-
     public JButton getBtn_register() {
         return btn_register;
     }
@@ -382,22 +317,6 @@ public class MedicineRegisterView extends javax.swing.JFrame {
         this.combo_productDoseQuantityType = combo_productDoseQuantityType;
     }
 
-    public JComboBox<String> getCombo_productSupplier() {
-        return combo_productSupplier;
-    }
-
-    public void setCombo_productSupplier(JComboBox<String> combo_productSupplier) {
-        this.combo_productSupplier = combo_productSupplier;
-    }
-
-    public JTextField getField_productCode() {
-        return field_productCode;
-    }
-
-    public void setField_productCode(JTextField field_productCode) {
-        this.field_productCode = field_productCode;
-    }
-
     public JTextField getField_productName() {
         return field_productName;
     }
@@ -428,14 +347,6 @@ public class MedicineRegisterView extends javax.swing.JFrame {
 
     public void setLbl_productAdmnistrationWay(JLabel lbl_productAdmnistrationWay) {
         this.lbl_productAdmnistrationWay = lbl_productAdmnistrationWay;
-    }
-
-    public JLabel getLbl_productCode() {
-        return lbl_productCode;
-    }
-
-    public void setLbl_productCode(JLabel lbl_productCode) {
-        this.lbl_productCode = lbl_productCode;
     }
 
     public JLabel getLbl_productDose() {
@@ -470,30 +381,6 @@ public class MedicineRegisterView extends javax.swing.JFrame {
         this.lbl_productExpirationDate = lbl_productExpirationDate;
     }
 
-    public JLabel getLbl_productExpirationDay() {
-        return lbl_productExpirationDay;
-    }
-
-    public void setLbl_productExpirationDay(JLabel lbl_productExpirationDay) {
-        this.lbl_productExpirationDay = lbl_productExpirationDay;
-    }
-
-    public JLabel getLbl_productExpirationMonth() {
-        return lbl_productExpirationMonth;
-    }
-
-    public void setLbl_productExpirationMonth(JLabel lbl_productExpirationMonth) {
-        this.lbl_productExpirationMonth = lbl_productExpirationMonth;
-    }
-
-    public JLabel getLbl_productExpirationYear() {
-        return lbl_productExpirationYear;
-    }
-
-    public void setLbl_productExpirationYear(JLabel lbl_productExpirationYear) {
-        this.lbl_productExpirationYear = lbl_productExpirationYear;
-    }
-
     public JLabel getLbl_productName() {
         return lbl_productName;
     }
@@ -516,14 +403,6 @@ public class MedicineRegisterView extends javax.swing.JFrame {
 
     public void setLbl_productSellPrize(JLabel lbl_productSellPrize) {
         this.lbl_productSellPrize = lbl_productSellPrize;
-    }
-
-    public JLabel getLbl_productSupplier() {
-        return lbl_productSupplier;
-    }
-
-    public void setLbl_productSupplier(JLabel lbl_productSupplier) {
-        this.lbl_productSupplier = lbl_productSupplier;
     }
 
     public JLabel getLbl_tittle() {
@@ -550,29 +429,15 @@ public class MedicineRegisterView extends javax.swing.JFrame {
         this.spinner_productDoseQuantity = spinner_productDoseQuantity;
     }
 
-    public JSpinner getSpinner_productExpirationDay() {
-        return spinner_productExpirationDay;
+    public JDateChooser getDateChooser() {
+        return dateChooser;
     }
 
-    public void setSpinner_productExpirationDay(JSpinner spinner_productExpirationDay) {
-        this.spinner_productExpirationDay = spinner_productExpirationDay;
+    public void setDateChooser(JDateChooser dateChooser) {
+        this.dateChooser = dateChooser;
     }
-
-    public JSpinner getSpinner_productExpirationMonth() {
-        return spinner_productExpirationMonth;
-    }
-
-    public void setSpinner_productExpirationMonth(JSpinner spinner_productExpirationMonth) {
-        this.spinner_productExpirationMonth = spinner_productExpirationMonth;
-    }
-
-    public JSpinner getSpinner_productExpirationYear() {
-        return spinner_productExpirationYear;
-    }
-
-    public void setSpinner_productExpirationYear(JSpinner spinner_productExpirationYear) {
-        this.spinner_productExpirationYear = spinner_productExpirationYear;
-    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancel;
@@ -580,29 +445,20 @@ public class MedicineRegisterView extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> combo_dosePeriodType;
     private javax.swing.JComboBox<String> combo_productAdministrationWay;
     private javax.swing.JComboBox<String> combo_productDoseQuantityType;
-    private javax.swing.JComboBox<String> combo_productSupplier;
-    private javax.swing.JTextField field_productCode;
+    private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JTextField field_productName;
     private javax.swing.JTextField field_productQuantity;
     private javax.swing.JTextField field_productSellPrize;
     private javax.swing.JLabel lbl_productAdmnistrationWay;
-    private javax.swing.JLabel lbl_productCode;
     private javax.swing.JLabel lbl_productDose;
     private javax.swing.JLabel lbl_productDosePeriod;
     private javax.swing.JLabel lbl_productDoseQuantity;
     private javax.swing.JLabel lbl_productExpirationDate;
-    private javax.swing.JLabel lbl_productExpirationDay;
-    private javax.swing.JLabel lbl_productExpirationMonth;
-    private javax.swing.JLabel lbl_productExpirationYear;
     private javax.swing.JLabel lbl_productName;
     private javax.swing.JLabel lbl_productQuantity;
     private javax.swing.JLabel lbl_productSellPrize;
-    private javax.swing.JLabel lbl_productSupplier;
     private javax.swing.JLabel lbl_tittle;
     private javax.swing.JSpinner spinner_productDosePeriod;
     private javax.swing.JSpinner spinner_productDoseQuantity;
-    private javax.swing.JSpinner spinner_productExpirationDay;
-    private javax.swing.JSpinner spinner_productExpirationMonth;
-    private javax.swing.JSpinner spinner_productExpirationYear;
     // End of variables declaration//GEN-END:variables
 }

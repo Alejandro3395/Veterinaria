@@ -26,7 +26,6 @@ import exceptions.InvalidFieldException;
 public abstract class DataViewHelper extends ViewHelper  {
     protected abstract ArrayList<String> obtainDataFromView();
     protected abstract void clearFields();
-    
     /**
      * This method checks if there is an empty field in the form.
      * @param data

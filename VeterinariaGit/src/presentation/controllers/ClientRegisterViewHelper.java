@@ -25,13 +25,15 @@ public class ClientRegisterViewHelper extends DataViewHelper{
         initializeView();
     }
     
+    
+    
     public static ClientRegisterViewHelper getInstance(){
         if( clientRegisterViewHelper== null) {
          clientRegisterViewHelper = new ClientRegisterViewHelper();
         }
         return clientRegisterViewHelper;
     }
-
+    
     public void setClientRegisterView(ClientRegisterView clientRegisterView) {
         this.clientRegisterView = clientRegisterView;
     }
@@ -69,6 +71,7 @@ public class ClientRegisterViewHelper extends DataViewHelper{
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Client");
                 updateManagerViewTable();
                 clearFields();
+                closeWindow();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
@@ -126,7 +129,7 @@ public class ClientRegisterViewHelper extends DataViewHelper{
         return data;
     }
     
-    @Override
+     @Override
     protected void clearFields() {
         clientRegisterView.getField_clientName().setText("");
         

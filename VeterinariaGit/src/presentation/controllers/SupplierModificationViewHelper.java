@@ -147,7 +147,7 @@ public class SupplierModificationViewHelper extends DataViewHelper {
     private void resetFields(){
         loadSupplierData();
     }
-
+    
     @Override
     protected void clearFields() {
         supplierRegisterView.getField_supplierName().setText("");
@@ -157,7 +157,5 @@ public class SupplierModificationViewHelper extends DataViewHelper {
         supplierRegisterView.getField_supplierPhoneNumber().setText("");
         
     }
-    
-    
     
 }

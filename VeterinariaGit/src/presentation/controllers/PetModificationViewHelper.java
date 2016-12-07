@@ -22,7 +22,6 @@ import presentation.views.PetRegisterView;
 public class PetModificationViewHelper extends DataViewHelper {
     private static PetModificationViewHelper petModificationViewHelper;
     private PetRegisterView petRegisterView;
-    private PetManagerViewHelper petManagerViewHelper;
     
     public PetModificationViewHelper(){
         setPetRegisterView( new PetRegisterView() );
@@ -39,14 +38,6 @@ public class PetModificationViewHelper extends DataViewHelper {
 
     public void setPetRegisterView(PetRegisterView petRegisterView) {
         this.petRegisterView = petRegisterView;
-    }
-
-    public PetManagerViewHelper getPetManagerViewHelper() {
-        return petManagerViewHelper;
-    }
-
-    public void setPetManagerViewHelper(PetManagerViewHelper petManagerViewHelper) {
-        this.petManagerViewHelper = petManagerViewHelper;
     }
 
     @Override
@@ -69,12 +60,14 @@ public class PetModificationViewHelper extends DataViewHelper {
     }
     
     private void loadPetData(){
-        int rowIndex = PetManagerViewHelper.getInstance().getPetManagerView().getTable_petTable().getSelectedRow();
+        int row = PetManagerViewHelper.getInstance().getPetManagerView().getTable_petTable().getSelectedRow();
+        int id = Integer.valueOf( PetManagerViewHelper.getInstance().getPetManagerView().getTable_petTable().getValueAt(row, 0).toString() );
+        
         String petOwner = PetManagerViewHelper.getInstance().getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
         
         PetManager petManager = PetManager.GetInstance();
         List<Pet> petList =  petManager.getPetList(petOwner);
-        Pet pet = petList.get(rowIndex);
+        Pet pet = petList.get(id);
         
         setData(pet);
     }
@@ -82,7 +75,9 @@ public class PetModificationViewHelper extends DataViewHelper {
     private void proceedWithModification(){
         ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
-        int rowIndex = PetManagerViewHelper.getInstance().getPetManagerView().getTable_petTable().getSelectedRow();
+        int row = PetManagerViewHelper.getInstance().getPetManagerView().getTable_petTable().getSelectedRow();
+        int id = Integer.valueOf( PetManagerViewHelper.getInstance().getPetManagerView().getTable_petTable().getValueAt(row, 0).toString() );
+        
         String petOwner = PetManagerViewHelper.getInstance().getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
         
         boolean isValidField =!isEmptyFields(data);
@@ -91,9 +86,10 @@ public class PetModificationViewHelper extends DataViewHelper {
         if( isValidField ){
             try{
                PetManager petManager = PetManager.GetInstance();
-               petManager.modifyPet(data,petOwner,rowIndex);
+               petManager.modifyPet(data,petOwner,id);
                getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Pet");
                updateManagerViewTable();
+               closeWindow();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
@@ -135,8 +131,8 @@ public class PetModificationViewHelper extends DataViewHelper {
         String petAge = petRegisterView.getSpiner_petAge().getValue().toString();
         data.add(petAge);
         
-        String petBreed = petRegisterView.getCombo_petBreed().getSelectedItem().toString();
-        data.add(petBreed);        
+        String petType = petRegisterView.getCombo_petType().getSelectedItem().toString();
+        data.add(petType);        
           
         return data;
     }
@@ -150,32 +146,33 @@ public class PetModificationViewHelper extends DataViewHelper {
         int petAge = (pet.getAge());
         petRegisterView.getSpiner_petAge().setValue(petAge);
         
-        String petBreed = pet.getBreed();
+        String petType = pet.getType();
         
-        int comboElements = petRegisterView.getCombo_petBreed().getItemCount();
-        int breedIndex = 0;
+        int comboElements = petRegisterView.getCombo_petType().getItemCount();
+        int typeIndex = 0;
         
         for(int i =0; i < comboElements;i++ ){
-            if(petBreed.equals(petRegisterView.getCombo_petBreed().getSelectedItem().toString())){
-                breedIndex = i;
+            if(petType.equals(petRegisterView.getCombo_petType().getItemAt(i).toString())){
+                typeIndex = i;
             }
         }
         
-        petRegisterView.getCombo_petBreed().setSelectedIndex(breedIndex);        
+        petRegisterView.getCombo_petType().setSelectedIndex(typeIndex); 
+        petRegisterView.getCombo_petType().setEnabled(false);
         
     }
     
     private void resetFields(){
         loadPetData();
     }
-
+    
     @Override
     protected void clearFields() {
         petRegisterView.getField_petName().setText("");
         
         petRegisterView.getSpiner_petAge().setValue(0);
         
-        petRegisterView.getCombo_petBreed().setSelectedIndex(0);
+        petRegisterView.getCombo_petType().setSelectedIndex(0);
     }
     
 }

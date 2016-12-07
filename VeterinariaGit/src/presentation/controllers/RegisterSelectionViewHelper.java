@@ -27,7 +27,7 @@ public class RegisterSelectionViewHelper extends ViewHelper {
     private RegisterSelectionView registerSelectionView;
 
     
-    RegisterSelectionViewHelper(){
+    private RegisterSelectionViewHelper(){
         setRegisterSelectionView(new RegisterSelectionView());
 
         initializeView();
@@ -43,6 +43,7 @@ public class RegisterSelectionViewHelper extends ViewHelper {
     public void setRegisterSelectionView(RegisterSelectionView registerSelectionView) {
         this.registerSelectionView = registerSelectionView;
     }
+    
     
     @Override
     public void loadView() {
@@ -70,8 +71,7 @@ public class RegisterSelectionViewHelper extends ViewHelper {
         registerSelectionView.getBtn_back().addActionListener(actionEvent -> closeView());
     }
      
-    
-    private void openEmployeeManagerView(){
+     private void openEmployeeManagerView(){
         registerSelectionView.dispose();
         EmployeeManagerViewHelper employeeManagerViewHelper = EmployeeManagerViewHelper.getInstance();
         employeeManagerViewHelper.loadView();

@@ -22,6 +22,7 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
     public EmployeeLoginViewHelper(){
         setEmployeeLoginView(new EmployeeLoginView());
         initializeView();
+        
     }
     
      public static EmployeeLoginViewHelper getInstance(){
@@ -30,15 +31,13 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
         }
         return employeeLoginViewHelper;
     }
-
+     
     public void setEmployeeLoginView(EmployeeLoginView employeeLoginView) {
         this.employeeLoginView = employeeLoginView;
-     //   initializeView();
     }
 
     @Override
     public void loadView() {
-        initializeView();
         employeeLoginView.setVisible(true);
     }
 
@@ -61,16 +60,21 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
         boolean isValidUser = false;
         SessionManager sessionManager = SessionManager.GetInstance();
         
-        System.out.println("DAta: " + data.get(0) +" "+data.get(1));
-        
-        
+        String message = "";
         if(isValidField){  
             isValidUser = sessionManager.employeeUserAuthentification(data);
+            if(isValidUser){
+                openMainMenuView();
+            }else{
+                message = "Usuario inexistente";
+                getNotifier().showWarningMessage( message );
+            }
+        }else{
+            message = "Datos invalidos";
+            getNotifier().showWarningMessage( message );
         }
         
-        if(isValidUser){
-            openMainMenuView();
-        }
+        
         
     }
         
@@ -102,9 +106,5 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
         employeeLoginView.getField_UserEmployee().setText(emptyString);
         employeeLoginView.getField_PassEmployee().setText(emptyString);
     }
-     
-    
-    
-    
     
 }

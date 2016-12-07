@@ -14,23 +14,26 @@ import presentation.views.InitialView;
  * @author Jorge
  */
 public class InitialViewHelper extends ViewHelper {
-    private static InitialViewHelper introViewHelper ; 
+    private static InitialViewHelper initialViewHelper ; 
     private InitialView initialView;
 
+    
+
     private InitialViewHelper() {
-        setIntroView(new InitialView());
+        setInitialView(new InitialView());
 
         initializeView();
     }
     
     public static InitialViewHelper getInstance(){
-        if(introViewHelper == null) {
-         introViewHelper = new InitialViewHelper();
+        if(initialViewHelper == null) {
+         initialViewHelper = new InitialViewHelper();
         }
-        return introViewHelper;
+        return initialViewHelper;
     }
 
-    public void setIntroView(InitialView initialView) {
+
+    public void setInitialView(InitialView initialView) {
         this.initialView = initialView;
     }
 

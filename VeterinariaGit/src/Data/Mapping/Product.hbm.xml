@@ -13,7 +13,7 @@
         <property name= "name" type="string" column="name"/>
         <property name= "amount" type="integer" column="amount"/>
         <property name= "cost" type="double" column="cost"/> 
-        <property name= "expiration_date" type="string" column="expiration_date" />
+        <property name= "expiration_date" type="date" column="expiration_date" />
         
     </class>
     

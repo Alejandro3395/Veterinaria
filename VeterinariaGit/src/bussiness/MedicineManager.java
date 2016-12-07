@@ -1,13 +1,13 @@
 /**
 * class: MedicineManager (MedicineManager.java)
 * @author: Jorge Zapata
-*
+* 
 * date: October 27, 2016
-*
+* 
 * This class represent the manager for the medicine entitys.
 * The objective of the class is to recieve the data that the view
 * collects and pass it to the entity class to insert it to the database.
-*
+* 
 */
 
 package bussiness;
@@ -17,13 +17,19 @@ import Entitys.Medicine;
 import Entitys.Supplier;
 import exceptions.InvalidFieldException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MedicineManager {
     private static final MedicineManager medicineManager = new MedicineManager();
     private MedicineDAO medicineDAO = new MedicineDAO();
-
+    
     /**
      * Constants to use with the createMedicine method
      */
@@ -33,28 +39,28 @@ public class MedicineManager {
     private static final int administrationWayIndex = 3;
     private static final int expirationDateIndex = 4;
     private static final int doseIndex = 5;
-
-
+    
+    
     private MedicineManager(){
         this.medicineDAO = MedicineDAO.GetInstance();
     }
-
+    
     /**
      * This method returns an instance of the class that the other classes can
      * use.
-     * @return
+     * @return 
      */
     public static MedicineManager GetInstance(){
         return medicineManager;
     }
-
-
+    
+    
 
     /**
-     * The method recieves the data array from the view and parse it
-     * so that the Medicine entity can understand it, finally we create a
+     * The method recieves the data array from the view and parse it 
+     * so that the Medicine entity can understand it, finally we create a 
      * new entity, the method assumes that the data is passed in the correct order.
-     *
+     * 
      * @param data
      */
     public Medicine createMedicine(ArrayList<String> data) throws InvalidFieldException {
@@ -62,19 +68,24 @@ public class MedicineManager {
         String medicineName = data.get(nameIndex);
         int  medicineQuantity = Integer.valueOf(data.get(quantityIndex).toString());
         double medicineSelPrice = Double.parseDouble(data.get(sellPriceIndex).toString());
-
+        
         String medicineAdministrationWay = data.get(administrationWayIndex).toString();
-        String medicineExpirationDate = data.get(expirationDateIndex).toString();
+        
+        String expirationDate = data.get(expirationDateIndex).toString();
+        Date medicineExpirationDate = getMedicineExpirationDate(expirationDate);
+        
+        //revisando las fechas
+        
         String medicineDose = data.get(doseIndex).toString();
-
+                
         Medicine medicineData;
-
+        
         medicineData = new Medicine(medicineName,medicineQuantity,medicineSelPrice,medicineDose,medicineExpirationDate,medicineAdministrationWay);
 
         return medicineData;
     }
 
-    public void registerMedicine(ArrayList<String> medicineData,String medicineSupplier) throws InvalidFieldException{
+     public void registerMedicine(ArrayList<String> medicineData,String medicineSupplier) throws InvalidFieldException{
             Medicine medicine = new Medicine(createMedicine(medicineData));
 
             SupplierManager supplierManager = SupplierManager.GetInstance();
@@ -96,22 +107,44 @@ public class MedicineManager {
             supplier.getMedicines().set(index,updatedMedicine);
             supplierManager.updateSupplier(supplier);
     }
-
+    
+    private Date getMedicineExpirationDate(String date) throws InvalidFieldException{
+        
+        Date expirationDate = null;
+        
+        try {
+            expirationDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException ex) {
+            throw new InvalidFieldException("Datos erroneos en la Fecha");
+        }
+        
+        
+        return expirationDate;
+    }
+    
+    private boolean isValidDate(String medicineExpirationDate) throws InvalidFieldException{
+        boolean result = true;
+        
+        
+        
+        return result;
+    }
+    
     public List<Medicine> getMedicinesBySupplierName(String supplierName){
-
+        
         SupplierManager supplierManager = SupplierManager.GetInstance();
         Supplier supplierData = supplierManager.getSupplierData(supplierName);
-
+        
         List<Medicine> medicineList;
         medicineList = new ArrayList<Medicine>  (supplierData.getMedicines());
-
-        return medicineList;
+        
+        return medicineList; 
     }
-
+    
     public List<Medicine> getMedicines(){
         List<Medicine> listMedicine = new ArrayList<Medicine>();
         listMedicine = medicineDAO.getMedicineDataList();
-
+        
         return listMedicine ;
     }
 }

@@ -8,7 +8,7 @@ package presentation.controllers;
 import Entitys.Address;
 import Entitys.Doctor;
 import Entitys.Phone;
-import bussiness.DoctorManager;
+import bussiness.DoctorHandler;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import presentation.ViewHelper;
 import presentation.views.DoctorManagerView;
 import presentation.controllers.DoctorRegisterViewHelper;
-import presentation.views.DoctorRegisterView;
 
 /**
  *
@@ -37,12 +36,12 @@ public class DoctorManagerViewHelper extends ViewHelper {
         }
         return doctorManagerViewHelper;
     }
-
+     
+    
     public DoctorManagerView getDoctorManagerView() {
         return doctorManagerView;
     }
-    
-    
+
     public void setDoctorManagerView(DoctorManagerView doctorManagerView) {
         this.doctorManagerView = doctorManagerView;
     }
@@ -70,7 +69,7 @@ public class DoctorManagerViewHelper extends ViewHelper {
 
     @Override
     protected void initializeView() {
-        configureView( getDoctorManagerView());
+        configureView( getDoctorManagerView() );
         getDoctorManagerView().setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
         
         setEvents();
@@ -86,7 +85,7 @@ public class DoctorManagerViewHelper extends ViewHelper {
         int rowCount = model.getRowCount();
         if(rowCount !=0){model.setRowCount(0);}
         
-        DoctorManager doctorManager = DoctorManager.GetInstance();
+        DoctorHandler doctorManager = DoctorHandler.GetInstance();
         
         ArrayList<Doctor> doctorList = doctorManager.getDoctors() ;
         setTableContent(doctorList);
@@ -115,8 +114,7 @@ public class DoctorManagerViewHelper extends ViewHelper {
     
     private void closeWindow(){
         getDoctorManagerView().dispose();
-        RegisterSelectionViewHelper registerSelectionViewHelper = RegisterSelectionViewHelper.getInstance();
-        registerSelectionViewHelper.loadView();
+        RegisterSelectionViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
@@ -124,8 +122,8 @@ public class DoctorManagerViewHelper extends ViewHelper {
         
         int id = Integer.valueOf( getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
 
-        DoctorManager doctorManager = DoctorManager.GetInstance();
-        doctorManager.deleteDoctor(id);
+        DoctorHandler doctorManager = DoctorHandler.GetInstance();
+        doctorManager.remove(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Doctor");
         updateTable();
     }

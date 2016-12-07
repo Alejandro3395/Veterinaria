@@ -10,6 +10,7 @@ import Entitys.Supplier;
 import bussiness.MedicineManager;
 import bussiness.SupplierManager;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +25,7 @@ public class MedicineManagerViewHelper extends ViewHelper {
     private static MedicineManagerViewHelper medicineManagerViewHelper = null;
     private MedicineManagerView medicineManagerView;
     
-    private int comoboSize;
+    private int comboSize;
     
     private MedicineManagerViewHelper(){
         setMedicineManagerView(new MedicineManagerView());
@@ -103,21 +104,10 @@ public class MedicineManagerViewHelper extends ViewHelper {
         return result;
     }
     
-    private boolean isEmptyCombo(){
-        boolean result = false;
-        
-        //String comboItem = getMedicineManagerView().getCombo_petOwner().getSelectedItem().toString();
-        int comboSize = getMedicineManagerView().getCombo_medicineSupplier().getItemCount();
-        if(comboSize<1){
-            result = true;
-        }
-        return result;
-    }
-    
     private boolean hasDataChanged(){
         boolean result = false;
         
-        if(comoboSize != getMedicineManagerView().getCombo_medicineSupplier().getItemCount()){
+        if(comboSize != getMedicineManagerView().getCombo_medicineSupplier().getItemCount()){
             result = true;
         }
         return result;
@@ -129,17 +119,20 @@ public class MedicineManagerViewHelper extends ViewHelper {
         ArrayList<Supplier> supplierList = supplierManager.getSupplierList();
         getMedicineManagerView().getCombo_medicineSupplier().removeAllItems();
         
-        comoboSize = supplierList.size();
+        comboSize = supplierList.size();
         
-        for(int index = 0; index < supplierList.size(); index++ ){
+        if(comboSize == 0){
+            getNotifier().showWarningMessage("No existen proveedores registrados");
+            closeWindow();
+        }else{
+          for(int index = 0; index < supplierList.size(); index++ ){
             Supplier supplier = supplierList.get(index);
             getMedicineManagerView().getCombo_medicineSupplier().addItem(supplier.getCompanyName().toString());
-        }
-        
-        
+          }  
+        }  
     }
     
-    private void openModificationView(){
+   private void openModificationView(){
         if(isRowSelected()){
             getMedicineManagerView().dispose();
             MedicineModificationViewHelper medicineModificationViewHelper = MedicineModificationViewHelper.getInstance();
@@ -162,7 +155,9 @@ public class MedicineManagerViewHelper extends ViewHelper {
     
     private void closeWindow(){
         getMedicineManagerView().dispose();
-        RegisterSelectionViewHelper.getInstance().loadView();
+        RegisterSelectionViewHelper registerSelectionViewHelper = RegisterSelectionViewHelper.getInstance();
+        registerSelectionViewHelper.loadView();
+        
     }
     
     private void proceedWithElimination(){
@@ -200,15 +195,13 @@ public class MedicineManagerViewHelper extends ViewHelper {
         }
     }
     
-    private void openRegisterView(){ 
-        if(!isEmptyCombo()){
+     private void openRegisterView(){ 
+        
             getMedicineManagerView().dispose();
             MedicineRegisterViewHelper medicineRegisterViewHelper = MedicineRegisterViewHelper.getInstance();
             //medicineRegisterViewHelper.getInstance().setMode(1);
             medicineRegisterViewHelper.getInstance().loadView();
-        }else{
-            getNotifier().showWarningMessage( "No es posible añadir mascota debido a que no hay clientes registrados" );
-        }
+        
     }
     
     private void addMedicineToTable(Medicine medicine, int index){
@@ -222,9 +215,12 @@ public class MedicineManagerViewHelper extends ViewHelper {
         
         int medicineQuantity = medicine.getAmount();
         
-        String medicineExpirationDate = medicine.getExpiration_date();
+        Date medicineExpirationDate = medicine.getExpiration_date();
+        
+        String expirationDate = medicineExpirationDate.toString();
+        
             
-        Object[] row = new Object[]{id,medicineName,medicinePrice,medicineQuantity,medicineExpirationDate };
+        Object[] row = new Object[]{id,medicineName,medicinePrice,medicineQuantity,expirationDate };
         model.addRow(row); 
     }
     

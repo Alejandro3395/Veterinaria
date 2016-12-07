@@ -7,9 +7,7 @@ package presentation.controllers;
 
 import javax.swing.WindowConstants;
 import presentation.ViewHelper;
-import presentation.views.LoginMainView;
 import presentation.views.MainMenuView;
-import presentation.views.SalesView;
 
 /**
  *
@@ -20,7 +18,7 @@ public class MainMenuViewHelper extends ViewHelper {
     private MainMenuView mainView;
 
     
-    private MainMenuViewHelper (){
+    public MainMenuViewHelper (){
         setMainView(new MainMenuView());
 
         initializeView();
@@ -32,6 +30,8 @@ public class MainMenuViewHelper extends ViewHelper {
         }
         return mainMenuViewHelper;
     }
+    
+
 
     public void setMainView(MainMenuView mainView) {
         this.mainView = mainView;
@@ -53,10 +53,12 @@ public class MainMenuViewHelper extends ViewHelper {
     protected void setEvents() {
         mainView.getBtn_register().addActionListener(actionEvent -> openRegisterSelection());
         mainView.getBtn_sales().addActionListener(actionEvent -> openSalesView());
+        mainView.getBtn_consult().addActionListener(actionEvent -> openAppointmentView());
         mainView.getBtn_exit().addActionListener(actionEvent -> closeView());
+       
     }
     
-    private void openSalesView(){
+     private void openSalesView(){
         mainView.dispose();
         SalesViewHelper salesViewHelper = SalesViewHelper.getInstance();
         salesViewHelper.loadView();
@@ -74,4 +76,8 @@ public class MainMenuViewHelper extends ViewHelper {
     }
     
     
+    private void openAppointmentView(){
+        mainView.dispose();
+        AppointmentManagerViewHelper.getInstance().loadView();
+    }
 }

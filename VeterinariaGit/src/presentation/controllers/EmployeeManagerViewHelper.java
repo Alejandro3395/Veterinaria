@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import Entitys.Employee;
-import bussiness.EmployeeManager;
+import bussiness.EmployeeHandler;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -76,7 +76,7 @@ public class EmployeeManagerViewHelper extends ViewHelper {
         int rowCount = model.getRowCount();
         if(rowCount !=0){model.setRowCount(0);}
         
-        EmployeeManager employeeManager = EmployeeManager.GetInstance();
+        EmployeeHandler employeeManager = EmployeeHandler.GetInstance();
         
         ArrayList<Employee> employeeList = employeeManager.getEmployees() ;
         setTableContent(employeeList);
@@ -113,8 +113,8 @@ public class EmployeeManagerViewHelper extends ViewHelper {
         
         int id = Integer.valueOf( getEmployeeManagerView().getTable_employeeTable().getValueAt(row, 0).toString() );
 
-        EmployeeManager employeeManager = EmployeeManager.GetInstance();
-        employeeManager.deleteEmployee(id);
+        EmployeeHandler employeeManager = EmployeeHandler.GetInstance();
+        employeeManager.remove(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Employee");
         updateTable();
     }

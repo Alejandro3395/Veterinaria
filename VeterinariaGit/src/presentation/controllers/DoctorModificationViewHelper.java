@@ -6,12 +6,11 @@
 package presentation.controllers;
 
 import Entitys.Doctor;
-import bussiness.DoctorManager;
+import bussiness.DoctorHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.DataViewHelper;
-import presentation.views.DoctorModificationView;
 import presentation.views.DoctorRegisterView;
 
 /**
@@ -20,7 +19,6 @@ import presentation.views.DoctorRegisterView;
  */
 public class DoctorModificationViewHelper extends DataViewHelper {
     private DoctorRegisterView doctorRegisterView;
-    private DoctorManagerViewHelper doctorManagerViewHelper;
     private static DoctorModificationViewHelper doctorModificationHelper = null;
 
     
@@ -36,20 +34,15 @@ public class DoctorModificationViewHelper extends DataViewHelper {
         }
         return doctorModificationHelper;
     }
-
+    
     public void setDoctorRegisterView(DoctorRegisterView doctorRegisterView) {
         this.doctorRegisterView = doctorRegisterView;
     }
 
-    
     @Override
     protected void setEvents() {
         doctorRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithModification());
         doctorRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelModification());
-    }
-
-    public void setDoctorManagerViewHelper(DoctorManagerViewHelper doctorManagerViewHelper) {
-        this.doctorManagerViewHelper = doctorManagerViewHelper;
     }
 
     @Override
@@ -69,7 +62,7 @@ public class DoctorModificationViewHelper extends DataViewHelper {
         int row = DoctorManagerViewHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
         int id = Integer.valueOf( DoctorManagerViewHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
         
-        DoctorManager doctorManager = DoctorManager.GetInstance();
+        DoctorHandler doctorManager = DoctorHandler.GetInstance();
         Doctor doctor =  doctorManager.getDoctor(id) ;
         
         setDataToView(doctor);
@@ -87,8 +80,8 @@ public class DoctorModificationViewHelper extends DataViewHelper {
         
         if( isValidField ){
             try{
-               DoctorManager doctorManager = DoctorManager.GetInstance();
-               doctorManager.modifyDoctor(data,id);
+               DoctorHandler doctorHandler = DoctorHandler.GetInstance();
+               doctorHandler.modifyDoctor(data,id);
                getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Doctor");
                updateManagerViewTable();
                closeWindow();
@@ -200,11 +193,10 @@ public class DoctorModificationViewHelper extends DataViewHelper {
         doctorRegisterView.getField_doctorEmail().setEditable(false);  
         
     }
-    
     private void resetFields(){
         loadDoctorData();
     }
-
+    
     @Override
     protected void clearFields() {
         doctorRegisterView.getField_doctorName().setText("");
@@ -231,6 +223,4 @@ public class DoctorModificationViewHelper extends DataViewHelper {
         
         doctorRegisterView.getField_doctorEmail().setText("");
     }
-
-
 }

@@ -1,13 +1,13 @@
 /**
 * class: supplierManager (SupplierManager.java)
 * @author: Diego Nicoli
-*
+* 
 * date: October 27, 2016
-*
+* 
 * This class represent the manager for the Supplier entitys.
 * The objective of the class is to recieve the data that the view
 * collects and pass it to the entity class to insert it to the database.
-*
+* 
 */
 package bussiness;
 
@@ -25,32 +25,32 @@ import exceptions.InvalidFieldException;
 public class SupplierManager {
     private static final SupplierManager supplierManager = new SupplierManager();
     private SupplierDAO supplierDAO;
-
+    
     /**
      * Constants to use with the createSupplier method
      */
-
+    
     private static final int nameIndex = 0;
     private static final int phoneLadaIndex = 1;
     private static final int phoneNumberIndex = 2;
-
-
-
+    
+    
+    
     private SupplierManager(){
         this.supplierDAO = SupplierDAO.GetInstance();
     }
-
+    
      /**
      * This method returns an instance of the class that the other classes can
      * use.
-     * @return
+     * @return 
      */
-
+    
     public static SupplierManager GetInstance(){
         return supplierManager;
     }
-
-
+    
+    
     private void addSupplier(Supplier supplier) {
         supplierDAO.add(supplier);
     }
@@ -59,51 +59,51 @@ public class SupplierManager {
         Supplier supplier =  (Supplier)(supplierDAO.get(id));
         supplierDAO.delete(supplier);
     }
-
+    
     public void updateSupplier(Supplier supplier){
         supplierDAO.update(supplier);
     }
-
+    
     public Supplier getSupplier(int id){
         return (Supplier) supplierDAO.get(id);
     }
-
-
+     
+    
     public Supplier getSupplierData(String supplierName){
         return supplierDAO.getSupplierByName(supplierName);
     }
-
+    
      /**
-     * The method recieves the data array from the view and parse it
-     * so that the Supplier entity can understand it, finally we create a
+     * The method recieves the data array from the view and parse it 
+     * so that the Supplier entity can understand it, finally we create a 
      * new entity, the method assumes that the data is passed in the correct order.
-     *
+     * 
      * @paramdata
      * @return data
-     * @throws InvalidFieldException
+     * @throws InvalidFieldException 
      */
-
+    
      public Supplier createSupplier(ArrayList<String> data) throws InvalidFieldException {
         String companyName = data.get(nameIndex);
         String supplierPhoneLada = data.get(phoneLadaIndex);
         String supplierPhoneNumber = data.get(phoneNumberIndex);
-
+        
         Supplier supplierData;
-
+        
         Phone supplierPhone = new Phone(supplierPhoneLada,supplierPhoneNumber);
-
+        
         supplierData = new Supplier(companyName,supplierPhone);
 
         return supplierData;
     }
-
-
+     
+     
      /**
-     * The method recieves the data from the view and uses it to create the new
+     * The method recieves the data from the view and uses it to create the new 
      * entitys, an exception is thrown if there's an invalid data.
-     *
+     * 
      * @param supplierData
-     * @param userSupplierData
+     * @param userSupplierData 
      */
     public void registerSupplier(ArrayList<String> supplierData) throws InvalidFieldException{
 
@@ -119,11 +119,11 @@ public class SupplierManager {
             updateSupplier(updatedSupplier);
 
     }
-
+    
     public ArrayList<Supplier> getSupplierList(){
         ArrayList<Supplier> supplierList;
         supplierList = new ArrayList<Supplier> ((ArrayList<Supplier>) supplierDAO.getList());
-        return supplierList;
-    }
-
+        return supplierList; 
+    } 
+     
 }

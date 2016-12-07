@@ -23,6 +23,7 @@ public class ClientModificationViewHelper extends DataViewHelper {
     
     public ClientModificationViewHelper(){
         setClientRegisterView( new ClientRegisterView() );
+        
         initializeView();
     }
     
@@ -177,7 +178,7 @@ public class ClientModificationViewHelper extends DataViewHelper {
     private void resetFields(){
         loadClientData();
     }
-
+    
     @Override
     protected void clearFields() {
         clientRegisterView.getField_clientName().setText("");

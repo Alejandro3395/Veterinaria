@@ -8,7 +8,6 @@ package presentation.controllers;
 import javax.swing.WindowConstants;
 import presentation.ViewHelper;
 import presentation.views.DoctorLoginView;
-import presentation.views.EmployeeLoginView;
 import presentation.views.LoginMainView;
 
 /**
@@ -32,7 +31,7 @@ public class LoginMainViewHelper extends ViewHelper{
         return loginMainViewHelper;
     }
 
-    public void setLoginView(LoginMainView loginMainView) {
+    private void setLoginView(LoginMainView loginMainView) {
         this.loginMainView = loginMainView;
     }
     
@@ -41,6 +40,7 @@ public class LoginMainViewHelper extends ViewHelper{
         loginMainView.getDoctorLoginBttn().addActionListener(actionEvent -> openDoctorLoginView());
         loginMainView.getEmployeeLoginBttn().addActionListener( actionEvent -> openEmployeeLoginView());
     }
+
     
     @Override
     public void loadView() {
@@ -64,9 +64,6 @@ public class LoginMainViewHelper extends ViewHelper{
         loginMainView.dispose();
         EmployeeLoginViewHelper employeeLoginViewHelper = EmployeeLoginViewHelper.getInstance();
         employeeLoginViewHelper.loadView();
-        
     }
-    
-    
     
 }

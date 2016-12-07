@@ -1,13 +1,13 @@
 /**
 * class: PetManager (PetManager.java)
 * @author: Diego Nicoli
-*
+* 
 * date: October 27, 2016
-*
+* 
 * This class represent the manager for the Pet entitys.
 * The objective of the class is to recieve the data that the view
 * collects and pass it to the entity class to insert it to the database.
-*
+* 
 */
 package bussiness;
 
@@ -23,66 +23,66 @@ import java.util.List;
 
 
 public class PetManager {
-
-
+    
+     
     /**
      * Constants to use with the createPet method
      */
-
+    
     static final int  nameIndex = 0;
     static final int  breedIndex = 2;
     static final int  ageIndex = 1;
     static final int  ownerIndex = 3;
-
+    
     private static final PetManager petManager = new PetManager();
-
+    
     public PetManager(){
-
+       
     }
-
+    
      /**
      * This method returns an instance of the class that the other classes can
      * use.
-     * @return
+     * @return 
      */
-
-
+    
+    
     public static PetManager GetInstance(){
         return petManager;
     }
-
-
-
-
+    
+    
+    
+    
      /**
-     * The method recieves the data array from the view and parse it
-     * so that the Pet entity can understand it, finally we create a
+     * The method recieves the data array from the view and parse it 
+     * so that the Pet entity can understand it, finally we create a 
      * new entity.
-     *
+     * 
      * @paramdata
      * @return data
-     * @throws InvalidFieldException
+     * @throws InvalidFieldException 
      */
+    
 
-
-
+         
         /**
-     * The method recieves the data array from the view and parse it
-     * so that the pet entity can understand it, finally we create a
+     * The method recieves the data array from the view and parse it 
+     * so that the pet entity can understand it, finally we create a 
      * new entity, the method assumes that the data is passed in the correct order.
-     *
+     * 
      * @param data
      * @return data
-     * @throws InvalidFieldException
+     * @throws InvalidFieldException 
      */
     public Pet createPet(ArrayList<String> data) throws InvalidFieldException {
-
+        
         String petName = data.get(nameIndex);
         int  petAge = Integer.valueOf(data.get(ageIndex));
         String petBreed = data.get(breedIndex);
-
+                
         Pet petData;
-
+        
         petData = new Pet(petName,petBreed,petAge);
 
         return petData;
@@ -109,16 +109,16 @@ public class PetManager {
             client.getPets().set(index,updatedPet);
             clientManager.updateClient(client);
     }
-
-
+    
+    
     public List<Pet> getPetList(String ownerName){
         ClientManager clientManager = ClientManager.GetInstance();
-
+        
         Client ownerData = clientManager.getClientData(ownerName);
         List<Pet> petList;
         petList = new ArrayList<Pet>  (ownerData.getPets());
-        return petList;
+        return petList; 
     }
-
-
+     
+    
 }

@@ -5,7 +5,7 @@
  */
 package presentation.controllers;
 
-import bussiness.EmployeeManager;
+import bussiness.EmployeeHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
@@ -26,8 +26,6 @@ import presentation.views.EmployeeRegisterView;
 */
 public class EmployeeRegisterViewHelper  extends DataViewHelper{
     private static EmployeeRegisterViewHelper employeeRegisterViewHelper = null;
-
-    private EmployeeManagerViewHelper employeeManagerViewHelper;
     private static int employeeDataIndex = 0;
     private static int userEmployeeDataIndex = 1;
     private EmployeeRegisterView employeeRegisterView;
@@ -44,14 +42,6 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
          employeeRegisterViewHelper = new EmployeeRegisterViewHelper();
         }
         return employeeRegisterViewHelper;
-    }
-    
-    public EmployeeManagerViewHelper getEmployeeManagerViewHelper() {
-        return employeeManagerViewHelper;
-    }
-
-    public void setEmployeeManagerViewHelper(EmployeeManagerViewHelper employeeManagerViewHelper) {
-        this.employeeManagerViewHelper = employeeManagerViewHelper;
     }
 
     public void setEmployeeRegisterView(EmployeeRegisterView employeeRegisterView) {
@@ -94,8 +84,8 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
         if(isValidField){
             
             try{
-               EmployeeManager employeeManager = EmployeeManager.GetInstance();
-               employeeManager.registerEmployee(employeeData,userEmployeeData);
+               EmployeeHandler employeeHandler = EmployeeHandler.GetInstance();
+               employeeHandler.registerEmployee(employeeData,userEmployeeData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Empleado");
                 updateManagerViewTable();
                 clearFields();
@@ -178,8 +168,8 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
     private void updateManagerViewTable() {
         EmployeeManagerViewHelper.getInstance().updateTable();
     }
-
-    @Override
+    
+   @Override
     protected void clearFields() {
         employeeRegisterView.getField_employeeName().setText("");
         

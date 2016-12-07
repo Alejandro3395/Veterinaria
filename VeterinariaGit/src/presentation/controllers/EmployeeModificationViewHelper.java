@@ -6,12 +6,12 @@
 package presentation.controllers;
 
 import Entitys.Employee;
-import bussiness.EmployeeManager;
-import exceptions.InvalidFieldException;
+import bussiness.EmployeeHandler;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import presentation.DataViewHelper;
 import presentation.views.EmployeeRegisterView;
+import exceptions.InvalidFieldException;
 
 /**
  *
@@ -33,7 +33,7 @@ public class EmployeeModificationViewHelper extends DataViewHelper {
         }
         return employeeModificationViewHelper;
     }
-
+    
     public void setEmployeeRegisterView(EmployeeRegisterView employeeRegisterView) {
         this.employeeRegisterView = employeeRegisterView;
     }
@@ -61,7 +61,7 @@ public class EmployeeModificationViewHelper extends DataViewHelper {
         int row = EmployeeManagerViewHelper.getInstance().getEmployeeManagerView().getTable_employeeTable().getSelectedRow();
         int id = Integer.valueOf( EmployeeManagerViewHelper.getInstance().getEmployeeManagerView().getTable_employeeTable().getValueAt(row, 0).toString() );
         
-        EmployeeManager employeeManager = EmployeeManager.GetInstance();
+        EmployeeHandler employeeManager = EmployeeHandler.GetInstance();
         Employee employee =  employeeManager.getEmployee(id) ;
         
         setData(employee);
@@ -80,8 +80,8 @@ public class EmployeeModificationViewHelper extends DataViewHelper {
         if( isValidField ){
             
             try{
-                EmployeeManager employeeManager = EmployeeManager.GetInstance();
-                employeeManager.modifyEmployee(data,id);
+                EmployeeHandler employeeHandler = EmployeeHandler.GetInstance();
+                employeeHandler.modifyEmployee(data,id);
                 getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Employee");
                 updateManagerViewTable();
                 closeWindow();
@@ -106,9 +106,6 @@ public class EmployeeModificationViewHelper extends DataViewHelper {
     
     private void closeWindow(){
         employeeRegisterView.dispose();
-        clearFields();
-        EmployeeManagerViewHelper employeeManagerViewHelper = EmployeeManagerViewHelper.getInstance();
-        employeeManagerViewHelper.loadView();
     }
 
     /**
@@ -193,7 +190,7 @@ public class EmployeeModificationViewHelper extends DataViewHelper {
     private void resetFields(){
         loadEmployeeData();
     }
-
+    
     @Override
     protected void clearFields() {
         employeeRegisterView.getField_employeeName().setText("");
