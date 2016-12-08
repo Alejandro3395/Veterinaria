@@ -7,22 +7,22 @@ package presentation.controllers;
 
 import Entitys.Client;
 import Entitys.Pet;
-import bussiness.AppointmentManager;
-import bussiness.ClientHandler;
-import bussiness.PetHandler;
+import bussiness.AppointmentInformationHandler;
+import bussiness.ClientInformationHandler;
+import bussiness.PetInformationHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.AppointmentRegisterView;
 
 /**
  *
  * @author jozapata
  */
-public class AppointmentRegisterViewHelper extends DataViewHelper{
+public class AppointmentRegisterViewHelper extends InformationViewHelper{
     private static AppointmentRegisterViewHelper appointmentRegisterViewHelper;
     private AppointmentRegisterView appointmentRegisterView;
     
@@ -52,7 +52,7 @@ public class AppointmentRegisterViewHelper extends DataViewHelper{
     protected void setEvents() {
         appointmentRegisterView.getBtn_register().addActionListener(actionEvent -> programAppointment());
         appointmentRegisterView.getCombo_client().addItemListener(aListener -> loadPetRegisterToCombo());
-        appointmentRegisterView.getBtn_cancel().addActionListener( actionEvent -> closeWindow());        
+        appointmentRegisterView.getBtn_cancel().addActionListener( actionEvent -> closeView());        
     }
 
     
@@ -115,10 +115,10 @@ public class AppointmentRegisterViewHelper extends DataViewHelper{
         
         if(isValidField){
             try{
-                AppointmentManager appointmentManager = AppointmentManager.GetInstance();
-                appointmentManager.registerAppointment(appointmentData);
+                AppointmentInformationHandler appointmentInformationHandler = AppointmentInformationHandler.GetInstance();
+                appointmentInformationHandler.registerAppointment(appointmentData);
                 getNotifier().showSuccessMessage("registro existoso", "Exito al registrar la cita");
-                closeWindow();
+                closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage(message);
@@ -134,13 +134,13 @@ public class AppointmentRegisterViewHelper extends DataViewHelper{
         
         if(!isEmptyList()){
             if(!hasDataChanged()){
-                PetHandler petManager = PetHandler.GetInstance();
+                PetInformationHandler petManager = PetInformationHandler.GetInstance();
                 String owner = appointmentRegisterView.getCombo_client().getSelectedItem().toString();                             
                 List<Pet> petList = petManager.getPetList(owner);
                 
                 if(petList == null){
                     getNotifier().showWarningMessage("No existen mascotas para el cliente seleccionado");
-                    closeWindow();
+                    closeView();
                 }else{
                     for(int index = 0; index < petList.size(); index++){
                         Pet pet = petList.get(index);
@@ -155,7 +155,7 @@ public class AppointmentRegisterViewHelper extends DataViewHelper{
     }
     
     private void loadClientRegisterToCombo(){
-        ClientHandler clientManager = ClientHandler.GetInstance();
+        ClientInformationHandler clientManager = ClientInformationHandler.GetInstance();
         ArrayList<Client> clientList = clientManager.getClientList();
         appointmentRegisterView.getCombo_client().removeAllItems();
         
@@ -163,7 +163,7 @@ public class AppointmentRegisterViewHelper extends DataViewHelper{
         
         if(clientComboSize  == 0){
             getNotifier().showWarningMessage("No existen clientes registrados");
-            closeWindow();
+            closeView();
         }else{
             for(int index = 0; index < clientList.size(); index++ ){
                 Client client = clientList.get(index);
@@ -192,9 +192,9 @@ public class AppointmentRegisterViewHelper extends DataViewHelper{
         return result;
     }
     
-    private void closeWindow(){
-        appointmentRegisterView.dispose();
+    private void closeView(){
         clearFields();
+        appointmentRegisterView.dispose();
         AppointmentManagerViewHelper.getInstance().loadView();
     }
 }

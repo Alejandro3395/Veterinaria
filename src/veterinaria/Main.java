@@ -17,7 +17,7 @@ import Entitys.Pet;
 import Entitys.Phone;
 import Entitys.Supplier;
 import Entitys.UserEmployee;
-import bussiness.ReportHandler;
+import bussiness.ReportInformationHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +55,7 @@ public class Main implements Runnable{
         
         JFrame.setDefaultLookAndFeelDecorated(true); //que nos permite dejar a Substance la decoracion ( por asi decirlo) 
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.MistAquaSkin"); // Setencia que aplica el skin Creme de Substance
-       // SubstanceLookAndFeel.setCurrentWatermark( new SubstanceImageWatermark("c:\\logo.jpg"));
-        //SubstanceLookAndFeel.setImageWatermarkOpacity(new Float(0.5));
+       SubstanceLookAndFeel.setCurrentTheme( "org.jvnet.substance.theme.SubstanceEbonyTheme" ); 
         createInitialView();
     }
 

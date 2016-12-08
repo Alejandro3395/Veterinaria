@@ -21,8 +21,8 @@ import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import presentation.controllers.ClientManagerViewHelper;
 
-public class DoctorHandler extends Receptionist<Doctor>{
-    private static final DoctorHandler doctorManager = new DoctorHandler();
+public class DoctorInformationHandler extends Receptionist<Doctor>{
+    private static final DoctorInformationHandler doctorInformationHandler = new DoctorInformationHandler();
     private DoctorDAO doctorDAO;
     /**
      * Constants to use with the createDoctor method
@@ -44,7 +44,7 @@ public class DoctorHandler extends Receptionist<Doctor>{
     private static final int userPasswordIndex = 1;
     private static final int userEmailIndex = 2;
     
-    private DoctorHandler(){
+    private DoctorInformationHandler(){
         this.doctorDAO = DoctorDAO.GetInstance();
     }
     
@@ -53,8 +53,8 @@ public class DoctorHandler extends Receptionist<Doctor>{
      * use.
      * @return 
      */
-    public static DoctorHandler GetInstance(){
-        return doctorManager;
+    public static DoctorInformationHandler GetInstance(){
+        return doctorInformationHandler;
     }
     
     /**
@@ -63,9 +63,11 @@ public class DoctorHandler extends Receptionist<Doctor>{
      * @param doctor
      * @param userDoctor 
      */
-    public void setDoctorUser(Doctor doctor, UserDoctor userDoctor){
+    public Doctor setDoctorUser(Doctor doctor, UserDoctor userDoctor){
+        Doctor doctorWithUser;
         doctor.setUser(userDoctor);
-        doctorManager.register(doctor);
+        doctorWithUser = doctor;
+        return doctorWithUser;
     }
     
     public Doctor getDoctor(int id){
@@ -139,7 +141,8 @@ public class DoctorHandler extends Receptionist<Doctor>{
    public void registerDoctor(ArrayList<String> doctorData, ArrayList<String> userDoctorData) throws InvalidFieldException{
       Doctor doctor = new Doctor(createDoctor(doctorData));
       UserDoctor user = new UserDoctor(createUserDoctor(userDoctorData));
-      setDoctorUser(doctor,user);
+      doctor = setDoctorUser(doctor,user);
+      register(doctor);
     }
 
     public void modifyDoctor(ArrayList<String> newDoctorData , int id) throws InvalidFieldException{

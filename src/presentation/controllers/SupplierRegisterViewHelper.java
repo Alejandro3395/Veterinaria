@@ -5,11 +5,11 @@
  */
 package presentation.controllers;
 
-import bussiness.SupplierHandler;
+import bussiness.SupplierInformationHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.ViewHelper;
 import presentation.views.SupplierRegisterView;
 
@@ -17,7 +17,7 @@ import presentation.views.SupplierRegisterView;
  *
  * @author Jorge
  */
-public class SupplierRegisterViewHelper extends DataViewHelper{
+public class SupplierRegisterViewHelper extends InformationViewHelper{
     private SupplierRegisterView supplierRegisterView;
     private static SupplierRegisterViewHelper supplierRegisterViewHelper;
     
@@ -40,9 +40,6 @@ public class SupplierRegisterViewHelper extends DataViewHelper{
         this.supplierRegisterView = supplierRegisterView;
     }
     
-    private void updateManagerViewTable(){
-        SupplierManagerViewHelper.getInstance().updateTable();
-    }
     
     @Override
     public void loadView() {
@@ -61,25 +58,25 @@ public class SupplierRegisterViewHelper extends DataViewHelper{
      */
     @Override
     protected void setEvents() {
-        supplierRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        supplierRegisterView.getBtn_register().addActionListener(actionEvent -> registerSupplier());
         supplierRegisterView.getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
         
     }
     
     private void cancelRegistration(){
-        closeWindow();
+        closeView();
     }
     
-    private void closeWindow(){
-        supplierRegisterView.dispose();
+    private void closeView(){
         clearFields();
+        supplierRegisterView.dispose();
         SupplierManagerViewHelper.getInstance().loadView();
     }
     
     /**
      *  This method uses sends the data the view provides to the manager.
      */
-    private void proceedWithRegistration(){
+    private void registerSupplier(){
         
         ArrayList<String> supplierData = new ArrayList<String>(obtainDataFromView());
         
@@ -89,11 +86,10 @@ public class SupplierRegisterViewHelper extends DataViewHelper{
         
         if(isValidField){
             try{
-                SupplierHandler supplierManager = SupplierHandler.GetInstance();
-                supplierManager.registerSupplier(supplierData);
+                SupplierInformationHandler supplierInformationHandler = SupplierInformationHandler.GetInstance();
+                supplierInformationHandler.registerSupplier(supplierData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el proveedor");
-                updateManagerViewTable();
-                closeWindow();
+                closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );

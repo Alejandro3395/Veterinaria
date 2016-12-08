@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class SessionManager {
     private static final SessionManager sessionManager = new SessionManager();
-    private static  Doctor currentDoctor;
+    private static  Doctor loggedDoctor;
     private DoctorDAO doctorDAO;
     private EmployeeDAO employeeDAO;
     private static int nameIndex = 0;
@@ -33,12 +33,12 @@ public class SessionManager {
 
 
 
-    public static Doctor getCurrentDoctor() {
-        return currentDoctor;
+    public static Doctor getLoggedDoctor() {
+        return loggedDoctor;
     }
 
-    public static void setCurrentDoctor(Doctor currentDoctor) {
-        SessionManager.currentDoctor = currentDoctor;
+    public static void setLoggedDoctor(Doctor currentDoctor) {
+        SessionManager.loggedDoctor = currentDoctor;
     }
 
 
@@ -56,7 +56,7 @@ public class SessionManager {
              if( dataUserDoctor.get(nameIndex).equals( userDoctor.getUserName() ) &&
                  dataUserDoctor.get(passwordIndex).equals( userDoctor.getUserPassword()) ){
                  isValid= true;
-                 setCurrentDoctor(doctor);
+                 setLoggedDoctor(doctor);
                  
              }   
          }

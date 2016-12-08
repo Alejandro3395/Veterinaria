@@ -3,12 +3,13 @@ package bussiness;
 import Data.DAOs.ClientDAO;
 import Entitys.Address;
 import Entitys.Client;
+import Entitys.Pet;
 import Entitys.Phone;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 
 /**
-* class: ClientHandler (ClientHandler.java)
+* class: ClientInformationHandler (ClientInformationHandler.java)
 * @author: Manuel Bojorquez
 * 
 * date: October 27, 2016
@@ -19,8 +20,8 @@ import java.util.ArrayList;
 * 
 */
 
-public class ClientHandler extends  Receptionist<Client> {
-    private static final ClientHandler clientHandler = new ClientHandler();
+public class ClientInformationHandler extends  Receptionist<Client> {
+    private static final ClientInformationHandler clientInformationHandler = new ClientInformationHandler();
     private ClientDAO clientDAO;
     
     /**
@@ -37,7 +38,7 @@ public class ClientHandler extends  Receptionist<Client> {
     
 
     
-    public ClientHandler(){
+    public ClientInformationHandler(){
         this.clientDAO = ClientDAO.GetInstance();
     }
     
@@ -45,10 +46,10 @@ public class ClientHandler extends  Receptionist<Client> {
     /**
      * This method returns an instance of the class that the other classes can
      * use.
-     * @return clientHandler
+     * @return clientInformationHandler
      */
-    public static ClientHandler GetInstance(){
-        return clientHandler;
+    public static ClientInformationHandler GetInstance(){
+        return clientInformationHandler;
     }
     
     
@@ -118,10 +119,22 @@ public class ClientHandler extends  Receptionist<Client> {
       edit(updatedClient);
     }
     
+    public void addPets(String clientName,Pet pet){
+        Client client = getClientData(clientName); //aqui se llama a lo de get por nombre
+        client.addPets(pet);
+        edit(client);
+    }
+    
     public ArrayList<Client> getClientList(){
         ArrayList<Client> clientList;
         clientList = new ArrayList<Client> ( (ArrayList<Client>) clientDAO.getList() );
         return clientList; 
+    }
+    
+    public void updatePet(String clientName,Pet pet,int index){
+        Client client = getClientData(clientName); //aqui se llama a lo de get por nombre
+        client.getPets().set(index-1,pet);
+        edit(client);
     }
 
     @Override

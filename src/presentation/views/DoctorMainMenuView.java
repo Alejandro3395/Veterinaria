@@ -32,47 +32,41 @@ public class DoctorMainMenuView extends javax.swing.JFrame {
         btn_consult = new javax.swing.JButton();
         btn_exit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(null);
+        setMinimumSize(new java.awt.Dimension(600, 600));
+        getContentPane().setLayout(null);
 
         btn_consult.setText("Consulta");
+        btn_consult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_consultActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_consult);
+        btn_consult.setBounds(240, 500, 75, 23);
 
         btn_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/logout.png"))); // NOI18N
         btn_exit.setText("Salir");
+        getContentPane().add(btn_exit);
+        btn_exit.setBounds(10, 10, 121, 73);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Consulta.png"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(210, 360, 128, 128);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(219, Short.MAX_VALUE)
-                .addComponent(btn_exit)
-                .addGap(230, 230, 230))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(219, 219, 219)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(245, 245, 245)
-                        .addComponent(btn_consult)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(btn_consult)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
-                .addComponent(btn_exit)
-                .addContainerGap())
-        );
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/doctor 3.png"))); // NOI18N
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(20, 0, 600, 560);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_consultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_consultActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,5 +143,6 @@ public class DoctorMainMenuView extends javax.swing.JFrame {
     private javax.swing.JButton btn_consult;
     private javax.swing.JButton btn_exit;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

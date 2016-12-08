@@ -23,7 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import exceptions.InvalidFieldException;
 
-public abstract class DataViewHelper extends ViewHelper  {
+public abstract class InformationViewHelper extends ViewHelper  {
     protected abstract ArrayList<String> obtainDataFromView();
     protected abstract void clearFields();
     /**

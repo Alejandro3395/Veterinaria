@@ -5,11 +5,11 @@
  */
 package presentation.controllers;
 
-import bussiness.EmployeeHandler;
+import bussiness.EmployeeInformationHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.ViewHelper;
 import presentation.views.EmployeeRegisterView;
 
@@ -24,7 +24,7 @@ import presentation.views.EmployeeRegisterView;
 * provides and pass the data to the manager class.
 * 
 */
-public class EmployeeRegisterViewHelper  extends DataViewHelper{
+public class EmployeeRegisterViewHelper  extends InformationViewHelper{
     private static EmployeeRegisterViewHelper employeeRegisterViewHelper = null;
     private static int employeeDataIndex = 0;
     private static int userEmployeeDataIndex = 1;
@@ -66,10 +66,10 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
      */
     @Override
     protected void setEvents() {
-        employeeRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        employeeRegisterView.getBtn_register().addActionListener(actionEvent -> registerEmployee());
     }
     
-    private void proceedWithRegistration(){
+    private void registerEmployee(){
         ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
 
         ArrayList<ArrayList> parsedData = new ArrayList<ArrayList>(parseData(data));
@@ -84,12 +84,10 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
         if(isValidField){
             
             try{
-               EmployeeHandler employeeHandler = EmployeeHandler.GetInstance();
-               employeeHandler.registerEmployee(employeeData,userEmployeeData);
+               EmployeeInformationHandler employeeInformationHandler = EmployeeInformationHandler.GetInstance();
+               employeeInformationHandler.registerEmployee(employeeData,userEmployeeData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Empleado");
-                updateManagerViewTable();
-                clearFields();
-                closeWindow();
+                closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage() ;
                 getNotifier().showWarningMessage( message );
@@ -158,17 +156,13 @@ public class EmployeeRegisterViewHelper  extends DataViewHelper{
         return data;
     }
 
-    private void closeWindow() {
-        employeeRegisterView.dispose();
+    private void closeView() {
         clearFields();
+        employeeRegisterView.dispose();
         EmployeeManagerViewHelper.getInstance().loadView();
         
     }
 
-    private void updateManagerViewTable() {
-        EmployeeManagerViewHelper.getInstance().updateTable();
-    }
-    
    @Override
     protected void clearFields() {
         employeeRegisterView.getField_employeeName().setText("");

@@ -7,9 +7,9 @@ package presentation.controllers;
 
 import Entitys.Appointment;
 import Entitys.Medicine;
-import bussiness.AppointmentManager;
-import bussiness.MedicineHandler;
-import bussiness.ReportHandler;
+import bussiness.AppointmentInformationHandler;
+import bussiness.MedicineInformationHandler;
+import bussiness.ReportInformationHandler;
 import bussiness.SalesManager;
 import bussiness.SessionManager;
 import java.text.DecimalFormat;
@@ -18,7 +18,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.ViewHelper;
 import presentation.views.AppointmentView;
 import presentation.views.SalesView;
@@ -27,7 +27,7 @@ import presentation.views.SalesView;
  *
  * @author mannu
  */
-public class AppointmentViewHelper extends DataViewHelper{
+public class AppointmentViewHelper extends InformationViewHelper{
     private AppointmentView appointmentView;
     private DefaultComboBoxModel comboBoxModel;
     private DefaultTableModel Tablemodel;
@@ -63,10 +63,10 @@ public class AppointmentViewHelper extends DataViewHelper{
         appointmentView.getCancelSaleBttn().addActionListener(actionEvent -> cancelAppointment());
     }
 
-    private void closeWindow(){
-        SalesManager.getInstance().CancelSale(getPurchases());
-        appointmentView.dispose();
+    private void closeView(){
         clearFields();
+        appointmentView.dispose();
+        SalesManager.getInstance().CancelSale(getProducts());
         
         AppointmentManagerViewHelper appointmentManagerViewHelper = AppointmentManagerViewHelper.getInstance();
         appointmentManagerViewHelper.loadView();
@@ -81,7 +81,7 @@ public class AppointmentViewHelper extends DataViewHelper{
     public void SetTotalCost(){
         DecimalFormat numDecimales = new DecimalFormat("0.00");
         SalesManager salesManager = SalesManager.getInstance();
-        totalCost = salesManager.calculateAmountToPay(getPurchases());
+        totalCost = salesManager.calculateAmountToPay(getProducts());
         appointmentView.getTotalSale_Field().setText(numDecimales.format(totalCost));
     }
     
@@ -107,7 +107,7 @@ public class AppointmentViewHelper extends DataViewHelper{
     public void loadProducts(){
         
         comboBoxModel.removeAllElements();
-        MedicineHandler medicineManager = MedicineHandler.GetInstance();
+        MedicineInformationHandler medicineManager = MedicineInformationHandler.GetInstance();
         List<Medicine> productsList =  medicineManager.getMedicines();
         
         for(Medicine medicine : productsList){
@@ -175,33 +175,19 @@ public class AppointmentViewHelper extends DataViewHelper{
         for(numMaxRows = 0; numMaxRows < Tablemodel.getRowCount(); numMaxRows++){ 
                 
             medicineName = String.valueOf(Tablemodel.getValueAt(numMaxRows, 0));
-            Medicine medicine = MedicineHandler.GetInstance().getMedicineByName(medicineName);
+            Medicine medicine = MedicineInformationHandler.GetInstance().getMedicineByName(medicineName);
             products.add(medicine);
         }
         return products;
     }
     
-    public List<String> getPurchases(){
-        int numMaxRows = 0;
-        String productAndPrice; 
-        List purchases = new ArrayList<>();
-        for(numMaxRows = 0; numMaxRows < Tablemodel.getRowCount(); numMaxRows++){ 
-                productAndPrice ="";
-                productAndPrice= productAndPrice.concat(String.valueOf(Tablemodel.getValueAt(numMaxRows, 0)));
-                productAndPrice= productAndPrice.concat(String.valueOf(Tablemodel.getValueAt(numMaxRows, 1))); 
-                purchases.add(productAndPrice);
-        }
-        return purchases;
-    }
-    
-    
      //Metodo puesto aqui para prueba 
      // Checar nombres
      private void BuildReport(){
         
-        AppointmentManager.GetInstance().getActualAppointment();
+        AppointmentInformationHandler.GetInstance().getActualAppointment();
          
-        ReportHandler rh = ReportHandler.getInstance();
+        ReportInformationHandler rh = ReportInformationHandler.getInstance();
          
         ArrayList<String> prescriptionData = new ArrayList<String>(obtainDataFromView());
         
@@ -214,20 +200,20 @@ public class AppointmentViewHelper extends DataViewHelper{
             String comment = prescriptionData.get(commentIndex);
             List<Medicine> products = getProducts();
             rh.BuildVeterinaryPrescription(client,pet,products,comment, totalCost);
-            AppointmentManager.GetInstance().finishAppointment();
-            closeWindow();
+            AppointmentInformationHandler.GetInstance().finishAppointment();
+            closeView();
         }else{
             getNotifier().showWarningMessage("Rellene todos los campos");
         }
      }
      
      private void cancelAppointment(){
-        AppointmentManager.GetInstance().cancelAppointment();
-        closeWindow();
+        AppointmentInformationHandler.GetInstance().cancelAppointment();
+        closeView();
      }
      
      private void setDataToView(){
-         String doctorName = SessionManager.getCurrentDoctor().getName();
+         String doctorName = SessionManager.getLoggedDoctor().getName();
          appointmentView.getField_doctor().setText(doctorName);
          appointmentView.getField_doctor().setEditable(false);
          
@@ -235,7 +221,7 @@ public class AppointmentViewHelper extends DataViewHelper{
         
          int id = Integer.valueOf( AppointmentManagerViewHelper.getInstance().getAppointmentManagerView().getTable_appointmentTable().getValueAt(row, 0).toString() );
 
-         Appointment appointment = AppointmentManager.GetInstance().getAppointment(id);
+         Appointment appointment = AppointmentInformationHandler.GetInstance().getAppointment(id);
          
          appointmentView.getField_client().setText(appointment.getClientName());
          appointmentView.getField_client().setEditable(false);

@@ -6,33 +6,33 @@
 package presentation.controllers;
 
 import Entitys.Doctor;
-import bussiness.DoctorHandler;
+import bussiness.DoctorInformationHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.DoctorRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class DoctorModificationViewHelper extends DataViewHelper {
+public class ModifyDoctorInfoViewHelper extends InformationViewHelper {
     private DoctorRegisterView doctorRegisterView;
-    private static DoctorModificationViewHelper doctorModificationHelper = null;
+    private static ModifyDoctorInfoViewHelper modifyDoctorInfoViewHelper = null;
 
     
-    private DoctorModificationViewHelper(){
+    private ModifyDoctorInfoViewHelper(){
         
         setDoctorRegisterView( new DoctorRegisterView() ); 
         initializeView();
     }
 
-    public static DoctorModificationViewHelper getInstance(){
-        if( doctorModificationHelper== null) {
-         doctorModificationHelper =  new DoctorModificationViewHelper();
+    public static ModifyDoctorInfoViewHelper getInstance(){
+        if( modifyDoctorInfoViewHelper== null) {
+         modifyDoctorInfoViewHelper =  new ModifyDoctorInfoViewHelper();
         }
-        return doctorModificationHelper;
+        return modifyDoctorInfoViewHelper;
     }
     
     public void setDoctorRegisterView(DoctorRegisterView doctorRegisterView) {
@@ -41,7 +41,7 @@ public class DoctorModificationViewHelper extends DataViewHelper {
 
     @Override
     protected void setEvents() {
-        doctorRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithModification());
+        doctorRegisterView.getBtn_register().addActionListener(actionEvent -> modifyDoctor());
         doctorRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelModification());
     }
 
@@ -62,13 +62,13 @@ public class DoctorModificationViewHelper extends DataViewHelper {
         int row = DoctorManagerViewHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
         int id = Integer.valueOf( DoctorManagerViewHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getValueAt(row, 0).toString() );
         
-        DoctorHandler doctorManager = DoctorHandler.GetInstance();
-        Doctor doctor =  doctorManager.getDoctor(id) ;
+        DoctorInformationHandler doctorInformationHandler = DoctorInformationHandler.GetInstance();
+        Doctor doctor =  doctorInformationHandler.getDoctor(id) ;
         
         setDataToView(doctor);
     }
     
-    private void proceedWithModification(){
+    private void modifyDoctor(){
         ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
         int row = DoctorManagerViewHelper.getInstance().getDoctorManagerView().getTable_doctorTable().getSelectedRow();
@@ -80,11 +80,10 @@ public class DoctorModificationViewHelper extends DataViewHelper {
         
         if( isValidField ){
             try{
-               DoctorHandler doctorHandler = DoctorHandler.GetInstance();
+               DoctorInformationHandler doctorHandler = DoctorInformationHandler.GetInstance();
                doctorHandler.modifyDoctor(data,id);
                getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Doctor");
-               updateManagerViewTable();
-               closeWindow();
+               closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
@@ -97,17 +96,13 @@ public class DoctorModificationViewHelper extends DataViewHelper {
         }
     }
     
-    private void updateManagerViewTable(){
-        DoctorManagerViewHelper.getInstance().updateTable();
-    }
-    
     private void cancelModification(){
-        closeWindow();
+        closeView();
     }
     
-    private void closeWindow(){
-        doctorRegisterView.dispose();
+    private void closeView(){
         clearFields();
+        doctorRegisterView.dispose();
         DoctorManagerViewHelper.getInstance().loadView();
     }
 

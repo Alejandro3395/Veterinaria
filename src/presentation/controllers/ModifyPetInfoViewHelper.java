@@ -6,34 +6,34 @@
 package presentation.controllers;
 
 import Entitys.Pet;
-import bussiness.ClientHandler;
-import bussiness.PetHandler;
+import bussiness.ClientInformationHandler;
+import bussiness.PetInformationHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.PetRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class PetModificationViewHelper extends DataViewHelper {
-    private static PetModificationViewHelper petModificationViewHelper;
+public class ModifyPetInfoViewHelper extends InformationViewHelper {
+    private static ModifyPetInfoViewHelper modifyPetInfoViewHelper;
     private PetRegisterView petRegisterView;
     
-    public PetModificationViewHelper(){
+    public ModifyPetInfoViewHelper(){
         setPetRegisterView( new PetRegisterView() );
         
         initializeView();
     }
 
-    public static PetModificationViewHelper getInstance(){
-        if( petModificationViewHelper== null) {
-         petModificationViewHelper = new PetModificationViewHelper();
+    public static ModifyPetInfoViewHelper getInstance(){
+        if( modifyPetInfoViewHelper== null) {
+         modifyPetInfoViewHelper = new ModifyPetInfoViewHelper();
         }
-        return petModificationViewHelper;
+        return modifyPetInfoViewHelper;
     }
 
     public void setPetRegisterView(PetRegisterView petRegisterView) {
@@ -55,7 +55,7 @@ public class PetModificationViewHelper extends DataViewHelper {
 
     @Override
     protected void setEvents() {
-        petRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithModification());
+        petRegisterView.getBtn_register().addActionListener(actionEvent -> modifyPet());
         petRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelModification());
     }
     
@@ -65,14 +65,14 @@ public class PetModificationViewHelper extends DataViewHelper {
         
         String petOwner = PetManagerViewHelper.getInstance().getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
         
-        PetHandler petManager = PetHandler.GetInstance();
-        List<Pet> petList =  petManager.getPetList(petOwner);
+        PetInformationHandler petInformationHandler = PetInformationHandler.GetInstance();
+        List<Pet> petList =  petInformationHandler.getPetList(petOwner);
         Pet pet = petList.get(id-1);
         
         setData(pet);
     }
     
-    private void proceedWithModification(){
+    private void modifyPet(){
         ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
         int row = PetManagerViewHelper.getInstance().getPetManagerView().getTable_petTable().getSelectedRow();
@@ -85,11 +85,10 @@ public class PetModificationViewHelper extends DataViewHelper {
         
         if( isValidField ){
             try{
-               PetHandler petManager = PetHandler.GetInstance();
-               petManager.modifyPet(data,petOwner,id);
+               PetInformationHandler petInformationHandler = PetInformationHandler.GetInstance();
+               petInformationHandler.modifyPet(data,petOwner,id);
                getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Pet");
-               updateManagerViewTable();
-               closeWindow();
+               closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
@@ -102,17 +101,14 @@ public class PetModificationViewHelper extends DataViewHelper {
         }
     }
     
-    private void updateManagerViewTable(){
-        PetManagerViewHelper.getInstance().updateTable();
-    }
     
     private void cancelModification(){
-        closeWindow();
+        closeView();
     }
     
-    private void closeWindow(){
-        petRegisterView.dispose();
+    private void closeView(){
         clearFields();
+        petRegisterView.dispose();
         PetManagerViewHelper.getInstance().loadView();
     }
 

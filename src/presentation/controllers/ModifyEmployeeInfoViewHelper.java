@@ -6,10 +6,10 @@
 package presentation.controllers;
 
 import Entitys.Employee;
-import bussiness.EmployeeHandler;
+import bussiness.EmployeeInformationHandler;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.EmployeeRegisterView;
 import exceptions.InvalidFieldException;
 
@@ -17,21 +17,21 @@ import exceptions.InvalidFieldException;
  *
  * @author Jorge
  */
-public class EmployeeModificationViewHelper extends DataViewHelper {
+public class ModifyEmployeeInfoViewHelper extends InformationViewHelper {
     
-    private static EmployeeModificationViewHelper employeeModificationViewHelper = null;
+    private static ModifyEmployeeInfoViewHelper modifyEmployeeInfoViewHelper = null;
     private EmployeeRegisterView employeeRegisterView;
     
-    public EmployeeModificationViewHelper(){
+    public ModifyEmployeeInfoViewHelper(){
         setEmployeeRegisterView( new EmployeeRegisterView() );
         initializeView();
     }
     
-    public static EmployeeModificationViewHelper getInstance(){
-        if( employeeModificationViewHelper== null) {
-         employeeModificationViewHelper = new EmployeeModificationViewHelper();
+    public static ModifyEmployeeInfoViewHelper getInstance(){
+        if( modifyEmployeeInfoViewHelper== null) {
+         modifyEmployeeInfoViewHelper = new ModifyEmployeeInfoViewHelper();
         }
-        return employeeModificationViewHelper;
+        return modifyEmployeeInfoViewHelper;
     }
     
     public void setEmployeeRegisterView(EmployeeRegisterView employeeRegisterView) {
@@ -53,7 +53,7 @@ public class EmployeeModificationViewHelper extends DataViewHelper {
 
     @Override
     protected void setEvents() {
-        employeeRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithModification());
+        employeeRegisterView.getBtn_register().addActionListener(actionEvent -> modifyEmployee());
         employeeRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelModification());
     }
     
@@ -61,13 +61,13 @@ public class EmployeeModificationViewHelper extends DataViewHelper {
         int row = EmployeeManagerViewHelper.getInstance().getEmployeeManagerView().getTable_employeeTable().getSelectedRow();
         int id = Integer.valueOf( EmployeeManagerViewHelper.getInstance().getEmployeeManagerView().getTable_employeeTable().getValueAt(row, 0).toString() );
         
-        EmployeeHandler employeeManager = EmployeeHandler.GetInstance();
+        EmployeeInformationHandler employeeManager = EmployeeInformationHandler.GetInstance();
         Employee employee =  employeeManager.getEmployee(id) ;
         
         setData(employee);
     }
     
-    private void proceedWithModification(){
+    private void modifyEmployee(){
         ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
         int row = EmployeeManagerViewHelper.getInstance().getEmployeeManagerView().getTable_employeeTable().getSelectedRow();
@@ -80,11 +80,11 @@ public class EmployeeModificationViewHelper extends DataViewHelper {
         if( isValidField ){
             
             try{
-                EmployeeHandler employeeHandler = EmployeeHandler.GetInstance();
-                employeeHandler.modifyEmployee(data,id);
+                EmployeeInformationHandler employeeInformationHandler = EmployeeInformationHandler.GetInstance();
+                employeeInformationHandler.modifyEmployee(data,id);
                 getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Employee");
                 updateManagerViewTable();
-                closeWindow();
+                closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
@@ -101,11 +101,13 @@ public class EmployeeModificationViewHelper extends DataViewHelper {
     }
     
     private void cancelModification(){
-        closeWindow();
+        closeView();
     }
     
-    private void closeWindow(){
+    private void closeView(){
+        clearFields();
         employeeRegisterView.dispose();
+        EmployeeManagerViewHelper.getInstance().loadView();
     }
 
     /**

@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import Entitys.Appointment;
-import bussiness.AppointmentManager;
+import bussiness.AppointmentInformationHandler;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -22,9 +22,8 @@ public class AppointmentManagerViewHelper extends ViewHelper {
     private AppointmentManagerView appointmentManagerView;
     
     
-    private AppointmentManagerViewHelper(){
-        setAppointmentManagerView(new AppointmentManagerView());
-        initializeView();
+    public void updateTable(){
+        loadAppointmentRecordsToTable();
     }
 
     public static AppointmentManagerViewHelper getInstance(){
@@ -34,7 +33,6 @@ public class AppointmentManagerViewHelper extends ViewHelper {
         return appointmentManagerViewHelper;
     }
      
-    
     public AppointmentManagerView getAppointmentManagerView() {
         return appointmentManagerView;
     }
@@ -56,12 +54,12 @@ public class AppointmentManagerViewHelper extends ViewHelper {
         getAppointmentManagerView().getBtn_modifyAppointment().addActionListener(actionEvent -> openModificationView());
         getAppointmentManagerView().getBtn_deleteAppointment().addActionListener(actionEvent -> displayConfirmationMessage());
         getAppointmentManagerView().getBtn_startAppointment().addActionListener(actionEvent -> startAppointment());
-        getAppointmentManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
+        getAppointmentManagerView().getBtn_back().addActionListener(actionEvent -> closeView());
     }
     
     @Override
     public void loadView() {
-        loadAppointmentRegisterToTable();
+        loadAppointmentRecordsToTable();
         getAppointmentManagerView().setVisible(true);
     }
 
@@ -73,19 +71,21 @@ public class AppointmentManagerViewHelper extends ViewHelper {
         setEvents();
     }
     
+    
+    
     /**
      * This method set the listeners into the view buttons.
      */ 
-    private void loadAppointmentRegisterToTable(){
+    private void loadAppointmentRecordsToTable(){
         
         DefaultTableModel model = (DefaultTableModel) getAppointmentManagerView().getTable_appointmentTable().getModel();
         
         int rowCount = model.getRowCount();
         if(rowCount !=0){model.setRowCount(0);}
         
-        AppointmentManager appointmentManager = AppointmentManager.GetInstance();
+        AppointmentInformationHandler appointmentInformationHandler = AppointmentInformationHandler.GetInstance();
         
-        ArrayList<Appointment> appointmentList = appointmentManager.getAppointments() ;
+        ArrayList<Appointment> appointmentList = appointmentInformationHandler.getAppointments() ;
         setTableContent(appointmentList);
     }
     
@@ -93,8 +93,8 @@ public class AppointmentManagerViewHelper extends ViewHelper {
         if(isRowSelected()){
             if(isAppointmentAvailable()){
                 appointmentManagerView.dispose();
-                AppointmentModificationViewHelper appointmentModificationViewHelper = AppointmentModificationViewHelper.getInstance();
-                appointmentModificationViewHelper.loadView();
+                ModifyAppointmentInfoView modifyAppointmentInfoView = ModifyAppointmentInfoView.getInstance();
+                modifyAppointmentInfoView.loadView();
             }else{
                 getNotifier().showWarningMessage( "La cita que elegiste no esta disponible" );
             }
@@ -114,7 +114,7 @@ public class AppointmentManagerViewHelper extends ViewHelper {
         }
     }
     
-    private void closeWindow(){
+    private void closeView(){
         getAppointmentManagerView().dispose();
         DoctorMainMenuViewHelper.getInstance().loadView();
     }
@@ -125,8 +125,8 @@ public class AppointmentManagerViewHelper extends ViewHelper {
         
             int id = Integer.valueOf( getAppointmentManagerView().getTable_appointmentTable().getValueAt(row, 0).toString() );
 
-            AppointmentManager appointmentManager = AppointmentManager.GetInstance();
-            appointmentManager.cancelAppointment(id);
+            AppointmentInformationHandler appointmentInformationHandler = AppointmentInformationHandler.GetInstance();
+            appointmentInformationHandler.cancelAppointment(id);
             getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar la cita");
             updateTable();
         }else{
@@ -178,7 +178,7 @@ public class AppointmentManagerViewHelper extends ViewHelper {
                 int row = getAppointmentManagerView().getTable_appointmentTable().getSelectedRow();
                 int id = Integer.valueOf( getAppointmentManagerView().getTable_appointmentTable().getValueAt(row, 0).toString() );
                 
-                AppointmentManager.GetInstance().startAppointment(id);
+                AppointmentInformationHandler.GetInstance().startAppointment(id);
                 AppointmentViewHelper appointmentHelper = AppointmentViewHelper.getInstance();
                 appointmentHelper.loadView();
             }else{
@@ -212,8 +212,9 @@ public class AppointmentManagerViewHelper extends ViewHelper {
         int optionSelected = getNotifier().showConfirmDialog( messageConfirm );
         return optionSelected == getNotifier().getYES_OPTION();
     }
-    
-    public void updateTable(){
-        loadAppointmentRegisterToTable();
+   
+    private AppointmentManagerViewHelper(){
+        setAppointmentManagerView(new AppointmentManagerView());
+        initializeView();
     }
 }

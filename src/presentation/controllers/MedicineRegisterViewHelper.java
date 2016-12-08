@@ -13,7 +13,7 @@
 package presentation.controllers;
 
 import Entitys.Medicine;
-import bussiness.MedicineHandler;
+import bussiness.MedicineInformationHandler;
 import exceptions.InvalidFieldException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,10 +23,10 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.MedicineRegisterView;
 
-public class MedicineRegisterViewHelper extends DataViewHelper {
+public class MedicineRegisterViewHelper extends InformationViewHelper {
     private static MedicineRegisterViewHelper medicineRegisterViewHelper;
     private MedicineRegisterView medicineRegisterView;
     
@@ -56,9 +56,6 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         this.medicineRegisterView = medicineRegisterView;
     }
     
-    private void updateManagerViewTable(){
-        MedicineManagerViewHelper.getInstance().updateTable();
-    }
     
     @Override
     public void loadView() {
@@ -77,25 +74,25 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
      */
     @Override
     protected void setEvents() {
-        medicineRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        medicineRegisterView.getBtn_register().addActionListener(actionEvent -> registerMedicine());
         medicineRegisterView.getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
         
     }
     
     private void cancelRegistration(){
-        closeWindow();
+        closeView();
     }
     
-    private void closeWindow(){
-        medicineRegisterView.dispose();
+    private void closeView(){
         clearFields();
+        medicineRegisterView.dispose();
         MedicineManagerViewHelper.getInstance().loadView();
     }
     
     /**
      *  This method uses sends the data the view provides to the manager.
      */
-    private void proceedWithRegistration(){
+    private void registerMedicine(){
         ArrayList<String> medicineData = new ArrayList<String>(obtainDataFromView());
         
         boolean isValidField =!isEmptyFields(medicineData);
@@ -107,12 +104,10 @@ public class MedicineRegisterViewHelper extends DataViewHelper {
         
         if(isValidField){
             try{
-                MedicineHandler medicineManager = MedicineHandler.GetInstance();
-                medicineManager.registerMedicine(medicineData,supplier);
+                MedicineInformationHandler medicineInformationHandler = MedicineInformationHandler.GetInstance();
+                medicineInformationHandler.registerMedicine(medicineData,supplier);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Medicine");
-                updateManagerViewTable();
-                clearFields();
-                closeWindow();
+                closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );

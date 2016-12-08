@@ -5,6 +5,7 @@
  */
 package bussiness;
 
+import Entitys.Medicine;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,15 +30,11 @@ public class SalesManager {
         return salesManager;
     }
     
-    public double calculateAmountToPay(List<String> purchases){
-        String[] productData;
+    public double calculateAmountToPay(List<Medicine> purchases){
         double amountToPay= 0;
-        int indexProductPrice = 1;
-        for(String product : purchases){
-             productData = product.split("  ");
-             amountToPay = amountToPay + Double.parseDouble(productData[indexProductPrice]);
-                   
-            }
+        for(Medicine product : purchases){
+            amountToPay = amountToPay + product.getCost();       
+        }
         return amountToPay;
     }
     
@@ -48,7 +45,6 @@ public class SalesManager {
         isInExistence = warehouseManager.isProductInExistence(nameMedicine);
         if(isInExistence){
             warehouseManager.WithdrawFromWarehouse(nameMedicine);
-            return isInExistence;
         }
         return isInExistence;
     }
@@ -57,12 +53,9 @@ public class SalesManager {
         warehouseManager.AddToWarehouse(medicineName);
     }
     
-    public void CancelSale(List<String> purchases){
-        int indexMedicineName = 0;
-        String[] productData ;
-        for(String product: purchases){
-            productData = product.split("  ");
-            removeProductToPurchase(productData[indexMedicineName]);
+    public void CancelSale(List<Medicine> purchases){
+        for(Medicine product: purchases){
+            removeProductToPurchase(product.getName());
         }
         
     }

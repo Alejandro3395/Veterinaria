@@ -22,7 +22,7 @@ import java.util.List;
 
 
 
-public class PetHandler {
+public class PetInformationHandler {
     
      
     /**
@@ -34,12 +34,20 @@ public class PetHandler {
     static final int  ageIndex = 1;
     static final int  ownerIndex = 3;
     
-    private static final PetHandler petHandler = new PetHandler();
+    private static final PetInformationHandler petInformationHandler = new PetInformationHandler();
     
-    public PetHandler(){
+    public PetInformationHandler(){
        
     }
     
+     /**
+     * This method returns an instance of the class that the other classes can
+     * use.
+     * @return     
+     /**
+     * This method returns an instance of the class that the other classes can
+     * use.
+     * @return     
      /**
      * This method returns an instance of the class that the other classes can
      * use.
@@ -51,8 +59,8 @@ public class PetHandler {
      */
     
     
-    public static PetHandler GetInstance(){
-        return petHandler;
+    public static PetInformationHandler GetInstance(){
+        return petInformationHandler;
     }
   
          
@@ -78,31 +86,29 @@ public class PetHandler {
         return petData;
     }
 
-    public void registerPet(ArrayList<String> petData,String petOwner) throws InvalidFieldException{
+    public void registerPet(ArrayList<String> petData,String clientName) throws InvalidFieldException{
 
-            Pet pet = new Pet(createPet(petData));
-            ClientHandler clientManager = ClientHandler.GetInstance();
-            Client client = clientManager.getClientData(petOwner); //aqui se llama a lo de get por nombre
-            client.addPets(pet);
-            clientManager.edit(client);
+        Pet pet = new Pet(createPet(petData));
+        ClientInformationHandler clientHandler = ClientInformationHandler.GetInstance();
+        clientHandler.addPets(clientName,pet);
+            
     }
 
 
-    public void modifyPet(ArrayList<String> newPetData , String petOwner,int index) throws InvalidFieldException{
+    public void modifyPet(ArrayList<String> newPetData , String clientName,int index) throws InvalidFieldException{
 
-            List<Pet> petList =  getPetList(petOwner);
-            Pet pet = petList.get(index-1);
-            Pet updatedPet = createPet(newPetData);
-            pet.setId(updatedPet.getId());
-            ClientHandler clientManager = ClientHandler.GetInstance();
-            Client client = clientManager.getClientData(petOwner); //aqui se llama a lo de get por nombre
-            client.getPets().set(index-1,updatedPet);
-            clientManager.edit(client);
+        List<Pet> petList =  getPetList(clientName);
+        Pet pet = petList.get(index-1);
+        Pet updatedPet = createPet(newPetData);
+        pet.setId(updatedPet.getId());
+        ClientInformationHandler clientHandler = ClientInformationHandler.GetInstance();
+        clientHandler.updatePet(clientName,pet,index);
+
     }
     
     
     public List<Pet> getPetList(String ownerName){
-        ClientHandler clientManager = ClientHandler.GetInstance();
+        ClientInformationHandler clientManager = ClientInformationHandler.GetInstance();
         
         Client ownerData = clientManager.getClientData(ownerName);
         List<Pet> petList;

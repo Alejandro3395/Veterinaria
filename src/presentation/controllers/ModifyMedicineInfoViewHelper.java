@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import Entitys.Medicine;
-import bussiness.MedicineHandler;
+import bussiness.MedicineInformationHandler;
 import exceptions.InvalidFieldException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,28 +16,28 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.MedicineRegisterView;
 
 /**
  *
  * @author mannu
  */
-public class MedicineModificationViewHelper extends DataViewHelper {
-    private static MedicineModificationViewHelper medicineModificationViewHelper;
+public class ModifyMedicineInfoViewHelper extends InformationViewHelper {
+    private static ModifyMedicineInfoViewHelper modifyMedicineInfoViewHelper;
     private MedicineRegisterView medicineRegisterView;
     private String supplier = null;
     
-    private MedicineModificationViewHelper(){
+    private ModifyMedicineInfoViewHelper(){
         setMedicineRegisterView( new MedicineRegisterView() );
         initializeView();
     }
 
-    public static MedicineModificationViewHelper getInstance(){
-        if( medicineModificationViewHelper== null) {
-         medicineModificationViewHelper = new MedicineModificationViewHelper();
+    public static ModifyMedicineInfoViewHelper getInstance(){
+        if( modifyMedicineInfoViewHelper== null) {
+         modifyMedicineInfoViewHelper = new ModifyMedicineInfoViewHelper();
         }
-        return medicineModificationViewHelper;
+        return modifyMedicineInfoViewHelper;
     }
 
     public void setMedicineRegisterView(MedicineRegisterView medicineRegisterView) {
@@ -59,7 +59,7 @@ public class MedicineModificationViewHelper extends DataViewHelper {
 
     @Override
     protected void setEvents() {
-        medicineRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithModification());
+        medicineRegisterView.getBtn_register().addActionListener(actionEvent -> modifyMedicine());
         medicineRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelModification());
     }
     
@@ -67,14 +67,14 @@ public class MedicineModificationViewHelper extends DataViewHelper {
         int rowIndex = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
         String medicineSupplier = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
-        MedicineHandler medicineManager = MedicineHandler.GetInstance();
-        List<Medicine> medicineList =  medicineManager.getMedicinesBySupplierName(medicineSupplier);
+        MedicineInformationHandler medicineInformationHandler = MedicineInformationHandler.GetInstance();
+        List<Medicine> medicineList =  medicineInformationHandler.getMedicinesBySupplierName(medicineSupplier);
         Medicine medicine = medicineList.get(rowIndex);
         
         setData(medicine);
     }
     
-    private void proceedWithModification(){
+    private void modifyMedicine(){
         ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
         int row = MedicineManagerViewHelper.getInstance().getMedicineManagerView().getTable_medicineTable().getSelectedRow();
@@ -87,8 +87,8 @@ public class MedicineModificationViewHelper extends DataViewHelper {
         
         if( isValidField ){
             try{
-                MedicineHandler medicineManager = MedicineHandler.GetInstance();
-                medicineManager.modifyMedicine(data,medicineOwner,id);
+                MedicineInformationHandler medicineInformationHandler = MedicineInformationHandler.GetInstance();
+                medicineInformationHandler.modifyMedicine(data,medicineOwner,id);
                 getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el medicamento");
                 updateManagerViewTable();
                 closeWindow();
@@ -113,8 +113,8 @@ public class MedicineModificationViewHelper extends DataViewHelper {
     }
     
      private void closeWindow(){
-        medicineRegisterView.dispose();
         clearFields();
+        medicineRegisterView.dispose();
         MedicineManagerViewHelper.getInstance().loadView();
     }
 

@@ -14,16 +14,16 @@ package presentation.controllers;
 
 import Entitys.Doctor;
 import Entitys.UserDoctor;
-import bussiness.DoctorHandler;
+import bussiness.DoctorInformationHandler;
 import exceptions.InvalidFieldException;
 import presentation.controllers.*;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.DoctorRegisterView;
 
 
-public class DoctorRegisterViewHelper extends DataViewHelper {
+public class DoctorRegisterViewHelper extends InformationViewHelper {
     private DoctorRegisterView doctorRegisterView;
     private static DoctorRegisterViewHelper doctorRegisterViewHelper = null;
     
@@ -52,12 +52,8 @@ public class DoctorRegisterViewHelper extends DataViewHelper {
      */
     @Override
     protected void setEvents() {
-        doctorRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        doctorRegisterView.getBtn_register().addActionListener(actionEvent -> registerDoctor());
         doctorRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelRegistration());     
-    }
-    
-    private void updateManagerViewTable(){
-        DoctorManagerViewHelper.getInstance().updateTable();
     }
     
     @Override
@@ -73,12 +69,12 @@ public class DoctorRegisterViewHelper extends DataViewHelper {
     }
     
     private void cancelRegistration(){
-        closeWindow();
+        closeView();
     }
     
-    private void closeWindow(){
-        doctorRegisterView.dispose();
+    private void closeView(){
         clearFields();
+        doctorRegisterView.dispose();
         DoctorManagerViewHelper doctorManagerViewHelper = DoctorManagerViewHelper.getInstance();
         doctorManagerViewHelper.loadView();
     }
@@ -86,7 +82,7 @@ public class DoctorRegisterViewHelper extends DataViewHelper {
     /**
      *  This method uses sends the data the view provides to the manager.
      */
-    private void proceedWithRegistration(){
+    private void registerDoctor(){
         
         ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
 
@@ -101,12 +97,11 @@ public class DoctorRegisterViewHelper extends DataViewHelper {
         
         if(isValidField){
             try{
-                DoctorHandler doctorHandler = DoctorHandler.GetInstance();
-                doctorHandler.registerDoctor(doctorData,userDoctorData);
+                DoctorInformationHandler doctorInformationHandler = DoctorInformationHandler.GetInstance();
+                doctorInformationHandler.registerDoctor(doctorData,userDoctorData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Doctor");
-                updateManagerViewTable();
                 clearFields();
-                closeWindow();
+                closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );

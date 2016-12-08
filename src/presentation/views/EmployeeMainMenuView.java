@@ -34,8 +34,14 @@ public class EmployeeMainMenuView extends javax.swing.JFrame {
         btn_exit = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        Menu = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(570, 525));
+        setMinimumSize(new java.awt.Dimension(570, 525));
+        setPreferredSize(new java.awt.Dimension(600, 590));
+        getContentPane().setLayout(null);
 
         btn_sales.setText("Ventas");
         btn_sales.addActionListener(new java.awt.event.ActionListener() {
@@ -43,6 +49,8 @@ public class EmployeeMainMenuView extends javax.swing.JFrame {
                 btn_salesActionPerformed(evt);
             }
         });
+        getContentPane().add(btn_sales);
+        btn_sales.setBounds(469, 320, 65, 23);
 
         btn_register.setText("Registro");
         btn_register.addActionListener(new java.awt.event.ActionListener() {
@@ -50,54 +58,31 @@ public class EmployeeMainMenuView extends javax.swing.JFrame {
                 btn_registerActionPerformed(evt);
             }
         });
+        getContentPane().add(btn_register);
+        btn_register.setBounds(18, 320, 73, 23);
 
         btn_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/logout.png"))); // NOI18N
         btn_exit.setText("Salir");
+        getContentPane().add(btn_exit);
+        btn_exit.setBounds(219, 441, 121, 73);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Ventas.png"))); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(432, 186, 128, 128);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/registrar.png"))); // NOI18N
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(10, 206, 96, 96);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_register)
-                        .addGap(15, 15, 15)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_sales)
-                        .addGap(26, 26, 26)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(219, Short.MAX_VALUE)
-                .addComponent(btn_exit)
-                .addGap(230, 230, 230))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(186, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_sales))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_register)))
-                .addGap(98, 98, 98)
-                .addComponent(btn_exit)
-                .addContainerGap())
-        );
+        Menu.setFont(new java.awt.Font("Lucida Fax", 0, 36)); // NOI18N
+        Menu.setText("Menu");
+        getContentPane().add(Menu);
+        Menu.setBounds(220, 30, 110, 30);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Module1/icons-large/Employee 2.png"))); // NOI18N
+        jLabel1.setPreferredSize(new java.awt.Dimension(570, 525));
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(30, 0, 570, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -181,9 +166,11 @@ public class EmployeeMainMenuView extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Menu;
     private javax.swing.JButton btn_exit;
     private javax.swing.JButton btn_register;
     private javax.swing.JButton btn_sales;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables

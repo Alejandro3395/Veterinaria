@@ -6,32 +6,32 @@
 package presentation.controllers;
 
 import Entitys.Client;
-import bussiness.ClientHandler;
+import bussiness.ClientInformationHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.ClientRegisterView;
 
 /**
  *
  * @author Jorge
  */
-public class ClientModificationViewHelper extends DataViewHelper {
-    private static ClientModificationViewHelper clientModificationViewHelper = null;
+public class ModifyClientInfoViewHelper extends InformationViewHelper {
+    private static ModifyClientInfoViewHelper modifyClientInfoViewHelper = null;
     private ClientRegisterView clientRegisterView;
     
-    public ClientModificationViewHelper(){
+    public ModifyClientInfoViewHelper(){
         setClientRegisterView( new ClientRegisterView() );
         
         initializeView();
     }
     
-    public static ClientModificationViewHelper getInstance(){
-        if( clientModificationViewHelper== null) {
-         clientModificationViewHelper = new ClientModificationViewHelper();
+    public static ModifyClientInfoViewHelper getInstance(){
+        if( modifyClientInfoViewHelper== null) {
+         modifyClientInfoViewHelper = new ModifyClientInfoViewHelper();
         }
-        return clientModificationViewHelper;
+        return modifyClientInfoViewHelper;
     }
 
     public void setClientRegisterView(ClientRegisterView clientRegisterView) {
@@ -54,7 +54,7 @@ public class ClientModificationViewHelper extends DataViewHelper {
 
     @Override
     protected void setEvents() {
-        clientRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithModification());
+        clientRegisterView.getBtn_register().addActionListener(actionEvent -> modifyClient());
         clientRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelModification());
     }
     
@@ -62,13 +62,13 @@ public class ClientModificationViewHelper extends DataViewHelper {
         int row = ClientManagerViewHelper.getInstance().getClientManagerView().getTable_clientTable().getSelectedRow();
         int id = Integer.valueOf( ClientManagerViewHelper.getInstance().getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
         
-        ClientHandler clientManager = ClientHandler.GetInstance();
-        Client client =  clientManager.getClient(id) ;
+        ClientInformationHandler clientInformationHandler = ClientInformationHandler.GetInstance();
+        Client client =  clientInformationHandler.getClient(id) ;
         
         setData(client);
     }
     
-    private void proceedWithModification(){
+    private void modifyClient(){
         ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
         int row = ClientManagerViewHelper.getInstance().getClientManagerView().getTable_clientTable().getSelectedRow();
@@ -80,11 +80,10 @@ public class ClientModificationViewHelper extends DataViewHelper {
         
         if( isValidField ){
             try{
-                ClientHandler clientManager = ClientHandler.GetInstance();
-                clientManager.modifyClient(data,id);
+                ClientInformationHandler clientInformationHandler = ClientInformationHandler.GetInstance();
+                clientInformationHandler.modifyClient(data,id);
                 getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Client");
-                updateManagerViewTable();
-                closeWindow();
+                closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
@@ -96,17 +95,13 @@ public class ClientModificationViewHelper extends DataViewHelper {
         }
     }
     
-    private void updateManagerViewTable(){
-        ClientManagerViewHelper.getInstance().updateTable();
-    }
-    
     private void cancelModification(){
-        closeWindow();
+        closeView();
     }
     
-    private void closeWindow(){
-        clientRegisterView.dispose();
+    private void closeView(){
         clearFields();
+        clientRegisterView.dispose();
         ClientManagerViewHelper.getInstance().loadView();
     }
 

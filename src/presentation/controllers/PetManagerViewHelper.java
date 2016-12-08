@@ -7,8 +7,8 @@ package presentation.controllers;
 
 import Entitys.Client;
 import Entitys.Pet;
-import bussiness.ClientHandler;
-import bussiness.PetHandler;
+import bussiness.ClientInformationHandler;
+import bussiness.PetInformationHandler;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.WindowConstants;
@@ -51,7 +51,7 @@ public class PetManagerViewHelper extends ViewHelper {
     public void loadView() {
         getPetManagerView().setVisible(true);
         loadClientRegisterToCombo();
-        loadPetRegisterToTable();
+        loadPetRecordsToTable();
         
     }
 
@@ -71,11 +71,11 @@ public class PetManagerViewHelper extends ViewHelper {
         getPetManagerView().getBtn_addPet().addActionListener(actionEvent -> openRegisterView());
         getPetManagerView().getBtn_modifyPet().addActionListener(actionEvent -> openModificationView());
         getPetManagerView().getBtn_deletePet().addActionListener(actionEvent -> openEliminationConfirmationView());
-        getPetManagerView().getCombo_petOwner().addActionListener( actionEvent -> loadPetRegisterToTable() );
-        getPetManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
+        getPetManagerView().getCombo_petOwner().addActionListener( actionEvent -> loadPetRecordsToTable() );
+        getPetManagerView().getBtn_back().addActionListener(actionEvent -> closeView());
     }
     
-    public void loadPetRegisterToTable(){
+    public void loadPetRecordsToTable(){
         
         DefaultTableModel model = (DefaultTableModel) getPetManagerView().getTable_petTable().getModel();
         int rowCount = model.getRowCount();
@@ -86,10 +86,10 @@ public class PetManagerViewHelper extends ViewHelper {
                 
                 
                 
-                PetHandler petManager = PetHandler.GetInstance();
+                PetInformationHandler petInformationHandler = PetInformationHandler.GetInstance();
                 String ownerName = getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
             
-                List<Pet> petList = petManager.getPetList(ownerName) ;
+                List<Pet> petList = petInformationHandler.getPetList(ownerName) ;
                 setTableContent(petList); 
             }
         } 
@@ -118,7 +118,7 @@ public class PetManagerViewHelper extends ViewHelper {
     
     private void loadClientRegisterToCombo(){
         
-        ClientHandler clientManager = ClientHandler.GetInstance();
+        ClientInformationHandler clientManager = ClientInformationHandler.GetInstance();
         ArrayList<Client> clientList = clientManager.getClientList();
         getPetManagerView().getCombo_petOwner().removeAllItems();
         
@@ -141,8 +141,8 @@ public class PetManagerViewHelper extends ViewHelper {
     private void openModificationView(){
         if(isRowSelected()){
             getPetManagerView().dispose();
-            PetModificationViewHelper petModificationViewHelper = PetModificationViewHelper.getInstance();
-            petModificationViewHelper.loadView();
+            ModifyPetInfoViewHelper modifyPetInfoViewHelper = ModifyPetInfoViewHelper.getInstance();
+            modifyPetInfoViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -152,24 +152,24 @@ public class PetManagerViewHelper extends ViewHelper {
         
         if(isRowSelected()){
             if(isDeletionConfirmed()){
-                proceedWithElimination();
+                eliminatePet();
             }
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
     }
     
-    private void closeWindow(){
+    private void closeView(){
         getPetManagerView().dispose();
         RegisterSelectionViewHelper.getInstance().loadView();
     }
     
-    private void proceedWithElimination(){
+    private void eliminatePet(){
         
         int rowIndex = getPetManagerView().getTable_petTable().getSelectedRow();
         String petOwner = getPetManagerView().getCombo_petOwner().getSelectedItem().toString();
         
-        ClientHandler clientManager = ClientHandler.GetInstance();
+        ClientInformationHandler clientManager = ClientInformationHandler.GetInstance();
         Client client = clientManager.getClientData(petOwner);
         client.getPets().remove(rowIndex);
         
@@ -228,7 +228,7 @@ public class PetManagerViewHelper extends ViewHelper {
     }
     
     public void updateTable(){
-        loadPetRegisterToTable();
+        loadPetRecordsToTable();
     }
     
 }

@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import Entitys.Client;
-import bussiness.ClientHandler;
+import bussiness.ClientInformationHandler;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -44,7 +44,7 @@ public class ClientManagerViewHelper extends ViewHelper {
 
     @Override
     public void loadView() {
-        loadClientRegisterToTable();
+        loadClientRecordsToTable();
         getClientManagerView().setVisible(true);
     }
 
@@ -64,27 +64,27 @@ public class ClientManagerViewHelper extends ViewHelper {
         getClientManagerView().getBtn_addClient().addActionListener(actionEvent -> openRegisterView());
         getClientManagerView().getBtn_modifyClient().addActionListener(actionEvent -> openModificationView());
         getClientManagerView().getBtn_deleteClient().addActionListener(actionEvent -> openEliminationConfirmationView());
-        getClientManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
+        getClientManagerView().getBtn_back().addActionListener(actionEvent -> closeView());
     }
     
-    public void loadClientRegisterToTable(){
+    public void loadClientRecordsToTable(){
         
         DefaultTableModel model = (DefaultTableModel) getClientManagerView().getTable_clientTable().getModel();
         
         int rowCount = model.getRowCount();
         if(rowCount !=0){model.setRowCount(0);}
         
-        ClientHandler clientManager = ClientHandler.GetInstance();
+        ClientInformationHandler clientInformationHandler = ClientInformationHandler.GetInstance();
         
-        ArrayList<Client> clientList = clientManager.getClientList() ;
+        ArrayList<Client> clientList = clientInformationHandler.getClientList() ;
         setTableContent(clientList);
     }
     
     private void openModificationView(){
         if(isRowSelected()){
             clientManagerView.dispose();
-            ClientModificationViewHelper clientModificationViewHelper = ClientModificationViewHelper.getInstance();
-            clientModificationViewHelper.loadView();
+            ModifyClientInfoViewHelper modifyClientInfoViewHelper = ModifyClientInfoViewHelper.getInstance();
+            modifyClientInfoViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -94,25 +94,25 @@ public class ClientManagerViewHelper extends ViewHelper {
         
         if(isRowSelected()){
             if(isDeletionConfirmed()){
-                proceedWithElimination();
+                eliminateClient();
             }
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
     }
     
-    private void closeWindow(){
+    private void closeView(){
         getClientManagerView().dispose();
         RegisterSelectionViewHelper.getInstance().loadView();
     }
     
-    private void proceedWithElimination(){
+    private void eliminateClient(){
         int row = getClientManagerView().getTable_clientTable().getSelectedRow();
         
         int id = Integer.valueOf( getClientManagerView().getTable_clientTable().getValueAt(row, 0).toString() );
 
-        ClientHandler clientManager = ClientHandler.GetInstance();
-        clientManager.remove(id);
+        ClientInformationHandler clientInformationHandler = ClientInformationHandler.GetInstance();
+        clientInformationHandler.remove(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Client");
         updateTable();
     }
@@ -167,6 +167,6 @@ public class ClientManagerViewHelper extends ViewHelper {
     }
     
     public void updateTable(){
-        loadClientRegisterToTable();
+        loadClientRecordsToTable();
     }
 }

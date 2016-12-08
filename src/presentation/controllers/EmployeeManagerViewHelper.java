@@ -6,7 +6,7 @@
 package presentation.controllers;
 
 import Entitys.Employee;
-import bussiness.EmployeeHandler;
+import bussiness.EmployeeInformationHandler;
 import bussiness.Receptionist;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
@@ -19,7 +19,7 @@ import presentation.views.EmployeeManagerView;
  * @author Jorge
  */
 public class EmployeeManagerViewHelper extends ViewHelper {
-    private static EmployeeManagerViewHelper employeeManagerViewHelper = null;
+    private static EmployeeManagerViewHelper employeeManagerviewHelper = null;
     private EmployeeManagerView employeeManagerView;
     
     private EmployeeManagerViewHelper(){
@@ -29,10 +29,10 @@ public class EmployeeManagerViewHelper extends ViewHelper {
     }
 
     public static EmployeeManagerViewHelper getInstance(){
-        if( employeeManagerViewHelper== null) {
-         employeeManagerViewHelper = new EmployeeManagerViewHelper();
+        if( employeeManagerviewHelper== null) {
+         employeeManagerviewHelper = new EmployeeManagerViewHelper();
         }
-        return employeeManagerViewHelper;
+        return employeeManagerviewHelper;
     }
     
     public EmployeeManagerView getEmployeeManagerView() {
@@ -47,7 +47,7 @@ public class EmployeeManagerViewHelper extends ViewHelper {
 
     @Override
     public void loadView() {
-        loadEmployeeRegisterToTable();
+        loadEmployeeRecordsToTable();
         getEmployeeManagerView().setVisible(true);
     }
 
@@ -67,27 +67,27 @@ public class EmployeeManagerViewHelper extends ViewHelper {
         getEmployeeManagerView().getBtn_addEmployee().addActionListener(actionEvent -> openRegisterView());
         getEmployeeManagerView().getBtn_modifyEmployee().addActionListener(actionEvent -> openModificationView());
         getEmployeeManagerView().getBtn_deleteEmployee().addActionListener(actionEvent -> openEliminationConfirmationView());
-        getEmployeeManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
+        getEmployeeManagerView().getBtn_back().addActionListener(actionEvent -> closeView());
     }
     
-    public void loadEmployeeRegisterToTable(){
+    public void loadEmployeeRecordsToTable(){
         
         DefaultTableModel model = (DefaultTableModel) getEmployeeManagerView().getTable_employeeTable().getModel();
         
         int rowCount = model.getRowCount();
         if(rowCount !=0){model.setRowCount(0);}
         
-        EmployeeHandler employeeManager = EmployeeHandler.GetInstance();
+        EmployeeInformationHandler employeeInformationHandler = EmployeeInformationHandler.GetInstance();
         
-        ArrayList<Employee> employeeList = employeeManager.getEmployees() ;
+        ArrayList<Employee> employeeList = employeeInformationHandler.getEmployees() ;
         setTableContent(employeeList);
     }
     
     private void openModificationView(){
         if(isRowSelected()){
             employeeManagerView.dispose();
-            EmployeeModificationViewHelper employeeModificationViewHelper = EmployeeModificationViewHelper.getInstance();
-            employeeModificationViewHelper.loadView();
+            ModifyEmployeeInfoViewHelper modifyEmployeeInfoViewHelper = ModifyEmployeeInfoViewHelper.getInstance();
+            modifyEmployeeInfoViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -97,25 +97,25 @@ public class EmployeeManagerViewHelper extends ViewHelper {
         
         if(isRowSelected()){
             if(isDeletionConfirmed()){
-                proceedWithElimination();
+                eliminateEmployee();
             }
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
     }
     
-    private void closeWindow(){
+    private void closeView(){
         getEmployeeManagerView().dispose();
         RegisterSelectionViewHelper.getInstance().loadView();
     }
     
-    private void proceedWithElimination(){
+    private void eliminateEmployee(){
         int row = getEmployeeManagerView().getTable_employeeTable().getSelectedRow();
         
         int id = Integer.valueOf( getEmployeeManagerView().getTable_employeeTable().getValueAt(row, 0).toString() );
 
-        EmployeeHandler employeeManager = EmployeeHandler.GetInstance();
-        employeeManager.remove(id);
+        EmployeeInformationHandler employeeInformationHandler = EmployeeInformationHandler.GetInstance();
+        employeeInformationHandler.remove(id);
         getNotifier().showSuccessMessage("Eliminacion exitosa", "exito al eliminar el Employee");
         updateTable();
     }
@@ -178,6 +178,6 @@ public class EmployeeManagerViewHelper extends ViewHelper {
     }
     
     public void updateTable(){
-        loadEmployeeRegisterToTable();
+        loadEmployeeRecordsToTable();
     }
 }

@@ -6,8 +6,8 @@
 package presentation.controllers;
 
 import Entitys.Medicine;
-import bussiness.MedicineHandler;
-import bussiness.ReportHandler;
+import bussiness.MedicineInformationHandler;
+import bussiness.ReportInformationHandler;
 import bussiness.SalesManager;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -25,16 +25,15 @@ import presentation.views.SalesView;
 public class SalesViewHelper extends ViewHelper{
     private SalesView saleView;
     private DefaultComboBoxModel comboBoxModel;
-    private DefaultTableModel Tablemodel;
+    private DefaultTableModel tablemodel;
     private static SalesViewHelper salesViewHelper;
     private double totalCost;
     private SalesManager salesManager;
     
-    
     private SalesViewHelper(){
-        setSaleView(new SalesView());  
+        saleView  = new SalesView();  
         comboBoxModel= (DefaultComboBoxModel) saleView.getProduct_list().getModel();
-        Tablemodel = (DefaultTableModel) saleView.getProductTable().getModel();
+        tablemodel = (DefaultTableModel) saleView.getProductTable().getModel();
         salesManager = SalesManager.getInstance();
         initializeView();
     }
@@ -43,62 +42,19 @@ public class SalesViewHelper extends ViewHelper{
         if( salesViewHelper== null) {
          salesViewHelper =  new SalesViewHelper();
         }
-        
         return salesViewHelper;
     }
     
-    @Override
-    protected void setEvents() {
-        saleView.getAddProductBttn().addActionListener(actionEvent -> InsertProductToTable());
-        saleView.getDeleteProductBttn().addActionListener(actionEvent -> RemoveProductFromTable());
-        saleView.getAceptSaleBttn().addActionListener(actionEvent -> BuildReport());
-        saleView.getCancelSaleBttn().addActionListener(actionEvent -> closeWindow());
-    }
-
-    private void closeWindow(){
-        SalesManager.getInstance().CancelSale(getPurchases());
-        saleView.dispose();
-        clearTable();
-        EmployeeMainMenuViewHelper mainMenuViewHelper = EmployeeMainMenuViewHelper.getInstance();
-        mainMenuViewHelper.loadView();
-    }
-    
-    //quitar de aqui
-    public void setSaleView(SalesView sellView) {
-        this.saleView = sellView;
-    }
-
-    
-    public void SetTotalCost(){
-        DecimalFormat numDecimales = new DecimalFormat("0.00");
-        SalesManager salesManager = SalesManager.getInstance();
-        totalCost = salesManager.calculateAmountToPay(getPurchases());
-        saleView.getTotalSale_Field().setText(numDecimales.format(totalCost));
-    }
-    
     public String getSelectedMedicine(){
-        String medicineSelected= (String)comboBoxModel.getSelectedItem();    
+        String medicineSelected = (String)comboBoxModel.getSelectedItem();    
         return medicineSelected;
     }
     
-    @Override
-    public void loadView() {
-        loadProducts();
-        saleView.setVisible(true);
-    }
-
-    @Override
-    protected void initializeView() {
-        configureView( saleView );
-        saleView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
-        setEvents();
-    }
-   
     public void loadProducts(){
         
         comboBoxModel.removeAllElements();
-        MedicineHandler medicineManager = MedicineHandler.GetInstance();
-        List<Medicine> productsList =  medicineManager.getMedicines();
+        MedicineInformationHandler medicineHandler = MedicineInformationHandler.GetInstance();
+        List<Medicine> productsList =  medicineHandler.getMedicines();
         
         for(Medicine medicine : productsList){
             
@@ -117,8 +73,10 @@ public class SalesViewHelper extends ViewHelper{
        
        if(salesManager.addProductToPurchase(medicineName)){
        Object[] rowMedicine = new Object[]{medicineName,medicinePrice};
-       Tablemodel.addRow(rowMedicine);
+       tablemodel.addRow(rowMedicine);
        SetTotalCost();
+       }else{
+           getNotifier().showWarningMessage("Se han agotado las unidades para el producto elegido");
        }
        
     }
@@ -128,9 +86,9 @@ public class SalesViewHelper extends ViewHelper{
         if(isRowSelected()){
             int indexRowSelected = saleView.getProductTable().getSelectedRow();
             if(isDeletionConfirmed()){
-                salesManager.removeProductToPurchase((String) Tablemodel.getValueAt(indexRowSelected, 0));
+                salesManager.removeProductToPurchase((String) tablemodel.getValueAt(indexRowSelected, 0));
                 
-                Tablemodel.removeRow(indexRowSelected);
+                tablemodel.removeRow(indexRowSelected);
             }
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
@@ -138,14 +96,59 @@ public class SalesViewHelper extends ViewHelper{
         
         SetTotalCost();
     }
-        
-    private boolean isDeletionConfirmed() {
-        String messageConfirm = "¿Estas seguro que deseas eliminarlo?";
-        int optionSelected = getNotifier().showConfirmDialog( messageConfirm );
-        return optionSelected == getNotifier().getYES_OPTION();
+
+    public List<Medicine> getPurchasesInformation(){
+        int numMaxRows = 0;
+        String medicineName; 
+        List products = new ArrayList<>();
+        for(numMaxRows = 0; numMaxRows < tablemodel.getRowCount(); numMaxRows++){  
+                
+            medicineName = String.valueOf(tablemodel.getValueAt(numMaxRows, 0));
+            Medicine medicine = MedicineInformationHandler.GetInstance().getMedicineByName(medicineName);
+            products.add(medicine);
+        }
+        return products;
     }
+    
+    @Override
+    public void loadView() {
+        loadProducts();
+        saleView.setVisible(true);
+    }
+    
+    @Override
+    protected void setEvents() {
+        saleView.getAddProductBttn().addActionListener(actionEvent -> InsertProductToTable());
+        saleView.getDeleteProductBttn().addActionListener(actionEvent -> RemoveProductFromTable());
+        saleView.getAceptSaleBttn().addActionListener(actionEvent -> BuildReport());
+        saleView.getCancelSaleBttn().addActionListener(actionEvent -> closeView());
+    }
+
+    @Override
+    protected void initializeView() {
+        configureView( saleView );
+        saleView.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+        setEvents();
+    }
+   
+    
+    
+    
+     //Metodo puesto aqui para prueba 
+     // Checar nombres
+     private void BuildReport(){
+         ReportInformationHandler rh = ReportInformationHandler.getInstance();
         
-    private boolean isRowSelected(){
+         rh.BuildSaleReport(totalCost);
+         
+         closeView();
+     }
+     
+     private void clearTable(){
+         tablemodel.setRowCount(0);
+     }
+     
+     private boolean isRowSelected(){
         boolean result = false;
         
         int rows = saleView.getProductTable().getRowCount();
@@ -157,34 +160,27 @@ public class SalesViewHelper extends ViewHelper{
         }
         return result;
     }
-    
-    public List<String> getPurchases(){
-        int numMaxRows = 0;
-        String productAndPrice; 
-        List purchases = new ArrayList<>();
-        for(numMaxRows = 0; numMaxRows < Tablemodel.getRowCount(); numMaxRows++){ 
-                productAndPrice ="";
-                productAndPrice= productAndPrice.concat(String.valueOf(Tablemodel.getValueAt(numMaxRows, 0)));
-                productAndPrice= productAndPrice.concat(String.valueOf(Tablemodel.getValueAt(numMaxRows, 1))); 
-                purchases.add(productAndPrice);
-        }
-
-        
-        return purchases;
-    }
-    
-     //Metodo puesto aqui para prueba 
-     // Checar nombres
-     private void BuildReport(){
-         ReportHandler rh = ReportHandler.getInstance();
-        
-         rh.BuildSaleReport(totalCost);
-         
-         closeWindow();
-     }
      
-     private void clearTable(){
-         Tablemodel.setRowCount(0);
-     }
+     private boolean isDeletionConfirmed() {
+        String messageConfirm = "¿Estas seguro que deseas eliminarlo?";
+        int optionSelected = getNotifier().showConfirmDialog( messageConfirm );
+        return optionSelected == getNotifier().getYES_OPTION();
+    }
+     
+     private void closeView(){
+        SalesManager.getInstance().CancelSale(getPurchasesInformation());
+        saleView.dispose();
+        clearTable();
+        EmployeeMainMenuViewHelper mainMenuViewHelper = EmployeeMainMenuViewHelper.getInstance();
+        mainMenuViewHelper.loadView();
+    }
+     
+    private void SetTotalCost(){    
+        SalesManager salesManager = SalesManager.getInstance();
+        totalCost = Double.valueOf(salesManager.calculateAmountToPay(getPurchasesInformation()));
+        DecimalFormat numDecimales = new DecimalFormat("0.00");
+        System.out.println("costo: "+ totalCost);
+        saleView.getTotalSale_Field().setText(numDecimales.format(totalCost));
+    }
      
 }

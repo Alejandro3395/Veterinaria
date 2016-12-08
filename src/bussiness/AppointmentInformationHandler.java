@@ -20,8 +20,8 @@ import java.util.List;
  *
  * @author jozapata
  */
-public class AppointmentManager extends Receptionist<Appointment> {
-    private static final AppointmentManager appointmentManager = new AppointmentManager();
+public class AppointmentInformationHandler extends Receptionist<Appointment> {
+    private static final AppointmentInformationHandler appointmentInformationHandler = new AppointmentInformationHandler();
     private AppointmentDAO appointmentDAO;
     
     private Appointment actualAppointment = null;
@@ -31,12 +31,12 @@ public class AppointmentManager extends Receptionist<Appointment> {
     private static final int dateIndex = 2;
     private static final int hourIndex = 3;
     
-    private AppointmentManager(){
+    private AppointmentInformationHandler(){
         this.appointmentDAO = AppointmentDAO.GetInstance();
     }
     
-    public static AppointmentManager GetInstance(){
-        return appointmentManager;
+    public static AppointmentInformationHandler GetInstance(){
+        return appointmentInformationHandler;
     }
     
     public Appointment getAppointment(int id){

@@ -6,31 +6,31 @@
 package presentation.controllers;
 
 import Entitys.Supplier;
-import bussiness.SupplierHandler;
+import bussiness.SupplierInformationHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.SupplierRegisterView;
 /**
  *
  * @author Jorge
  */
-public class SupplierModificationViewHelper extends DataViewHelper {
-    private static SupplierModificationViewHelper supplierModificationViewHelper;
+public class ModifySupplierInfoViewHelper extends InformationViewHelper {
+    private static ModifySupplierInfoViewHelper modifySupplierInfoViewHelper;
     private SupplierRegisterView supplierRegisterView;
     
-    private SupplierModificationViewHelper(){
+    private ModifySupplierInfoViewHelper(){
         setSupplierRegisterView( new SupplierRegisterView() );
         
         initializeView();
     }
 
-    public static SupplierModificationViewHelper getInstance(){
-        if( supplierModificationViewHelper == null) {
-            supplierModificationViewHelper = new SupplierModificationViewHelper();
+    public static ModifySupplierInfoViewHelper getInstance(){
+        if( modifySupplierInfoViewHelper == null) {
+            modifySupplierInfoViewHelper = new ModifySupplierInfoViewHelper();
         }
-        return supplierModificationViewHelper;
+        return modifySupplierInfoViewHelper;
     }
 
     public void setSupplierRegisterView(SupplierRegisterView supplierRegisterView) {
@@ -52,7 +52,7 @@ public class SupplierModificationViewHelper extends DataViewHelper {
 
     @Override
     protected void setEvents() {
-        supplierRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithModification());
+        supplierRegisterView.getBtn_register().addActionListener(actionEvent -> modifySupplier());
         supplierRegisterView.getBtn_cancel().addActionListener(actionEvent -> cancelModification());
     }
     
@@ -60,13 +60,13 @@ public class SupplierModificationViewHelper extends DataViewHelper {
         int row = SupplierManagerViewHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getSelectedRow();
         int id = Integer.valueOf( SupplierManagerViewHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getValueAt(row, 0).toString() );
         
-        SupplierHandler supplierManager = SupplierHandler.GetInstance();
-        Supplier supplier =  supplierManager.getSupplier(id) ;
+        SupplierInformationHandler supplierInformationHandler = SupplierInformationHandler.GetInstance();
+        Supplier supplier =  supplierInformationHandler.getSupplier(id) ;
         
         setData(supplier);
     }
     
-    private void proceedWithModification(){
+    private void modifySupplier(){
         ArrayList<String> data = new ArrayList<String>(obtainDataFromView());
         
         int row = SupplierManagerViewHelper.getInstance().getSupplierManagerView().getTable_supplierTable().getSelectedRow();
@@ -78,11 +78,10 @@ public class SupplierModificationViewHelper extends DataViewHelper {
         
         if( isValidField ){
             try{
-                SupplierHandler supplierManager = SupplierHandler.GetInstance();
-                supplierManager.modifySupplier(data,id);
+                SupplierInformationHandler supplierInformationHandler = SupplierInformationHandler.GetInstance();
+                supplierInformationHandler.modifySupplier(data,id);
                 getNotifier().showSuccessMessage("Modificacion exitosa", "exito al modificar el Supplier");
-                updateManagerViewTable();
-                closeWindow();
+                closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
@@ -95,17 +94,14 @@ public class SupplierModificationViewHelper extends DataViewHelper {
         }
     }
     
-    private void updateManagerViewTable(){
-        SupplierManagerViewHelper.getInstance().updateTable();
-    }
     
     private void cancelModification(){
-        closeWindow();
+        closeView();
     }
     
-    private void closeWindow(){
-        supplierRegisterView.dispose();
+    private void closeView(){
         clearFields();
+        supplierRegisterView.dispose();
         SupplierManagerViewHelper.getInstance().loadView();
     }
 

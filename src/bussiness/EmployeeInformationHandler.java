@@ -15,8 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class EmployeeHandler extends Receptionist<Employee> {
-    private static final EmployeeHandler employeeManager = new EmployeeHandler();
+public class EmployeeInformationHandler extends Receptionist<Employee> {
+    private static final EmployeeInformationHandler employeeInformationHandler = new EmployeeInformationHandler();
     private EmployeeDAO employeeDAO;
     
     
@@ -39,7 +39,7 @@ public class EmployeeHandler extends Receptionist<Employee> {
     private static final int userPasswordIndex = 1;
     private static final int userEmailIndex = 2;
     
-    private EmployeeHandler(){
+    private EmployeeInformationHandler(){
         this.employeeDAO = EmployeeDAO.GetInstance();
     }
     
@@ -48,8 +48,8 @@ public class EmployeeHandler extends Receptionist<Employee> {
      * use.
      * @return 
      */
-    public static EmployeeHandler GetInstance(){
-        return employeeManager;
+    public static EmployeeInformationHandler GetInstance(){
+        return employeeInformationHandler;
     }
     
     public Employee getEmployee(int id){
@@ -68,9 +68,11 @@ public class EmployeeHandler extends Receptionist<Employee> {
      * @param doctor
      * @param userDoctor 
      */
-    private void setEmployeeUser(Employee employee, UserEmployee userEmployee){
+    private Employee setEmployeeUser(Employee employee, UserEmployee userEmployee){
+        Employee employeeWithUser;
         employee.setUser(userEmployee);
-        employeeManager.register(employee);
+        employeeWithUser = employee;
+        return employeeWithUser;
     }
 
     private Employee createEmployee(ArrayList<String> data) throws InvalidFieldException {
@@ -117,7 +119,8 @@ public class EmployeeHandler extends Receptionist<Employee> {
     public void registerEmployee(ArrayList<String> employeeData, ArrayList<String> userEmployeeData) throws InvalidFieldException{
       Employee employee = new Employee(createEmployee(employeeData));
       UserEmployee user = new UserEmployee(createUserEmployee(userEmployeeData));
-      setEmployeeUser(employee,user);
+      employee = setEmployeeUser(employee,user);
+      register(employee);
     }
 
     public void modifyEmployee(ArrayList<String> newEmployeeData , int id) throws InvalidFieldException{

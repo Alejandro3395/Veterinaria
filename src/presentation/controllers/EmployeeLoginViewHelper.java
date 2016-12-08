@@ -8,14 +8,14 @@ package presentation.controllers;
 import bussiness.SessionManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.EmployeeLoginView;
 
 /**
  *
  * @author mannu
  */
-public class EmployeeLoginViewHelper extends DataViewHelper {
+public class EmployeeLoginViewHelper extends InformationViewHelper {
     private EmployeeLoginView employeeLoginView;
     private static EmployeeLoginViewHelper employeeLoginViewHelper;
 
@@ -51,12 +51,12 @@ public class EmployeeLoginViewHelper extends DataViewHelper {
     @Override
     protected void setEvents() {
         employeeLoginView.getLogin_Bttn().addActionListener( actionEvent -> validateEmployeeUserAccess() );
-        employeeLoginView.getBtn_Cancel().addActionListener(actionEvent -> closeWindow() );
+        employeeLoginView.getBtn_Cancel().addActionListener(actionEvent -> closeView() );
     }
    
-     private void closeWindow(){
-        employeeLoginView.dispose();
+     private void closeView(){
         clearFields();
+        employeeLoginView.dispose();
         LoginMainViewHelper.getInstance().loadView();
     }
      

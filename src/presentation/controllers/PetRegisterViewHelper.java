@@ -11,11 +11,11 @@
 */
 package presentation.controllers;
 
-import bussiness.PetHandler;
+import bussiness.PetInformationHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.ViewHelper;
 import presentation.views.PetRegisterView;
 
@@ -23,7 +23,7 @@ import presentation.views.PetRegisterView;
  *
  * @author Jorge
  */
-public class PetRegisterViewHelper extends DataViewHelper {
+public class PetRegisterViewHelper extends InformationViewHelper {
     private static PetRegisterViewHelper petRegisterViewHelper;
     private PetRegisterView petRegisterView;
     
@@ -54,9 +54,6 @@ public class PetRegisterViewHelper extends DataViewHelper {
         this.petRegisterView = petRegisterView;
     }
     
-    private void updateManagerViewTable(){
-        PetManagerViewHelper.getInstance().updateTable();
-    }
     
     @Override
     public void loadView() {
@@ -75,25 +72,25 @@ public class PetRegisterViewHelper extends DataViewHelper {
      */
     @Override
     protected void setEvents() {
-        petRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        petRegisterView.getBtn_register().addActionListener(actionEvent -> registerPet());
         petRegisterView.getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
         
     }
     
     private void cancelRegistration(){
-        closeWindow();
+        closeView();
     }
     
-    private void closeWindow(){
-        petRegisterView.dispose();
+    private void closeView(){
         clearFields();
+        petRegisterView.dispose();
         PetManagerViewHelper.getInstance().loadView();
     }
     
     /**
      *  This method uses sends the data the view provides to the manager.
      */
-    private void proceedWithRegistration(){
+    private void registerPet(){
         ArrayList<String> petData = new ArrayList<String>(obtainDataFromView());
         
         boolean isValidField =!isEmptyFields(petData);
@@ -105,11 +102,10 @@ public class PetRegisterViewHelper extends DataViewHelper {
         
         if(isValidField){
             try{
-               PetHandler petManager = PetHandler.GetInstance();
-               petManager.registerPet(petData,owner); 
-               getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Pet");
-               updateManagerViewTable();                
-               closeWindow();
+               PetInformationHandler petInformationHandler = PetInformationHandler.GetInstance();
+               petInformationHandler.registerPet(petData,owner); 
+               getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Pet");             
+               closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );

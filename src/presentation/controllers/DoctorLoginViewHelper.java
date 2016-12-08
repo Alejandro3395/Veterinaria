@@ -8,14 +8,14 @@ package presentation.controllers;
 import bussiness.SessionManager;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.DoctorLoginView;
 
 /**
  *
  * @author mannu
  */
-public class DoctorLoginViewHelper extends DataViewHelper{
+public class DoctorLoginViewHelper extends InformationViewHelper{
     private static DoctorLoginViewHelper doctorLoginViewHelper= null; 
     private DoctorLoginView doctorLoginView;
 
@@ -38,7 +38,7 @@ public class DoctorLoginViewHelper extends DataViewHelper{
     @Override
     protected void setEvents() {
         doctorLoginView.getLogin_Bttn().addActionListener(actionEvent -> validateDoctorUserAccess() );
-        doctorLoginView.getBtn_Cancel().addActionListener(actionEvent -> closeWindow() );
+        doctorLoginView.getBtn_Cancel().addActionListener(actionEvent -> closeView() );
 
     }
     
@@ -54,9 +54,9 @@ public class DoctorLoginViewHelper extends DataViewHelper{
         setEvents();
     }
     
-    private void closeWindow(){
-        doctorLoginView.dispose();
+    private void closeView(){
         clearFields();
+        doctorLoginView.dispose();
         LoginMainViewHelper.getInstance().loadView();
     }
 

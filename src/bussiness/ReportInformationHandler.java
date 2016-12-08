@@ -21,6 +21,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.BaseFont;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,19 +35,19 @@ import presentation.controllers.SalesViewHelper;
  *
  * @author mannu
  */
-public class ReportHandler {
-   private static ReportHandler reportHandler = null; 
+public class ReportInformationHandler {
+   private static ReportInformationHandler reportInformationHandler = null; 
    private DateFormat hourdateFormat;
     
-   private ReportHandler(){
+   private ReportInformationHandler(){
        hourdateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
    }
    
-     public static ReportHandler getInstance(){
-        if( reportHandler== null) {
-         reportHandler = new ReportHandler();
+     public static ReportInformationHandler getInstance(){
+        if( reportInformationHandler== null) {
+         reportInformationHandler = new ReportInformationHandler();
         }
-        return reportHandler;
+        return reportInformationHandler;
     }
     
     public void BuildSaleReport(double totalCost){
@@ -99,8 +100,15 @@ public class ReportHandler {
             //Tal vez agregar la fecha al nombre de la receta
             FileOutputStream fileOutputStream = new FileOutputStream("prescription.pdf");
             PdfWriter.getInstance(veterinaryPrescription,fileOutputStream).setInitialLeading(20);
+            Image logo = Image.getInstance("logo2.png");
+            Image division = Image.getInstance("linea.png");
             veterinaryPrescription.open();
-             
+            division.setAbsolutePosition(20f, 600f);
+            veterinaryPrescription.add(division);
+            logo.setAbsolutePosition(400, 50f);
+            veterinaryPrescription.add(logo);
+            
+            
              //Encabezado
             BuildHeaderPrescription(veterinaryPrescription, clientName, petName);
             
@@ -134,7 +142,7 @@ public class ReportHandler {
              Font font = new Font(baseFont);
              font.setStyle(Font.BOLDITALIC);
              font.setSize(35);
-             Doctor doctor = SessionManager.getCurrentDoctor();
+             Doctor doctor = SessionManager.getLoggedDoctor();
              Paragraph p1 = new Paragraph("Dr. "+doctor.getName(),font);
              p1.setAlignment(Element.ALIGN_CENTER);
              veterinaryPrescription.add(p1);
@@ -159,12 +167,13 @@ public class ReportHandler {
                                        Document veterinaryPrescription,
                                        Double totalCost,
                                        PdfPTable table ) throws DocumentException{
-
+         Font font2 = new Font();
+         font2.setSize(20);
          for(Medicine medicine : medicines){
-             
-                    table.addCell(medicine.getName());
-                    table.addCell(medicine.getDose());
-                    table.addCell(medicine.getAdministration());
+                    table.addCell(new Phrase(medicine.getName(), font2));
+                    
+                    table.addCell(new Phrase(medicine.getDose(), font2));
+                    table.addCell(new Phrase(medicine.getAdministration(), font2));
                    
             }
            
@@ -184,7 +193,10 @@ public class ReportHandler {
     
     private void BuildFooterPrescription(Document veterinaryPrescription,
                                          String comments ) throws DocumentException{
-        Paragraph p = new Paragraph(comments);
+        Font font2 = new Font();
+        font2.setSize(20);
+        Paragraph p = new Paragraph(comments,font2);
+        p.setAlignment(Element.ALIGN_JUSTIFIED);
         veterinaryPrescription.add(p);
     }
     
@@ -206,16 +218,13 @@ public class ReportHandler {
                                      double totalCost, 
                                      Document documento) throws DocumentException{
         
-        List<String> purchases = SalesViewHelper.getInstance().getPurchases();
-        String[] productData;
-        int productName = 0;
-        int productPrice = 1;
-         for(String product : purchases){
-             productData = product.split("  ");              
-                    table.addCell(productData[productName]);
-                    table.addCell(productData[productPrice]);
+        List<Medicine> purchases = SalesViewHelper.getInstance().getPurchasesInformation();
+        for(Medicine product : purchases){           
+            table.addCell(product.getName());
+            table.addCell(Double.toString(product.getCost()));
                    
-            }
+        }
+            
            
 
             PdfPCell celdaFinal = new PdfPCell(new Paragraph("Total: " + String.valueOf(totalCost)));

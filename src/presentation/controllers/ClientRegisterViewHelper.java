@@ -5,18 +5,18 @@
  */
 package presentation.controllers;
 
-import bussiness.ClientHandler;
+import bussiness.ClientInformationHandler;
 import exceptions.InvalidFieldException;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.ClientRegisterView;
 
 /**
  *
  * @author Mannuel
  */
-public class ClientRegisterViewHelper extends DataViewHelper{
+public class ClientRegisterViewHelper extends InformationViewHelper{
     private static ClientRegisterViewHelper clientRegisterViewHelper;
     private ClientRegisterView clientRegisterView;
     
@@ -52,11 +52,11 @@ public class ClientRegisterViewHelper extends DataViewHelper{
 
     @Override
     protected void setEvents() {
-        clientRegisterView.getBtn_register().addActionListener(actionEvent -> proceedWithRegistration());
+        clientRegisterView.getBtn_register().addActionListener(actionEvent -> registerClient());
         clientRegisterView.getBtn_cancel().addActionListener(ActionEvent -> cancelRegistration());
     }
     
-    private void proceedWithRegistration(){
+    private void registerClient(){
         
         ArrayList<String> clientData = new ArrayList<String>(obtainDataFromView());
               
@@ -66,12 +66,11 @@ public class ClientRegisterViewHelper extends DataViewHelper{
         
         if(isValidField){
             try{
-                ClientHandler clientManager = ClientHandler.GetInstance();
-                clientManager.registerClient(clientData);
+                ClientInformationHandler clientInformationHandler = ClientInformationHandler.GetInstance();
+                clientInformationHandler.registerClient(clientData);
                 getNotifier().showSuccessMessage("Registro exitoso", "exito al registrar el Client");
-                updateManagerViewTable();
                 clearFields();
-                closeWindow();
+                closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage( message );
@@ -83,19 +82,16 @@ public class ClientRegisterViewHelper extends DataViewHelper{
     }
     
     private void cancelRegistration(){
-        closeWindow();
+        closeView();
     }
     
-    private void closeWindow(){
-        clientRegisterView.dispose();
+    private void closeView(){
         clearFields();
+        clientRegisterView.dispose();
         ClientManagerViewHelper.getInstance().loadView();
         
     }
     
-    private void updateManagerViewTable(){
-        ClientManagerViewHelper.getInstance().updateTable();
-    }
     
     @Override
     protected ArrayList<String> obtainDataFromView() {

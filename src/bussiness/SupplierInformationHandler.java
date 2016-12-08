@@ -1,5 +1,5 @@
 /**
-* class: supplierHandler (SupplierManager.java)
+* class: supplierInformationHandler (SupplierManager.java)
 * @author: Diego Nicoli
 * 
 * date: October 27, 2016
@@ -12,6 +12,7 @@
 package bussiness;
 
 import Data.DAOs.SupplierDAO;
+import Entitys.Medicine;
 import Entitys.Supplier;
 import Entitys.Phone;
 import java.sql.SQLException;
@@ -22,8 +23,8 @@ import exceptions.InvalidFieldException;
  *
  * @author diego
  */
-public class SupplierHandler extends Receptionist<Supplier> {
-    private static final SupplierHandler supplierHandler = new SupplierHandler();
+public class SupplierInformationHandler extends Receptionist<Supplier> {
+    private static final SupplierInformationHandler supplierInformationHandler = new SupplierInformationHandler();
     private SupplierDAO supplierDAO;
     
     /**
@@ -36,7 +37,7 @@ public class SupplierHandler extends Receptionist<Supplier> {
     
     
     
-    private SupplierHandler(){
+    private SupplierInformationHandler(){
         this.supplierDAO = SupplierDAO.GetInstance();
     }
     
@@ -46,8 +47,8 @@ public class SupplierHandler extends Receptionist<Supplier> {
      * @return 
      */
     
-    public static SupplierHandler GetInstance(){
-        return supplierHandler;
+    public static SupplierInformationHandler GetInstance(){
+        return supplierInformationHandler;
     }
     
     
@@ -111,7 +112,7 @@ public class SupplierHandler extends Receptionist<Supplier> {
     public void registerSupplier(ArrayList<String> supplierData) throws InvalidFieldException{
 
             Supplier supplier = new Supplier(createSupplier(supplierData));
-            supplierHandler.register(supplier);
+            supplierInformationHandler.register(supplier);
     }
 
     public void modifySupplier(ArrayList<String> newSupplierData , int id) throws InvalidFieldException{
@@ -127,6 +128,18 @@ public class SupplierHandler extends Receptionist<Supplier> {
         ArrayList<Supplier> supplierList;
         supplierList = new ArrayList<Supplier> ((ArrayList<Supplier>) supplierDAO.getList());
         return supplierList; 
-    } 
+    }
+    
+    public void addMedicine(String supplierName,Medicine medicine){
+        Supplier supplier = getSupplierData(supplierName); //aqui se llama a lo de get por nombre
+        supplier.addMedicines(medicine);
+        edit(supplier);
+    }
+    
+    public void updateMedicine(String supplierName,Medicine medicine, int index){
+        Supplier supplier = getSupplierData(supplierName); //aqui se llama a lo de get por nombre
+        supplier.getMedicines().set(index-1,medicine);
+        edit(supplier);
+    }
      
 }

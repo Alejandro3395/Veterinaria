@@ -8,9 +8,9 @@ package presentation.controllers;
 import Entitys.Appointment;
 import Entitys.Client;
 import Entitys.Pet;
-import bussiness.AppointmentManager;
-import bussiness.ClientHandler;
-import bussiness.PetHandler;
+import bussiness.AppointmentInformationHandler;
+import bussiness.ClientInformationHandler;
+import bussiness.PetInformationHandler;
 import exceptions.InvalidFieldException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,30 +19,30 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.WindowConstants;
-import presentation.DataViewHelper;
+import presentation.InformationViewHelper;
 import presentation.views.AppointmentRegisterView;
 
 /**
  *
  * @author jozapata
  */
-public class AppointmentModificationViewHelper extends DataViewHelper{
-    private static AppointmentModificationViewHelper appointmentModificationViewHelper;
+public class ModifyAppointmentInfoView extends InformationViewHelper{
+    private static ModifyAppointmentInfoView modifyAppointmentInfoView;
     private AppointmentRegisterView appointmentRegisterView;
     
     private int clientComboSize;
 
-    public AppointmentModificationViewHelper() {
+    public ModifyAppointmentInfoView() {
         setAppointmentRegisterView(new AppointmentRegisterView());
        
         initializeView();
     }   
             
-    public static AppointmentModificationViewHelper getInstance(){
-        if(appointmentModificationViewHelper == null) {
-           appointmentModificationViewHelper = new AppointmentModificationViewHelper();
+    public static ModifyAppointmentInfoView getInstance(){
+        if(modifyAppointmentInfoView == null) {
+           modifyAppointmentInfoView = new ModifyAppointmentInfoView();
         }
-        return appointmentModificationViewHelper;
+        return modifyAppointmentInfoView;
     }
 
     public void setAppointmentRegisterView(AppointmentRegisterView appointmentRegisterView) {
@@ -56,7 +56,7 @@ public class AppointmentModificationViewHelper extends DataViewHelper{
     protected void setEvents() {
         appointmentRegisterView.getBtn_register().addActionListener(actionEvent -> programAppointment());
         appointmentRegisterView.getCombo_client().addItemListener(aListener -> loadPetRegisterToCombo());
-        appointmentRegisterView.getBtn_cancel().addActionListener( actionEvent -> closeWindow());        
+        appointmentRegisterView.getBtn_cancel().addActionListener( actionEvent -> closeView());        
     }
 
     
@@ -78,8 +78,8 @@ public class AppointmentModificationViewHelper extends DataViewHelper{
         int row = AppointmentManagerViewHelper.getInstance().getAppointmentManagerView().getTable_appointmentTable().getSelectedRow();
         int id = Integer.valueOf( AppointmentManagerViewHelper.getInstance().getAppointmentManagerView().getTable_appointmentTable().getValueAt(row, 0).toString() );
         
-        AppointmentManager appointmentManager = AppointmentManager.GetInstance();
-        Appointment appointment  =  appointmentManager.getAppointment(id) ;
+        AppointmentInformationHandler appointmentInformationHandler = AppointmentInformationHandler.GetInstance();
+        Appointment appointment  =  appointmentInformationHandler.getAppointment(id) ;
         
         setDataToView(appointment);
     }
@@ -163,10 +163,10 @@ public class AppointmentModificationViewHelper extends DataViewHelper{
         
         if(isValidField){
             try{
-                AppointmentManager appointmentManager = AppointmentManager.GetInstance();
-                appointmentManager.modifyAppointment(appointmentData,id);
+                AppointmentInformationHandler appointmentInformationHandler = AppointmentInformationHandler.GetInstance();
+                appointmentInformationHandler.modifyAppointment(appointmentData,id);
                 getNotifier().showSuccessMessage("Modificacion existosa", "Exito al modificar la cita");
-                closeWindow();
+                closeView();
             }catch(InvalidFieldException exception){
                 message = exception.getMessage();
                 getNotifier().showWarningMessage(message);
@@ -185,7 +185,7 @@ public class AppointmentModificationViewHelper extends DataViewHelper{
         
         if(!isEmptyList()){
             if(!hasDataChanged()){
-                PetHandler petManager = PetHandler.GetInstance();
+                PetInformationHandler petManager = PetInformationHandler.GetInstance();
                 String owner = appointmentRegisterView.getCombo_client().getSelectedItem().toString();                             
                 List<Pet> petList = petManager.getPetList(owner);
                 
@@ -199,7 +199,7 @@ public class AppointmentModificationViewHelper extends DataViewHelper{
     }
     
     private void loadClientRegisterToCombo(){
-        ClientHandler clientManager = ClientHandler.GetInstance();
+        ClientInformationHandler clientManager = ClientInformationHandler.GetInstance();
         ArrayList<Client> clientList = clientManager.getClientList();
         appointmentRegisterView.getCombo_client().removeAllItems();
         
@@ -207,7 +207,7 @@ public class AppointmentModificationViewHelper extends DataViewHelper{
         
         if(clientComboSize  == 0){
             getNotifier().showWarningMessage("No existen clientes registrados");
-            closeWindow();
+            closeView();
         }else{
             for(int index = 0; index < clientList.size(); index++ ){
                 Client client = clientList.get(index);
@@ -236,9 +236,9 @@ public class AppointmentModificationViewHelper extends DataViewHelper{
         return result;
     }
     
-    private void closeWindow(){
-        appointmentRegisterView.dispose();
+    private void closeView(){
         clearFields();
+        appointmentRegisterView.dispose();
         AppointmentManagerViewHelper.getInstance().loadView();
     }
 }

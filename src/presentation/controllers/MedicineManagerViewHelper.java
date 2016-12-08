@@ -7,8 +7,8 @@ package presentation.controllers;
 
 import Entitys.Medicine;
 import Entitys.Supplier;
-import bussiness.MedicineHandler;
-import bussiness.SupplierHandler;
+import bussiness.MedicineInformationHandler;
+import bussiness.SupplierInformationHandler;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +52,7 @@ public class MedicineManagerViewHelper extends ViewHelper {
     public void loadView() {
         getMedicineManagerView().setVisible(true);
         loadSupplierRegisterToCombo();
-        loadMedicineRegisterToTable();
+        loadMedicineRecordsToTable();
 
     }
 
@@ -72,11 +72,11 @@ public class MedicineManagerViewHelper extends ViewHelper {
         getMedicineManagerView().getBtn_addMedicine().addActionListener(actionEvent -> openRegisterView());
         getMedicineManagerView().getBtn_modifyMedicine().addActionListener(actionEvent -> openModificationView());
         getMedicineManagerView().getBtn_deleteMedicine().addActionListener(actionEvent -> displayConfirmationMessage());
-        getMedicineManagerView().getCombo_medicineSupplier().addActionListener( actionEvent -> loadMedicineRegisterToTable() );
-        getMedicineManagerView().getBtn_back().addActionListener(actionEvent -> closeWindow());
+        getMedicineManagerView().getCombo_medicineSupplier().addActionListener( actionEvent -> loadMedicineRecordsToTable() );
+        getMedicineManagerView().getBtn_back().addActionListener(actionEvent -> closeView());
     }
     
-    public void loadMedicineRegisterToTable(){
+    public void loadMedicineRecordsToTable(){
         
         DefaultTableModel model = (DefaultTableModel) getMedicineManagerView().getTable_medicineTable().getModel();
         int rowCount = model.getRowCount();
@@ -84,10 +84,10 @@ public class MedicineManagerViewHelper extends ViewHelper {
         
         if(!isEmptyList()){
             if(!hasDataChanged()){
-                MedicineHandler medicineManager = MedicineHandler.GetInstance();
+                MedicineInformationHandler medicineInformationHandler = MedicineInformationHandler.GetInstance();
                 String supplierName = getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
             
-                List<Medicine> medicineList = medicineManager.getMedicinesBySupplierName(supplierName) ;
+                List<Medicine> medicineList = medicineInformationHandler.getMedicinesBySupplierName(supplierName) ;
                 setTableContent(medicineList); 
             }
         } 
@@ -115,7 +115,7 @@ public class MedicineManagerViewHelper extends ViewHelper {
     
     private void loadSupplierRegisterToCombo(){
         
-        SupplierHandler supplierManager = SupplierHandler.GetInstance();
+        SupplierInformationHandler supplierManager = SupplierInformationHandler.GetInstance();
         ArrayList<Supplier> supplierList = supplierManager.getSupplierList();
         getMedicineManagerView().getCombo_medicineSupplier().removeAllItems();
         
@@ -123,7 +123,7 @@ public class MedicineManagerViewHelper extends ViewHelper {
         
         if(comboSize == 0){
             getNotifier().showWarningMessage("No existen proveedores registrados");
-            closeWindow();
+            closeView();
         }else{
           for(int index = 0; index < supplierList.size(); index++ ){
             Supplier supplier = supplierList.get(index);
@@ -135,8 +135,8 @@ public class MedicineManagerViewHelper extends ViewHelper {
    private void openModificationView(){
         if(isRowSelected()){
             getMedicineManagerView().dispose();
-            MedicineModificationViewHelper medicineModificationViewHelper = MedicineModificationViewHelper.getInstance();
-            medicineModificationViewHelper.loadView();
+            ModifyMedicineInfoViewHelper modifyMedicineInfoViewHelper = ModifyMedicineInfoViewHelper.getInstance();
+            modifyMedicineInfoViewHelper.loadView();
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
@@ -146,26 +146,26 @@ public class MedicineManagerViewHelper extends ViewHelper {
         
         if(isRowSelected()){
             if(isDeletionConfirmed()){
-                proceedWithElimination();
+                eliminateMedicine();
             }
         }else{
             getNotifier().showWarningMessage( "Porfavor elije un registro" );
         }
     }
     
-    private void closeWindow(){
+    private void closeView(){
         getMedicineManagerView().dispose();
         RegisterSelectionViewHelper registerSelectionViewHelper = RegisterSelectionViewHelper.getInstance();
         registerSelectionViewHelper.loadView();
         
     }
     
-    private void proceedWithElimination(){
+    private void eliminateMedicine(){
         
         int rowIndex = getMedicineManagerView().getTable_medicineTable().getSelectedRow();
         String medicineSupplier = getMedicineManagerView().getCombo_medicineSupplier().getSelectedItem().toString();
         
-        SupplierHandler supplierManager = SupplierHandler.GetInstance();
+        SupplierInformationHandler supplierManager = SupplierInformationHandler.GetInstance();
         Supplier supplier = supplierManager.getSupplierData(medicineSupplier);
         supplier.getMedicines().remove(rowIndex);
         
@@ -232,7 +232,7 @@ public class MedicineManagerViewHelper extends ViewHelper {
     }
     
     public void updateTable(){
-        loadMedicineRegisterToTable();
+        loadMedicineRecordsToTable();
     }
     
     
