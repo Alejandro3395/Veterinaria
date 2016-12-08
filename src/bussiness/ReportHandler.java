@@ -35,17 +35,17 @@ import presentation.controllers.SalesViewHelper;
  *
  * @author mannu
  */
-public class ReportInformationHandler {
-   private static ReportInformationHandler reportInformationHandler = null; 
+public class ReportHandler {
+   private static ReportHandler reportInformationHandler = null; 
    private DateFormat hourdateFormat;
     
-   private ReportInformationHandler(){
+   private ReportHandler(){
        hourdateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
    }
    
-     public static ReportInformationHandler getInstance(){
+     public static ReportHandler getInstance(){
         if( reportInformationHandler== null) {
-         reportInformationHandler = new ReportInformationHandler();
+         reportInformationHandler = new ReportHandler();
         }
         return reportInformationHandler;
     }

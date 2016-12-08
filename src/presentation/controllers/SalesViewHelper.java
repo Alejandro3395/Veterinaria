@@ -7,7 +7,7 @@ package presentation.controllers;
 
 import Entitys.Medicine;
 import bussiness.MedicineInformationHandler;
-import bussiness.ReportInformationHandler;
+import bussiness.ReportHandler;
 import bussiness.SalesManager;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -30,14 +30,15 @@ public class SalesViewHelper extends ViewHelper{
     private double totalCost;
     private SalesManager salesManager;
     
-    private SalesViewHelper(){
+      private SalesViewHelper(){
         saleView  = new SalesView();  
         comboBoxModel= (DefaultComboBoxModel) saleView.getProduct_list().getModel();
         tablemodel = (DefaultTableModel) saleView.getProductTable().getModel();
         salesManager = SalesManager.getInstance();
         initializeView();
     }
-
+     
+    
     public static SalesViewHelper getInstance(){
         if( salesViewHelper== null) {
          salesViewHelper =  new SalesViewHelper();
@@ -120,7 +121,7 @@ public class SalesViewHelper extends ViewHelper{
     protected void setEvents() {
         saleView.getAddProductBttn().addActionListener(actionEvent -> InsertProductToTable());
         saleView.getDeleteProductBttn().addActionListener(actionEvent -> RemoveProductFromTable());
-        saleView.getAceptSaleBttn().addActionListener(actionEvent -> BuildReport());
+        saleView.getAceptSaleBttn().addActionListener(actionEvent -> CompleteSale());
         saleView.getCancelSaleBttn().addActionListener(actionEvent -> closeView());
     }
 
@@ -137,9 +138,9 @@ public class SalesViewHelper extends ViewHelper{
      //Metodo puesto aqui para prueba 
      // Checar nombres
      private void BuildReport(){
-         ReportInformationHandler rh = ReportInformationHandler.getInstance();
+         ReportHandler reportInfoHandler = ReportHandler.getInstance();
         
-         rh.BuildSaleReport(totalCost);
+         reportInfoHandler.BuildSaleReport(totalCost);
          
          closeView();
      }
@@ -182,5 +183,24 @@ public class SalesViewHelper extends ViewHelper{
         System.out.println("costo: "+ totalCost);
         saleView.getTotalSale_Field().setText(numDecimales.format(totalCost));
     }
-     
+    
+    private boolean isPurchaseTableEmpty(){
+        boolean isEmpty = false;
+        int numProductsInTable = tablemodel.getRowCount();
+        if( numProductsInTable == 0){
+            isEmpty= true;
+        }
+        return isEmpty;
+    }
+    
+    private void CompleteSale(){
+        if(isPurchaseTableEmpty()){
+            getNotifier().showWarningMessage( "Porfavor agregue minimo un producto a la lista para realizar la venta" );
+        }else{
+            BuildReport();
+        }
+        
+    }
+    
+  
 }

@@ -9,7 +9,7 @@ import Entitys.Appointment;
 import Entitys.Medicine;
 import bussiness.AppointmentInformationHandler;
 import bussiness.MedicineInformationHandler;
-import bussiness.ReportInformationHandler;
+import bussiness.ReportHandler;
 import bussiness.SalesManager;
 import bussiness.SessionManager;
 import java.text.DecimalFormat;
@@ -59,7 +59,7 @@ public class AppointmentViewHelper extends InformationViewHelper{
     protected void setEvents() {
         appointmentView.getAddProductBttn().addActionListener(actionEvent -> InsertProductToTable());
         appointmentView.getDeleteProductBttn().addActionListener(actionEvent -> RemoveProductFromTable());
-        appointmentView.getAceptSaleBttn().addActionListener(actionEvent -> BuildReport());
+        appointmentView.getAceptSaleBttn().addActionListener(actionEvent -> CompleteAppointment());
         appointmentView.getCancelSaleBttn().addActionListener(actionEvent -> cancelAppointment());
     }
 
@@ -187,12 +187,11 @@ public class AppointmentViewHelper extends InformationViewHelper{
         
         AppointmentInformationHandler.GetInstance().getActualAppointment();
          
-        ReportInformationHandler rh = ReportInformationHandler.getInstance();
+        ReportHandler rh = ReportHandler.getInstance();
          
         ArrayList<String> prescriptionData = new ArrayList<String>(obtainDataFromView());
         
         boolean isValidField = !isEmptyFields(prescriptionData);
-        String message = "";
         
         if(isValidField){
             String client = prescriptionData.get(clientIndex);
@@ -248,6 +247,24 @@ public class AppointmentViewHelper extends InformationViewHelper{
         data.add(comment);
         
         return data;
+    }
+    
+    private boolean isProductTableEmpty(){
+        boolean isEmpty = false;
+        int numProductsInTable = Tablemodel.getRowCount();
+        if( numProductsInTable == 0){
+            isEmpty= true;
+        }
+        return isEmpty;
+    }
+    
+    private void CompleteAppointment(){
+        if(isProductTableEmpty()){
+            getNotifier().showWarningMessage("Agrega minimo un producto para terminar con la cita");
+        }else{
+            BuildReport();
+        }
+        
     }
 
     @Override
