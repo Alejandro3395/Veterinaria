@@ -70,7 +70,7 @@ public class DoctorLoginViewHelper extends InformationViewHelper{
             SessionManager sessionManager = SessionManager.GetInstance();
             isValidUser = sessionManager.doctorUserAuthentification(data);
             if(isValidUser){
-                openMainMenuView();
+                openAppointmentManagerView();
             }else{
                 message = "Usuario inexistente";
                 getNotifier().showWarningMessage( message );
@@ -96,11 +96,11 @@ public class DoctorLoginViewHelper extends InformationViewHelper{
         return data;
     }
     
-   private void openMainMenuView(){
+   private void openAppointmentManagerView(){
         doctorLoginView.dispose();
         clearFields();
-        DoctorMainMenuViewHelper doctorMainMenuViewHelper = DoctorMainMenuViewHelper.getInstance();
-        doctorMainMenuViewHelper.loadView();
+        AppointmentManagerViewHelper appointmentManagerViewHelper = AppointmentManagerViewHelper.getInstance();
+        appointmentManagerViewHelper.loadView();
     }
 
     @Override

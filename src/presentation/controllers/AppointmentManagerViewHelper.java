@@ -116,7 +116,7 @@ public class AppointmentManagerViewHelper extends ViewHelper {
     
     private void closeView(){
         getAppointmentManagerView().dispose();
-        DoctorMainMenuViewHelper.getInstance().loadView();
+        DoctorLoginViewHelper.getInstance().loadView();
     }
     
     private void proceedWithElimination(){
