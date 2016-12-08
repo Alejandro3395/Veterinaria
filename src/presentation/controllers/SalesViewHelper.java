@@ -72,9 +72,9 @@ public class SalesViewHelper extends ViewHelper{
        double medicinePrice = Double.valueOf(medicineDataRow[1]);
        
        if(salesManager.addProductToPurchase(medicineName)){
-       Object[] rowMedicine = new Object[]{medicineName,medicinePrice};
-       tablemodel.addRow(rowMedicine);
-       SetTotalCost();
+            Object[] rowMedicine = new Object[]{medicineName,medicinePrice};
+            tablemodel.addRow(rowMedicine);
+            SetTotalCost();
        }else{
            getNotifier().showWarningMessage("Se han agotado las unidades para el producto elegido");
        }

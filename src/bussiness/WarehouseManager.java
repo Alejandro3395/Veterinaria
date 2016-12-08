@@ -36,7 +36,7 @@ public class WarehouseManager {
         medicines = medicineDAO.getMedicineDataList();
         for(Medicine medicine : medicines){
 
-            if(medicineName.equals(medicine.getName())){
+            if(medicineName.contains(medicine.getName())){
                 if(medicine.getAmount() > 0){
                     
                     isInExistence = true;
